@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/BBIC/app/src/main/res/font/fontstyle.xml" value="0.22592592592592592" />
+        <entry key="..\:/BBIC/app/src/main/res/layout/loading.xml" value="0.35280797101449274" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/activity_main.xml" value="0.17916666666666667" />
       </map>
     </option>
