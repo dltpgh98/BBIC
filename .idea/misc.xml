@@ -3,7 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/activity_main.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/ic_baseline_menu.xml" value="0.1875" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/layout_radious.xml" value="0.1385" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/font/fontstyle.xml" value="0.209375" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/drawer.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/loading.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/login.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/promise_write.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/viewpager_item.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/menu/navi_menu.xml" value="0.17916666666666667" />
       </map>
     </option>
   </component>
