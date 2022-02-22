@@ -24,6 +24,15 @@
             android:contentDescription="@string/StringValue"
             android:src="@drawable/ic_baseline_menu"/>
 
+        <TextView
+            android:id="@+id/test_text"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="30sp"
+            android:textAlignment="center"
+            android:text="test"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include layout="@layout/drawer"/>
