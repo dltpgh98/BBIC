@@ -20,6 +20,10 @@
         </activity>
         <activity android:name=".Maps_Activity"/>
         <activity android:name=".Login_Activity"/>
+        //naver maps id설정
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="21vppi0ha7" />
     </application>
 
 </manifest>

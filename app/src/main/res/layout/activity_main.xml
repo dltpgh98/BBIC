@@ -14,6 +14,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <fragment
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.naver.maps.map.MapFragment" />
         <ImageButton
             android:id="@+id/main_menu_ibtn1"
             app:layout_constraintStart_toStartOf="parent"
