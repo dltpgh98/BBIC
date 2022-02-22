@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BBIC">
         <activity
-            android:name=".MainActivity"
+            android:name=".Loading_Activity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login_Activiy"/>
+        <activity android:name=".Maps_Activity"/>
+        <activity android:name=".Login_Activity"/>
     </application>
 
 </manifest>

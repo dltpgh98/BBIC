@@ -1,5 +1,6 @@
 package com.example.bbic;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +18,8 @@ public class Login_Activiy extends AppCompatActivity {
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),Map_Activity.class);
+                startActivity(intent);
                 finish();
             }
         });
