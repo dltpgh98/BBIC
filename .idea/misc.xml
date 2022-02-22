@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/BBIC-lee/app/src/main/res/layout/activity_main.xml" value="0.21965579710144928" />
+        <entry key="..\:/BBIC-lee/app/src/main/res/layout/loading.xml" value="0.35280797101449274" />
+        <entry key="..\:/BBIC-lee/app/src/main/res/layout/login.xml" value="0.35280797101449274" />
+        <entry key="..\:/BBIC-lee/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2655" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/ic_baseline_menu.xml" value="0.1875" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/layout_radious.xml" value="0.1385" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/font/fontstyle.xml" value="0.209375" />
