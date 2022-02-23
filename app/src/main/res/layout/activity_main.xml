@@ -14,20 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <fragment
-            android:id="@+id/map"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:name="com.naver.maps.map.MapFragment" />
-        <ImageButton
-            android:id="@+id/main_menu_ibtn1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_width="50sp"
-            android:layout_height="50sp"
-            android:background="#00000000"
-            android:contentDescription="@string/StringValue"
-            android:src="@drawable/ic_baseline_menu"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -83,6 +70,12 @@
                     android:paddingLeft="16sp"
                     android:text="Action"
                     android:textSize="24sp" />
+
+                <fragment
+                    android:id="@+id/map"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:name="com.naver.maps.map.MapFragment" />
 
             </LinearLayout>
 
