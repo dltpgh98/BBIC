@@ -10,26 +10,7 @@
     android:id="@+id/main_activity"
     tools:context=".Maps_Activity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <fragment
-            android:id="@+id/map"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:name="com.naver.maps.map.MapFragment" />
-        <ImageButton
-            android:id="@+id/main_menu_ibtn1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_width="50sp"
-            android:layout_height="50sp"
-            android:background="#00000000"
-            android:contentDescription="@string/StringValue"
-            android:src="@drawable/ic_baseline_menu"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include layout="@layout/drawer"/>
 
@@ -41,7 +22,7 @@
         app:umanoFadeColor="#00ff0000"
         app:umanoPanelHeight="70dp"
         app:umanoOverlay="true"
-        app:umanoParallaxOffset="200dp"
+        app:umanoParallaxOffset="0dp"
         app:umanoShadowHeight="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,18 +30,11 @@
             android:layout_height="match_parent"
             >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="Main Content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+            <fragment
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.naver.maps.map.MapFragment" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout

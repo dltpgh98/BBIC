@@ -23,7 +23,7 @@
         //naver maps id설정
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="21vppi0ha7" />
+            android:value="1s9u4lx3wq" />
     </application>
 
 </manifest>
