@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,6 +32,19 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.main_menu_ibtn:
                     drawerLayout.openDrawer(drawerView);
                     break;
+                case R.id.drawer_menu_1:
+                    Log.d("클릭", "onClick: ");
+                    break;
+                case R.id.drawer_menu_2:
+                    break;
+                case R.id.drawer_menu_3:
+                    break;
+                case R.id.drawer_menu_4:
+                    break;
+                case R.id.drawer_menu_5:
+                    break;
+                case R.id.drawer_menu_6:
+                    break;
             }
         }
     }
@@ -39,8 +53,11 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private View drawerView;
     private ImageButton menuIbtn;
-    private TextView temText, fineText, ultraText, covidText;
+    private TextView
+            temText, fineText, ultraText, covidText;
     private ImageView weatherImage;
+
+    private Button[] drawerMenu = new Button[6];
 
 
     private final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=경기도부천시날씨"; //웹크롤링 할 주소(1)
@@ -66,11 +83,24 @@ public class MainActivity extends AppCompatActivity {
         covidText = (TextView) findViewById(R.id.drawer_covid_text);
         weatherImage = (ImageView) findViewById(R.id.drawer_weather_img);
 
+        drawerMenu[0] = (Button) findViewById(R.id.drawer_menu_1);
+        drawerMenu[1] = (Button) findViewById(R.id.drawer_menu_2);
+        drawerMenu[2] = (Button) findViewById(R.id.drawer_menu_3);
+        drawerMenu[3] = (Button) findViewById(R.id.drawer_menu_4);
+        drawerMenu[4] = (Button) findViewById(R.id.drawer_menu_5);
+        drawerMenu[5] = (Button) findViewById(R.id.drawer_menu_6);
+
         //레이아웃에 네비게이션 드로어 설젇
         drawerLayout.setDrawerListener(drawerListener);
 
         //버튼의 클릭 리스너 설정
         menuIbtn.setOnClickListener(onClickListener);
+        drawerMenu[0].setOnClickListener(onClickListener);
+        drawerMenu[1].setOnClickListener(onClickListener);
+        drawerMenu[2].setOnClickListener(onClickListener);
+        drawerMenu[3].setOnClickListener(onClickListener);
+        drawerMenu[4].setOnClickListener(onClickListener);
+        drawerMenu[5].setOnClickListener(onClickListener);
 
         //스레드간 데이터 전달을 위한 번들 생성
         final Bundle bundle = new Bundle();
