@@ -95,6 +95,19 @@
             android:textAlignment="center"
             android:textSize="20sp" />
 
+        <TextView
+            android:id="@+id/drawer_covid_text"
+            android:layout_width="match_parent"
+            android:layout_height="15sp"
+            android:layout_marginTop="285sp"
+            android:layout_marginLeft="25sp"
+            android:layout_marginRight="25sp"
+            android:background="@drawable/corner"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:text="전일 코로나 확진자 : 000,000"
+            android:textAlignment="center"/>
+
     </RelativeLayout>
 
 </LinearLayout>

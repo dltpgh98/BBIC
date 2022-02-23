@@ -39,11 +39,13 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private View drawerView;
     private ImageButton menuIbtn;
-    private TextView temText, fineText, ultraText;
+    private TextView temText, fineText, ultraText, covidText;
+    private ImageView weatherImage;
 
 
-    private final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=경기도부천시날씨"; //웹크롤링 할 주소
-    private String allDust, weather, tem, fineDust, ultraFineDust;
+    private final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=경기도부천시날씨"; //웹크롤링 할 주소(1)
+    private final String covidURL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=코로나19"; //웹크롤링 할 주소(2)
+    private String allDust, weather, tem, fineDust, ultraFineDust, covidNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         temText = (TextView) findViewById(R.id.drawer_tem_text);
         fineText = (TextView) findViewById(R.id.drawer_fine_text);
         ultraText = (TextView) findViewById(R.id.drawer_ultra_text);
+        covidText = (TextView) findViewById(R.id.drawer_covid_text);
+        weatherImage = (ImageView) findViewById(R.id.drawer_weather_img);
 
         //레이아웃에 네비게이션 드로어 설젇
         drawerLayout.setDrawerListener(drawerListener);
@@ -87,6 +91,11 @@ public class MainActivity extends AppCompatActivity {
                     //날씨
                     Elements wt = doc.select(".weather_main");
 
+                    //웹 사이트 데이터 설정
+                    doc = Jsoup.connect(covidURL).get();
+
+                    Elements covid = doc.select(".status_info");
+
                     //문자열 변환 및 자르기
                     tem = temperature.get(0).text().substring(5);
                     allDust = dust.get(0).text();
@@ -94,12 +103,15 @@ public class MainActivity extends AppCompatActivity {
                     fineDust = array[1];
                     ultraFineDust = array[3];
                     weather = wt.get(0).text();
+                    array = covid.get(0).text().split(" ");
+                    covidNum = array[2];
 
                     //번들에 문자열 포장
                     bundle.putString("temperature",tem);
                     bundle.putString("fine",fineDust);
                     bundle.putString("ultra",ultraFineDust);
                     bundle.putString("weather",weather);
+                    bundle.putString("covid",covidNum);
                     Message msg = handler.obtainMessage();
 
                     //메세지내용 번들로 지정
@@ -122,7 +134,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg){
             Bundle bundle = msg.getData();
-
             drawer_input();
         }
     };
@@ -168,6 +179,27 @@ public class MainActivity extends AppCompatActivity {
                 ultraText.setTextColor(getResources().getColor(R.color.black));
                 break;
         }
+
+        switch (weather)
+        {
+            case "맑음":
+                weatherImage.setImageResource(R.drawable.sunny);
+                break;
+            case "흐림":
+                weatherImage.setImageResource(R.drawable.cloud);
+                break;
+            case "눈":
+                weatherImage.setImageResource(R.drawable.snow);
+                break;
+            case "비":
+                weatherImage.setImageResource(R.drawable.rain);
+                break;
+            default:
+                weatherImage.setImageResource(R.drawable.ic_baseline_block);
+                Log.d("날씨 명", weather);
+        }
+
+        covidText.setText("전일 코로나 확진자 수 '"+covidNum+"' 명");
     }
 
     //드로어 이벤트 리스너
