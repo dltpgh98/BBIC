@@ -13,19 +13,184 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/drawer_profile_icon"
+            android:id="@+id/drawer_profile_img"
             android:layout_width="match_parent"
-            android:layout_height="125sp"
-            android:layout_marginTop="50sp"
-            android:src="@drawable/image_profile"/>
+            android:layout_height="100sp"
+            android:layout_marginTop="30sp"
+            android:src="@drawable/image_profile" />
+
+        <TextView
+            android:id="@+id/drawer_profile_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="140sp"
+            android:text="김동훈"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
+
+        <ImageView
+            android:id="@+id/drawer_weather_img"
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:layout_marginLeft="25sp"
+            android:layout_marginTop="170sp"
+            android:src="@drawable/sunny" />
+
+        <TextView
+            android:id="@+id/drawer_tem_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="118sp"
+            android:layout_marginTop="195sp"
+            android:text="20°C"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/drawer_area_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="118sp"
+            android:layout_marginTop="225sp"
+            android:text="부천시"
+            android:textColor="@color/black"
+            android:textSize="18sp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="김동훈"
-            android:textSize="20sp"
+            android:layout_marginLeft="40sp"
+            android:layout_marginTop="260sp"
+            android:text="미세먼지"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="130sp"
+            android:layout_marginTop="260sp"
+            android:text="초미세먼지"
+            android:textColor="@color/black"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/drawer_fine_text"
+            android:layout_width="20sp"
+            android:layout_height="20sp"
+            android:layout_marginLeft="85sp"
+            android:layout_marginTop="254sp"
+            android:text="●"
             android:textAlignment="center"
-            android:layout_marginTop="180sp"/>
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/drawer_ultra_text"
+            android:layout_width="20sp"
+            android:layout_height="20sp"
+            android:layout_marginLeft="188sp"
+            android:layout_marginTop="254sp"
+            android:text="●"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/drawer_covid_text"
+            android:layout_width="match_parent"
+            android:layout_height="15sp"
+            android:layout_marginTop="285sp"
+            android:layout_marginLeft="25sp"
+            android:layout_marginRight="25sp"
+            android:background="@drawable/corner"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:text="전일 코로나 확진자 : 000,000"
+            android:textAlignment="center"/>
+
+        <Button
+            android:id="@+id/drawer_menu_1"
+            android:layout_width="match_parent"
+            android:layout_height="35sp"
+            android:layout_marginLeft="30sp"
+            android:layout_marginTop="330sp"
+            android:layout_marginRight="30sp"
+            android:background="@color/transparent"
+            android:padding="0sp"
+            android:text="지도"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/drawer_menu_2"
+            android:layout_width="match_parent"
+            android:layout_height="35sp"
+            android:layout_marginLeft="30sp"
+            android:layout_marginTop="370sp"
+            android:layout_marginRight="30sp"
+            android:background="@color/transparent"
+            android:padding="0sp"
+            android:text="지하철 노선도"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/drawer_menu_3"
+            android:layout_width="match_parent"
+            android:layout_height="35sp"
+            android:layout_marginLeft="30sp"
+            android:layout_marginTop="410sp"
+            android:layout_marginRight="30sp"
+            android:background="@color/transparent"
+            android:padding="0sp"
+            android:text="즐겨찾기"
+            android:textColor="@color/black"
+            android:textAlignment="textStart"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/drawer_menu_4"
+            android:layout_width="match_parent"
+            android:layout_height="35sp"
+            android:layout_marginLeft="30sp"
+            android:layout_marginTop="450sp"
+            android:layout_marginRight="30sp"
+            android:background="@color/transparent"
+            android:padding="0sp"
+            android:text="길찾기"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/drawer_menu_5"
+            android:layout_width="match_parent"
+            android:layout_height="35sp"
+            android:layout_marginLeft="30sp"
+            android:layout_marginTop="490sp"
+            android:layout_marginRight="30sp"
+            android:background="@color/transparent"
+            android:padding="0sp"
+            android:text="친구/약속"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/drawer_menu_6"
+            android:layout_width="match_parent"
+            android:layout_height="35sp"
+            android:layout_marginLeft="30sp"
+            android:layout_marginTop="530sp"
+            android:layout_marginRight="30sp"
+            android:background="@color/transparent"
+            android:padding="0sp"
+            android:text="설정"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
     </RelativeLayout>
 
