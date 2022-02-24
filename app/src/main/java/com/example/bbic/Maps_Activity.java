@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.naver.maps.map.MapFragment;
 
@@ -47,9 +49,9 @@ public class Maps_Activity extends AppCompatActivity {
                 case R.id.drawer_menu_2:
                     break;
                 case R.id.drawer_menu_3:
+                    System.out.println("click");
                     Intent intent = new Intent(getApplicationContext(), Bookmark.class);
                     startActivity(intent);
-
                     break;
                 case R.id.drawer_menu_4:
                     break;
@@ -70,6 +72,8 @@ public class Maps_Activity extends AppCompatActivity {
     private ImageView weatherImage;
 
     private Button[] drawerMenu = new Button[6];
+
+
 
     private final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=경기도부천시날씨"; //웹크롤링 할 주소(1)
     private final String covidURL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=코로나19"; //웹크롤링 할 주소(2)
@@ -119,6 +123,7 @@ public class Maps_Activity extends AppCompatActivity {
         drawerMenu[3].setOnClickListener(onClickListener);
         drawerMenu[4].setOnClickListener(onClickListener);
         drawerMenu[5].setOnClickListener(onClickListener);
+
 
         //스레드간 데이터 전달을 위한 번들 생성
         final Bundle bundle = new Bundle();
@@ -260,17 +265,17 @@ public class Maps_Activity extends AppCompatActivity {
     DrawerLayout.DrawerListener drawerListener = new DrawerLayout.DrawerListener() {
         @Override
         public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
+            System.out.println("opening");
         }
 
         @Override
         public void onDrawerOpened(@NonNull View drawerView) {
-
+            System.out.println("open");
         }
 
         @Override
         public void onDrawerClosed(@NonNull View drawerView) {
-
+            System.out.println("close");
         }
 
         @Override

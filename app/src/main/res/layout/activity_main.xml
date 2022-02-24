@@ -7,12 +7,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
+    android:clickable="true"
     android:id="@+id/main_activity"
     tools:context=".Maps_Activity">
 
 
-
-    <include layout="@layout/drawer"/>
 
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
         android:layout_width="match_parent"
@@ -91,7 +90,8 @@
             android:contentDescription="@string/StringValue"
             android:src="@drawable/ic_baseline_menu"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <include layout="@layout/drawer"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
