@@ -3,6 +3,7 @@
     package="com.example.bbic">
     <uses-permission android:name="android.permission.INTERNET"/>
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,10 +22,12 @@
         </activity>
         <activity android:name=".Maps_Activity"/>
         <activity android:name=".Login_Activity"/>
+        <activity android:name=".Bookmark"/>
         //naver maps id설정
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="1s9u4lx3wq" />
+
     </application>
     //위치 권한을 명시
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
