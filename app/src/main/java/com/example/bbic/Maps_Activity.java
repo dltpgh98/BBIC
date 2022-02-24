@@ -47,8 +47,8 @@ public class Maps_Activity extends AppCompatActivity {
                 case R.id.drawer_menu_2:
                     break;
                 case R.id.drawer_menu_3:
-//                    Intent intent = new Intent(getApplicationContext(), Bookmark.class);
-//                    startActivity(intent);
+                    Intent intent = new Intent(getApplicationContext(), Bookmark.class);
+                    startActivity(intent);
 
                     break;
                 case R.id.drawer_menu_4:
