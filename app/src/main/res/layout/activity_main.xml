@@ -34,7 +34,7 @@
             android:id="@+id/map"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="com.naver.maps.map.MapFragment" />
+            android:name="com.naver.maps.map.MapFragment" />//네이버 지도
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
@@ -48,7 +48,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="140dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -81,15 +81,41 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageButton
-            android:id="@+id/main_menu_ibtn"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_radious"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_width="50sp"
-            android:layout_height="50sp"
-            android:background="#00000000"
-            android:contentDescription="@string/StringValue"
-            android:src="@drawable/ic_baseline_menu"/>
+            app:layout_constraintTop_toTopOf="parent">//검색창 밑 사이드바
+
+            <ImageButton
+                android:id="@+id/main_menu_ibtn"
+                android:layout_width="50sp"
+                android:layout_height="50sp"
+                android:background="#00000000"
+                android:contentDescription="@string/StringValue"
+                android:src="@drawable/ic_baseline_menu"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />//사이드 메뉴
+
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/main_search_et"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />//검색창
+            <ImageButton
+                android:id="@+id/main_search_ibtn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_search"
+                android:background="#00000000"/> //검색 버튼
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
