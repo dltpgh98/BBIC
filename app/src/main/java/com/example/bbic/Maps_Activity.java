@@ -47,6 +47,9 @@ public class Maps_Activity extends AppCompatActivity {
                 case R.id.drawer_menu_2:
                     break;
                 case R.id.drawer_menu_3:
+//                    Intent intent = new Intent(getApplicationContext(), Bookmark.class);
+//                    startActivity(intent);
+
                     break;
                 case R.id.drawer_menu_4:
                     break;
@@ -67,7 +70,6 @@ public class Maps_Activity extends AppCompatActivity {
     private ImageView weatherImage;
 
     private Button[] drawerMenu = new Button[6];
-
 
     private final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=경기도부천시날씨"; //웹크롤링 할 주소(1)
     private final String covidURL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=코로나19"; //웹크롤링 할 주소(2)
