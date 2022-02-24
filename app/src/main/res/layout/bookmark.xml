@@ -1,45 +1,76 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    >
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="vertical">
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabRoot"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="탭1" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="탭2" />
-
-
-        </com.google.android.material.tabs.TabLayout>
-    </LinearLayout>
+    android:background="@color/white"
+    android:clickable="true"
+    android:id="@+id/main_activity"
+    tools:context=".Maps_Activity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
-        <FrameLayout
-            android:id="@+id/tab_container"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="50dp"
+            android:orientation="vertical">
 
-        </FrameLayout>
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabRoot"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="장소" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="데증교통" />
+
+
+            </com.google.android.material.tabs.TabLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/tab_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </FrameLayout>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+            <ImageButton
+            android:id="@+id/main_menu_ibtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:background="#00000000"
+            android:contentDescription="@string/StringValue"
+            android:src="@drawable/ic_baseline_menu"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include layout="@layout/drawer"/>
+
+</androidx.drawerlayout.widget.DrawerLayout>
