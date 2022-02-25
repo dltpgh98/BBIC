@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 
 import com.naver.maps.map.MapFragment;
+import com.odsay.odsayandroidsdk.ODsayService;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -45,17 +46,22 @@ public class Maps_Activity extends AppCompatActivity {
                     break;
                 case R.id.drawer_menu_1:
                     Log.d("클릭", "onClick: ");
+                    drawerLayout.closeDrawer(drawerView);
                     break;
                 case R.id.drawer_menu_2:
                     break;
                 case R.id.drawer_menu_3:
                     System.out.println("click");
-                    Intent intent = new Intent(getApplicationContext(), Bookmark.class);
-                    startActivity(intent);
+                    Intent intent3 = new Intent(getApplicationContext(), Bookmark.class);
+                    startActivity(intent3);
+                    finish();
                     break;
                 case R.id.drawer_menu_4:
                     break;
                 case R.id.drawer_menu_5:
+                    Intent intent5 = new Intent(getApplicationContext(), FP.class);
+                    startActivity(intent5);
+                    finish();
                     break;
                 case R.id.drawer_menu_6:
                     break;

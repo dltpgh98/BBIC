@@ -14,7 +14,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -25,10 +24,10 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Bookmark extends AppCompatActivity {
+public class FP extends AppCompatActivity {
     TabLayout tabRoot;
-    Bookmark_Place bookmark_place;
-    Bookmark_Transit bookmark_transit;
+    FP_friend fp_friend;
+    FP_promise fp_promise;
 
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
@@ -55,21 +54,22 @@ public class Bookmark extends AppCompatActivity {
                     break;
                 case R.id.drawer_menu_1:
                     Log.d("클릭", "onClick: ");
-                    Intent intent1 = new Intent(getApplicationContext(), FP.class);
+                    Intent intent1 = new Intent(getApplicationContext(), Maps_Activity.class);
                     startActivity(intent1);
                     finish();
                     break;
                 case R.id.drawer_menu_2:
                     break;
                 case R.id.drawer_menu_3:
-                    drawerLayout.closeDrawer(drawerView);
+                    System.out.println("click");
+                    Intent intent3 = new Intent(getApplicationContext(), Bookmark.class);
+                    startActivity(intent3);
+                    finish();
                     break;
                 case R.id.drawer_menu_4:
                     break;
                 case R.id.drawer_menu_5:
-                    Intent intent5 = new Intent(getApplicationContext(), FP.class);
-                    startActivity(intent5);
-                    finish();
+                    drawerLayout.closeDrawer(drawerView);
                     break;
                 case R.id.drawer_menu_6:
                     break;
@@ -80,21 +80,21 @@ public class Bookmark extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bookmark);
+        setContentView(R.layout.fp);
 
 
 
-        bookmark_place = new Bookmark_Place();
-        bookmark_transit = new Bookmark_Transit();
+        fp_friend = new FP_friend();
+        fp_promise = new FP_promise();
 
 
         tabRoot = findViewById(R.id.tabRoot);
         tabRoot.removeAllTabs();
-        tabRoot.addTab(tabRoot.newTab().setText("장소"));
-        tabRoot.addTab(tabRoot.newTab().setText("대중교통"));
+        tabRoot.addTab(tabRoot.newTab().setText("친구"));
+        tabRoot.addTab(tabRoot.newTab().setText("약속"));
 
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.tab_container, bookmark_place).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.tab_container, fp_friend).commit();
 
         tabRoot.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -102,10 +102,10 @@ public class Bookmark extends AppCompatActivity {
                 switch(tab.getPosition())
                 {
                     case 0:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.tab_container, bookmark_place).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.tab_container, fp_friend).commit();
                         break;
                     case 1:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.tab_container, bookmark_transit).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.tab_container, fp_promise).commit();
                         break;
                 }
             }

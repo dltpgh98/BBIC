@@ -30,12 +30,12 @@
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="장소" />
+                    android:text="친구" />
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="대증교통" />
+                    android:text="약속" />
 
 
             </com.google.android.material.tabs.TabLayout>
