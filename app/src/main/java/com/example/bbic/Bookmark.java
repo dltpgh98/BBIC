@@ -1,10 +1,6 @@
 package com.example.bbic;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,13 +11,38 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.viewpager2.widget.ViewPager2;
+
+import com.google.android.material.tabs.TabLayout;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class Bookmark extends AppCompatActivity {
+    TabLayout tabRoot;
+    Bookmark_Place bookmark_place;
+    Bookmark_Transit bookmark_transit;
+
+    //참조를 위한 각 객체 생성
+    private DrawerLayout drawerLayout;
+    private View drawerView;
+    private ImageButton menuIbtn;
+    private TextView
+            temText, fineText, ultraText, covidText;
+    private ImageView weatherImage;
+
+    private Button[] drawerMenu = new Button[6];
+
+    private final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=경기도부천시날씨"; //웹크롤링 할 주소(1)
+    private final String covidURL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=코로나19"; //웹크롤링 할 주소(2)
+    private String allDust, weather, tem, fineDust, ultraFineDust, covidNum;
 
     //버튼 클릭 리스너 클래스
     class BtnOnClickListener implements View.OnClickListener{
@@ -38,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.drawer_menu_2:
                     break;
                 case R.id.drawer_menu_3:
+                    System.out.println("click");
+                    Intent intent = new Intent(getApplicationContext(), Bookmark.class);
+                    startActivity(intent);
                     break;
                 case R.id.drawer_menu_4:
                     break;
@@ -49,29 +73,53 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //참조를 위한 각 객체 생성
-    private DrawerLayout drawerLayout;
-    private View drawerView;
-    private ImageButton menuIbtn;
-    private TextView
-            temText, fineText, ultraText, covidText;
-    private ImageView weatherImage;
-
-    private Button[] drawerMenu = new Button[6];
-
-
-    private final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=경기도부천시날씨"; //웹크롤링 할 주소(1)
-    private final String covidURL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=코로나19"; //웹크롤링 할 주소(2)
-    private String allDust, weather, tem, fineDust, ultraFineDust, covidNum;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.bookmark);
+
+
+
+        bookmark_place = new Bookmark_Place();
+        bookmark_transit = new Bookmark_Transit();
+
+
+        tabRoot = findViewById(R.id.tabRoot);
+        tabRoot.removeAllTabs();
+        tabRoot.addTab(tabRoot.newTab().setText("장소"));
+        tabRoot.addTab(tabRoot.newTab().setText("대중교통"));
+
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.tab_container, bookmark_place).commit();
+
+        tabRoot.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch(tab.getPosition())
+                {
+                    case 0:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.tab_container, bookmark_place).commit();
+                        break;
+                    case 1:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.tab_container, bookmark_transit).commit();
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         //버튼 클릭 리스너 클래스 객체 생성(클릭 이벤트를 위함)
-
         BtnOnClickListener onClickListener = new BtnOnClickListener();
+
 
         //각 객체의 참조값을 넣어줌
         drawerLayout = (DrawerLayout) findViewById(R.id.main_activity);
@@ -101,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
         drawerMenu[3].setOnClickListener(onClickListener);
         drawerMenu[4].setOnClickListener(onClickListener);
         drawerMenu[5].setOnClickListener(onClickListener);
+
 
         //스레드간 데이터 전달을 위한 번들 생성
         final Bundle bundle = new Bundle();
@@ -216,7 +265,6 @@ public class MainActivity extends AppCompatActivity {
                 weatherImage.setImageResource(R.drawable.sunny);
                 break;
             case "흐림":
-            case "구름많음":
                 weatherImage.setImageResource(R.drawable.cloud);
                 break;
             case "눈":
@@ -237,17 +285,17 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout.DrawerListener drawerListener = new DrawerLayout.DrawerListener() {
         @Override
         public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
+            System.out.println("opening");
         }
 
         @Override
         public void onDrawerOpened(@NonNull View drawerView) {
-
+            System.out.println("open");
         }
 
         @Override
         public void onDrawerClosed(@NonNull View drawerView) {
-
+            System.out.println("close");
         }
 
         @Override
@@ -255,5 +303,15 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+    protected ArrayList setTextList(){
 
+        ArrayList<String> itemList = new ArrayList();
+        itemList.add("Page 1");
+        itemList.add("Page 2");
+        itemList.add("Page 3");
+        itemList.add("Page 4");
+        itemList.add("Page 5");
+
+        return itemList;
+    }
 }

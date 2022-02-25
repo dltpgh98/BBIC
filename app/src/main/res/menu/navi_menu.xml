@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/menu1"
+            android:title="지도"/>
+
+        <item android:id="@+id/menu2"
+            android:title="지하철 노선도"/>
+
+        <item android:id="@+id/menu3"
+            android:title="즐겨찾기"/>
+
+        <item android:id="@+id/menu4"
+            android:title="길찾기"/>
+
+        <item android:id="@+id/menu5"
+            android:title="친구/약속"/>
+
+        <item android:id="@+id/menu6"
+            android:title="설정"/>
+
+    </group>
+
+</menu>

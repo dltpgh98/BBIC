@@ -2,26 +2,37 @@ package com.example.bbic;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+
+import com.naver.maps.map.MapFragment;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class Maps_Activity extends AppCompatActivity {
 
     //버튼 클릭 리스너 클래스
     class BtnOnClickListener implements View.OnClickListener{
@@ -38,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.drawer_menu_2:
                     break;
                 case R.id.drawer_menu_3:
+                    System.out.println("click");
+                    Intent intent = new Intent(getApplicationContext(), Bookmark.class);
+                    startActivity(intent);
                     break;
                 case R.id.drawer_menu_4:
                     break;
@@ -60,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     private Button[] drawerMenu = new Button[6];
 
 
+
     private final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=경기도부천시날씨"; //웹크롤링 할 주소(1)
     private final String covidURL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=코로나19"; //웹크롤링 할 주소(2)
     private String allDust, weather, tem, fineDust, ultraFineDust, covidNum;
@@ -68,9 +83,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //도성대
+        FragmentManager fm = getSupportFragmentManager();
+        MapFragment mapFragment = (MapFragment)fm.findFragmentById(R.id.map);
+        if (mapFragment == null) {
+            mapFragment = MapFragment.newInstance();
+            fm.beginTransaction().add(R.id.map, mapFragment).commit();
+        }
 
+        //이세호
         //버튼 클릭 리스너 클래스 객체 생성(클릭 이벤트를 위함)
-
         BtnOnClickListener onClickListener = new BtnOnClickListener();
 
         //각 객체의 참조값을 넣어줌
@@ -101,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         drawerMenu[3].setOnClickListener(onClickListener);
         drawerMenu[4].setOnClickListener(onClickListener);
         drawerMenu[5].setOnClickListener(onClickListener);
+
 
         //스레드간 데이터 전달을 위한 번들 생성
         final Bundle bundle = new Bundle();
@@ -157,6 +180,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }.start();
+
+        //뷰페이저 설정
+        ViewPager2 viewPager = findViewById(R.id.view_pager);
+        ViewpagerAdapter adapter = new ViewpagerAdapter(setTextList());
+        viewPager.setAdapter(adapter);
+
 
     }
 
@@ -216,7 +245,6 @@ public class MainActivity extends AppCompatActivity {
                 weatherImage.setImageResource(R.drawable.sunny);
                 break;
             case "흐림":
-            case "구름많음":
                 weatherImage.setImageResource(R.drawable.cloud);
                 break;
             case "눈":
@@ -237,17 +265,17 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout.DrawerListener drawerListener = new DrawerLayout.DrawerListener() {
         @Override
         public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
+            System.out.println("opening");
         }
 
         @Override
         public void onDrawerOpened(@NonNull View drawerView) {
-
+            System.out.println("open");
         }
 
         @Override
         public void onDrawerClosed(@NonNull View drawerView) {
-
+            System.out.println("close");
         }
 
         @Override
@@ -255,5 +283,15 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+    protected ArrayList setTextList(){
 
+        ArrayList<String> itemList = new ArrayList();
+        itemList.add("Page 1");
+        itemList.add("Page 2");
+        itemList.add("Page 3");
+        itemList.add("Page 4");
+        itemList.add("Page 5");
+
+        return itemList;
+    }
 }

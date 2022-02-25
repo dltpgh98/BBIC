@@ -7,8 +7,74 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
+    android:clickable="true"
     android:id="@+id/main_activity"
-    tools:context=".MainActivity">
+    tools:context=".Maps_Activity">
+
+
+
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        app:umanoDragView="@id/dragView"
+        app:umanoFadeColor="#00ff0000"
+        app:umanoPanelHeight="70dp"
+        app:umanoOverlay="true"
+        app:umanoParallaxOffset="0dp"
+        app:umanoShadowHeight="10dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <fragment
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.naver.maps.map.MapFragment" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/dragView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="false"
+            android:background="@drawable/layout_radious"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16sp"
+                    android:text="Action"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" >
+            </androidx.viewpager2.widget.ViewPager2>
+
+        </LinearLayout>
+
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -24,17 +90,8 @@
             android:contentDescription="@string/StringValue"
             android:src="@drawable/ic_baseline_menu"/>
 
-        <TextView
-            android:id="@+id/test_text"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="30sp"
-            android:textAlignment="center"
-            android:text="test"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
     <include layout="@layout/drawer"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -3,14 +3,24 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1945" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/circle.xml" value="0.1085" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/corner.xml" value="0.22" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_circle.xml" value="0.1085" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_menu.xml" value="0.1945" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1945" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/activity_main.xml" value="0.3175925925925926" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/drawer.xml" value="0.4090909090909091" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/circle.xml" value="0.1945" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/corner.xml" value="0.1945" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/header_stroke.xml" value="0.1945" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/font/fontstyle.xml" value="0.21770833333333334" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/bookmark.xml" value="0.3175925925925926" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/drawer.xml" value="0.33" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/setting.xml" value="0.375" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/activity_main.xml" value="0.23097826086956522" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/bookmark.xml" value="0.25" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/bookmark_place.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/bookmark_place_abc.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/bookmark_place_new.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/bookmark_transit.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/bookmark_transit_bus.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/bookmark_transit_subway.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/drawer.xml" value="0.17603850050658562" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/loading.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/menu/navi_menu.xml" value="0.25" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/activity_main.xml" value="0.17916666666666667" />
       </map>
     </option>
