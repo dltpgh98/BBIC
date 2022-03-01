@@ -12,7 +12,7 @@
 
 
 
-    <include layout="@layout/drawer"/>
+
 
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
         android:layout_width="match_parent"
@@ -118,6 +118,6 @@
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
+    <include layout="@layout/drawer"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
