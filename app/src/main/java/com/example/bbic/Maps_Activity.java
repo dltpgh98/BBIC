@@ -36,6 +36,8 @@ public class Maps_Activity extends AppCompatActivity {
 
     //버튼 클릭 리스너 클래스
     class BtnOnClickListener implements View.OnClickListener{
+        Intent intent = null;
+
         @Override
         public void onClick(View view){
             switch (view.getId()){
@@ -50,7 +52,7 @@ public class Maps_Activity extends AppCompatActivity {
                     break;
                 case R.id.drawer_menu_3:
                     System.out.println("click");
-                    Intent intent = new Intent(getApplicationContext(), Bookmark.class);
+                    intent = new Intent(getApplicationContext(), Bookmark.class);
                     startActivity(intent);
                     break;
                 case R.id.drawer_menu_4:
@@ -58,6 +60,8 @@ public class Maps_Activity extends AppCompatActivity {
                 case R.id.drawer_menu_5:
                     break;
                 case R.id.drawer_menu_6:
+                    intent = new Intent(getApplicationContext(), Setting_Activity.class);
+                    startActivity(intent);
                     break;
             }
         }
@@ -72,6 +76,7 @@ public class Maps_Activity extends AppCompatActivity {
     private ImageView weatherImage;
 
     private Button[] drawerMenu = new Button[6];
+    //Button[] button = new Button[a(int 값이 들어가있으면 됨)]
 
 
 
@@ -197,6 +202,7 @@ public class Maps_Activity extends AppCompatActivity {
         }
     };
 
+    //드로어 내용 초기화 메소드
     private void drawer_input()
     {
         temText.setText(tem+"C");
@@ -264,25 +270,18 @@ public class Maps_Activity extends AppCompatActivity {
     //드로어 이벤트 리스너
     DrawerLayout.DrawerListener drawerListener = new DrawerLayout.DrawerListener() {
         @Override
-        public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-            System.out.println("opening");
-        }
+        public void onDrawerSlide(@NonNull View drawerView, float slideOffset) { }
 
         @Override
-        public void onDrawerOpened(@NonNull View drawerView) {
-            System.out.println("open");
-        }
+        public void onDrawerOpened(@NonNull View drawerView) { }
 
         @Override
-        public void onDrawerClosed(@NonNull View drawerView) {
-            System.out.println("close");
-        }
+        public void onDrawerClosed(@NonNull View drawerView) { }
 
         @Override
-        public void onDrawerStateChanged(int newState) {
-
-        }
+        public void onDrawerStateChanged(int newState) { }
     };
+
     protected ArrayList setTextList(){
 
         ArrayList<String> itemList = new ArrayList();

@@ -1,17 +1,14 @@
 package com.example.bbic;
 
-import android.os.Bundle;
-import android.util.Log;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Setting extends AppCompatActivity {
+import android.os.Bundle;
+
+public class Setting_Activity extends AppCompatActivity {
 
     @Override
-    protected void OnCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting);
-
-
     }
 }

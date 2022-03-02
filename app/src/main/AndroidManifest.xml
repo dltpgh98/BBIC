@@ -3,6 +3,7 @@
     package="com.example.bbic">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,6 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.BBIC">
+        <activity
+            android:name=".Setting_Activity"
+            android:exported="false" />
         <activity
             android:name=".Loading_Activity"
             android:exported="true">
@@ -19,14 +23,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Maps_Activity"/>
-        <activity android:name=".Login_Activity"/>
-        <activity android:name=".Bookmark"/>
-        //naver maps id설정
+        <activity android:name=".Maps_Activity" />
+        <activity android:name=".Login_Activity" />
+        <activity android:name=".Bookmark" />
+
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="1s9u4lx3wq" />
-
     </application>
 
 </manifest>
