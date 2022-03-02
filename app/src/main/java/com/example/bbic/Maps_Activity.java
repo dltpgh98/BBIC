@@ -65,6 +65,10 @@ public class Maps_Activity extends AppCompatActivity {
                     break;
                 case R.id.drawer_menu_6:
                     break;
+                case R.id.main_search_ibtn:
+//                    Intent intent = new Intent(getApplicationContext(), Bookmark.class);
+//                    startActivity(intent);
+                    break;
             }
         }
     }
@@ -72,7 +76,7 @@ public class Maps_Activity extends AppCompatActivity {
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
     private View drawerView;
-    private ImageButton menuIbtn;
+    private ImageButton menuIbtn, searchIbtn;
     private TextView
             temText, fineText, ultraText, covidText;
     private ImageView weatherImage;
@@ -110,6 +114,7 @@ public class Maps_Activity extends AppCompatActivity {
         ultraText = (TextView) findViewById(R.id.drawer_ultra_text);
         covidText = (TextView) findViewById(R.id.drawer_covid_text);
         weatherImage = (ImageView) findViewById(R.id.drawer_weather_img);
+        searchIbtn = (ImageButton)findViewById(R.id.main_search_ibtn);
 
         drawerMenu[0] = (Button) findViewById(R.id.drawer_menu_1);
         drawerMenu[1] = (Button) findViewById(R.id.drawer_menu_2);
@@ -129,6 +134,8 @@ public class Maps_Activity extends AppCompatActivity {
         drawerMenu[3].setOnClickListener(onClickListener);
         drawerMenu[4].setOnClickListener(onClickListener);
         drawerMenu[5].setOnClickListener(onClickListener);
+
+        searchIbtn.setOnClickListener(onClickListener); // 검색 버튼 리스너
 
 
         //스레드간 데이터 전달을 위한 번들 생성
@@ -251,6 +258,7 @@ public class Maps_Activity extends AppCompatActivity {
                 weatherImage.setImageResource(R.drawable.sunny);
                 break;
             case "흐림":
+            case "구름많음":
                 weatherImage.setImageResource(R.drawable.cloud);
                 break;
             case "눈":

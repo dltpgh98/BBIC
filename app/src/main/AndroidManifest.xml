@@ -24,6 +24,7 @@
         <activity android:name=".Login_Activity"/>
         <activity android:name=".Bookmark"/>
         <activity android:name=".FP"/>
+        <activity android:name=".Promise_write"/>
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"

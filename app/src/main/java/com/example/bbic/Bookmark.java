@@ -88,13 +88,13 @@ public class Bookmark extends AppCompatActivity {
         bookmark_transit = new Bookmark_Transit();
 
 
-        tabRoot = findViewById(R.id.tabRoot);
+        tabRoot = findViewById(R.id.bookmark_tab_root);
         tabRoot.removeAllTabs();
         tabRoot.addTab(tabRoot.newTab().setText("장소"));
         tabRoot.addTab(tabRoot.newTab().setText("대중교통"));
 
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.tab_container, bookmark_place).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.bookmark_tab_container, bookmark_place).commit();
 
         tabRoot.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -102,10 +102,10 @@ public class Bookmark extends AppCompatActivity {
                 switch(tab.getPosition())
                 {
                     case 0:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.tab_container, bookmark_place).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bookmark_tab_container, bookmark_place).commit();
                         break;
                     case 1:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.tab_container, bookmark_transit).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bookmark_tab_container, bookmark_transit).commit();
                         break;
                 }
             }

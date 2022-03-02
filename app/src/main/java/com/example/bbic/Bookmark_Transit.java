@@ -25,21 +25,21 @@ public class Bookmark_Transit extends Fragment {
         bookmark_transit_subway = new Bookmark_Transit_subway();
 
 
-        getChildFragmentManager().beginTransaction().replace(R.id.tab2_container, bookmark_transit_bus).commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.transit_container, bookmark_transit_bus).commit();
 
-        Button btn = rootView.findViewById(R.id.btn2_1);
+        Button btn = rootView.findViewById(R.id.transit_leftTab_btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getChildFragmentManager().beginTransaction().replace(R.id.tab2_container, bookmark_transit_bus).commit();
+                getChildFragmentManager().beginTransaction().replace(R.id.transit_container, bookmark_transit_bus).commit();
             }
         });
 
-        btn = rootView.findViewById(R.id.btn2_2);
+        btn = rootView.findViewById(R.id.transit_rightTap_btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getChildFragmentManager().beginTransaction().replace(R.id.tab2_container, bookmark_transit_subway).commit();
+                getChildFragmentManager().beginTransaction().replace(R.id.transit_container, bookmark_transit_subway).commit();
             }
         });
 

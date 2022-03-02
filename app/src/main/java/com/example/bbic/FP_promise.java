@@ -1,5 +1,6 @@
 package com.example.bbic;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class FP_promise extends Fragment {
     FP_promise_list fp_promise_list;
     FP_promise_ask fp_promise_ask;
+    FloatingActionButton fab;
 
 
     @Nullable
@@ -23,6 +27,15 @@ public class FP_promise extends Fragment {
 
         fp_promise_list = new FP_promise_list();
         fp_promise_ask = new FP_promise_ask();
+        fab = rootView.findViewById(R.id.fab_btn);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), Promise_write.class);
+                startActivity(intent);
+            }
+        });
 
 
         getChildFragmentManager().beginTransaction().replace(R.id.tab2_container, fp_promise_list).commit();
