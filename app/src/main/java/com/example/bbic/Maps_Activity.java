@@ -11,20 +11,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.naver.maps.map.MapFragment;
-import com.odsay.odsayandroidsdk.ODsayService;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -41,7 +35,7 @@ public class Maps_Activity extends AppCompatActivity {
         public void onClick(View view){
             switch (view.getId()){
                 //case를 통해 id에 따른 클릭이벤트 실행
-                case R.id.main_menu_ibtn:
+                case R.id.menu_ibtn:
                     drawerLayout.openDrawer(drawerView);
                     break;
                 case R.id.drawer_menu_1:
@@ -64,6 +58,9 @@ public class Maps_Activity extends AppCompatActivity {
                     finish();
                     break;
                 case R.id.drawer_menu_6:
+                    Intent intent6 = new Intent(getApplicationContext(), Setting_Activity.class);
+                    startActivity(intent6);
+                    finish();
                     break;
                 case R.id.main_search_ibtn:
 //                    Intent intent = new Intent(getApplicationContext(), Bookmark.class);
@@ -108,7 +105,7 @@ public class Maps_Activity extends AppCompatActivity {
         //각 객체의 참조값을 넣어줌
         drawerLayout = (DrawerLayout) findViewById(R.id.main_activity);
         drawerView = (View) findViewById(R.id.drawer_main);
-        menuIbtn = (ImageButton) findViewById(R.id.main_menu_ibtn);
+        menuIbtn = (ImageButton) findViewById(R.id.menu_ibtn);
         temText = (TextView) findViewById(R.id.drawer_tem_text);
         fineText = (TextView) findViewById(R.id.drawer_fine_text);
         ultraText = (TextView) findViewById(R.id.drawer_ultra_text);

@@ -14,7 +14,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -50,7 +49,7 @@ public class Bookmark extends AppCompatActivity {
         public void onClick(View view){
             switch (view.getId()){
                 //case를 통해 id에 따른 클릭이벤트 실행
-                case R.id.main_menu_ibtn:
+                case R.id.menu_ibtn:
                     drawerLayout.openDrawer(drawerView);
                     break;
                 case R.id.drawer_menu_1:
@@ -72,6 +71,9 @@ public class Bookmark extends AppCompatActivity {
                     finish();
                     break;
                 case R.id.drawer_menu_6:
+                    Intent intent6 = new Intent(getApplicationContext(), Setting_Activity.class);
+                    startActivity(intent6);
+                    finish();
                     break;
             }
         }
@@ -128,7 +130,7 @@ public class Bookmark extends AppCompatActivity {
         //각 객체의 참조값을 넣어줌
         drawerLayout = (DrawerLayout) findViewById(R.id.main_activity);
         drawerView = (View) findViewById(R.id.drawer_main);
-        menuIbtn = (ImageButton) findViewById(R.id.main_menu_ibtn);
+        menuIbtn = (ImageButton) findViewById(R.id.menu_ibtn);
         temText = (TextView) findViewById(R.id.drawer_tem_text);
         fineText = (TextView) findViewById(R.id.drawer_fine_text);
         ultraText = (TextView) findViewById(R.id.drawer_ultra_text);

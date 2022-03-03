@@ -15,33 +15,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.google.android.material.tabs.TabLayout;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-public class FP extends AppCompatActivity {
-    TabLayout tabRoot;
-    FP_friend fp_friend;
-    FP_promise fp_promise;
-
-    //참조를 위한 각 객체 생성
-    private DrawerLayout drawerLayout;
-    private View drawerView;
-    private ImageButton menuIbtn;
-    private TextView
-            temText, fineText, ultraText, covidText;
-    private ImageView weatherImage;
-
-    private Button[] drawerMenu = new Button[6];
-
-    private final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=경기도부천시날씨"; //웹크롤링 할 주소(1)
-    private final String covidURL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=코로나19"; //웹크롤링 할 주소(2)
-    private String allDust, weather, tem, fineDust, ultraFineDust, covidNum;
+public class Setting_Activity extends AppCompatActivity {
 
     //버튼 클릭 리스너 클래스
     class BtnOnClickListener implements View.OnClickListener{
@@ -69,64 +49,40 @@ public class FP extends AppCompatActivity {
                 case R.id.drawer_menu_4:
                     break;
                 case R.id.drawer_menu_5:
-                    drawerLayout.closeDrawer(drawerView);
-                    break;
-                case R.id.drawer_menu_6:
-                    Intent intent6 = new Intent(getApplicationContext(), Setting_Activity.class);
-                    startActivity(intent6);
+                    Intent intent5 = new Intent(getApplicationContext(), FP.class);
+                    startActivity(intent5);
                     finish();
                     break;
+                case R.id.drawer_menu_6:
+                    drawerLayout.closeDrawer(drawerView);
+                    break;
+
             }
         }
     }
 
+    //참조를 위한 각 객체 생성
+    private DrawerLayout drawerLayout;
+    private View drawerView;
+    private ImageButton menuIbtn, searchIbtn;
+    private TextView
+            temText, fineText, ultraText, covidText;
+    private ImageView weatherImage;
+
+    private Button[] drawerMenu = new Button[6];
+
+
+
+    private final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=경기도부천시날씨"; //웹크롤링 할 주소(1)
+    private final String covidURL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=코로나19"; //웹크롤링 할 주소(2)
+    private String allDust, weather, tem, fineDust, ultraFineDust, covidNum;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fp);
+        setContentView(R.layout.setting);
 
-
-
-        fp_friend = new FP_friend();
-        fp_promise = new FP_promise();
-
-
-        tabRoot = findViewById(R.id.fp_tab_root);
-        tabRoot.removeAllTabs();
-        tabRoot.addTab(tabRoot.newTab().setText("친구"));
-        tabRoot.addTab(tabRoot.newTab().setText("약속"));
-
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_friend).commit();
-
-        tabRoot.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switch(tab.getPosition())
-                {
-                    case 0:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_friend).commit();
-                        break;
-                    case 1:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_promise).commit();
-                        break;
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-        //버튼 클릭 리스너 클래스 객체 생성(클릭 이벤트를 위함)
         BtnOnClickListener onClickListener = new BtnOnClickListener();
-
 
         //각 객체의 참조값을 넣어줌
         drawerLayout = (DrawerLayout) findViewById(R.id.main_activity);
@@ -214,6 +170,7 @@ public class FP extends AppCompatActivity {
             }
         }.start();
 
+
     }
 
     Handler handler = new Handler(){
@@ -223,7 +180,6 @@ public class FP extends AppCompatActivity {
             drawer_input();
         }
     };
-
     private void drawer_input()
     {
         temText.setText(tem+"C");
@@ -272,6 +228,7 @@ public class FP extends AppCompatActivity {
                 weatherImage.setImageResource(R.drawable.sunny);
                 break;
             case "흐림":
+            case "구름많음":
                 weatherImage.setImageResource(R.drawable.cloud);
                 break;
             case "눈":
@@ -287,7 +244,6 @@ public class FP extends AppCompatActivity {
 
         covidText.setText("전일 코로나 확진자 수 '"+covidNum+"' 명");
     }
-
     //드로어 이벤트 리스너
     DrawerLayout.DrawerListener drawerListener = new DrawerLayout.DrawerListener() {
         @Override
@@ -310,15 +266,4 @@ public class FP extends AppCompatActivity {
 
         }
     };
-    protected ArrayList setTextList(){
-
-        ArrayList<String> itemList = new ArrayList();
-        itemList.add("Page 1");
-        itemList.add("Page 2");
-        itemList.add("Page 3");
-        itemList.add("Page 4");
-        itemList.add("Page 5");
-
-        return itemList;
-    }
 }
