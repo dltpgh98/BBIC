@@ -7,10 +7,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
+    android:clickable="true"
     android:id="@+id/main_activity"
     tools:context=".Maps_Activity">
-
-
 
 
 
@@ -34,7 +33,7 @@
             android:id="@+id/map"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="com.naver.maps.map.MapFragment" />//네이버 지도
+            android:name="com.naver.maps.map.MapFragment" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
@@ -48,7 +47,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_height="70dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -116,6 +115,7 @@
                 android:background="#00000000"/> //검색 버튼
 
         </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <include layout="@layout/drawer"/>
