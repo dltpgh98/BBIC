@@ -14,6 +14,7 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/drawer.xml" value="0.17603850050658562" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/loading.xml" value="0.18489583333333334" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/menu/navi_menu.xml" value="0.25" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/borderline.xml" value="0.1185" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/ic_search.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout-ldltr/test.xml" value="0.17916666666666667" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/activity_main.xml" value="0.17916666666666667" />
@@ -33,8 +34,9 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_promise.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_promise_ask.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_promise_list.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/promise_write.xml" value="0.14447463768115942" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/promise_write.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/test.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/viewpager_item.xml" value="0.1" />
       </map>
     </option>
   </component>

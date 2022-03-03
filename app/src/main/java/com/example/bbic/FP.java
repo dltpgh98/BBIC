@@ -88,13 +88,13 @@ public class FP extends AppCompatActivity {
         fp_promise = new FP_promise();
 
 
-        tabRoot = findViewById(R.id.tabRoot);
+        tabRoot = findViewById(R.id.fp_tab_root);
         tabRoot.removeAllTabs();
         tabRoot.addTab(tabRoot.newTab().setText("친구"));
         tabRoot.addTab(tabRoot.newTab().setText("약속"));
 
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.tab_container, fp_friend).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_friend).commit();
 
         tabRoot.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -102,10 +102,10 @@ public class FP extends AppCompatActivity {
                 switch(tab.getPosition())
                 {
                     case 0:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.tab_container, fp_friend).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_friend).commit();
                         break;
                     case 1:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.tab_container, fp_promise).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_promise).commit();
                         break;
                 }
             }

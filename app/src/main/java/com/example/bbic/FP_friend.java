@@ -1,6 +1,5 @@
 package com.example.bbic;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,21 +37,21 @@ public class FP_friend extends Fragment {
 //        });
 
 
-        getChildFragmentManager().beginTransaction().replace(R.id.tab1_container, fp_friend_list).commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.fp_container, fp_friend_list).commit();
 
-        Button btn = rootView.findViewById(R.id.btn1_1);
+        Button btn = rootView.findViewById(R.id.fp_leftTab_btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getChildFragmentManager().beginTransaction().replace(R.id.tab1_container, fp_friend_list).commit();
+                getChildFragmentManager().beginTransaction().replace(R.id.fp_container, fp_friend_list).commit();
             }
         });
 
-        btn = rootView.findViewById(R.id.btn1_2);
+        btn = rootView.findViewById(R.id.fp_rightTap_btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getChildFragmentManager().beginTransaction().replace(R.id.tab1_container, fp_friend_ask).commit();
+                getChildFragmentManager().beginTransaction().replace(R.id.fp_container, fp_friend_ask).commit();
             }
         });
 

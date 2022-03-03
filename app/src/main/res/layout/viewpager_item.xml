@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
 <GridView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,7 +13,6 @@
     android:numColumns="2"
     android:horizontalSpacing="10dp"
     >
-
 
 </GridView>
     <TextView
@@ -27,8 +25,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
