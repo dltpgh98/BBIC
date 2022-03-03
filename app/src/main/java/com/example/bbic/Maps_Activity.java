@@ -26,7 +26,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
+//ver 0.0.1
 public class Maps_Activity extends AppCompatActivity {
 
     //버튼 클릭 리스너 클래스
