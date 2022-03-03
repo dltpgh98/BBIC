@@ -38,21 +38,21 @@ public class FP_promise extends Fragment {
         });
 
 
-        getChildFragmentManager().beginTransaction().replace(R.id.tab2_container, fp_promise_list).commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.promise_container, fp_promise_list).commit();
 
-        Button btn = rootView.findViewById(R.id.btn2_1);
+        Button btn = rootView.findViewById(R.id.p_leftTab_btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getChildFragmentManager().beginTransaction().replace(R.id.tab2_container, fp_promise_list).commit();
+                getChildFragmentManager().beginTransaction().replace(R.id.promise_container, fp_promise_list).commit();
             }
         });
 
-        btn = rootView.findViewById(R.id.btn2_2);
+        btn = rootView.findViewById(R.id.p_rightTap_btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getChildFragmentManager().beginTransaction().replace(R.id.tab2_container, fp_promise_ask).commit();
+                getChildFragmentManager().beginTransaction().replace(R.id.promise_container, fp_promise_ask).commit();
             }
         });
 

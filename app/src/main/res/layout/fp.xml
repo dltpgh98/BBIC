@@ -16,16 +16,39 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-
         <LinearLayout
+            android:id="@+id/fp_topBar_ly"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="9"
+                android:gravity="center"
+                android:text="친구/약속"
+                android:textStyle="bold"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/_top_tab_fply"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintTop_toBottomOf="@+id/fp_topBar_ly"
             android:orientation="vertical">
 
             <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabRoot"
+                android:id="@+id/fp_tab_root"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toBottomOf="@+id/fp_topBar_ly"
+                >
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
@@ -44,10 +67,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@+id/fp_top_tab_ly"
             android:orientation="vertical">
 
             <FrameLayout
-                android:id="@+id/tab_container"
+                android:id="@+id/fp_tab_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -59,7 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-            <ImageButton
+        <ImageButton
             android:id="@+id/main_menu_ibtn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
