@@ -74,7 +74,7 @@
 
                 <EditText
                     android:id="@+id/promise_pen_title_tv"
-                    android:layout_width="166dp"
+                    android:layout_width="351dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:background="@null"
@@ -129,8 +129,8 @@
 
                 <ImageButton
                     android:id="@+id/image_button"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="right"
                     android:src="@drawable/ic_control_point" />
 
@@ -181,6 +181,16 @@
 
             </TableRow>
 
+        </TableLayout>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="10dp">
+
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -190,12 +200,16 @@
 
                 <EditText
                     android:id="@+id/promise_pen_txt_tv"
-                    android:layout_width="252dp"
+                    android:layout_width="395dp"
                     android:layout_height="90dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:background="@null"
                     android:fontFamily="@font/fontstyle"
                     android:gravity="top"
                     android:hint="내용"
+                    android:maxLines="4"
+                    android:maxLength="50"
                     android:inputType="textMultiLine"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
@@ -204,6 +218,7 @@
             </TableRow>
 
         </TableLayout>
+
 
     </LinearLayout>
 
