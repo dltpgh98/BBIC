@@ -49,13 +49,18 @@ public class Bookmark_Transit_bus extends Fragment {
 
         recyclerView.setAdapter(busAdapter);
 
-        TextView textView = (TextView) rootView.findViewById(R.id.place_new_tv);
+        TextView textView = (TextView) rootView.findViewById(R.id.bus_text);
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 PlaceData placeData = new PlaceData(R.drawable.ic_baseline_star_24,R.drawable.ic_baseline_directions_bus_24,
-                        "정류장","테스트 동","00분00초","00분00초","01번","00분00초","00분00초","01번","00분00초","00분00초","01번");
+                        "정류장","테스트 동",
+                        "00분00초","00분00초","01번",
+                        "00분00초","00분00초","01번",
+                        "00분00초","00분00초","01번");
+                arrayList.add(placeData);
+                busAdapter.notifyDataSetChanged();
             }
         });
 

@@ -31,15 +31,19 @@ public class Transit_BusAdapter extends RecyclerView.Adapter<Transit_BusAdapter.
     @Override
     public void onBindViewHolder(@NonNull Transit_BusAdapter.BusCustomViewHolder holder, int position) {
         holder.bookmark_iv.setImageResource(arrayList.get(position).getBookmark_iv());
-        holder.bus_info_iv.setImageResource(arrayList.get(position).getBus_info_iv());
+        holder.bus_info_iv.setImageResource(arrayList.get(position).getBus_info_iv());  //버스모양 버튼과 별모양
+
         holder.station_name.setText(arrayList.get(position).getStation_name());
         holder.to_station_name.setText(arrayList.get(position).getTo_station_name());
+
         holder.bus_fastTime1.setText(arrayList.get(position).getBus_fastTime1());
         holder.bus_fastTime2.setText(arrayList.get(position).getBus_fastTime2());
-        holder.bus_fastTime3.setText(arrayList.get(position).getBus_fastTime2());
+        holder.bus_fastTime3.setText(arrayList.get(position).getBus_fastTime3());
+
         holder.bus_nextTime1.setText(arrayList.get(position).getBus_nextTime1());
         holder.bus_nextTime2.setText(arrayList.get(position).getBus_nextTime2());
         holder.bus_nextTime3.setText(arrayList.get(position).getBus_nextTime3());
+
         holder.bus_num1.setText(arrayList.get(position).getBus_num1());
         holder.bus_num2.setText(arrayList.get(position).getBus_num2());
         holder.bus_num3.setText(arrayList.get(position).getBus_num3());
