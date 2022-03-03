@@ -8,6 +8,7 @@
         <entry key="..\:/BBIC-lee/app/src/main/res/layout/login.xml" value="0.35280797101449274" />
         <entry key="..\:/BBIC-lee/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2655" />
         <entry key="..\:/BBIC/app/src/main/res/drawable/ic_baseline_menu.xml" value="0.2655" />
+        <entry key="..\:/BBIC/app/src/main/res/drawable/ic_baseline_star_24.xml" value="0.1955" />
         <entry key="..\:/BBIC/app/src/main/res/drawable/layout_radious.xml" value="0.2655" />
         <entry key="..\:/BBIC/app/src/main/res/layout/activity_main.xml" value="0.21965579710144928" />
         <entry key="..\:/BBIC/app/src/main/res/layout/bookmark.xml" value="0.25" />
@@ -16,7 +17,8 @@
         <entry key="..\:/BBIC/app/src/main/res/layout/bookmark_place_list.xml" value="0.33" />
         <entry key="..\:/BBIC/app/src/main/res/layout/bookmark_place_new.xml" value="0.24010416666666667" />
         <entry key="..\:/BBIC/app/src/main/res/layout/bookmark_transit.xml" value="0.24010416666666667" />
-        <entry key="..\:/BBIC/app/src/main/res/layout/bookmark_transit_bus.xml" value="0.1890625" />
+        <entry key="..\:/BBIC/app/src/main/res/layout/bookmark_transit_bus.xml" value="0.1" />
+        <entry key="..\:/BBIC/app/src/main/res/layout/bookmark_transit_bus_list.xml" value="0.33" />
         <entry key="..\:/BBIC/app/src/main/res/layout/transit_bus_list.xml" value="0.18489583333333334" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/circle.xml" value="0.121" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/corner.xml" value="0.121" />
