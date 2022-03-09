@@ -2,10 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.bbic">
 
-
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -24,13 +25,13 @@
         <activity android:name=".Maps_Activity"/>
         <activity android:name=".Login_Activity"/>
         <activity android:name=".Bookmark"/>
-        //naver maps id설정
+        <activity android:name=".FP"/>
+        <activity android:name=".Promise_write"/>
+        <activity android:name=".Setting_Activity"/>
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="1s9u4lx3wq" />
 
     </application>
-    //위치 권한을 명시
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

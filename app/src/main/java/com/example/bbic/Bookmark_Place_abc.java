@@ -30,9 +30,7 @@ public class Bookmark_Place_abc extends Fragment {
         //return super.onCreateView(inflater, container, savedInstanceState);
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.bookmark_place_abc, container, false);
 
-        //도성대
-        //객체 생성
-        recyclerView = (RecyclerView)rootView.findViewById(R.id.place_abc_rv);
+        recyclerView = (RecyclerView)rootView.findViewById(R.id.place_abc_rv);      //리스트 객체생성
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);                         //형태를 잡아줌
 
@@ -46,14 +44,11 @@ public class Bookmark_Place_abc extends Fragment {
                 arrayList.add(new PlaceData(R.drawable.ic_baseline_menu,i+"번째 사람","부천"+i+"번지"));
 
         }
-        //어뎁터 객체에 저장및 동기화
         placeAdapter.setArrayList(arrayList);
 
         recyclerView.setAdapter(placeAdapter);
 
-        //테스트 용도 단일 객체 생성
         TextView textView = (TextView)rootView.findViewById(R.id.place_abc_tv);
-
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

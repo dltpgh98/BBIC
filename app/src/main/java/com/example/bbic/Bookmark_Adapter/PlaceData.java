@@ -1,7 +1,5 @@
 package com.example.bbic.Bookmark_Adapter;
 
-import androidx.annotation.NonNull;
-
 public class PlaceData {
     private int place_iv;
     private String place_name;

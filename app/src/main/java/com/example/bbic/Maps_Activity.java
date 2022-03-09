@@ -2,26 +2,34 @@ package com.example.bbic;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.naver.maps.geometry.LatLng;
+import com.naver.maps.map.CameraUpdate;
+import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapFragment;
+import com.naver.maps.map.NaverMap;
+import com.naver.maps.map.OnMapReadyCallback;
+import com.naver.maps.map.util.FusedLocationSource;
+import com.naver.maps.map.overlay.Marker;
+import com.naver.maps.map.overlay.PathOverlay;
+
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -29,8 +37,11 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
-public class Maps_Activity extends AppCompatActivity {
+//ver 0.0.1
+public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallback {
 
     //버튼 클릭 리스너 클래스
     class BtnOnClickListener implements View.OnClickListener{
@@ -38,24 +49,32 @@ public class Maps_Activity extends AppCompatActivity {
         public void onClick(View view){
             switch (view.getId()){
                 //case를 통해 id에 따른 클릭이벤트 실행
-                case R.id.main_menu_ibtn:
+                case R.id.menu_ibtn:
                     drawerLayout.openDrawer(drawerView);
                     break;
                 case R.id.drawer_menu_1:
                     Log.d("클릭", "onClick: ");
+                    drawerLayout.closeDrawer(drawerView);
                     break;
                 case R.id.drawer_menu_2:
                     break;
                 case R.id.drawer_menu_3:
-                    Intent intent = new Intent(getApplicationContext(), Bookmark.class);
-                    startActivity(intent);
-
+                    System.out.println("click");
+                    Intent intent3 = new Intent(getApplicationContext(), Bookmark.class);
+                    startActivity(intent3);
+                    finish();
                     break;
                 case R.id.drawer_menu_4:
                     break;
                 case R.id.drawer_menu_5:
+                    Intent intent5 = new Intent(getApplicationContext(), FP.class);
+                    startActivity(intent5);
+                    finish();
                     break;
                 case R.id.drawer_menu_6:
+                    Intent intent6 = new Intent(getApplicationContext(), Setting_Activity.class);
+                    startActivity(intent6);
+                    finish();
                     break;
                 case R.id.main_search_ibtn:
 //                    Intent intent = new Intent(getApplicationContext(), Bookmark.class);
@@ -68,17 +87,54 @@ public class Maps_Activity extends AppCompatActivity {
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
     private View drawerView;
-    private ImageButton menuIbtn,searchIbtn;
+    private ImageButton menuIbtn, searchIbtn;
     private TextView
             temText, fineText, ultraText, covidText;
     private ImageView weatherImage;
 
     private Button[] drawerMenu = new Button[6];
+    private FusedLocationSource locationSource;
+
+    private NaverMap naverMap;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
+    private static final String[] PERMISSION = {
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+    };
+    List<LatLng> lstLatLng = new ArrayList<>();
+
+
 
     private final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=경기도부천시날씨"; //웹크롤링 할 주소(1)
     private final String covidURL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=코로나19"; //웹크롤링 할 주소(2)
     private String allDust, weather, tem, fineDust, ultraFineDust, covidNum;
+    @Override
+    public void onMapReady(@NonNull NaverMap naverMap){
+        this.naverMap = naverMap;
 
+        naverMap.setLocationSource(locationSource); // 현재위치
+        ActivityCompat.requestPermissions(this,PERMISSION, LOCATION_PERMISSION_REQUEST_CODE); //현재위치 표시할떄 권한 확인
+
+        naverMap.getUiSettings().setLocationButtonEnabled(true);
+        LatLng initialPosition = new LatLng(37.506855, 127.066242);
+        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(initialPosition);
+        naverMap.moveCamera(cameraUpdate);
+
+
+
+    }
+
+    public void onRequestPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
+        if(locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)){
+            if(!locationSource.isActivated()){
+                        naverMap.setLocationTrackingMode(LocationTrackingMode.None);
+                        return;
+            }else{
+                naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +146,11 @@ public class Maps_Activity extends AppCompatActivity {
             mapFragment = MapFragment.newInstance();
             fm.beginTransaction().add(R.id.map, mapFragment).commit();
         }
+        mapFragment.getMapAsync(this);
+        locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
+
+
+
 
         //이세호
         //버튼 클릭 리스너 클래스 객체 생성(클릭 이벤트를 위함)
@@ -98,7 +159,7 @@ public class Maps_Activity extends AppCompatActivity {
         //각 객체의 참조값을 넣어줌
         drawerLayout = (DrawerLayout) findViewById(R.id.main_activity);
         drawerView = (View) findViewById(R.id.drawer_main);
-        menuIbtn = (ImageButton) findViewById(R.id.main_menu_ibtn);
+        menuIbtn = (ImageButton) findViewById(R.id.menu_ibtn);
         temText = (TextView) findViewById(R.id.drawer_tem_text);
         fineText = (TextView) findViewById(R.id.drawer_fine_text);
         ultraText = (TextView) findViewById(R.id.drawer_ultra_text);
@@ -269,17 +330,17 @@ public class Maps_Activity extends AppCompatActivity {
     DrawerLayout.DrawerListener drawerListener = new DrawerLayout.DrawerListener() {
         @Override
         public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
+            System.out.println("opening");
         }
 
         @Override
         public void onDrawerOpened(@NonNull View drawerView) {
-
+            System.out.println("open");
         }
 
         @Override
         public void onDrawerClosed(@NonNull View drawerView) {
-
+            System.out.println("close");
         }
 
         @Override

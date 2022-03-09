@@ -90,7 +90,7 @@
             app:layout_constraintTop_toTopOf="parent">//검색창 밑 사이드바
 
             <ImageButton
-                android:id="@+id/main_menu_ibtn"
+                android:id="@+id/menu_ibtn"
                 android:layout_width="50sp"
                 android:layout_height="50sp"
                 android:background="#00000000"

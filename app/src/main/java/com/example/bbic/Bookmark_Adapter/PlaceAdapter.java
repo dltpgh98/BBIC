@@ -30,7 +30,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.CustomViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PlaceAdapter.CustomViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
         holder.place_iv.setImageResource(arrayList.get(position).getPlace_iv());
         holder.place_name.setText(arrayList.get(position).getPlace_name());
         holder.place_address.setText(arrayList.get(position).getPlace_address());
