@@ -121,7 +121,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         naverMap.moveCamera(cameraUpdate);
 
 
-
     }
 
     public void onRequestPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
