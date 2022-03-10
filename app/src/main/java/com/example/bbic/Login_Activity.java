@@ -108,12 +108,20 @@ public class Login_Activity extends AppCompatActivity {
                     // 유저의 어카운트 정보에 나이
                     Log.d(TAG,"invoke: age" + user.getKakaoAccount().getAgeRange());
 
-                    nickname.setText(user.getKakaoAccount().getProfile().getNickname());
 
-                    Glide.with(profileImage).load(user.getKakaoAccount().
-                            getProfile().getProfileImageUrl()).circleCrop().into(profileImage);
+//                    nickname.setText(user.getKakaoAccount().getProfile().getNickname());
+//
+//                    Glide.with(profileImage).load(user.getKakaoAccount().
+//                            getProfile().getProfileImageUrl()).circleCrop().into(profileImage);
                     login_btn.setVisibility(View.GONE);
                     logout_btn.setVisibility(View.VISIBLE);
+
+                    Intent intent = new Intent(getApplicationContext(), Maps_Activity.class);
+                    intent.putExtra("닉네임",user.getKakaoAccount().getProfile().getNickname());
+                    intent.putExtra("프로필", user.getKakaoAccount().getProfile().getProfileImageUrl());
+                    startActivity(intent);
+                    finish();
+
                 }else {
                     // 로그인이 되어 있지 않다면 위와 반대로
                     nickname.setText(null);

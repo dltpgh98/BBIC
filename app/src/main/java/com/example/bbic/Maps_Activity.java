@@ -20,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.LocationTrackingMode;
@@ -89,8 +90,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private View drawerView;
     private ImageButton menuIbtn, searchIbtn;
     private TextView
-            temText, fineText, ultraText, covidText;
-    private ImageView weatherImage;
+            temText, fineText, ultraText, covidText, nickName;
+    private ImageView weatherImage, profile;
 
     private Button[] drawerMenu = new Button[6];
     private FusedLocationSource locationSource;
@@ -166,6 +167,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         covidText = (TextView) findViewById(R.id.drawer_covid_text);
         weatherImage = (ImageView) findViewById(R.id.drawer_weather_img);
         searchIbtn = (ImageButton)findViewById(R.id.main_search_ibtn);
+        profile = (ImageView)findViewById(R.id.drawer_profile_img); // 카카오톡 프로파일 이미지
+        nickName = (TextView)findViewById(R.id.drawer_profile_name); // 카카오톡 닉네임
 
         drawerMenu[0] = (Button) findViewById(R.id.drawer_menu_1);
         drawerMenu[1] = (Button) findViewById(R.id.drawer_menu_2);
@@ -187,6 +190,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         drawerMenu[5].setOnClickListener(onClickListener);
 
         searchIbtn.setOnClickListener(onClickListener); // 검색 버튼 리스너
+
+        Intent intent = getIntent();
+        nickName.setText(intent.getStringExtra("닉네임")); // 카카오톡 프로필 닉네임
+        Glide.with(this).load(intent.getStringExtra("프로필")).circleCrop().into(profile); // 카카오톡 프로필 이미지
 
 
         //스레드간 데이터 전달을 위한 번들 생성
