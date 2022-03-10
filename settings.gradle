@@ -13,6 +13,9 @@ dependencyResolutionManagement {
         maven {
             url 'https://naver.jfrog.io/artifactory/maven/'
         }
+        maven {
+            url 'https://devrepo.kakao.com/nexus/content/groups/public/'
+        }//카카오 로그인
     }
 }
 rootProject.name = "BBIC"
