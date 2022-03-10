@@ -32,7 +32,7 @@ public class FP extends AppCompatActivity {
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
     private View drawerView;
-    private ImageButton menuIbtn;
+    private ImageButton menuIbtn, homeIbtn;
     private TextView
             temText, fineText, ultraText, covidText;
     private ImageView weatherImage;
@@ -74,6 +74,11 @@ public class FP extends AppCompatActivity {
                 case R.id.drawer_menu_6:
                     Intent intent6 = new Intent(getApplicationContext(), Setting_Activity.class);
                     startActivity(intent6);
+                    finish();
+                    break;
+                case R.id.home_btn:
+                    Intent home = new Intent(getApplicationContext(), Maps_Activity.class);
+                    startActivity(home);
                     finish();
                     break;
             }
@@ -132,6 +137,7 @@ public class FP extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.main_activity);
         drawerView = (View) findViewById(R.id.drawer_main);
         menuIbtn = (ImageButton) findViewById(R.id.menu_ibtn);
+        homeIbtn = (ImageButton) findViewById(R.id.home_btn); // 홈화면(지도)
         temText = (TextView) findViewById(R.id.drawer_tem_text);
         fineText = (TextView) findViewById(R.id.drawer_fine_text);
         ultraText = (TextView) findViewById(R.id.drawer_ultra_text);
@@ -150,6 +156,7 @@ public class FP extends AppCompatActivity {
 
         //버튼의 클릭 리스너 설정
         menuIbtn.setOnClickListener(onClickListener);
+        homeIbtn.setOnClickListener(onClickListener);
         drawerMenu[0].setOnClickListener(onClickListener);
         drawerMenu[1].setOnClickListener(onClickListener);
         drawerMenu[2].setOnClickListener(onClickListener);
