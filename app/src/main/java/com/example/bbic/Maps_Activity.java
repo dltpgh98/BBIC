@@ -30,6 +30,7 @@ import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.PathOverlay;
+import com.naver.maps.map.widget.LocationButtonView;
 
 
 import org.jsoup.Jsoup;
@@ -102,7 +103,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
     };
-    List<LatLng> lstLatLng = new ArrayList<>();
+
 
 
 
@@ -113,16 +114,16 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     public void onMapReady(@NonNull NaverMap naverMap){
         this.naverMap = naverMap;
 
+
         naverMap.setLocationSource(locationSource); // 현재위치
         ActivityCompat.requestPermissions(this,PERMISSION, LOCATION_PERMISSION_REQUEST_CODE); //현재위치 표시할떄 권한 확인
 
         naverMap.getUiSettings().setLocationButtonEnabled(true);
+        //LocationButtonView locationButtonView = (LocationButtonView)findViewById(R.id.locationbtn);
+        //locationButtonView.setMap(naverMap);
         LatLng initialPosition = new LatLng(37.506855, 127.066242);
         CameraUpdate cameraUpdate = CameraUpdate.scrollTo(initialPosition);
         naverMap.moveCamera(cameraUpdate);
-
-
-
     }
 
     public void onRequestPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){

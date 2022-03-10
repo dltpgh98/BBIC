@@ -114,7 +114,7 @@ public class Login_Activity extends AppCompatActivity {
 //                    Glide.with(profileImage).load(user.getKakaoAccount().
 //                            getProfile().getProfileImageUrl()).circleCrop().into(profileImage);
                     login_btn.setVisibility(View.GONE);
-                    logout_btn.setVisibility(View.VISIBLE);
+                    //logout_btn.setVisibility(View.VISIBLE);
 
                     Intent intent = new Intent(getApplicationContext(), Maps_Activity.class);
                     intent.putExtra("닉네임",user.getKakaoAccount().getProfile().getNickname());
@@ -127,7 +127,7 @@ public class Login_Activity extends AppCompatActivity {
                     nickname.setText(null);
                     profileImage.setImageBitmap(null);
                     login_btn.setVisibility(View.VISIBLE);
-                    logout_btn.setVisibility(View.GONE);
+                    //logout_btn.setVisibility(View.GONE);
                 }
                 return null;
             }
