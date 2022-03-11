@@ -12,7 +12,7 @@ public class GlobalApplication extends Application {
         instance = this;
 
         // Kakao Sdk 초기화
-        KakaoSdk.init(this, "237bfab315be922619de46ca0a92a59a");
+        KakaoSdk.init(this, "2f3198abf019768640ab25011210a35b");
     }
 
 }
