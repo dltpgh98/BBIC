@@ -19,13 +19,16 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.naver.maps.geometry.LatLng;
+import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
+import com.naver.maps.map.NaverMapOptions;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.overlay.Marker;
@@ -63,6 +66,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 case R.id.drawer_menu_3:
                     System.out.println("click");
                     Intent intent3 = new Intent(getApplicationContext(), Bookmark.class);
+                    intent3.putExtra("닉네임", name);
+                    intent3.putExtra("프로필", name);
                     startActivity(intent3);
                     finish();
                     break;
@@ -70,11 +75,15 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     break;
                 case R.id.drawer_menu_5:
                     Intent intent5 = new Intent(getApplicationContext(), FP.class);
+                    intent5.putExtra("닉네임", name);
+                    intent5.putExtra("프로필", name);
                     startActivity(intent5);
                     finish();
                     break;
                 case R.id.drawer_menu_6:
                     Intent intent6 = new Intent(getApplicationContext(), Setting_Activity.class);
+                    intent6.putExtra("닉네임", name);
+                    intent6.putExtra("프로필", name);
                     startActivity(intent6);
                     finish();
                     break;
@@ -93,6 +102,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private TextView
             temText, fineText, ultraText, covidText, nickName;
     private ImageView weatherImage, profile;
+    private String name, address;
 
     private Button[] drawerMenu = new Button[6];
     private FusedLocationSource locationSource;
@@ -113,14 +123,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     @Override
     public void onMapReady(@NonNull NaverMap naverMap){
         this.naverMap = naverMap;
-
-
         naverMap.setLocationSource(locationSource); // 현재위치
         ActivityCompat.requestPermissions(this,PERMISSION, LOCATION_PERMISSION_REQUEST_CODE); //현재위치 표시할떄 권한 확인
 
         naverMap.getUiSettings().setLocationButtonEnabled(true);
-        //LocationButtonView locationButtonView = (LocationButtonView)findViewById(R.id.locationbtn);
-        //locationButtonView.setMap(naverMap);
         LatLng initialPosition = new LatLng(37.506855, 127.066242);
         CameraUpdate cameraUpdate = CameraUpdate.scrollTo(initialPosition);
         naverMap.moveCamera(cameraUpdate);
@@ -141,6 +147,22 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
+
+        CameraPosition cameraPosition = new CameraPosition(
+                new LatLng(35.1798159, 129.0750222), // 대상 지점
+                16, // 줌 레벨
+                20, // 기울임 각도
+                0 // 베어링 각도
+        );
+        NaverMapOptions options = new NaverMapOptions()
+                .camera(cameraPosition)
+                .mapType(NaverMap.MapType.Terrain)
+                .enabledLayerGroups(NaverMap.LAYER_GROUP_BUILDING)
+                .compassEnabled(true)
+                .scaleBarEnabled(true)
+                .locationButtonEnabled(true);
         //도성대
         FragmentManager fm = getSupportFragmentManager();
         MapFragment mapFragment = (MapFragment)fm.findFragmentById(R.id.map);
@@ -149,7 +171,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             fm.beginTransaction().add(R.id.map, mapFragment).commit();
         }
         mapFragment.getMapAsync(this);
-        locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
+
+
+
 
         //이세호
         //버튼 클릭 리스너 클래스 객체 생성(클릭 이벤트를 위함)
@@ -190,8 +214,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         searchIbtn.setOnClickListener(onClickListener); // 검색 버튼 리스너
 
         Intent intent = getIntent();
-        nickName.setText(intent.getStringExtra("닉네임")); // 카카오톡 프로필 닉네임
-        Glide.with(this).load(intent.getStringExtra("프로필")).circleCrop().into(profile); // 카카오톡 프로필 이미지
+        name = intent.getStringExtra("닉네임");
+        address = intent.getStringExtra("프로필");
+        nickName.setText(name); // 카카오톡 프로필 닉네임
+        Glide.with(this).load(address).circleCrop().into(profile); // 카카오톡 프로필 이미지
 
 
         //스레드간 데이터 전달을 위한 번들 생성
