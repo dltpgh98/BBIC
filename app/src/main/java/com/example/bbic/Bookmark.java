@@ -64,11 +64,16 @@ public class Bookmark extends AppCompatActivity {
                     Log.d("클릭", "onClick: ");
                     Intent intent1 = new Intent(getApplicationContext(), FP.class);
                     intent1.putExtra("닉네임", name);
-                    intent1.putExtra("프로필", name);
+                    intent1.putExtra("프로필", address);
                     startActivity(intent1);
                     finish();
                     break;
                 case R.id.drawer_menu_2:
+                    Intent intent2 = new Intent(getApplicationContext(), Subway.class);
+                    intent2.putExtra("닉네임", name);
+                    intent2.putExtra("프로필", address);
+                    startActivity(intent2);
+                    finish();
                     break;
                 case R.id.drawer_menu_3:
                     drawerLayout.closeDrawer(drawerView);
@@ -78,21 +83,21 @@ public class Bookmark extends AppCompatActivity {
                 case R.id.drawer_menu_5:
                     Intent intent5 = new Intent(getApplicationContext(), FP.class);
                     intent5.putExtra("닉네임", name);
-                    intent5.putExtra("프로필", name);
+                    intent5.putExtra("프로필", address);
                     startActivity(intent5);
                     finish();
                     break;
                 case R.id.drawer_menu_6:
                     Intent intent6 = new Intent(getApplicationContext(), Setting_Activity.class);
                     intent6.putExtra("닉네임", name);
-                    intent6.putExtra("프로필", name);
+                    intent6.putExtra("프로필", address);
                     startActivity(intent6);
                     finish();
                     break;
                 case R.id.home_btn:
                     Intent home = new Intent(getApplicationContext(), Maps_Activity.class);
                     home.putExtra("닉네임", name);
-                    home.putExtra("프로필", name);
+                    home.putExtra("프로필", address);
                     startActivity(home);
                     finish();
                     break;

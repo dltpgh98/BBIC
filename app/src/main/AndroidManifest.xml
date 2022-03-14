@@ -29,6 +29,7 @@
         <activity android:name=".FP"/>
         <activity android:name=".Promise_write"/>
         <activity android:name=".Setting_Activity"/>
+        <activity android:name=".Subway"/>
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="1s9u4lx3wq"
