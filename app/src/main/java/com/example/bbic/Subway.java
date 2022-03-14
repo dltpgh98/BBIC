@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Subway extends AppCompatActivity {
 
@@ -43,6 +44,8 @@ public class Subway extends AppCompatActivity {
     private ImageView weatherImage, profile;
     private String name, address;
     private PhotoView subway;
+    private SubwayMapTouchPoint subwayMapTouchPoint;
+    public static final Locale DEFAULT_LOCALE = Locale.KOREAN;
 
     private Button[] drawerMenu = new Button[6];
 

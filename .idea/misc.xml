@@ -14,6 +14,22 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/drawer.xml" value="0.17603850050658562" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/loading.xml" value="0.18489583333333334" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/menu/navi_menu.xml" value="0.25" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_dialog.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_a.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_e.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_eighth.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_fifth.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_first.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_kc.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_ku.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_m.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_second.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_seventh.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_su.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_ui.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/line_fifth.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/line_first.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/line_m.xml" value="0.261" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/borderline.xml" value="0.1185" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/header_stroke.xml" value="0.2605" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/ic_baseline_keyboard_arrow_right.xml" value="0.2605" />
