@@ -9,7 +9,8 @@
     android:background="@color/white"
     android:clickable="true"
     android:id="@+id/main_activity"
-    tools:context=".Setting_Activity">
+    tools:context=".Setting_Activity"
+    tools:ignore="MissingDefaultResource">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -31,8 +32,9 @@
                 android:background="@drawable/header_stroke"
                 app:layout_constraintTop_toTopOf="parent"/>
 
+
             <ImageButton
-                android:id="@+id/setting_menu_ibtn"
+                android:id="@+id/menu_ibtn"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_margin="10sp"
@@ -42,6 +44,7 @@
                 android:contentDescription="@string/StringValue"
                 android:src="@drawable/ic_baseline_menu"
                 app:layout_constraintTop_toBottomOf="parent"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

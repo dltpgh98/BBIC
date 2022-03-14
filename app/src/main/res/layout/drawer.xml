@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_main"
     android:layout_width="240dp"
     android:layout_height="match_parent"
     android:layout_gravity="start"
+
     android:background="@color/white">
 
     <RelativeLayout
@@ -33,17 +33,17 @@
 
         <ImageView
             android:id="@+id/drawer_weather_img"
-            android:layout_width="90sp"
-            android:layout_height="90sp"
+            android:layout_width="100sp"
+            android:layout_height="100sp"
             android:layout_marginLeft="25sp"
-            android:layout_marginTop="175sp"
+            android:layout_marginTop="170sp"
             android:src="@drawable/sunny" />
 
         <TextView
             android:id="@+id/drawer_tem_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="118sp"
+            android:layout_marginLeft="125sp"
             android:layout_marginTop="195sp"
             android:text="20°C"
             android:textColor="@color/black"
@@ -53,7 +53,7 @@
             android:id="@+id/drawer_area_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="118sp"
+            android:layout_marginLeft="125sp"
             android:layout_marginTop="225sp"
             android:text="부천시"
             android:textColor="@color/black"
@@ -79,23 +79,23 @@
 
         <TextView
             android:id="@+id/drawer_fine_text"
-            android:layout_width="20sp"
+            android:layout_width="wrap_content"
             android:layout_height="20sp"
-            android:layout_marginLeft="85sp"
-            android:layout_marginTop="254sp"
+            android:layout_marginLeft="89sp"
+            android:layout_marginTop="260sp"
             android:text="●"
             android:textAlignment="center"
-            android:textSize="20sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/drawer_ultra_text"
             android:layout_width="20sp"
             android:layout_height="20sp"
             android:layout_marginLeft="188sp"
-            android:layout_marginTop="254sp"
+            android:layout_marginTop="260sp"
             android:text="●"
             android:textAlignment="center"
-            android:textSize="20sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/drawer_covid_text"

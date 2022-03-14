@@ -16,16 +16,49 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-
         <LinearLayout
+            android:id="@+id/bookmark_topBar_ly"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="9"
+                android:gravity="center"
+                android:layout_marginStart="50dp"
+                android:text="즐겨찾기"
+                android:textStyle="bold"
+                />
+
+            <ImageButton
+                android:id="@+id/home_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                android:src="@drawable/ic_baseline_map" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bookmark_top_tab_ly"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintTop_toBottomOf="@+id/bookmark_topBar_ly"
             android:orientation="vertical">
 
             <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabRoot"
+                android:id="@+id/bookmark_tab_root"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toBottomOf="@+id/bookmark_topBar_ly"
+                >
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
@@ -35,7 +68,7 @@
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="데증교통" />
+                    android:text="대중교통" />
 
 
             </com.google.android.material.tabs.TabLayout>
@@ -44,10 +77,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@+id/bookmark_top_tab_ly"
             android:orientation="vertical">
 
             <FrameLayout
-                android:id="@+id/tab_container"
+                android:id="@+id/bookmark_tab_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -59,8 +93,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-            <ImageButton
-            android:id="@+id/main_menu_ibtn"
+        <ImageButton
+            android:id="@+id/menu_ibtn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="50sp"

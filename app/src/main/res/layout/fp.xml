@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:clickable="true"
+    android:id="@+id/main_activity"
+    tools:context=".Maps_Activity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:id="@+id/fp_topBar_ly"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="9"
+                android:gravity="center"
+                android:layout_marginStart="50dp"
+                android:text="친구/약속"
+                android:textStyle="bold"
+                />
+
+            <ImageButton
+                android:id="@+id/home_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                android:src="@drawable/ic_baseline_map" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/_top_tab_fply"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintTop_toBottomOf="@+id/fp_topBar_ly"
+            android:orientation="vertical">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/fp_tab_root"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toBottomOf="@+id/fp_topBar_ly"
+                >
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="친구" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약속" />
+
+
+            </com.google.android.material.tabs.TabLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@+id/fp_top_tab_ly"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/fp_tab_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/menu_ibtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:background="#00000000"
+            android:contentDescription="@string/StringValue"
+            android:src="@drawable/ic_baseline_menu"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include layout="@layout/drawer"/>
+
+</androidx.drawerlayout.widget.DrawerLayout>
