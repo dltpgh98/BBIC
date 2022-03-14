@@ -45,6 +45,11 @@ public class PlaceData {
     private String subway_right_time3;
     private String subway_right_whole3;
 
+    //friend_list
+    private int friend_profile;
+    private int friend_stat;
+    private int friend_setting;
+    private String friend_name;
 
     public PlaceData(int place_iv, String place_name,String place_address) {        //3개 place
 
@@ -71,7 +76,6 @@ public class PlaceData {
         this.bus_nextTime3 = bus_nextTime3;
         this.bus_num3 = bus_num3;
     }
-
 
 
     public PlaceData(int bookmark_iv,String subway_this_name, String subway_left_direction, String subway_right_direction,    //22개 subway
@@ -106,6 +110,12 @@ public class PlaceData {
         this.subway_right_whole3 = subway_right_whole3;
     }
 
+    public PlaceData(int friend_profile, int friend_stat, int friend_setting, String friend_name) {
+        this.friend_profile = friend_profile;
+        this.friend_stat = friend_stat;
+        this.friend_setting = friend_setting;
+        this.friend_name = friend_name;
+    }
 
     public int getPlace_iv() {
         return place_iv;
@@ -403,6 +413,39 @@ public class PlaceData {
 
     public void setSubway_right_whole3(String subway_right_whole3) {
         this.subway_right_whole3 = subway_right_whole3;
+    }
+
+
+    public int getFriend_profile() {
+        return friend_profile;
+    }
+
+    public void setFriend_profile(int friend_profile) {
+        this.friend_profile = friend_profile;
+    }
+
+    public int getFriend_stat() {
+        return friend_stat;
+    }
+
+    public void setFriend_stat(int friend_stat) {
+        this.friend_stat = friend_stat;
+    }
+
+    public int getFriend_setting() {
+        return friend_setting;
+    }
+
+    public void setFriend_setting(int friend_setting) {
+        this.friend_setting = friend_setting;
+    }
+
+    public String getFriend_name() {
+        return friend_name;
+    }
+
+    public void setFriend_name(String friend_name) {
+        this.friend_name = friend_name;
     }
 }
 

@@ -26,13 +26,19 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="9"
                 android:gravity="center"
+                android:layout_marginStart="50dp"
                 android:text="즐겨찾기"
                 android:textStyle="bold"
                 />
+
+            <ImageButton
+                android:id="@+id/home_btn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
 
         </LinearLayout>
 
