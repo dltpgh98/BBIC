@@ -2,20 +2,30 @@ package com.example.bbic;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -34,6 +44,8 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 //ver 0.0.1
 public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallback {
@@ -46,6 +58,15 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             switch (view.getId()) {
                 //case를 통해 id에 따른 클릭이벤트 실행
                 case R.id.menu_ibtn:
+                    if(!drawerEnabled) {
+                        gpsTracker = new GpsTracker(Maps_Activity.this);
+
+                        double latitude = gpsTracker.getLatitude();
+                        double longitude = gpsTracker.getLongitude();
+
+                        String myAddress = getCurrentAddress(latitude, longitude);
+                        drawerInit(myAddress);
+                    }
                     drawerLayout.openDrawer(drawerView);
                     break;
                 case R.id.drawer_menu_1:
@@ -85,6 +106,12 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             }
         }
     }
+    //위치 참조를 위한 객체
+    GpsTracker gpsTracker;
+    private static final int GPS_ENABLE_REQUEST_CODE = 2001;
+    private static final int PERMISSIONS_REQUEST_CODE = 100;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
+    String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
@@ -97,20 +124,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     private Button[] drawerMenu = new Button[6];
     private FusedLocationSource locationSource;
+    private boolean drawerEnabled = false;
 
     private NaverMap naverMap;
 
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
-    private static final int GPS_ENABLE_REQUEST_CODE = 2001;
-    private static final int PERMISSIONS_REQUEST_CODE = 100;
-    private static final String[] PERMISSION = {
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
-    };
-
-    private final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=경기도부천시날씨"; //웹크롤링 할 주소(1)
-    private final String covidURL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=코로나19"; //웹크롤링 할 주소(2)
     private String allDust, weather, tem, fineDust, ultraFineDust, covidNum;
+
+
 
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
@@ -191,6 +211,24 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         nickName.setText(name); // 카카오톡 프로필 닉네임
         Glide.with(this).load(address).circleCrop().into(profile); // 카카오톡 프로필 이미지
 
+        if(!checkLocationServiceStatus()){
+            showDialogForLocationServiceSetting();
+        }else{
+            checkRunTimePermission();
+        }
+
+        //뷰페이저 설정
+        ViewPager2 viewPager = findViewById(R.id.view_pager);
+        ViewpagerAdapter adapter = new ViewpagerAdapter(setTextList());
+        viewPager.setAdapter(adapter);
+
+
+    }
+
+    private void drawerInit(String myAddress){
+        String[] add = myAddress.split(" ");
+        final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query="+add[1]+" "+add[2]+"날씨"; //웹크롤링 할 주소(1)
+        final String covidURL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=코로나19"; //웹크롤링 할 주소(2)
         //스레드간 데이터 전달을 위한 번들 생성
         final Bundle bundle = new Bundle();
 
@@ -246,13 +284,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 }
             }
         }.start();
-
-        //뷰페이저 설정
-        ViewPager2 viewPager = findViewById(R.id.view_pager);
-        ViewpagerAdapter adapter = new ViewpagerAdapter(setTextList());
-        viewPager.setAdapter(adapter);
-
-        rGeocoding();
     }
 
     Handler handler = new Handler() {
@@ -359,7 +390,122 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         return itemList;
     }
 
-    private void rGeocoding() {
+    @SuppressLint("MissingSuperCall")
+    @Override
+    //퍼미션 요청 결과를 받는 메소드
+    public void onRequestPermissionsResult(int permsRequestCode, @NonNull String[] permissions, @NonNull int[]grandResults) {
+        if (permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length){//요청 코드가 동일하고, 요청한 퍼미션 만큼 수신되었다면 실행
+            boolean check_result = true;
 
+            //퍼미션이 모두 허용됫는지 체크
+            for (int result : grandResults){
+                if(result != PackageManager.PERMISSION_GRANTED){//허용이 아닐경우
+                    check_result = false;//false로 저장
+                    break;
+                }
+            }
+
+            if(check_result){
+
+            }else{//거부된 퍼미션이 있을경우
+                if(ActivityCompat.shouldShowRequestPermissionRationale(this,REQUIRED_PERMISSIONS[0])||ActivityCompat.shouldShowRequestPermissionRationale(this,REQUIRED_PERMISSIONS[1])){
+
+                    Toast.makeText(Maps_Activity.this, "권한이 거부되었습니다. 앱을 다시 실행하여 권한을 허용해주세요", Toast.LENGTH_LONG).show();
+                    finish();
+                }else{
+                    Toast.makeText(Maps_Activity.this, "권한이 거부되었습니다. 설정(앱 정보)에서 권한을 허용해주세요", Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+        }
+    }
+
+    void checkRunTimePermission(){//런타임 퍼미션 처리
+        //위치 퍼미션 체크
+        int hasFineLocationPermission = ContextCompat.checkSelfPermission(Maps_Activity.this,Manifest.permission.ACCESS_FINE_LOCATION);
+        int hasCoarseLocationPermission = ContextCompat.checkSelfPermission(Maps_Activity.this,Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED && hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED) {//퍼미션을 가지고있다면
+
+        }else{//권한이 없다면
+            if(ActivityCompat.shouldShowRequestPermissionRationale(Maps_Activity.this,REQUIRED_PERMISSIONS[0])){//권한 요청을 거부한적이 있을때
+                Toast.makeText(Maps_Activity.this, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+                ActivityCompat.requestPermissions(Maps_Activity.this, REQUIRED_PERMISSIONS,PERMISSIONS_REQUEST_CODE);//사용자에게 권한 요청
+            }else{//요청이 처음이라면
+                ActivityCompat.requestPermissions(Maps_Activity.this, REQUIRED_PERMISSIONS,PERMISSIONS_REQUEST_CODE);//사용자에게 권한 요청
+            }
+        }
+    }
+
+    public String getCurrentAddress(double latitude, double longitude){//주소 찾기
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());//역지오코딩 위한 지오코딩 객체 선언
+
+        List<Address> addresses;//주소를 저장할 주소리스트 선언
+
+        try{
+            addresses = geocoder.getFromLocation(latitude,longitude,7);//매개변수로 입력받은 경도위도로 주소 찾기
+        }catch (IOException ioException){//에러시
+            Toast.makeText(Maps_Activity.this, "지오코더 서비스 사용불가", Toast.LENGTH_SHORT).show();
+            return "지오코더 서비스 사용불가";
+        }catch (IllegalArgumentException illegalArgumentException){
+            Toast.makeText(Maps_Activity.this, "잘못된 GPS 좌표", Toast.LENGTH_SHORT).show();
+            return "잘못된 GPS 좌표";
+        }
+
+        if(addresses == null || addresses.size() == 0){//나온 주소가 없을때
+            Toast.makeText(this, "주소 미발견", Toast.LENGTH_SHORT).show();
+            return "주소 미발견";
+        }
+
+        Address address = addresses.get(0);//주소객체에 주소값 저장
+        return address.getAddressLine(0).toString()+"\n";//리턴
+    }
+
+    private void showDialogForLocationServiceSetting(){//GPS 활성화가 안되있을때 허용하게 나오게 하는 다이알로그
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(Maps_Activity.this);//다이얼로그 생성
+        builder.setTitle("위치 서비스 비활성화");//타이틀 설정
+        builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n"+"위치 설정을 수정하실래요?");//내용 설정
+        builder.setCancelable(true);//버튼 추가
+        builder.setPositiveButton("설정",new DialogInterface.OnClickListener(){//수락 버튼 설정
+            @Override
+            public void onClick(DialogInterface dialog, int id){
+                Intent callGPSSettingIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivityForResult(callGPSSettingIntent, GPS_ENABLE_REQUEST_CODE);//권한 요청창 뜨게끔
+            }
+        });
+
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {//취소 버튼 설정
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                dialog.cancel();//다이얼로그 취소
+            }
+        });
+        builder.create().show();//생성후 보여주기
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+
+        switch (requestCode){
+
+            case GPS_ENABLE_REQUEST_CODE:
+                if(checkLocationServiceStatus()){
+                    if(checkLocationServiceStatus()){
+                        Log.d("위치권한 확인","true");
+                        checkRunTimePermission();
+                        return;
+                    }
+                }
+
+                break;
+        }
+    }
+
+    public boolean checkLocationServiceStatus(){
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)||locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 }
