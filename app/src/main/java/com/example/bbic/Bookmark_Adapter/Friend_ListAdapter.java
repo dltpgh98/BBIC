@@ -15,10 +15,10 @@ import com.example.bbic.R;
 import java.util.ArrayList;
 
 
-public class Friend_listAdapter extends RecyclerView.Adapter<Friend_listAdapter.FriendlistViewHolder> {
+public class Friend_ListAdapter extends RecyclerView.Adapter<Friend_ListAdapter.FriendlistViewHolder> {
     private ArrayList<PlaceData> arrayList;
 
-    public Friend_listAdapter(ArrayList<PlaceData> arrayList) {this.arrayList=arrayList;}
+    public Friend_ListAdapter(ArrayList<PlaceData> arrayList) {this.arrayList=arrayList;}
 
     @NonNull
     @Override
@@ -33,7 +33,7 @@ public class Friend_listAdapter extends RecyclerView.Adapter<Friend_listAdapter.
     public void onBindViewHolder(@NonNull FriendlistViewHolder holder, int position) {
         holder.friend_profile.setImageResource(arrayList.get(position).getFriend_profile());
         holder.friend_stat.setImageResource(arrayList.get(position).getFriend_stat());
-        holder.friend_seting.setImageResource(arrayList.get(position).getFriend_setting());
+        holder.friend_setting.setImageResource(arrayList.get(position).getFriend_setting());
         holder.friend_name.setText(arrayList.get(position).getFriend_name());
 
         holder.itemView.setTag(position);
@@ -75,15 +75,15 @@ public class Friend_listAdapter extends RecyclerView.Adapter<Friend_listAdapter.
     public class FriendlistViewHolder extends RecyclerView.ViewHolder{
         protected ImageView friend_profile;
         protected ImageView friend_stat;
-        protected ImageView friend_seting;
+        protected ImageView friend_setting;
         protected TextView friend_name;
 
         public FriendlistViewHolder(@NonNull View itemView){
             super(itemView);
-            this.friend_profile = (ImageView) itemView.findViewById(R.id.list_profile_iv);
-            this.friend_stat = (ImageView) itemView.findViewById(R.id.list_Pro_stat_iv);
-            this.friend_seting = (ImageView) itemView.findViewById(R.id.list_setting_iv);
-            this.friend_name = (TextView) itemView.findViewById(R.id.list_name);
+            this.friend_profile = (ImageView) itemView.findViewById(R.id.ask_profile_iv);
+            this.friend_stat = (ImageView) itemView.findViewById(R.id.ask_pro_stat_iv);
+            this.friend_setting = (ImageView) itemView.findViewById(R.id.ask_setting_iv);
+            this.friend_name = (TextView) itemView.findViewById(R.id.ask_name);
         }
     }
 }

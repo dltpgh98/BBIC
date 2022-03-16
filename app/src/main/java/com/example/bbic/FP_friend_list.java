@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bbic.Bookmark_Adapter.Friend_listAdapter;
+import com.example.bbic.Bookmark_Adapter.Friend_ListAdapter;
 import com.example.bbic.Bookmark_Adapter.PlaceData;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class FP_friend_list extends Fragment {
 
     private ArrayList<PlaceData> arrayList;
-    private Friend_listAdapter listAdapter;
+    private Friend_ListAdapter listAdapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
 
@@ -33,7 +33,7 @@ public class FP_friend_list extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        listAdapter = new Friend_listAdapter(arrayList);
+        listAdapter = new Friend_ListAdapter(arrayList);
         arrayList = new ArrayList<>();
 
         for(int i = 1; i<=10 ; i++ ){

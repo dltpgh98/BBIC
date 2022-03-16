@@ -35,7 +35,7 @@
             android:background="@color/green"
             app:layout_constraintBottom_toBottomOf="@id/ask_profile_iv"
             app:layout_constraintEnd_toEndOf="@id/ask_profile_iv"
- />
+            />
 
         <TextView
             android:id="@+id/ask_name"
@@ -50,8 +50,17 @@
             app:layout_constraintStart_toEndOf="@id/ask_profile_iv"/>
 
         <ImageView
-            android:id="@+id/ask_setting_iv"
-            android:layout_width="8dp"
+            android:id="@+id/ask_delete_iv"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:srcCompat="@color/green"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ask_accept_iv"/>
+        <ImageView
+            android:id="@+id/ask_accept_iv"
+            android:layout_width="30dp"
             android:layout_height="30dp"
             app:srcCompat="@color/green"
             android:layout_marginEnd="15dp"

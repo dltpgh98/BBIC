@@ -51,6 +51,23 @@ public class PlaceData {
     private int friend_setting;
     private String friend_name;
 
+    //friend_ask
+    private int friend_delete;
+    private int friend_accept;
+
+    //promise_list
+    private int promise_sidebar;
+    private int promise_profile1;
+    private int promise_profile2;
+    private int promise_profile3;
+    private String promise_title;
+    private String promise_address;
+    private String promise_settime;
+
+    //promise_ask
+    private int promise_delete;
+    private int promise_accept;
+
     public PlaceData(int place_iv, String place_name,String place_address) {        //3개 place
 
         this.place_iv = place_iv;
@@ -110,11 +127,45 @@ public class PlaceData {
         this.subway_right_whole3 = subway_right_whole3;
     }
 
-    public PlaceData(int friend_profile, int friend_stat, int friend_setting, String friend_name) {
+    public PlaceData(int friend_profile, int friend_stat, int friend_setting, String friend_name) {  // 4개 friend_list
         this.friend_profile = friend_profile;
         this.friend_stat = friend_stat;
         this.friend_setting = friend_setting;
         this.friend_name = friend_name;
+    }
+
+    public PlaceData(int friend_profile, int friend_stat, int friend_delete, int friend_accept, String friend_name) {  // 5개 friend_ask
+        this.friend_profile = friend_profile;
+        this.friend_stat = friend_stat;
+        this.friend_delete = friend_delete;
+        this.friend_accept = friend_accept;
+        this.friend_name = friend_name;
+
+    }
+
+    public PlaceData(int promise_sidebar, int promise_profile1, int promise_profile2, int promise_profile3,
+                     String promise_title, String promise_address, String promise_settime) {  // 7개 promise_list
+        this.promise_sidebar = promise_sidebar;
+        this.promise_profile1 = promise_profile1;
+        this.promise_profile2 = promise_profile2;
+        this.promise_profile3 = promise_profile3;
+        this.promise_title = promise_title;
+        this.promise_address = promise_address;
+        this.promise_settime = promise_settime;
+    }
+
+    public PlaceData(int promise_sidebar, int promise_profile1, int promise_profile2, int promise_profile3,
+                     String promise_title, String promise_address, String promise_settime,
+                     int promise_delete, int promise_accept) {  // 9개 promise_ask
+        this.promise_sidebar = promise_sidebar;
+        this.promise_profile1 = promise_profile1;
+        this.promise_profile2 = promise_profile2;
+        this.promise_profile3 = promise_profile3;
+        this.promise_title = promise_title;
+        this.promise_address = promise_address;
+        this.promise_settime = promise_settime;
+        this.promise_delete = promise_delete;
+        this.promise_accept = promise_accept;
     }
 
     public int getPlace_iv() {
@@ -446,6 +497,95 @@ public class PlaceData {
 
     public void setFriend_name(String friend_name) {
         this.friend_name = friend_name;
+    }
+
+    public int getFriend_delete() {
+        return friend_delete;
+    }
+
+    public void setFriend_delete(int friend_delete) {
+        this.friend_delete = friend_delete;
+    }
+
+    public int getFriend_accept() {
+        return friend_accept;
+    }
+
+    public void setFriend_accept(int friend_accept) {
+        this.friend_accept = friend_accept;
+    }
+
+
+    public int getPromise_sidebar() {
+        return promise_sidebar;
+    }
+
+    public void setPromise_sidebar(int promise_sidebar) {
+        this.promise_sidebar = promise_sidebar;
+    }
+
+    public int getPromise_profile1() {
+        return promise_profile1;
+    }
+
+    public void setPromise_profile1(int promise_profile1) {
+        this.promise_profile1 = promise_profile1;
+    }
+
+    public int getPromise_profile2() {
+        return promise_profile2;
+    }
+
+    public void setPromise_profile2(int promise_profile2) {
+        this.promise_profile2 = promise_profile2;
+    }
+
+    public int getPromise_profile3() {
+        return promise_profile3;
+    }
+
+    public void setPromise_profile3(int promise_profile3) {
+        this.promise_profile3 = promise_profile3;
+    }
+
+    public String getPromise_title() {
+        return promise_title;
+    }
+
+    public void setPromise_title(String promise_title) {
+        this.promise_title = promise_title;
+    }
+
+    public String getPromise_address() {
+        return promise_address;
+    }
+
+    public void setPromise_address(String promise_address) {
+        this.promise_address = promise_address;
+    }
+
+    public String getPromise_settime() {
+        return promise_settime;
+    }
+
+    public void setPromise_settime(String promise_settime) {
+        this.promise_settime = promise_settime;
+    }
+
+    public int getPromise_delete() {
+        return promise_delete;
+    }
+
+    public void setPromise_delete(int promise_delete) {
+        this.promise_delete = promise_delete;
+    }
+
+    public int getPromise_accept() {
+        return promise_accept;
+    }
+
+    public void setPromise_accept(int promise_accept) {
+        this.promise_accept = promise_accept;
     }
 }
 
