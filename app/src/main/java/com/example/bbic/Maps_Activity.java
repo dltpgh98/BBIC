@@ -65,7 +65,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         double longitude = gpsTracker.getLongitude();
 
                         String myAddress = getCurrentAddress(latitude, longitude);
+                        String[] add = myAddress.split(" ");
+                        Log.d("위치", add[1]+" "+add[2]);
                         drawerInit(myAddress);
+                        drawerEnabled=true;
                     }
                     drawerLayout.openDrawer(drawerView);
                     break;
@@ -118,7 +121,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private View drawerView;
     private ImageButton menuIbtn, searchIbtn;
     private TextView
-            temText, fineText, ultraText, covidText, nickName;
+            temText, fineText, ultraText, covidText, nickName, areaText;
     private ImageView weatherImage, profile;
     private String name, address;
 
@@ -183,6 +186,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         searchIbtn = (ImageButton) findViewById(R.id.main_search_ibtn);
         profile = (ImageView) findViewById(R.id.drawer_profile_img); // 카카오톡 프로파일 이미지
         nickName = (TextView) findViewById(R.id.drawer_profile_name); // 카카오톡 닉네임
+        areaText = (TextView) findViewById(R.id.drawer_area_text);
 
         drawerMenu[0] = (Button) findViewById(R.id.drawer_menu_1);
         drawerMenu[1] = (Button) findViewById(R.id.drawer_menu_2);
@@ -262,6 +266,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     weather = wt.get(0).text();
                     array = covid.get(0).text().split(" ");
                     covidNum = array[2];
+                    areaText.setText(add[2]);
 
                     //번들에 문자열 포장
                     bundle.putString("temperature", tem);

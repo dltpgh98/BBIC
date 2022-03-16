@@ -57,7 +57,7 @@
             android:layout_marginTop="225sp"
             android:text="부천시"
             android:textColor="@color/black"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
