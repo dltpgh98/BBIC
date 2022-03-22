@@ -36,7 +36,7 @@ public class FP_promise_list extends Fragment {
         arrayList = new ArrayList<>();
 
         for(int i = 1; i<=10 ; i++ ) {
-                arrayList.add(new PlaceData(R.color.green,R.drawable.image_profile,R.drawable.image_profile,R.drawable.image_profile,
+                arrayList.add(new PlaceData(R.drawable.left_curve,R.drawable.image_profile,R.drawable.image_profile,R.drawable.image_profile,
                         "타이틀", "주소","22.03.02 AM 09:00"));
         }
         listAdapter.setArrayList(arrayList);

@@ -38,8 +38,8 @@ public class FP_promise_ask extends Fragment {
         arrayList = new ArrayList<>();
 
         for(int i = 1; i<=10 ; i++ ) {
-            arrayList.add(new PlaceData(R.color.green,R.drawable.image_profile,R.drawable.image_profile,R.drawable.image_profile,
-                    "타이틀", "주소","22.03.02 AM 09:00",R.color.red,R.color.green));
+            arrayList.add(new PlaceData(R.drawable.left_curve,R.drawable.image_profile,R.drawable.image_profile,R.drawable.image_profile,
+                    "타이틀", "주소","22.03.02 AM 09:00",R.drawable.ic_baseline_close,R.drawable.ic_baseline_check));
         }
         askAdapter.setArrayList(arrayList);
         recyclerView.setAdapter(askAdapter);

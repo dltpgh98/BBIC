@@ -1,5 +1,6 @@
 package com.example.bbic;
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,6 +34,7 @@ public class FP_friend_ask extends Fragment {
 //        imageView = rootView.findViewById(R.id.ask_profile_iv);
 //        imageView.setClipToOutline(true);
 
+
         recyclerView = (RecyclerView) rootView.findViewById(R.id.friend_ask_rv);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -41,7 +44,7 @@ public class FP_friend_ask extends Fragment {
 
         for(int i = 1; i<=10 ; i++ ) {
             if (i % 2 == 0)
-                arrayList.add(new PlaceData(R.drawable.image_profile,R.color.transparent,R.color.red,R.color.green,i+"번째 테스트"));
+                arrayList.add(new PlaceData(R.drawable.image_profile,R.color.transparent,R.drawable.ic_baseline_close,R.drawable.ic_baseline_check,i+"번째 테스트"));
         }
         askAdapter.setArrayList(arrayList);
         recyclerView.setAdapter(askAdapter);

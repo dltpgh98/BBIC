@@ -1,5 +1,7 @@
 package com.example.bbic.Bookmark_Adapter;
 
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bbic.R;
@@ -30,7 +33,10 @@ public class Promise_AskAdapter extends RecyclerView.Adapter<Promise_AskAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull PromiseAskViewHolder holder, int position) {
+        final GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.left_curve);
+
         holder.promise_sidebar.setImageResource(arrayList.get(position).getPromise_sidebar());
+        drawable.setColor(Color.parseColor("#0034EB"));        holder.promise_sidebar.setImageDrawable(drawable);
         holder.promise_profile1.setImageResource(arrayList.get(position).getPromise_profile1());
         holder.promise_profile2.setImageResource(arrayList.get(position).getPromise_profile2());
         holder.promise_profile3.setImageResource(arrayList.get(position).getPromise_profile3());

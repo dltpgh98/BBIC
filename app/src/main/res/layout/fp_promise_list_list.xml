@@ -12,7 +12,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/layout_radious"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
             android:text="약속 제목"
             android:fontFamily="@font/nanum_square_round_b"
             android:textSize="25dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/pro_list_sidebar_iv"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -44,6 +44,7 @@
             android:layout_height="wrap_content"
             android:text="주소"
             android:fontFamily="@font/nanum_square_round_b"
+            android:layout_marginStart="8dp"
             app:layout_constraintStart_toEndOf="@+id/pro_list_sidebar_iv"
             app:layout_constraintTop_toBottomOf="@+id/pro_list_title_tv" />
 
@@ -51,7 +52,7 @@
             android:id="@+id/pro_list_profile1_iv"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="3dp"
             app:layout_constraintStart_toEndOf="@id/pro_list_sidebar_iv"

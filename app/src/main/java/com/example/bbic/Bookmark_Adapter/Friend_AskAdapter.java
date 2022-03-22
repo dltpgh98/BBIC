@@ -1,5 +1,7 @@
 package com.example.bbic.Bookmark_Adapter;
 
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,13 +10,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bbic.R;
 
 import java.util.ArrayList;
 
-public class Friend_AskAdapter extends RecyclerView.Adapter<Friend_AskAdapter.FriendaskViewHolder> {
+public class    Friend_AskAdapter extends RecyclerView.Adapter<Friend_AskAdapter.FriendaskViewHolder> {
     private ArrayList<PlaceData> arrayList;
 
     public Friend_AskAdapter(ArrayList<PlaceData> arrayList) {this.arrayList = arrayList;}
@@ -30,10 +33,13 @@ public class Friend_AskAdapter extends RecyclerView.Adapter<Friend_AskAdapter.Fr
 
     @Override
     public void onBindViewHolder(@NonNull FriendaskViewHolder holder, int position) {
+
         holder.friend_profile.setImageResource(arrayList.get(position).getFriend_profile());
         holder.friend_stat.setImageResource(arrayList.get(position).getFriend_stat());
         holder.friend_delete.setImageResource(arrayList.get(position).getFriend_delete());
         holder.friend_accept.setImageResource(arrayList.get(position).getFriend_accept());
+
+
         holder.friend_name.setText(arrayList.get(position).getFriend_name());
 
         holder.itemView.setTag(position);
