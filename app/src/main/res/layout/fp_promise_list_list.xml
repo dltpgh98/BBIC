@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/pro_list_sidebar_iv"
+            android:layout_width="10dp"
+            android:layout_height="90dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@color/green" />
+
+        <TextView
+            android:id="@+id/pro_list_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="3dp"
+            android:text="약속 제목"
+            android:fontFamily="@font/nanum_square_round_b"
+            android:textSize="25dp"
+            app:layout_constraintStart_toEndOf="@id/pro_list_sidebar_iv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/pro_list_address_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="주소"
+            android:fontFamily="@font/nanum_square_round_b"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/pro_list_sidebar_iv"
+            app:layout_constraintTop_toBottomOf="@+id/pro_list_title_tv" />
+
+        <ImageView
+            android:id="@+id/pro_list_profile1_iv"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="3dp"
+            app:layout_constraintStart_toEndOf="@id/pro_list_sidebar_iv"
+            app:layout_constraintTop_toBottomOf="@id/pro_list_address_tv"
+            app:srcCompat="@drawable/image_profile" />
+        <ImageView
+            android:id="@+id/pro_list_profile2_iv"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toEndOf="@id/pro_list_profile1_iv"
+            app:layout_constraintTop_toBottomOf="@id/pro_list_address_tv"
+            app:srcCompat="@drawable/image_profile" />
+        <ImageView
+            android:id="@+id/pro_list_profile3_iv"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toEndOf="@id/pro_list_profile2_iv"
+            app:layout_constraintTop_toBottomOf="@id/pro_list_address_tv"
+            app:srcCompat="@drawable/image_profile" />
+
+        <TextView
+            android:id="@+id/pro_list_settime_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="약속 일시 Ex)22.03.02 AM 09:00"
+            android:fontFamily="@font/nanum_square_round_b"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

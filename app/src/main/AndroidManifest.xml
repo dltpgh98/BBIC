@@ -16,7 +16,8 @@
         android:theme="@style/Theme.BBIC">
         <activity
             android:name=".Loading_Activity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/LoadingTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

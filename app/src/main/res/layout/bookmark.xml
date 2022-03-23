@@ -37,12 +37,10 @@
 
             <ImageButton
                 android:id="@+id/home_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:scaleX="0.8"
-                android:scaleY="0.8"
-                android:src="@drawable/ic_baseline_map" />
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/transparent"
+                android:src="@drawable/ic_baseline_home_24"/>
 
         </LinearLayout>
 

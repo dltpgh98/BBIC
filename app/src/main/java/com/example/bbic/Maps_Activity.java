@@ -2,7 +2,6 @@ package com.example.bbic;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,8 +9,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -31,7 +28,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
-import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
@@ -58,31 +54,24 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             switch (view.getId()) {
                 //case를 통해 id에 따른 클릭이벤트 실행
                 case R.id.menu_ibtn:
-                    if(!drawerEnabled) {
-                        gpsTracker = new GpsTracker(Maps_Activity.this);
-
-                        double latitude = gpsTracker.getLatitude();
-                        double longitude = gpsTracker.getLongitude();
-
-                        String myAddress = getCurrentAddress(latitude, longitude);
-                        String[] add = myAddress.split(" ");
-                        Log.d("위치", add[1]+" "+add[2]);
-                        drawerInit(myAddress);
-                        drawerEnabled=true;
-                    }
                     drawerLayout.openDrawer(drawerView);
                     break;
                 case R.id.drawer_menu_1:
-                    Log.d("클릭", "onClick: ");
                     drawerLayout.closeDrawer(drawerView);
                     break;
                 case R.id.drawer_menu_2:
                     break;
                 case R.id.drawer_menu_3:
-                    System.out.println("click");
                     Intent intent3 = new Intent(getApplicationContext(), Bookmark.class);
                     intent3.putExtra("닉네임", name);
                     intent3.putExtra("프로필", address);
+                    intent3.putExtra("미세먼지", fineDust);
+                    intent3.putExtra("초미세먼지", ultraFineDust);
+                    intent3.putExtra("온도", tem);
+                    intent3.putExtra("날씨", weather);
+                    intent3.putExtra("도", area);
+                    intent3.putExtra("시", city);
+                    intent3.putExtra("코로나",covidNum);
                     startActivity(intent3);
                     finish();
                     break;
@@ -92,6 +81,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     Intent intent5 = new Intent(getApplicationContext(), FP.class);
                     intent5.putExtra("닉네임", name);
                     intent5.putExtra("프로필", address);
+                    intent5.putExtra("미세먼지", fineDust);
+                    intent5.putExtra("초미세먼지", ultraFineDust);
+                    intent5.putExtra("온도", tem);
+                    intent5.putExtra("날씨", weather);
+                    intent5.putExtra("도", area);
+                    intent5.putExtra("시", city);
+                    intent5.putExtra("코로나",covidNum);
                     startActivity(intent5);
                     finish();
                     break;
@@ -99,6 +95,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     Intent intent6 = new Intent(getApplicationContext(), Setting_Activity.class);
                     intent6.putExtra("닉네임", name);
                     intent6.putExtra("프로필", address);
+                    intent6.putExtra("미세먼지", fineDust);
+                    intent6.putExtra("초미세먼지", ultraFineDust);
+                    intent6.putExtra("온도", tem);
+                    intent6.putExtra("날씨", weather);
+                    intent6.putExtra("도", area);
+                    intent6.putExtra("시", city);
+                    intent6.putExtra("코로나",covidNum);
                     startActivity(intent6);
                     finish();
                     break;
@@ -123,15 +126,14 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private TextView
             temText, fineText, ultraText, covidText, nickName, areaText;
     private ImageView weatherImage, profile;
-    private String name, address;
+    private String[] add;
 
     private Button[] drawerMenu = new Button[6];
     private FusedLocationSource locationSource;
-    private boolean drawerEnabled = false;
 
     private NaverMap naverMap;
 
-    private String allDust, weather, tem, fineDust, ultraFineDust, covidNum;
+    private String allDust, weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city;
 
 
 
@@ -159,6 +161,15 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         setContentView(R.layout.activity_main);
 
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
+        gpsTracker = new GpsTracker(Maps_Activity.this);
+
+        double latitude = gpsTracker.getLatitude();
+        double longitude = gpsTracker.getLongitude();
+
+        String myAddress = getCurrentAddress(latitude, longitude);
+        String[] add = myAddress.split(" ");
+        Log.d("위치", add[1]+" "+add[2]);
+        drawerInit(myAddress);
 
         //도성대
         FragmentManager fm = getSupportFragmentManager();
@@ -230,8 +241,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     }
 
     private void drawerInit(String myAddress){
-        String[] add = myAddress.split(" ");
-        final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query="+add[1]+" "+add[2]+"날씨"; //웹크롤링 할 주소(1)
+        add = myAddress.split(" ");
+        area=add[1];
+        city=add[2];
+        final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query="+area+" "+city+"날씨"; //웹크롤링 할 주소(1)
         final String covidURL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=코로나19"; //웹크롤링 할 주소(2)
         //스레드간 데이터 전달을 위한 번들 생성
         final Bundle bundle = new Bundle();
@@ -266,21 +279,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     weather = wt.get(0).text();
                     array = covid.get(0).text().split(" ");
                     covidNum = array[2];
-                    areaText.setText(add[2]);
 
-                    //번들에 문자열 포장
-                    bundle.putString("temperature", tem);
-                    bundle.putString("fine", fineDust);
-                    bundle.putString("ultra", ultraFineDust);
-                    bundle.putString("weather", weather);
-                    bundle.putString("covid", covidNum);
-                    Message msg = handler.obtainMessage();
-
-                    //메세지내용 번들로 지정
-                    msg.setData(bundle);
-
-                    //핸들러에 메세지 전달
-                    handler.sendMessage(msg);
+                    drawer_input();
 
                     //10분마다 한번씩 실행
                     Thread.sleep(600000);
@@ -291,16 +291,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }.start();
     }
 
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            Bundle bundle = msg.getData();
-            drawer_input();
-        }
-    };
-
     private void drawer_input() {
         temText.setText(tem + "C");
+        areaText.setText(city);
+        covidText.setText("전일 코로나 확진자 수 '" + covidNum + "' 명");
 
         switch (fineDust) {
             case "좋음":
@@ -356,8 +350,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 weatherImage.setImageResource(R.drawable.ic_baseline_block);
                 Log.d("날씨 명", weather);
         }
-
-        covidText.setText("전일 코로나 확진자 수 '" + covidNum + "' 명");
     }
 
     //드로어 이벤트 리스너
@@ -513,4 +505,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)||locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
+
+    /*private void intentPutExtra(Intent intent){
+
+    }*/
 }
