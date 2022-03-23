@@ -4,4 +4,5 @@
     <string name="setting_header_text">설정</string>
     <string name="subway_header_text">지하철 노선도</string>
     <string name="kakao_APP_Key">2f3198abf019768640ab25011210a35b</string>
+    <string name="test">test</string>
 </resources>
