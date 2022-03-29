@@ -100,9 +100,9 @@ public class Login_Activity extends AppCompatActivity {
                     // 유저의 아이디
                     Log.d(TAG,"invoke: id" + user.getId());
                     // 유저의 어카운트정보에 이메일
-                    Log.d(TAG,"invoke: nickname" + user.getKakaoAccount().getEmail());
+                    Log.d(TAG,"invoke: nickname" + user.getKakaoAccount().getProfile().getNickname());
                     // 유저의 어카운트 정보의 프로파일에 닉네임
-                    Log.d(TAG,"invoke: email" + user.getKakaoAccount().getProfile().getNickname());
+                    Log.d(TAG,"invoke: email" + user.getKakaoAccount().getEmail());
                     // 유저의 어카운트 파일의 성별
                     Log.d(TAG,"invoke: gerder" + user.getKakaoAccount().getGender());
                     // 유저의 어카운트 정보에 나이

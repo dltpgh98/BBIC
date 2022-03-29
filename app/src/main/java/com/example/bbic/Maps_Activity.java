@@ -5,6 +5,8 @@ import static com.naver.maps.map.NaverMap.LAYER_GROUP_TRANSIT;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.LauncherActivity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -36,6 +38,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.CameraUpdate;
@@ -44,15 +48,28 @@ import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
+import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.widget.LocationButtonView;
+import com.odsay.odsayandroidsdk.API;
+import com.odsay.odsayandroidsdk.ODsayData;
+import com.odsay.odsayandroidsdk.ODsayService;
+import com.odsay.odsayandroidsdk.OnResultCallbackListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -60,6 +77,23 @@ import java.util.Vector;
 
 //ver 0.0.1
 public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallback {
+
+    private static class InfoWindowAdapter extends InfoWindow.DefaultTextAdapter {
+        private InfoWindowAdapter(@NonNull Context context) {
+            super(context);
+        }
+
+        @NonNull
+        @Override
+        public CharSequence getText(@NonNull InfoWindow infoWindow) {
+            if (infoWindow.getMarker() != null) {
+                return getContext().getString(R.string.format_info_window_on_marker, infoWindow.getMarker().getTag());
+            } else {
+                return getContext().getString(R.string.format_info_window_on_map,
+                        infoWindow.getPosition().latitude, infoWindow.getPosition().longitude);
+            }
+        }
+    }
 
     //버튼 클릭 리스너 클래스
     class BtnOnClickListener implements View.OnClickListener {
@@ -132,6 +166,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private Geocoder geocoder;
+    private float x = 0, y= 0;
 
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
@@ -145,9 +180,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private Button[] drawerMenu = new Button[6];
     private FusedLocationSource locationSource;
     private boolean drawerEnabled = false;
-    private NetworkThread thread; // api쓰레드
 
     private NaverMap naverMap;
+    private List<BusStationList> busStationList;
+
 
 
     private String allDust, weather, tem, fineDust, ultraFineDust, covidNum;
@@ -198,12 +234,27 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         UiSettings uiSettings = naverMap.getUiSettings();
         uiSettings.setLocationButtonEnabled(true);
         uiSettings.setLogoGravity(Gravity.RIGHT|Gravity.BOTTOM);
+
+        InfoWindow infoWindow = new InfoWindow();
+        infoWindow.setPosition(new LatLng(37.5666102, 126.9783881));
+        infoWindow.setAdapter(new InfoWindowAdapter(this));
+        infoWindow.setOnClickListener(overlay -> {
+            infoWindow.close();
+            return true;
+        });
+        infoWindow.open(naverMap);
 //
 //        LocationButtonView locationButtonView = findViewById(R.id.navermap_location_button);
 //        locationButtonView.setMap(naverMap);
 
         CameraUpdate cameraUpdate = CameraUpdate.scrollTo(initialPosition);
         naverMap.moveCamera(cameraUpdate);
+
+
+        naverMap.setOnMapClickListener((point, coord) -> {
+            infoWindow.setPosition(coord);
+            infoWindow.open(naverMap);
+        });
 
         markersPosition = new Vector<LatLng>();
         for (int x = 0; x < 100; ++x) {
@@ -264,9 +315,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        thread=new NetworkThread();
-        thread.start();
-
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
 
         //도성대
@@ -277,6 +325,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             fm.beginTransaction().add(R.id.map, mapFragment).commit();
         }
         mapFragment.getMapAsync(this);
+
 
 
         //이세호
@@ -386,7 +435,148 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             }
         });
 
+        ODsayService odsayService = ODsayService.init(getApplicationContext(), "d/F477b1GZGKZgWCv8LynPEERmoxCdE1jSOojHzKNPM");
+        odsayService.setReadTimeout(5000);
+        odsayService.setConnectionTimeout(5000);
+        // 콜백 함수 구현
+        OnResultCallbackListener busStationInfo = new OnResultCallbackListener() {
+            // 호출 성공 시 실행
+            @Override
+            public void onSuccess(ODsayData odsayData, API api) {
+                try {
+                    // API Value 는 API 호출 메소드 명을 따라갑니다.
+                    if (api == API.BUS_STATION_INFO) {
+                        String stationName = odsayData.getJson().getJSONObject("result").getString("stationName");
+                        Log.d("Station name : %s", stationName);
+                    }
+                }catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            // 호출 실패 시 실행
+            @Override
+            public void onError(int i, String s, API api) {
+                if (api == API.BUS_STATION_INFO) {}
+            }
+        };
+        OnResultCallbackListener pointSearch = new OnResultCallbackListener() {
+            // 호출 성공 시 실행
+            @Override
+            public void onSuccess(ODsayData odsayData, API api) {
+                try {
+                    // API Value 는 API 호출 메소드 명을 따라갑니다.
+                    if (api == API.POINT_SEARCH) {
+//                        JSONObject jsonObject = new JSONObject();
+//                        JSONArray jsonArray = jsonObject.getJSONArray("result");
+//                        int count = 0;
+//
+//                        while(count < jsonArray.length()){
+//                            JSONObject object = jsonArray.getJSONObject(count);
+//
+//                            String stationName = object.getString("stationName");
+//
+//                            BusStationList List =new BusStationList(stationName);
+//
+//                            busStationList.add(List);
+//                            count++;
+//                        }
 
+                        int count = odsayData.getJson().getJSONObject("result").getInt("count");
+                        //String stationName = odsayData.getJson().getJSONObject("result").getString("stationName");
+                        Log.d("Station count : %s", String.valueOf(count));
+
+                        JSONArray station = odsayData.getJson().getJSONObject("result").getJSONArray("station");
+                        Log.d("station info:", String.valueOf(station));
+                        Log.d("station count:", String.valueOf(station.length()));
+                        for (int i = 0; i < station.length(); i++){
+                                    String info  = station.getString(i);
+                                    Log.d("info:", info);
+                        }
+
+                    }
+                }catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            // 호출 실패 시 실행
+            @Override
+            public void onError(int i, String s, API api) {
+                if (api == API.POINT_SEARCH) {}
+            }
+        };
+
+
+        // API 호출
+        odsayService.requestBusStationInfo("107475", busStationInfo);
+        odsayService.requestPointSearch("126.84807","37.5454","250","1:2",pointSearch);
+
+
+
+
+//        String getBusstationXmlData(){
+//            StringBuilder buffer = new StringBuilder();
+//
+//            String serviceKey = "dLt4yggklN2Ka%2FyGP%2Fp2OqpFavssgoVTbnYH2o6KUw3X4rgn27JKQrFm%2BYr6klQsN3Gt1pWZO41Kr1viTL86Ww%3D%3D";
+//            String gpsLati = String.valueOf(x);
+//            String gpsLong = String.valueOf(y);
+//            String numOfRows = "10";
+//            String pageNo = "1";
+//            String queryUrl = "http://apis.data.go.kr/1613000/BusSttnInfoInqireService/getCrdntPrxmtSttnList?serviceKey=" + serviceKey + "&gpsLati=" + gpsLati + "&gpsLong=" + gpsLong + "&numOfRows=" + numOfRows + "&pageNo=" + pageNo + "&_type=xml";
+//
+//            try{
+//                URL url= new URL(queryUrl);//문자열로 된 요청 url을 URL 객체로 생성.
+//                InputStream is= url.openStream(); //url위치로 입력스트림 연결
+//
+//                XmlPullParserFactory factory= XmlPullParserFactory.newInstance();
+//                XmlPullParser xpp= factory.newPullParser();
+//                xpp.setInput( new InputStreamReader(is, "UTF-8") ); //inputstream 으로부터 xml 입력받기
+//
+//                String tag;
+//                xpp.next();
+//                int eventType= xpp.getEventType();
+//
+//                while(eventType != XmlPullParser.END_DOCUMENT){
+//                    switch(eventType){
+//                      case  XmlPullParser.START_DOCUMENT:
+//                        break;
+//                      case XmlPullParser.START_TAG:
+//                            tag= xpp.getName();//태그 이름 얻어오기
+//
+//                            if(tag.equals("item")) ;
+//                            else if(tag.equals("nodeid")) {
+//                                buffer.append("정류소 ID : ");
+//                                xpp.next();
+//                                buffer.append(xpp.getText());
+//                                buffer.append("\n\n");
+//                            }
+//                            else if(tag.equals("nodenm")) {
+//                                buffer.append("정류소 명 : ");
+//                                xpp.next();
+//                                buffer.append(xpp.getText());
+//                                buffer.append("\n\n");
+//                            }
+//                            else if(tag.equals("citycode")) {
+//                                buffer.append("도시코드 : ");
+//                                xpp.next();
+//                                buffer.append(xpp.getText() +"층");
+//                                buffer.append("\n\n");
+//                            }
+//                            break;
+//                      case XmlPullParser.TEXT:
+//                          break;
+//                      case XmlPullParser.END_TAG:
+//                            tag= xpp.getName();
+//                            if(tag.equals("item")) buffer.append("\n");
+//                            break;
+//
+//                    }
+//                    eventType= xpp.next();
+//                }
+//            }catch (Exception e){
+//
+//            }
+//            return buffer.toString();//StringBuffer 문자열 객체 반환
+//        }
     }
 
     private void drawerInit(String myAddress){
