@@ -13,6 +13,12 @@ dependencyResolutionManagement {
         maven {
             url 'https://naver.jfrog.io/artifactory/maven/'
         }
+        maven {
+            url 'https://devrepo.kakao.com/nexus/content/groups/public/'
+        }//카카오 로그인
+        maven {
+            url "https://jitpack.io"
+        }// 포토뷰, 핀피줌 아웃
     }
 }
 rootProject.name = "BBIC"

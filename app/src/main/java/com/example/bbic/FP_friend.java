@@ -1,5 +1,6 @@
 package com.example.bbic;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,13 +29,13 @@ public class FP_friend extends Fragment {
         fp_friend_ask = new FP_friend_ask(); // 요청 버튼
         fab = rootView.findViewById(R.id.fab_btn);
 
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getContext(), Promise_write.class);
-//                startActivity(intent);
-//            }
-//        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), Promise_write.class);
+                startActivity(intent);
+            }
+        });
 
 
         getChildFragmentManager().beginTransaction().replace(R.id.fp_container, fp_friend_list).commit();

@@ -132,6 +132,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="right"
+                    android:background="@color/transparent"
                     android:src="@drawable/ic_control_point" />
 
 
