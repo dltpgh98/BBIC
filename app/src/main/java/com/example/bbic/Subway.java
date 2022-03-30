@@ -1,17 +1,10 @@
 package com.example.bbic;
-import android.annotation.SuppressLint;
-import android.widget.Toast;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Base64;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -24,15 +17,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bumptech.glide.Glide;
 import com.github.chrisbanes.photoview.PhotoView;
-import com.google.android.material.tabs.TabLayout;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -47,7 +37,7 @@ public class Subway extends AppCompatActivity {
     private ImageView weatherImage, profile;
     private String name, address;
     private PhotoView subway;
-    private SubwayMapTouchPoint subwayMapTouchPoint;
+//    private SubwayMapTouchPoint subwayMapTouchPoint;
     public static final Locale DEFAULT_LOCALE = Locale.KOREAN;
     private int id[] = new int[3];
     private int x[] = new int[3];

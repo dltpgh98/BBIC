@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -13,11 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:name=".GlobalApplication"
-        android:theme="@style/Theme.BBIC"
-        >
+        android:theme="@style/Theme.BBIC">
         <activity
             android:name=".Loading_Activity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/LoadingTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,7 +31,6 @@
         <activity android:name=".FP"/>
         <activity android:name=".Promise_write"/>
         <activity android:name=".Setting_Activity"/>
-        <activity android:name=".Subway"/>
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="1s9u4lx3wq"

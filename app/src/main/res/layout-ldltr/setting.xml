@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/subway_header"
+            android:id="@+id/setting_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent">
@@ -48,10 +48,10 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/subway_view"
+            android:id="@+id/setting_menu_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/subway_header">
+            app:layout_constraintTop_toBottomOf="@id/setting_header">
 
             <TextView
                android:layout_width="match_parent"
@@ -94,7 +94,7 @@
             android:id="@+id/setting_menu_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/subway_view">
+            app:layout_constraintTop_toBottomOf="@id/setting_menu_1">
 
             <TextView
                 android:layout_width="match_parent"

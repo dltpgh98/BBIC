@@ -1,11 +1,9 @@
 package com.example.bbic;
 
-import static com.naver.maps.map.NaverMap.LAYER_GROUP_TRAFFIC;
 import static com.naver.maps.map.NaverMap.LAYER_GROUP_TRANSIT;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.LauncherActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,8 +12,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
@@ -38,8 +34,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.CameraUpdate;
@@ -51,7 +45,6 @@ import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.util.FusedLocationSource;
-import com.naver.maps.map.widget.LocationButtonView;
 import com.odsay.odsayandroidsdk.API;
 import com.odsay.odsayandroidsdk.ODsayData;
 import com.odsay.odsayandroidsdk.ODsayService;
@@ -59,17 +52,11 @@ import com.odsay.odsayandroidsdk.OnResultCallbackListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -118,21 +105,21 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     drawerLayout.openDrawer(drawerView);
                     break;
                 case R.id.drawer_menu_1:
-                    Log.d("클릭", "onClick: ");
                     drawerLayout.closeDrawer(drawerView);
                     break;
                 case R.id.drawer_menu_2:
-                    Intent intent2 = new Intent(getApplicationContext(), Subway.class);
-                    intent2.putExtra("닉네임", name);
-                    intent2.putExtra("프로필", address);
-                    startActivity(intent2);
-                    finish();
                     break;
                 case R.id.drawer_menu_3:
-                    System.out.println("click");
                     Intent intent3 = new Intent(getApplicationContext(), Bookmark.class);
                     intent3.putExtra("닉네임", name);
                     intent3.putExtra("프로필", address);
+                    intent3.putExtra("미세먼지", fineDust);
+                    intent3.putExtra("초미세먼지", ultraFineDust);
+                    intent3.putExtra("온도", tem);
+                    intent3.putExtra("날씨", weather);
+                    intent3.putExtra("도", area);
+                    intent3.putExtra("시", city);
+                    intent3.putExtra("코로나",covidNum);
                     startActivity(intent3);
                     finish();
                     break;
@@ -142,6 +129,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     Intent intent5 = new Intent(getApplicationContext(), FP.class);
                     intent5.putExtra("닉네임", name);
                     intent5.putExtra("프로필", address);
+                    intent5.putExtra("미세먼지", fineDust);
+                    intent5.putExtra("초미세먼지", ultraFineDust);
+                    intent5.putExtra("온도", tem);
+                    intent5.putExtra("날씨", weather);
+                    intent5.putExtra("도", area);
+                    intent5.putExtra("시", city);
+                    intent5.putExtra("코로나",covidNum);
                     startActivity(intent5);
                     finish();
                     break;
@@ -149,6 +143,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     Intent intent6 = new Intent(getApplicationContext(), Setting_Activity.class);
                     intent6.putExtra("닉네임", name);
                     intent6.putExtra("프로필", address);
+                    intent6.putExtra("미세먼지", fineDust);
+                    intent6.putExtra("초미세먼지", ultraFineDust);
+                    intent6.putExtra("온도", tem);
+                    intent6.putExtra("날씨", weather);
+                    intent6.putExtra("도", area);
+                    intent6.putExtra("시", city);
+                    intent6.putExtra("코로나",covidNum);
                     startActivity(intent6);
                     finish();
                     break;
@@ -166,7 +167,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private Geocoder geocoder;
-    private float x = 0, y= 0;
 
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
@@ -175,22 +175,20 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private TextView
             temText, fineText, ultraText, covidText, nickName, areaText;
     private ImageView weatherImage, profile;
-    private String name, address;
+    private String[] add;
     private EditText editText;
     private Button[] drawerMenu = new Button[6];
     private FusedLocationSource locationSource;
     private boolean drawerEnabled = false;
 
     private NaverMap naverMap;
-    private List<BusStationList> busStationList;
 
-
-
-    private String allDust, weather, tem, fineDust, ultraFineDust, covidNum;
+    private String allDust, weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city;
     // 마커 정보 저장시킬 변수들 선언
     private Vector<LatLng> markersPosition;
     private Vector<Marker> activeMarkers;
 
+    //수정할수도 있음 ==============================================
     // 현재 카메라가 보고있는 위치
     public LatLng getCurrentPosition(NaverMap naverMap) {
         CameraPosition cameraPosition = naverMap.getCameraPosition();
@@ -219,8 +217,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
         activeMarkers = new Vector<Marker>();
     }
-
-
+//===============================================================
 
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
@@ -294,7 +291,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 }
             }
         });
-
     }
 
     public void onRequestPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -306,7 +302,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
             }
         }
-
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
@@ -316,6 +311,16 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         setContentView(R.layout.activity_main);
 
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
+        gpsTracker = new GpsTracker(Maps_Activity.this);
+
+        double latitude = gpsTracker.getLatitude();
+        double longitude = gpsTracker.getLongitude();
+
+        String myAddress = getCurrentAddress(latitude, longitude);
+        String[] add = myAddress.split(" ");
+        Log.d("위치", add[1]+" "+add[2]);
+        Log.d("위치 좌표", latitude +" "+longitude);
+        drawerInit(myAddress);
 
         //도성대
         FragmentManager fm = getSupportFragmentManager();
@@ -325,7 +330,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             fm.beginTransaction().add(R.id.map, mapFragment).commit();
         }
         mapFragment.getMapAsync(this);
-
 
 
         //이세호
@@ -345,7 +349,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         profile = (ImageView) findViewById(R.id.drawer_profile_img); // 카카오톡 프로파일 이미지
         nickName = (TextView) findViewById(R.id.drawer_profile_name); // 카카오톡 닉네임
         areaText = (TextView) findViewById(R.id.drawer_area_text);
-        editText = (EditText) findViewById(R.id.main_search_et); // 검색창
+        editText = (EditText) findViewById(R.id.main_search_et);
 
         drawerMenu[0] = (Button) findViewById(R.id.drawer_menu_1);
         drawerMenu[1] = (Button) findViewById(R.id.drawer_menu_2);
@@ -384,7 +388,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         ViewPager2 viewPager = findViewById(R.id.view_pager);
         ViewpagerAdapter adapter = new ViewpagerAdapter(setTextList());
         viewPager.setAdapter(adapter);
-
 
         editText.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -428,13 +431,15 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             naverMap.moveCamera(cameraUpdate);
 
                         }
-                    break;
+                        break;
                 }
                 editText.requestFocus();
                 return false;
             }
         });
 
+
+// ODSay ====================================================================================================================
         ODsayService odsayService = ODsayService.init(getApplicationContext(), "d/F477b1GZGKZgWCv8LynPEERmoxCdE1jSOojHzKNPM");
         odsayService.setReadTimeout(5000);
         odsayService.setConnectionTimeout(5000);
@@ -459,7 +464,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 if (api == API.BUS_STATION_INFO) {}
             }
         };
-        OnResultCallbackListener pointSearch = new OnResultCallbackListener() {
+        OnResultCallbackListener pointSearch = new OnResultCallbackListener() {  //특정 좌표 기준 반경내 대중교통 POI 정보
             // 호출 성공 시 실행
             @Override
             public void onSuccess(ODsayData odsayData, API api) {
@@ -487,13 +492,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
                         JSONArray station = odsayData.getJson().getJSONObject("result").getJSONArray("station");
                         Log.d("station info:", String.valueOf(station));
-                        Log.d("station count:", String.valueOf(station.length()));
-                        String stationName1  = station.getJSONObject(0).getString("stationName");
-                        Log.d("stationName1:", stationName1);
+                        Log.d("station Test:", String.valueOf(station.getJSONObject(0).getString("stationID")));
                         for (int i = 0; i < station.length(); i++){
-                                    String info  = station.getString(i);
-                                    String stationName  = station.getJSONObject(i).getString("stationName");
-                                    Log.d("stationName:", stationName);
+                            String info  = station.getString(i);
+                            Log.d("info:", info);
+
                         }
 
                     }
@@ -511,80 +514,18 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         // API 호출
         odsayService.requestBusStationInfo("107475", busStationInfo);
+
         odsayService.requestPointSearch("126.84807","37.5454","250","1:2",pointSearch);
 
 
-
-
-//        String getBusstationXmlData(){
-//            StringBuilder buffer = new StringBuilder();
-//
-//            String serviceKey = "dLt4yggklN2Ka%2FyGP%2Fp2OqpFavssgoVTbnYH2o6KUw3X4rgn27JKQrFm%2BYr6klQsN3Gt1pWZO41Kr1viTL86Ww%3D%3D";
-//            String gpsLati = String.valueOf(x);
-//            String gpsLong = String.valueOf(y);
-//            String numOfRows = "10";
-//            String pageNo = "1";
-//            String queryUrl = "http://apis.data.go.kr/1613000/BusSttnInfoInqireService/getCrdntPrxmtSttnList?serviceKey=" + serviceKey + "&gpsLati=" + gpsLati + "&gpsLong=" + gpsLong + "&numOfRows=" + numOfRows + "&pageNo=" + pageNo + "&_type=xml";
-//
-//            try{
-//                URL url= new URL(queryUrl);//문자열로 된 요청 url을 URL 객체로 생성.
-//                InputStream is= url.openStream(); //url위치로 입력스트림 연결
-//
-//                XmlPullParserFactory factory= XmlPullParserFactory.newInstance();
-//                XmlPullParser xpp= factory.newPullParser();
-//                xpp.setInput( new InputStreamReader(is, "UTF-8") ); //inputstream 으로부터 xml 입력받기
-//
-//                String tag;
-//                xpp.next();
-//                int eventType= xpp.getEventType();
-//
-//                while(eventType != XmlPullParser.END_DOCUMENT){
-//                    switch(eventType){
-//                      case  XmlPullParser.START_DOCUMENT:
-//                        break;
-//                      case XmlPullParser.START_TAG:
-//                            tag= xpp.getName();//태그 이름 얻어오기
-//
-//                            if(tag.equals("item")) ;
-//                            else if(tag.equals("nodeid")) {
-//                                buffer.append("정류소 ID : ");
-//                                xpp.next();
-//                                buffer.append(xpp.getText());
-//                                buffer.append("\n\n");
-//                            }
-//                            else if(tag.equals("nodenm")) {
-//                                buffer.append("정류소 명 : ");
-//                                xpp.next();
-//                                buffer.append(xpp.getText());
-//                                buffer.append("\n\n");
-//                            }
-//                            else if(tag.equals("citycode")) {
-//                                buffer.append("도시코드 : ");
-//                                xpp.next();
-//                                buffer.append(xpp.getText() +"층");
-//                                buffer.append("\n\n");
-//                            }
-//                            break;
-//                      case XmlPullParser.TEXT:
-//                          break;
-//                      case XmlPullParser.END_TAG:
-//                            tag= xpp.getName();
-//                            if(tag.equals("item")) buffer.append("\n");
-//                            break;
-//
-//                    }
-//                    eventType= xpp.next();
-//                }
-//            }catch (Exception e){
-//
-//            }
-//            return buffer.toString();//StringBuffer 문자열 객체 반환
-//        }
     }
 
+
     private void drawerInit(String myAddress){
-        String[] add = myAddress.split(" ");
-        final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query="+add[1]+" "+add[2]+"날씨"; //웹크롤링 할 주소(1)
+        add = myAddress.split(" ");
+        area=add[1];
+        city=add[2];
+        final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query="+area+" "+city+"날씨"; //웹크롤링 할 주소(1)
         final String covidURL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=코로나19"; //웹크롤링 할 주소(2)
         //스레드간 데이터 전달을 위한 번들 생성
         final Bundle bundle = new Bundle();
@@ -619,21 +560,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     weather = wt.get(0).text();
                     array = covid.get(0).text().split(" ");
                     covidNum = array[2];
-                    areaText.setText(add[2]);
 
-                    //번들에 문자열 포장
-                    bundle.putString("temperature", tem);
-                    bundle.putString("fine", fineDust);
-                    bundle.putString("ultra", ultraFineDust);
-                    bundle.putString("weather", weather);
-                    bundle.putString("covid", covidNum);
-                    Message msg = handler.obtainMessage();
-
-                    //메세지내용 번들로 지정
-                    msg.setData(bundle);
-
-                    //핸들러에 메세지 전달
-                    handler.sendMessage(msg);
+                    drawer_input();
 
                     //10분마다 한번씩 실행
                     Thread.sleep(600000);
@@ -644,16 +572,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }.start();
     }
 
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            Bundle bundle = msg.getData();
-            drawer_input();
-        }
-    };
-
     private void drawer_input() {
         temText.setText(tem + "C");
+        areaText.setText(city);
+        covidText.setText("전일 코로나 확진자 수 '" + covidNum + "' 명");
 
         switch (fineDust) {
             case "좋음":
@@ -709,8 +631,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 weatherImage.setImageResource(R.drawable.ic_baseline_block);
                 Log.d("날씨 명", weather);
         }
-
-        covidText.setText("전일 코로나 확진자 수 '" + covidNum + "' 명");
     }
 
     //드로어 이벤트 리스너
@@ -763,8 +683,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 }
             }
 
-
-
             if(check_result){
 
             }else{//거부된 퍼미션이 있을경우
@@ -780,25 +698,31 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
     }
 
-    void checkRunTimePermission(){//런타임 퍼미션 처리
+    boolean checkRunTimePermission(){//런타임 퍼미션 처리
         //위치 퍼미션 체크
         int hasFineLocationPermission = ContextCompat.checkSelfPermission(Maps_Activity.this,Manifest.permission.ACCESS_FINE_LOCATION);
         int hasCoarseLocationPermission = ContextCompat.checkSelfPermission(Maps_Activity.this,Manifest.permission.ACCESS_COARSE_LOCATION);
 
         if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED && hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED) {//퍼미션을 가지고있다면
-
+            return true;
         }else{//권한이 없다면
-            if(ActivityCompat.shouldShowRequestPermissionRationale(Maps_Activity.this,REQUIRED_PERMISSIONS[0])){//권한 요청을 거부한적이 있을때
-                Toast.makeText(Maps_Activity.this, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
-                ActivityCompat.requestPermissions(Maps_Activity.this, REQUIRED_PERMISSIONS,PERMISSIONS_REQUEST_CODE);//사용자에게 권한 요청
-            }else{//요청이 처음이라면
-                ActivityCompat.requestPermissions(Maps_Activity.this, REQUIRED_PERMISSIONS,PERMISSIONS_REQUEST_CODE);//사용자에게 권한 요청
-            }
+            Toast.makeText(Maps_Activity.this, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+            do {
+                if(ActivityCompat.shouldShowRequestPermissionRationale(Maps_Activity.this,REQUIRED_PERMISSIONS[0])){//권한 요청을 거부한적이 있을때
+                    ActivityCompat.requestPermissions(Maps_Activity.this, REQUIRED_PERMISSIONS,PERMISSIONS_REQUEST_CODE);//사용자에게 권한 요청
+                }else{//요청이 처음이라면
+                    ActivityCompat.requestPermissions(Maps_Activity.this, REQUIRED_PERMISSIONS,PERMISSIONS_REQUEST_CODE);//사용자에게 권한 요청
+                }
+
+                hasFineLocationPermission = ContextCompat.checkSelfPermission(Maps_Activity.this,Manifest.permission.ACCESS_FINE_LOCATION);
+                hasCoarseLocationPermission = ContextCompat.checkSelfPermission(Maps_Activity.this,Manifest.permission.ACCESS_COARSE_LOCATION);
+            }while (hasFineLocationPermission != PackageManager.PERMISSION_GRANTED && hasCoarseLocationPermission != PackageManager.PERMISSION_GRANTED);
         }
+        return true;
     }
 
     public String getCurrentAddress(double latitude, double longitude){//주소 찾기
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());//역지오코딩 위한 지오코딩 객체 선언
+        geocoder = new Geocoder(this, Locale.getDefault());//역지오코딩 위한 지오코딩 객체 선언
 
         List<Address> addresses;//주소를 저장할 주소리스트 선언
 
@@ -868,4 +792,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)||locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
+
+    /*private void intentPutExtra(Intent intent){
+
+    }*/
 }
