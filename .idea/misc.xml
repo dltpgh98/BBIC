@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/BBIC-master/app/src/main/res/drawable/ic_baseline_menu.xml" value="0.2935" />
+        <entry key="..\:/BBIC-master/app/src/main/res/layout/bookmark_place_abc.xml" value="0.28958333333333336" />
+        <entry key="..\:/BBIC-master/app/src/main/res/layout/bookmark_place_list.xml" value="0.5" />
+        <entry key="..\:/BBIC-master/app/src/main/res/layout/fp_friend_ask_list.xml" value="0.28958333333333336" />
+        <entry key="..\:/BBIC-master/app/src/main/res/layout/fp_friend_list_list.xml" value="0.28958333333333336" />
+        <entry key="..\:/BBIC-master/app/src/main/res/layout/fp_promise_list.xml" value="0.28958333333333336" />
+        <entry key="..\:/BBIC-master/app/src/main/res/layout/fp_promise_list_list.xml" value="0.28958333333333336" />
         <entry key="..\:/BBIC/app/src/main/res/drawable/green_radious.xml" value="0.2135" />
         <entry key="..\:/BBIC/app/src/main/res/drawable/ic_baseline_check.xml" value="0.2135" />
         <entry key="..\:/BBIC/app/src/main/res/drawable/ic_baseline_close.xml" value="0.2135" />

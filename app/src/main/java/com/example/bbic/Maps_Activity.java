@@ -169,6 +169,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         String myAddress = getCurrentAddress(latitude, longitude);
         String[] add = myAddress.split(" ");
         Log.d("위치", add[1]+" "+add[2]);
+        Log.d("위치 좌표", latitude +" "+longitude);
         drawerInit(myAddress);
 
         //도성대
