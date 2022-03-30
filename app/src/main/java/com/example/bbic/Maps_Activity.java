@@ -488,9 +488,12 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         JSONArray station = odsayData.getJson().getJSONObject("result").getJSONArray("station");
                         Log.d("station info:", String.valueOf(station));
                         Log.d("station count:", String.valueOf(station.length()));
+                        String stationName1  = station.getJSONObject(0).getString("stationName");
+                        Log.d("stationName1:", stationName1);
                         for (int i = 0; i < station.length(); i++){
                                     String info  = station.getString(i);
-                                    Log.d("info:", info);
+                                    String stationName  = station.getJSONObject(i).getString("stationName");
+                                    Log.d("stationName:", stationName);
                         }
 
                     }
