@@ -188,7 +188,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private Vector<LatLng> markersPosition;
     private Vector<Marker> activeMarkers;
 
-    //수정할수도 있음 ==============================================
+    //수정할수도 있음 ===============================================
     // 현재 카메라가 보고있는 위치
     public LatLng getCurrentPosition(NaverMap naverMap) {
         CameraPosition cameraPosition = naverMap.getCameraPosition();
