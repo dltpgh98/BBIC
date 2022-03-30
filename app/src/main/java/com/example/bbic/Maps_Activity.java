@@ -1,7 +1,10 @@
 package com.example.bbic;
 
+import static com.naver.maps.map.NaverMap.LAYER_GROUP_TRANSIT;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,8 +14,11 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,12 +34,24 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
+import com.naver.maps.geometry.LatLng;
+import com.naver.maps.map.CameraPosition;
+import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
+import com.naver.maps.map.UiSettings;
+import com.naver.maps.map.overlay.InfoWindow;
+import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.util.FusedLocationSource;
+import com.odsay.odsayandroidsdk.API;
+import com.odsay.odsayandroidsdk.ODsayData;
+import com.odsay.odsayandroidsdk.ODsayService;
+import com.odsay.odsayandroidsdk.OnResultCallbackListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -42,9 +60,27 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Vector;
 
 //ver 0.0.1
 public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallback {
+
+    private static class InfoWindowAdapter extends InfoWindow.DefaultTextAdapter {
+        private InfoWindowAdapter(@NonNull Context context) {
+            super(context);
+        }
+
+        @NonNull
+        @Override
+        public CharSequence getText(@NonNull InfoWindow infoWindow) {
+            if (infoWindow.getMarker() != null) {
+                return getContext().getString(R.string.format_info_window_on_marker, infoWindow.getMarker().getTag());
+            } else {
+                return getContext().getString(R.string.format_info_window_on_map,
+                        infoWindow.getPosition().latitude, infoWindow.getPosition().longitude);
+            }
+        }
+    }
 
     //버튼 클릭 리스너 클래스
     class BtnOnClickListener implements View.OnClickListener {
@@ -54,6 +90,18 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             switch (view.getId()) {
                 //case를 통해 id에 따른 클릭이벤트 실행
                 case R.id.menu_ibtn:
+                    if(!drawerEnabled) {
+                        gpsTracker = new GpsTracker(Maps_Activity.this);
+
+                        double latitude = gpsTracker.getLatitude();
+                        double longitude = gpsTracker.getLongitude();
+
+                        String myAddress = getCurrentAddress(latitude, longitude);
+                        String[] add = myAddress.split(" ");
+                        Log.d("위치", add[1]+" "+add[2]);
+                        drawerInit(myAddress);
+                        drawerEnabled=true;
+                    }
                     drawerLayout.openDrawer(drawerView);
                     break;
                 case R.id.drawer_menu_1:
@@ -118,6 +166,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+    private Geocoder geocoder;
 
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
@@ -127,20 +176,121 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             temText, fineText, ultraText, covidText, nickName, areaText;
     private ImageView weatherImage, profile;
     private String[] add;
-
+    private EditText editText;
     private Button[] drawerMenu = new Button[6];
     private FusedLocationSource locationSource;
+    private boolean drawerEnabled = false;
 
     private NaverMap naverMap;
 
     private String allDust, weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city;
+    // 마커 정보 저장시킬 변수들 선언
+    private Vector<LatLng> markersPosition;
+    private Vector<Marker> activeMarkers;
 
+    //수정할수도 있음 ==============================================
+    // 현재 카메라가 보고있는 위치
+    public LatLng getCurrentPosition(NaverMap naverMap) {
+        CameraPosition cameraPosition = naverMap.getCameraPosition();
+        return new LatLng(((CameraPosition) cameraPosition).target.latitude, cameraPosition.target.longitude);
+    }
 
+    // 선택한 마커의 위치가 가시거리(카메라가 보고있는 위치 반경 3km 내)에 있는지 확인
+    public final static double REFERANCE_LAT = 1 / 109.958489129649955;
+    public final static double REFERANCE_LNG = 1 / 88.74;
+    public final static double REFERANCE_LAT_X3 = 3 / 109.958489129649955;
+    public final static double REFERANCE_LNG_X3 = 3 / 88.74;
+    public boolean withinSightMarker(LatLng currentPosition, LatLng markerPosition) {
+        boolean withinSightMarkerLat = Math.abs(currentPosition.latitude - markerPosition.latitude) <= REFERANCE_LAT_X3;
+        boolean withinSightMarkerLng = Math.abs(currentPosition.longitude - markerPosition.longitude) <= REFERANCE_LNG_X3;
+        return withinSightMarkerLat && withinSightMarkerLng;
+    }
+
+    // 지도상에 표시되고있는 마커들 지도에서 삭제
+    private void freeActiveMarkers() {
+        if (activeMarkers == null) {
+            activeMarkers = new Vector<Marker>();
+            return;
+        }
+        for (Marker activeMarker: activeMarkers) {
+            activeMarker.setMap(null);
+        }
+        activeMarkers = new Vector<Marker>();
+    }
+//===============================================================
 
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
+        geocoder = new Geocoder(this);
+        this.naverMap = naverMap;
+        naverMap.setLayerGroupEnabled(LAYER_GROUP_TRANSIT,true);
         naverMap.setLocationSource(locationSource);
         naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
+        LatLng initialPosition = new LatLng(37.506855, 127.066242);
+
+        UiSettings uiSettings = naverMap.getUiSettings();
+        uiSettings.setLocationButtonEnabled(true);
+        uiSettings.setLogoGravity(Gravity.RIGHT|Gravity.BOTTOM);
+
+        InfoWindow infoWindow = new InfoWindow();
+        infoWindow.setPosition(new LatLng(37.5666102, 126.9783881));
+        infoWindow.setAdapter(new InfoWindowAdapter(this));
+        infoWindow.setOnClickListener(overlay -> {
+            infoWindow.close();
+            return true;
+        });
+        infoWindow.open(naverMap);
+//
+//        LocationButtonView locationButtonView = findViewById(R.id.navermap_location_button);
+//        locationButtonView.setMap(naverMap);
+
+        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(initialPosition);
+        naverMap.moveCamera(cameraUpdate);
+
+
+        naverMap.setOnMapClickListener((point, coord) -> {
+            infoWindow.setPosition(coord);
+            infoWindow.open(naverMap);
+        });
+
+        markersPosition = new Vector<LatLng>();
+        for (int x = 0; x < 100; ++x) {
+            for (int y = 0; y < 100; ++y) {
+                markersPosition.add(new LatLng(
+                        initialPosition.latitude - (REFERANCE_LAT * x),
+                        initialPosition.longitude + (REFERANCE_LNG * y)
+                ));
+                markersPosition.add(new LatLng(
+                        initialPosition.latitude + (REFERANCE_LAT * x),
+                        initialPosition.longitude - (REFERANCE_LNG * y)
+                ));
+                markersPosition.add(new LatLng(
+                        initialPosition.latitude + (REFERANCE_LAT * x),
+                        initialPosition.longitude + (REFERANCE_LNG * y)
+                ));
+                markersPosition.add(new LatLng(
+                        initialPosition.latitude - (REFERANCE_LAT * x),
+                        initialPosition.longitude - (REFERANCE_LNG * y)
+                ));
+            }
+        }
+        // 카메라 이동 되면 호출 되는 이벤트
+        naverMap.addOnCameraChangeListener(new NaverMap.OnCameraChangeListener() {
+            @Override
+            public void onCameraChange(int reason, boolean animated) {
+                freeActiveMarkers();
+                // 정의된 마커위치들중 가시거리 내에있는것들만 마커 생성
+                LatLng currentPosition = getCurrentPosition(naverMap);
+                for (LatLng markerPosition: markersPosition) {
+                    if (!withinSightMarker(currentPosition, markerPosition))
+                        continue;
+                    Marker marker = new Marker();
+                    marker.setPosition(markerPosition);
+                    marker.setMap(naverMap);
+                    activeMarkers.add(marker);
+                }
+            }
+        });
     }
 
     public void onRequestPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -199,6 +349,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         profile = (ImageView) findViewById(R.id.drawer_profile_img); // 카카오톡 프로파일 이미지
         nickName = (TextView) findViewById(R.id.drawer_profile_name); // 카카오톡 닉네임
         areaText = (TextView) findViewById(R.id.drawer_area_text);
+        editText = (EditText) findViewById(R.id.main_search_et);
 
         drawerMenu[0] = (Button) findViewById(R.id.drawer_menu_1);
         drawerMenu[1] = (Button) findViewById(R.id.drawer_menu_2);
@@ -238,8 +389,137 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         ViewpagerAdapter adapter = new ViewpagerAdapter(setTextList());
         viewPager.setAdapter(adapter);
 
+        editText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                switch(i){
+                    case  KeyEvent.KEYCODE_ENTER:
+                        if(editText.length() == 0){
+                            editText.requestFocus();
+                            break;
+                        }else{
+                            String str = editText.getText().toString();
+                            List<Address> addressList = null;
+                            try{
+                                addressList = geocoder.getFromLocationName(
+                                        str,//주소
+                                        10 // 최대겁색 결과 개수
+                                );
+                            }catch (IOException e){
+                                e.printStackTrace();
+                            }
+                            System.out.println(addressList.get(0).toString());
+                            //콤마를 기준으로 split
+                            String []splitStr = addressList.get(0).toString().split(",");
+                            String address = splitStr[0].substring(splitStr[0].indexOf("\"") + 1,splitStr[0].length() - 2); // 주소
+                            System.out.println(address);
+
+                            String latitude = splitStr[10].substring(splitStr[10].indexOf("=") + 1); // 위도
+                            String longitude = splitStr[12].substring(splitStr[12].indexOf("=") + 1); // 경도
+                            System.out.println(latitude);
+                            System.out.println(longitude);
+
+                            // 좌표(위도, 경도) 생성
+                            LatLng point = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+                            // 마커 생성
+                            Marker marker = new Marker();
+                            marker.setPosition(point);
+                            // 마커 추가
+                            marker.setMap(naverMap);
+
+                            CameraUpdate cameraUpdate = CameraUpdate.scrollTo(point);
+                            naverMap.moveCamera(cameraUpdate);
+
+                        }
+                        break;
+                }
+                editText.requestFocus();
+                return false;
+            }
+        });
+
+
+// ODSay ====================================================================================================================
+        ODsayService odsayService = ODsayService.init(getApplicationContext(), "d/F477b1GZGKZgWCv8LynPEERmoxCdE1jSOojHzKNPM");
+        odsayService.setReadTimeout(5000);
+        odsayService.setConnectionTimeout(5000);
+        // 콜백 함수 구현
+        OnResultCallbackListener busStationInfo = new OnResultCallbackListener() {
+            // 호출 성공 시 실행
+            @Override
+            public void onSuccess(ODsayData odsayData, API api) {
+                try {
+                    // API Value 는 API 호출 메소드 명을 따라갑니다.
+                    if (api == API.BUS_STATION_INFO) {
+                        String stationName = odsayData.getJson().getJSONObject("result").getString("stationName");
+                        Log.d("Station name : %s", stationName);
+                    }
+                }catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            // 호출 실패 시 실행
+            @Override
+            public void onError(int i, String s, API api) {
+                if (api == API.BUS_STATION_INFO) {}
+            }
+        };
+        OnResultCallbackListener pointSearch = new OnResultCallbackListener() {  //특정 좌표 기준 반경내 대중교통 POI 정보
+            // 호출 성공 시 실행
+            @Override
+            public void onSuccess(ODsayData odsayData, API api) {
+                try {
+                    // API Value 는 API 호출 메소드 명을 따라갑니다.
+                    if (api == API.POINT_SEARCH) {
+//                        JSONObject jsonObject = new JSONObject();
+//                        JSONArray jsonArray = jsonObject.getJSONArray("result");
+//                        int count = 0;
+//
+//                        while(count < jsonArray.length()){
+//                            JSONObject object = jsonArray.getJSONObject(count);
+//
+//                            String stationName = object.getString("stationName");
+//
+//                            BusStationList List =new BusStationList(stationName);
+//
+//                            busStationList.add(List);
+//                            count++;
+//                        }
+
+                        int count = odsayData.getJson().getJSONObject("result").getInt("count");
+                        //String stationName = odsayData.getJson().getJSONObject("result").getString("stationName");
+                        Log.d("Station count : %s", String.valueOf(count));
+
+                        JSONArray station = odsayData.getJson().getJSONObject("result").getJSONArray("station");
+                        Log.d("station info:", String.valueOf(station));
+                        Log.d("station Test:", String.valueOf(station.getJSONObject(0).getString("stationID")));
+                        for (int i = 0; i < station.length(); i++){
+                            String info  = station.getString(i);
+                            Log.d("info:", info);
+
+                        }
+
+                    }
+                }catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            // 호출 실패 시 실행
+            @Override
+            public void onError(int i, String s, API api) {
+                if (api == API.POINT_SEARCH) {}
+            }
+        };
+
+
+        // API 호출
+        odsayService.requestBusStationInfo("107475", busStationInfo);
+
+        odsayService.requestPointSearch("126.84807","37.5454","250","1:2",pointSearch);
+
 
     }
+
 
     private void drawerInit(String myAddress){
         add = myAddress.split(" ");
@@ -442,7 +722,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     }
 
     public String getCurrentAddress(double latitude, double longitude){//주소 찾기
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());//역지오코딩 위한 지오코딩 객체 선언
+        geocoder = new Geocoder(this, Locale.getDefault());//역지오코딩 위한 지오코딩 객체 선언
 
         List<Address> addresses;//주소를 저장할 주소리스트 선언
 
