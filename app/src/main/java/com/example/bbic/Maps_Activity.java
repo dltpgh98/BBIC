@@ -65,6 +65,7 @@ import java.util.Vector;
 //ver 0.0.1
 public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallback {
 
+
     private static class InfoWindowAdapter extends InfoWindow.DefaultTextAdapter {
         private InfoWindowAdapter(@NonNull Context context) {
             super(context);
@@ -188,6 +189,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private Vector<LatLng> markersPosition;
     private Vector<Marker> activeMarkers;
 
+    private BusStationList[] busStationLists;
+
+
     //수정할수도 있음 ==============================================
     // 현재 카메라가 보고있는 위치
     public LatLng getCurrentPosition(NaverMap naverMap) {
@@ -254,26 +258,26 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         });
 
         markersPosition = new Vector<LatLng>();
-        for (int x = 0; x < 100; ++x) {
-            for (int y = 0; y < 100; ++y) {
-                markersPosition.add(new LatLng(
-                        initialPosition.latitude - (REFERANCE_LAT * x),
-                        initialPosition.longitude + (REFERANCE_LNG * y)
-                ));
-                markersPosition.add(new LatLng(
-                        initialPosition.latitude + (REFERANCE_LAT * x),
-                        initialPosition.longitude - (REFERANCE_LNG * y)
-                ));
-                markersPosition.add(new LatLng(
-                        initialPosition.latitude + (REFERANCE_LAT * x),
-                        initialPosition.longitude + (REFERANCE_LNG * y)
-                ));
-                markersPosition.add(new LatLng(
-                        initialPosition.latitude - (REFERANCE_LAT * x),
-                        initialPosition.longitude - (REFERANCE_LNG * y)
-                ));
-            }
-        }
+//        for (int x = 0; x < 100; ++x) {
+//            for (int y = 0; y < 100; ++y) {
+//                markersPosition.add(new LatLng(
+//                        initialPosition.latitude - (REFERANCE_LAT * x),
+//                        initialPosition.longitude + (REFERANCE_LNG * y)
+//                ));
+//                markersPosition.add(new LatLng(
+//                        initialPosition.latitude + (REFERANCE_LAT * x),
+//                        initialPosition.longitude - (REFERANCE_LNG * y)
+//                ));
+//                markersPosition.add(new LatLng(
+//                        initialPosition.latitude + (REFERANCE_LAT * x),
+//                        initialPosition.longitude + (REFERANCE_LNG * y)
+//                ));
+//                markersPosition.add(new LatLng(
+//                        initialPosition.latitude - (REFERANCE_LAT * x),
+//                        initialPosition.longitude - (REFERANCE_LNG * y)
+//                ));
+//            }
+//        }
         // 카메라 이동 되면 호출 되는 이벤트
         naverMap.addOnCameraChangeListener(new NaverMap.OnCameraChangeListener() {
             @Override
@@ -489,6 +493,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         int count = odsayData.getJson().getJSONObject("result").getInt("count");
                         //String stationName = odsayData.getJson().getJSONObject("result").getString("stationName");
                         Log.d("Station count : %s", String.valueOf(count));
+                        busStationLists = new BusStationList[count];
 
                         JSONArray station = odsayData.getJson().getJSONObject("result").getJSONArray("station");
                         Log.d("station info:", String.valueOf(station));
@@ -496,6 +501,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         for (int i = 0; i < station.length(); i++){
                             String info  = station.getString(i);
                             Log.d("info:", info);
+                            //busStationLists[i] = new BusStationList("","","","","");
 
                         }
 
@@ -514,8 +520,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         // API 호출
         odsayService.requestBusStationInfo("107475", busStationInfo);
+        odsayService.requestPointSearch(String.valueOf(longitude),String.valueOf(latitude),"800","1:2",pointSearch);
 
-        odsayService.requestPointSearch("126.84807","37.5454","250","1:2",pointSearch);
 
 
     }
