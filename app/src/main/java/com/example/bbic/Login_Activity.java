@@ -88,6 +88,10 @@ public class Login_Activity extends AppCompatActivity {
             }
         });
         updateKakaoLoginUi();
+
+
+
+
     }
 
     private  void updateKakaoLoginUi() {

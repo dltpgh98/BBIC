@@ -67,6 +67,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
 
     private static class InfoWindowAdapter extends InfoWindow.DefaultTextAdapter {
+
+
         private InfoWindowAdapter(@NonNull Context context) {
             super(context);
         }
@@ -77,9 +79,17 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             if (infoWindow.getMarker() != null) {
                 return getContext().getString(R.string.format_info_window_on_marker, infoWindow.getMarker().getTag());
             } else {
+                    Log.d("위치 좌표 Y",String.valueOf(infoWindow.getPosition().latitude));
+                    Log.d("위치 좌표 X",String.valueOf(infoWindow.getPosition().longitude));
+                    y = String.valueOf(infoWindow.getPosition().latitude);
+                    x = String.valueOf(infoWindow.getPosition().longitude);
+
+                    //point_search.getOdsayService().requestPointSearch(point_search.setX(x),point_search.setY(y),"5","1:2",point_search.getPointSearch());
                 return getContext().getString(R.string.format_info_window_on_map,
                         infoWindow.getPosition().latitude, infoWindow.getPosition().longitude);
+
             }
+
         }
     }
 
@@ -190,6 +200,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private Vector<Marker> activeMarkers;
 
     private BusStationList[] busStationLists;
+    private static String y = "",x = "";
+    private static Point_Search point_search;
 
 
     //수정할수도 있음 ==============================================
@@ -227,6 +239,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     public void onMapReady(@NonNull NaverMap naverMap) {
         geocoder = new Geocoder(this);
         this.naverMap = naverMap;
+
+        ODsayService odsayService = ODsayService.init(getApplicationContext(), "d/F477b1GZGKZgWCv8LynPEERmoxCdE1jSOojHzKNPM");
+        odsayService.setReadTimeout(5000);
+        odsayService.setConnectionTimeout(5000);
+
         naverMap.setLayerGroupEnabled(LAYER_GROUP_TRANSIT,true);
         naverMap.setLocationSource(locationSource);
         naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
@@ -244,6 +261,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             return true;
         });
         infoWindow.open(naverMap);
+
 //
 //        LocationButtonView locationButtonView = findViewById(R.id.navermap_location_button);
 //        locationButtonView.setMap(naverMap);
@@ -252,9 +270,16 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         naverMap.moveCamera(cameraUpdate);
 
 
+
         naverMap.setOnMapClickListener((point, coord) -> {
             infoWindow.setPosition(coord);
             infoWindow.open(naverMap);
+            point_search = new Point_Search();
+            odsayService.requestPointSearch(x,y,"5","1:2", point_search.pointSearch);
+            busStationLists = new BusStationList[30];
+            busStationLists = point_search.getBusStationList();
+            String station = busStationLists[0].getStationName();
+            System.out.println("지하철역 " + station);
         });
 
         markersPosition = new Vector<LatLng>();
@@ -444,37 +469,37 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
 
 // ODSay ====================================================================================================================
-        ODsayService odsayService = ODsayService.init(getApplicationContext(), "d/F477b1GZGKZgWCv8LynPEERmoxCdE1jSOojHzKNPM");
-        odsayService.setReadTimeout(5000);
-        odsayService.setConnectionTimeout(5000);
-        // 콜백 함수 구현
-        OnResultCallbackListener busStationInfo = new OnResultCallbackListener() {
-            // 호출 성공 시 실행
-            @Override
-            public void onSuccess(ODsayData odsayData, API api) {
-                try {
-                    // API Value 는 API 호출 메소드 명을 따라갑니다.
-                    if (api == API.BUS_STATION_INFO) {
-                        String stationName = odsayData.getJson().getJSONObject("result").getString("stationName");
-                        Log.d("Station name : %s", stationName);
-                    }
-                }catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            // 호출 실패 시 실행
-            @Override
-            public void onError(int i, String s, API api) {
-                if (api == API.BUS_STATION_INFO) {}
-            }
-        };
-        OnResultCallbackListener pointSearch = new OnResultCallbackListener() {  //특정 좌표 기준 반경내 대중교통 POI 정보
-            // 호출 성공 시 실행
-            @Override
-            public void onSuccess(ODsayData odsayData, API api) {
-                try {
-                    // API Value 는 API 호출 메소드 명을 따라갑니다.
-                    if (api == API.POINT_SEARCH) {
+//        ODsayService odsayService = ODsayService.init(getApplicationContext(), "d/F477b1GZGKZgWCv8LynPEERmoxCdE1jSOojHzKNPM");
+//        odsayService.setReadTimeout(5000);
+//        odsayService.setConnectionTimeout(5000);
+//        // 콜백 함수 구현
+//        OnResultCallbackListener busStationInfo = new OnResultCallbackListener() {
+//            // 호출 성공 시 실행
+//            @Override
+//            public void onSuccess(ODsayData odsayData, API api) {
+//                try {
+//                    // API Value 는 API 호출 메소드 명을 따라갑니다.
+//                    if (api == API.BUS_STATION_INFO) {
+//                        String stationName = odsayData.getJson().getJSONObject("result").getString("stationName");
+//                        Log.d("Station name : %s", stationName);
+//                    }
+//                }catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            // 호출 실패 시 실행
+//            @Override
+//            public void onError(int i, String s, API api) {
+//                if (api == API.BUS_STATION_INFO) {}
+//            }
+//        };
+//        OnResultCallbackListener pointSearch = new OnResultCallbackListener() {  //특정 좌표 기준 반경내 대중교통 POI 정보
+//            // 호출 성공 시 실행
+//            @Override
+//            public void onSuccess(ODsayData odsayData, API api) {
+//                try {
+//                    // API Value 는 API 호출 메소드 명을 따라갑니다.
+//                    if (api == API.POINT_SEARCH) {
 //                        JSONObject jsonObject = new JSONObject();
 //                        JSONArray jsonArray = jsonObject.getJSONArray("result");
 //                        int count = 0;
@@ -489,40 +514,41 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                            busStationList.add(List);
 //                            count++;
 //                        }
-
-                        int count = odsayData.getJson().getJSONObject("result").getInt("count");
-                        //String stationName = odsayData.getJson().getJSONObject("result").getString("stationName");
-                        Log.d("Station count : %s", String.valueOf(count));
-                        busStationLists = new BusStationList[count];
-
-                        JSONArray station = odsayData.getJson().getJSONObject("result").getJSONArray("station");
-                        Log.d("station info:", String.valueOf(station));
-                        Log.d("station Test:", String.valueOf(station.getJSONObject(0).getString("stationID")));
-                        for (int i = 0; i < station.length(); i++){
-                            String info  = station.getString(i);
-                            Log.d("info:", info);
-                            //busStationLists[i] = new BusStationList("","","","","");
-
-                        }
-
-                    }
-                }catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            // 호출 실패 시 실행
-            @Override
-            public void onError(int i, String s, API api) {
-                if (api == API.POINT_SEARCH) {}
-            }
-        };
-
-
-        // API 호출
-        odsayService.requestBusStationInfo("107475", busStationInfo);
-        odsayService.requestPointSearch(String.valueOf(longitude),String.valueOf(latitude),"800","1:2",pointSearch);
-
-
+//
+//                        int count = odsayData.getJson().getJSONObject("result").getInt("count");
+//                        //String stationName = odsayData.getJson().getJSONObject("result").getString("stationName");
+//                        Log.d("Station count : %s", String.valueOf(count));
+//
+//
+//                        JSONArray station = odsayData.getJson().getJSONObject("result").getJSONArray("station");
+//                        Log.d("station info:", String.valueOf(station));
+//                        Log.d("station Test:", String.valueOf(station.getJSONObject(0).getString("stationID")));
+//                        for (int i = 0; i < station.length(); i++){
+//                            String info  = station.getString(i);
+//                            Log.d("info:", info);
+//                            busStationLists[i] = new BusStationList("","","","","");
+//                            busStationLists[i].setStationClass(station.getJSONObject(i).getString("stationClass"));
+//                            busStationLists[i].setStationName(station.getJSONObject(i).getString("stationName"));
+//                            busStationLists[i].setStationID(station.getJSONObject(i).getString("stationID"));
+//                            busStationLists[i].setX(station.getJSONObject(i).getString("x"));
+//                            busStationLists[i].setY(station.getJSONObject(i).getString("y"));
+//                            Log.d("클래스 확인", busStationLists[i].getStationClass());
+//                        }
+//
+//                    }
+//                }catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            // 호출 실패 시 실행
+//            @Override
+//            public void onError(int i, String s, API api) {
+//                if (api == API.POINT_SEARCH) {}
+//            }
+//        };
+//        // API 호출
+//        odsayService.requestBusStationInfo("107475", busStationInfo);
+//        odsayService.requestPointSearch(x,y,"5","1:2",pointSearch);
 
     }
 

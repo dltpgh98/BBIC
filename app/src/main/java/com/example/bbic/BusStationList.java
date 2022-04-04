@@ -4,28 +4,57 @@ import android.util.Log;
 
 public class BusStationList {
 
-    public String stationClass;
-    public String stationName;
-    public String stationID;
-    public String x;
-    public String y;
+    private String stationClass;
+    private String stationName;
+    private String stationID;
+    private String x;
+    private String y;
 
+    public String getStationClass() {
+        return stationClass;
+    }
 
-    public BusStationList(String stationClass,String stationName, String stationID, String x, String y) {
+    public void setStationClass(String stationClass) {
+        this.stationClass = stationClass;
+    }
+
+    public String getStationName() {
+        return stationName;
+    }
+
+    public void setStationName(String stationName) {
+        this.stationName = stationName;
+    }
+
+    public String getStationID() {
+        return stationID;
+    }
+
+    public void setStationID(String stationID) {
+        this.stationID = stationID;
+    }
+
+    public String getX() {
+        return x;
+    }
+
+    public void setX(String x) {
+        this.x = x;
+    }
+
+    public String getY() {
+        return y;
+    }
+
+    public void setY(String y) {
+        this.y = y;
+    }
+
+    public BusStationList(String stationClass, String stationName, String stationID, String x, String y) {
         this.stationClass = stationClass;
         this.stationName = stationName;
         this.stationID = stationID;
         this.x = x;
         this.y = y;
-
-        Log.d("stationClass : %s", stationClass);
-        Log.d("Station name : %s", stationName);
-        Log.d("stationID : %s", stationID);
-        Log.d("x : %s", x);
-        Log.d("y : %s", y);
-
-
     }
-
-
 }
