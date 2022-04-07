@@ -79,16 +79,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 return getContext().getString(R.string.format_info_window_on_marker, infoWindow.getMarker().getTag());
             } else {
 
-                    Log.d("위치 좌표 Y",String.valueOf(infoWindow.getPosition().latitude));
-                    Log.d("위치 좌표 X",String.valueOf(infoWindow.getPosition().longitude));
-                    y = String.valueOf(infoWindow.getPosition().latitude);
-                    x = String.valueOf(infoWindow.getPosition().longitude);
 
-                    //point_search.getOdsayService().requestPointSearch(point_search.setX(x),point_search.setY(y),"5","1:2",point_search.getPointSearch());
-//                return getContext().getString(R.string.format_info_window_on_map,
-//                        infoWindow.getPosition().latitude, infoWindow.getPosition().longitude);
-
-                return busStationName;
+//                    y = String.valueOf(infoWindow.getPosition().latitude);
+//                    x = String.valueOf(infoWindow.getPosition().longitude);
+                    System.out.println("인포윈도우에서 정류장 이름 : " + StationName);
+                return StationName;
             }
 
         }
@@ -200,12 +195,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private Vector<LatLng> markersPosition;
     private Vector<Marker> activeMarkers;
 
-    private BusStationList[] busStationLists;
+    private StationList[] StationLists;
     private static String y = "",x = "";
     private static Odsay point_search;
     private static Odsay bus_info;
-    private static String busStationName;
-    private static String busStationId;
+    private static String StationName;
+    private static int StationId;
+    private static int stationClass;
 
 
     //수정할수도 있음 ==============================================
@@ -262,7 +258,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         infoWindow.setAdapter(new InfoWindowAdapter(this));
         infoWindow.setOnClickListener(overlay -> {
             infoWindow.close();
-
             return true;
         });
 
@@ -281,30 +276,44 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
             point_search = new Odsay();
             bus_info = new Odsay();
+            StationName = "";
+            y = String.valueOf(infoWindow.getPosition().latitude);
+            x = String.valueOf(infoWindow.getPosition().longitude);
+            Log.d("위치 좌표 Y",String.valueOf(infoWindow.getPosition().latitude));
+            Log.d("위치 좌표 X",String.valueOf(infoWindow.getPosition().longitude));
             odsayService.requestPointSearch(x,y,"5","1:2", point_search.pointSearch);
-            busStationName = "";
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println("count : " + point_search.getCount());
-                    busStationLists = new BusStationList[point_search.getCount()];
-                    busStationLists = point_search.getBusStationList();
-                    for (int i = 0; i < point_search.getCount(); i++){
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("배열의 크기 : " + point_search.getCount());
+                        if(point_search.getCount() >=1){
+                            StationLists = new StationList[point_search.getStationList().length];
+                            StationLists = point_search.getStationList();
+                            for (int i = 0; i < point_search.getCount(); i++){
 
-                        System.out.println("가져온 배열" + busStationLists[i].getStationClass());
-                        System.out.println("가져온 정류장 이름" + busStationLists[i].getStationName());
-                        System.out.println("가져온 정류장 아이디" + busStationLists[i].getStationID());
-                        System.out.println("가져온 정류장 " + busStationLists[i].getX());
-                        System.out.println("가져온 정류장 " + busStationLists[i].getY());
-                        busStationName = busStationLists[i].getStationName();
-                        busStationId = busStationLists[i].getStationID();
-                        odsayService.requestBusStationInfo(busStationId,bus_info.busStationInfo);
+                                System.out.println("가져온 배열" + StationLists[i].getStationClass());
+                                System.out.println("가져온 정류장 이름" + StationLists[i].getStationName());
+                                System.out.println("가져온 정류장 아이디" + StationLists[i].getStationID());
+                                System.out.println("가져온 정류장 " + StationLists[i].getX());
+                                System.out.println("가져온 정류장 " + StationLists[i].getY());
+                                StationName = StationLists[i].getStationName();
+                                System.out.println("정류장 이름 : " + StationName + "\n" + "반목문안에서의 배열의 크기 : " + point_search.getCount());
+                                StationId = StationLists[i].getStationID();
+                                stationClass = StationLists[i].getStationClass();
+                                odsayService.requestBusStationInfo(String.valueOf(StationLists[i].getStationID()), point_search.busStationInfo);
+
+                            }
+                        }
+
+                        infoWindow.setPosition(coord);
+                        infoWindow.open(naverMap);
 
                     }
-                    infoWindow.setPosition(coord);
-                    infoWindow.open(naverMap);
-                }
-            },250);
+                },3000);
+
+
+
+
 //            new Thread() {
 //                @Override
 //                public void run() {

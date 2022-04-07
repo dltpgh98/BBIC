@@ -3,14 +3,14 @@ package com.example.bbic;
 public class BusList {
 
     private String busNo;
-    private String type;
-    private String busID;
+    private int type;
+    private int busID;
     private String busStartPoint;
     private String busEndPoint;
     private String busFirstTime;
     private String busLastTime;
     private String busInterval;
-    private String busCityCode;
+    private int busCityCode;
     private String busCityName;
     private String busLocalBlID;
 
@@ -22,20 +22,36 @@ public class BusList {
         this.busNo = busNo;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 
-    public String getBusID() {
+    public int getBusID() {
         return busID;
     }
 
-    public void setBusID(String busID) {
+    public void setBusID(int busID) {
         this.busID = busID;
+    }
+
+    public String getBusStartPoint() {
+        return busStartPoint;
+    }
+
+    public void setBusStartPoint(String busStartPoint) {
+        this.busStartPoint = busStartPoint;
+    }
+
+    public String getBusEndPoint() {
+        return busEndPoint;
+    }
+
+    public void setBusEndPoint(String busEndPoint) {
+        this.busEndPoint = busEndPoint;
     }
 
     public String getBusFirstTime() {
@@ -62,11 +78,11 @@ public class BusList {
         this.busInterval = busInterval;
     }
 
-    public String getBusCityCode() {
+    public int getBusCityCode() {
         return busCityCode;
     }
 
-    public void setBusCityCode(String busCityCode) {
+    public void setBusCityCode(int busCityCode) {
         this.busCityCode = busCityCode;
     }
 
@@ -86,51 +102,17 @@ public class BusList {
         this.busLocalBlID = busLocalBlID;
     }
 
-    public String getStationClass() {
-        return busNo;
-    }
-
-    public void setStationClass(String stationClass) {
-        this.busNo = stationClass;
-    }
-
-    public String getStationName() {
-        return type;
-    }
-
-    public void setStationName(String stationName) {
-        this.type = stationName;
-    }
-
-    public String getStationID() {
-        return busID;
-    }
-
-    public void setStationID(String stationID) {
-        this.busID = stationID;
-    }
-
-    public String getBusStartPoint() {
-        return busStartPoint;
-    }
-
-    public void setBusStartPoint(String busStartPoint) {
+    public BusList(String busNo, int type, int busID, String busStartPoint, String busEndPoint, String busFirstTime, String busLastTime, String busInterval, int busCityCode, String busCityName, String busLocalBlID) {
+        this.busNo = busNo;
+        this.type = type;
+        this.busID = busID;
         this.busStartPoint = busStartPoint;
-    }
-
-    public String getBusEndPoint() {
-        return busEndPoint;
-    }
-
-    public void setBusEndPoint(String busEndPoint) {
         this.busEndPoint = busEndPoint;
-    }
-
-    public BusList(String stationClass, String stationName, String stationID, String x, String y) {
-        this.busNo = stationClass;
-        this.type = stationName;
-        this.busID = stationID;
-        this.busStartPoint = x;
-        this.busEndPoint = y;
+        this.busFirstTime = busFirstTime;
+        this.busLastTime = busLastTime;
+        this.busInterval = busInterval;
+        this.busCityCode = busCityCode;
+        this.busCityName = busCityName;
+        this.busLocalBlID = busLocalBlID;
     }
 }
