@@ -23,6 +23,42 @@ public class Odsay extends Maps_Activity {
 
     public Odsay() {
     }
+
+    public OnResultCallbackListener subwayStationInfo = new OnResultCallbackListener() {//지하철 정보
+        @Override
+        public void onSuccess(ODsayData odsayData, API api) {
+            try{
+              if(api == API.SUBWAY_STATION_INFO){
+                  String stationName = odsayData.getJson().getJSONObject("result").getString("stationName");
+                  int type = odsayData.getJson().getJSONObject("result").getInt("type");
+                  String laneName = odsayData.getJson().getJSONObject("result").getString("laneName");
+                  String laneCity = odsayData.getJson().getJSONObject("result").getString("laneCity");
+                  String address = odsayData.getJson().getJSONObject("result").getJSONObject("defaultInfo").getString("address");
+                  String new_adress = odsayData.getJson().getJSONObject("result").getJSONObject("defaultInfo").getString("new_address");
+
+                  String exOBJ = odsayData.getJson().getJSONObject("result").getString("exOBJ");
+                  if(!exOBJ.equals("")){
+                      JSONArray exOBJArray = new JSONArray(exOBJ);//환승역 배열
+                      for (int i = 0; i < exOBJArray.length(); i++){
+
+                      }
+                  }else {
+
+                  }
+
+
+              }
+            }catch (Exception e){
+
+            }
+        }
+
+        @Override
+        public void onError(int i, String s, API api) {
+
+        }
+    };
+
     public OnResultCallbackListener busStationInfo = new OnResultCallbackListener() {  //특정 좌표 기준 반경내 대중교통 POI 정보
         // 호출 성공 시 실행
         @Override

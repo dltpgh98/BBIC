@@ -197,7 +197,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     private StationList[] StationLists;
     private static String y = "",x = "";
-    private static Odsay point_search;
+    private static Odsay odsay;
     private static Odsay bus_info;
     private static String StationName;
     private static int StationId;
@@ -274,22 +274,24 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         naverMap.setOnMapClickListener((point, coord) -> {
 
-            point_search = new Odsay();
+            odsay = new Odsay();
             bus_info = new Odsay();
             StationName = "";
+            x = "";
+            y = "";
             y = String.valueOf(infoWindow.getPosition().latitude);
             x = String.valueOf(infoWindow.getPosition().longitude);
             Log.d("위치 좌표 Y",String.valueOf(infoWindow.getPosition().latitude));
             Log.d("위치 좌표 X",String.valueOf(infoWindow.getPosition().longitude));
-            odsayService.requestPointSearch(x,y,"5","1:2", point_search.pointSearch);
+            odsayService.requestPointSearch(x,y,"5","1:2", odsay.pointSearch);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        System.out.println("배열의 크기 : " + point_search.getCount());
-                        if(point_search.getCount() >=1){
-                            StationLists = new StationList[point_search.getStationList().length];
-                            StationLists = point_search.getStationList();
-                            for (int i = 0; i < point_search.getCount(); i++){
+                        System.out.println("배열의 크기 : " + odsay.getCount());
+                        if(odsay.getCount() >=1){
+                            StationLists = new StationList[odsay.getStationList().length];
+                            StationLists = odsay.getStationList();
+                            for (int i = 0; i < odsay.getCount(); i++){
 
                                 System.out.println("가져온 배열" + StationLists[i].getStationClass());
                                 System.out.println("가져온 정류장 이름" + StationLists[i].getStationName());
@@ -297,10 +299,15 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                 System.out.println("가져온 정류장 " + StationLists[i].getX());
                                 System.out.println("가져온 정류장 " + StationLists[i].getY());
                                 StationName = StationLists[i].getStationName();
-                                System.out.println("정류장 이름 : " + StationName + "\n" + "반목문안에서의 배열의 크기 : " + point_search.getCount());
+                                System.out.println("정류장 이름 : " + StationName + "\n" + "반목문안에서의 배열의 크기 : " + odsay.getCount());
                                 StationId = StationLists[i].getStationID();
                                 stationClass = StationLists[i].getStationClass();
-                                odsayService.requestBusStationInfo(String.valueOf(StationLists[i].getStationID()), point_search.busStationInfo);
+
+                                if(stationClass == 1){
+                                    odsayService.requestBusStationInfo(String.valueOf(StationLists[i].getStationID()), odsay.busStationInfo);
+                                }else if(stationClass == 2){
+                                           //odsayService.requestSubwayStationInfo(StationId, odsay.);
+                                 }
 
                             }
                         }
@@ -578,62 +585,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                if (api == API.BUS_STATION_INFO) {}
 //            }
 //        };
-//        OnResultCallbackListener pointSearch = new OnResultCallbackListener() {  //특정 좌표 기준 반경내 대중교통 POI 정보
-//            // 호출 성공 시 실행
-//            @Override
-//            public void onSuccess(ODsayData odsayData, API api) {
-//                try {
-//                    // API Value 는 API 호출 메소드 명을 따라갑니다.
-//                    if (api == API.POINT_SEARCH) {
-//                        JSONObject jsonObject = new JSONObject();
-//                        JSONArray jsonArray = jsonObject.getJSONArray("result");
-//                        int count = 0;
-//
-//                        while(count < jsonArray.length()){
-//                            JSONObject object = jsonArray.getJSONObject(count);
-//
-//                            String stationName = object.getString("stationName");
-//
-//                            BusStationList List =new BusStationList(stationName);
-//
-//                            busStationList.add(List);
-//                            count++;
-//                        }
-//
-//                        int count = odsayData.getJson().getJSONObject("result").getInt("count");
-//                        //String stationName = odsayData.getJson().getJSONObject("result").getString("stationName");
-//                        Log.d("Station count : %s", String.valueOf(count));
-//
-//
-//                        JSONArray station = odsayData.getJson().getJSONObject("result").getJSONArray("station");
-//                        Log.d("station info:", String.valueOf(station));
-//                        Log.d("station Test:", String.valueOf(station.getJSONObject(0).getString("stationID")));
-//                        for (int i = 0; i < station.length(); i++){
-//                            String info  = station.getString(i);
-//                            Log.d("info:", info);
-//                            busStationLists[i] = new BusStationList("","","","","");
-//                            busStationLists[i].setStationClass(station.getJSONObject(i).getString("stationClass"));
-//                            busStationLists[i].setStationName(station.getJSONObject(i).getString("stationName"));
-//                            busStationLists[i].setStationID(station.getJSONObject(i).getString("stationID"));
-//                            busStationLists[i].setX(station.getJSONObject(i).getString("x"));
-//                            busStationLists[i].setY(station.getJSONObject(i).getString("y"));
-//                            Log.d("클래스 확인", busStationLists[i].getStationClass());
-//                        }
-//
-//                    }
-//                }catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//            // 호출 실패 시 실행
-//            @Override
-//            public void onError(int i, String s, API api) {
-//                if (api == API.POINT_SEARCH) {}
-//            }
-//        };
-//        // API 호출
-//        odsayService.requestBusStationInfo("107475", busStationInfo);
-//        odsayService.requestPointSearch(x,y,"5","1:2",pointSearch);
 
     }
 
