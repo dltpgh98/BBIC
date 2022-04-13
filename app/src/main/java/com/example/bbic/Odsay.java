@@ -34,22 +34,124 @@ public class Odsay extends Maps_Activity {
                   String laneName = odsayData.getJson().getJSONObject("result").getString("laneName");
                   String laneCity = odsayData.getJson().getJSONObject("result").getString("laneCity");
                   String address = odsayData.getJson().getJSONObject("result").getJSONObject("defaultInfo").getString("address");
-                  String new_adress = odsayData.getJson().getJSONObject("result").getJSONObject("defaultInfo").getString("new_address");
 
-                  String exOBJ = odsayData.getJson().getJSONObject("result").getString("exOBJ");
-                  if(!exOBJ.equals("")){
-                      JSONArray exOBJArray = new JSONArray(exOBJ);//환승역 배열
+                  String new_adress;
+
+                  try{
+                      new_adress = odsayData.getJson().getJSONObject("result").getJSONObject("defaultInfo").getString("new_address");
+                  }catch (JSONException e){
+                      new_adress = "";
+                      e.printStackTrace();
+                  }
+
+                  String exOBJ;
+                  JSONArray exOBJArray;
+                  JSONObject sunJsonObject;
+                  String ex_stationName;
+                  int ex_stationID;
+                  int ex_type;
+                  String ex_laneName;
+                  String ex_laneCity;
+
+                  try{
+                      exOBJ = odsayData.getJson().getJSONObject("result").getJSONObject("exOBJ").getString("station");
+                      exOBJArray = new JSONArray(exOBJ);//환승역 배열
                       for (int i = 0; i < exOBJArray.length(); i++){
+                          sunJsonObject = exOBJArray.getJSONObject(i);
+                          ex_stationName = sunJsonObject.getString("stationName");
+                          ex_stationID = sunJsonObject.getInt("stationID");
+                          ex_type = sunJsonObject.getInt("type");
+                          ex_laneName = sunJsonObject.getString("laneName");
+                          ex_laneCity = sunJsonObject.getString("laneCity");
 
+                          System.out.println("sunJsonObject" + sunJsonObject + "\n" + "ex_stationName" + ex_stationName + "\n" + "ex_stationID" + ex_stationID + "\n" + "ex_type" + ex_type + "\n");
                       }
-                  }else {
+                  }catch (Exception e){
+                      exOBJ = "";
+                      e.printStackTrace();
+                      System.out.println("환승역 없음");
+                  }
 
+                  String prevOBJ;
+                  JSONArray prevOBJArray;
+                  JSONObject prevOBJObject;
+                  String prev_stationName;
+                  int prev_stationID;
+                  int prev_type;
+                  String prev_laneName;
+                  String prev_laneCity;
+                  double prev_x;
+                  double prev_y;
+
+                  try{
+                      prevOBJ = odsayData.getJson().getJSONObject("result").getJSONObject("prevOBJ").getString("station");
+                      prevOBJArray = new JSONArray(prevOBJ);//이전역 배열
+                      for (int i = 0; i < prevOBJArray.length(); i++){
+                          prevOBJObject = prevOBJArray.getJSONObject(i);
+                          prev_stationName = prevOBJObject.getString("stationName");
+                          prev_stationID = prevOBJObject.getInt("stationID");
+                          prev_type = prevOBJObject.getInt("type");
+                          prev_laneName = prevOBJObject.getString("laneName");
+                          prev_laneCity = prevOBJObject.getString("laneCity");
+                          prev_x = prevOBJObject.getDouble("x");
+                          prev_y = prevOBJObject.getDouble("y");
+
+                          System.out.println("prev_stationName" + prev_stationName + "\n" + "prev_stationID"+ prev_stationID + "\n");
+                      }
+                  }catch (Exception e){
+                      prevOBJ ="";
+                      System.out.println("이전역 없음");
+                      e.printStackTrace();
+                  }
+
+
+                  String nextOBJ;
+                  JSONArray nextOBJArray;
+                  JSONObject nextOBJObject;
+                  String next_stationName;
+                  int next_stationID;
+                  int next_type;
+                  String next_laneName;
+                  String next_laneCity;
+                  double next_x;
+                  double next_y;
+
+                  try{
+                      nextOBJ = odsayData.getJson().getJSONObject("result").getJSONObject("nextOBJ").getString("station");
+                      nextOBJArray = new JSONArray(nextOBJ);//다음역 배열
+                      for (int i = 0; i <nextOBJArray.length() ; i++){
+                          nextOBJObject = nextOBJArray.getJSONObject(i);
+                          next_stationName = nextOBJObject.getString("stationName");
+                          next_stationID = nextOBJObject.getInt("stationID");
+                          next_type = nextOBJObject.getInt("type");
+                          next_laneName = nextOBJObject.getString("laneName");
+                          next_laneCity = nextOBJObject.getString("laneCity");
+                          next_x = nextOBJObject.getDouble("x");
+                          next_y = nextOBJObject.getDouble("y");
+
+
+                          System.out.println("next_stationName" + next_stationName + "\n" + "next_stationID" + next_stationID + "\n");
+                      }
+                  }catch (JSONException e){
+                      nextOBJ = "";
+                      System.out.println("다음역 없음");
+                      e.printStackTrace();
+                  }
+
+                  String gate = odsayData.getJson().getJSONObject("result").getJSONObject("exitInfo").getString("gate");// 츨구 정보
+                  JSONArray gateArray = new JSONArray(gate);
+                  for (int i = 0; i < gateArray.length(); i++){
+                      JSONObject subJsonObject = gateArray.getJSONObject(i);
+                      String gateNo = subJsonObject.getString("gateNo");
+                      String gateLink = subJsonObject.getString("gateLink");
+
+                      System.out.println("gateLink" + gateLink);
                   }
 
 
               }
-            }catch (Exception e){
-
+            }catch (JSONException e){
+                e.printStackTrace();
             }
         }
 

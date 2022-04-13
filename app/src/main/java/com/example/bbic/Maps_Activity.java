@@ -306,7 +306,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                 if(stationClass == 1){
                                     odsayService.requestBusStationInfo(String.valueOf(StationLists[i].getStationID()), odsay.busStationInfo);
                                 }else if(stationClass == 2){
-                                           //odsayService.requestSubwayStationInfo(StationId, odsay.);
+                                           odsayService.requestSubwayStationInfo(String.valueOf(StationId), odsay.subwayStationInfo);
                                  }
 
                             }
