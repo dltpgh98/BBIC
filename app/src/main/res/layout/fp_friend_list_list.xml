@@ -51,9 +51,9 @@
 
         <ImageView
             android:id="@+id/ask_setting_iv"
-            android:layout_width="10dp"
+            android:layout_width="8dp"
             android:layout_height="30dp"
-            app:srcCompat="@drawable/setting_menu"
+            app:srcCompat="@drawable/setting_menu_f"
             android:layout_marginEnd="15dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -38,7 +38,7 @@ public class FP_friend_list extends Fragment {
 
         for(int i = 1; i<=10 ; i++ ){
             if(i%2==0)
-                arrayList.add(new PlaceData(R.drawable.image_profile,R.color.green,R.drawable.setting_menu,i+"번째 테스트"));
+                arrayList.add(new PlaceData(R.drawable.image_profile,R.color.green,R.drawable.setting_menu_f,i+"번째 테스트"));
         }
         listAdapter.setArrayList(arrayList);
         recyclerView.setAdapter(listAdapter);

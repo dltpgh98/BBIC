@@ -39,9 +39,9 @@ public class Bookmark_Place_abc extends Fragment {
         arrayList = new ArrayList<>();
         for(int i=1;i<=10;i++){
             if(i%2==0)
-                arrayList.add(new PlaceData(R.drawable.setting_menu,i+"번째 사람","인천"+i+"번지"));
+                arrayList.add(new PlaceData(R.drawable.setting_menu_f,i+"번째 사람","인천"+i+"번지"));
             else
-                arrayList.add(new PlaceData(R.drawable.setting_menu,i+"번째 사람","부천"+i+"번지"));
+                arrayList.add(new PlaceData(R.drawable.setting_menu_f,i+"번째 사람","부천"+i+"번지"));
 
         }
         placeAdapter.setArrayList(arrayList);
@@ -52,7 +52,7 @@ public class Bookmark_Place_abc extends Fragment {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlaceData placeData = new PlaceData(R.drawable.setting_menu,"테스트","부천");
+                PlaceData placeData = new PlaceData(R.drawable.setting_menu_f,"테스트","부천");
                 arrayList.add(placeData);
                 placeAdapter.notifyDataSetChanged();
             }

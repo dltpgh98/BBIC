@@ -43,7 +43,7 @@ public class Bookmark_Place_new extends Fragment {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlaceData placeData = new PlaceData(R.drawable.setting_menu,"장소","부천 부계동");
+                PlaceData placeData = new PlaceData(R.drawable.setting_menu_f,"장소","부천 부계동");
                 arrayList.add(placeData);
                 placeAdapter.notifyDataSetChanged();
             }

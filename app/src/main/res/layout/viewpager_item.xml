@@ -4,17 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
-<GridView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/gridView"
-    android:numColumns="2"
-    android:horizontalSpacing="10dp"
-    >
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/gridView"
+        android:numColumns="2"
+        android:horizontalSpacing="10dp"
+        >
 
-</GridView>
+    </GridView>
     <TextView
         android:id="@+id/view_pager_text"
         android:layout_width="wrap_content"
@@ -25,5 +25,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/test"
+        android:textSize="60sp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/test"
+        android:textSize="60sp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/test"
+        android:textSize="60sp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

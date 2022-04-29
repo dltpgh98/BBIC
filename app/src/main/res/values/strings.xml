@@ -2,5 +2,12 @@
     <string name="app_name">BBIC</string>
     <string name="StringValue">이미지가 열리지 않습니다.</string>
     <string name="setting_header_text">설정</string>
+    <string name="subway_header_text">지하철 노선도</string>
     <string name="kakao_APP_Key">2f3198abf019768640ab25011210a35b</string>
+    <string name="test">test</string>
+    <string name="name_info_window">Info Window</string>
+    <string name="description_info_window">정보 창</string>
+    <string name="format_info_window_on_marker">마커: %s</string>
+    <string name="format_info_window_on_map">좌표: (%1$.5f, %2$.5f)</string>
+    <string name="odsay_key">d/F477b1GZGKZgWCv8LynPEERmoxCdE1jSOojHzKNPM</string>
 </resources>
