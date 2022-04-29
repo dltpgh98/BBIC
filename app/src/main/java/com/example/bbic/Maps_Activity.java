@@ -28,6 +28,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -47,6 +48,7 @@ import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.odsay.odsayandroidsdk.ODsayService;
+import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -62,6 +64,9 @@ import java.util.Vector;
 public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallback {
 
 
+    public Maps_Activity() {
+    }
+
     private static class InfoWindowAdapter extends InfoWindow.DefaultTextAdapter {
 
 
@@ -73,13 +78,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         @Override
         public CharSequence getText(@NonNull InfoWindow infoWindow) {
 
-
-
             if (infoWindow.getMarker() != null) {
                 return getContext().getString(R.string.format_info_window_on_marker, infoWindow.getMarker().getTag());
             } else {
-
-
 //                    y = String.valueOf(infoWindow.getPosition().latitude);
 //                    x = String.valueOf(infoWindow.getPosition().longitude);
                     System.out.println("인포윈도우에서 정류장 이름 : " + StationName);
@@ -188,6 +189,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private FusedLocationSource locationSource;
     private boolean drawerEnabled = false;
 
+    private ViewPager2 viewPager;
+    private WormDotsIndicator indicator;
+    private ConstraintLayout view_userpage;
+
     private NaverMap naverMap;
 
     private String allDust, weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city;
@@ -281,6 +286,12 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             y = "";
             y = String.valueOf(infoWindow.getPosition().latitude);
             x = String.valueOf(infoWindow.getPosition().longitude);
+            Map_Find_way mapFind_way =new Map_Find_way();
+
+            odsayService.requestSearchPubTransPath("126.8881529057685","37.49185398304374",x,y,"0","0","0", mapFind_way.Find_way);
+            odsayService.requestLoadLane("0:0@1673:1:25:27@2:2:233:239",mapFind_way.LoadLane);
+
+
             Log.d("위치 좌표 Y",String.valueOf(infoWindow.getPosition().latitude));
             Log.d("위치 좌표 X",String.valueOf(infoWindow.getPosition().longitude));
             odsayService.requestPointSearch(x,y,"5","1:2", odsay.pointSearch);
@@ -506,9 +517,16 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
 
         //뷰페이저 설정
-        ViewPager2 viewPager = findViewById(R.id.view_pager);
-        ViewpagerAdapter adapter = new ViewpagerAdapter(setTextList());
-        viewPager.setAdapter(adapter);
+        viewPager = findViewById(R.id.view_pager);
+        ViewpagerAdapter pagerAdapter = new ViewpagerAdapter(setTextList());
+        viewPager.setAdapter(pagerAdapter);
+
+        viewPager.setOnClickListener(onClickListener);
+
+        indicator = (WormDotsIndicator) findViewById(R.id.dots_indicator);
+        indicator.setViewPager2(viewPager);
+
+        final ImageButton ibtn = (ImageButton)viewPager.findViewById(R.id.view_item_ibtn1);
 
         editText.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -861,7 +879,4 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)||locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
-    /*private void intentPutExtra(Intent intent){
-
-    }*/
 }

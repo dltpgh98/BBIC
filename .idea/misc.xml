@@ -31,11 +31,15 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/line_fifth.xml" value="0.261" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/line_first.xml" value="0.261" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/line_m.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/bar.xml" value="0.247" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/borderline.xml" value="0.1185" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/header_stroke.xml" value="0.2605" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/ic_baseline_circle_24.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/ic_baseline_keyboard_arrow_right.xml" value="0.2605" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.247" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/ic_launcher_background.xml" value="0.139" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/ic_search.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/sliding_corner.xml" value="0.247" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout-ldltr/drawer.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout-ldltr/setting.xml" value="0.2708860759493671" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout-ldltr/test.xml" value="0.17916666666666667" />
@@ -62,7 +66,8 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/promise_write.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/subway.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/test.xml" value="0.17916666666666667" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/viewpager_item.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/viewpager_header.xml" value="0.2015625" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/viewpager_item.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/xml/network_security_config.xml" value="0.17300724637681159" />
       </map>
     </option>

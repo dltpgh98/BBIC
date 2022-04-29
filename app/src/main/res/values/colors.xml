@@ -13,6 +13,9 @@
     <color name="green">#3AFF00</color>
     <color name="blue">#3F51B5</color>
     <color name="transparent">#00ff0000</color>
+    <color name="normal">#89000000</color>
+    <color name="PersianBlue">#1A35E9</color>
+    <color name="bar">#BFBFBF</color>
 
     <color name="colorPrimary">#e27600</color>
     <color name="colorPrimaryDark">#000000</color>
