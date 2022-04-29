@@ -853,7 +853,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         });
         builder.create().show();//생성후 보여주기
     }
-
+//
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
