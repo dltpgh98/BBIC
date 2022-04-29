@@ -1,281 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <TableLayout
-        android:id="@+id/view_item_table"
+    <GridView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="20sp"
-        android:layout_marginVertical="10sp"
-        android:stretchColumns="*"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="64dp">
+        android:id="@+id/gridView"
+        android:numColumns="2"
+        android:horizontalSpacing="10dp"
+        >
 
-        <TableRow android:id="@+id/view_item_row1">
-
-            <ImageButton
-                android:id="@+id/view_item_ibtn1"
-                android:layout_width="match_parent"
-                android:layout_height="66sp"
-                android:layout_weight="2"
-                android:background="@color/transparent"
-                android:contentDescription="@string/StringValue"
-                android:scaleType="fitCenter"
-                android:src="@drawable/image_profile" />
-
-            <ImageButton
-                android:id="@+id/view_item_ibtn2"
-                android:layout_width="match_parent"
-                android:layout_height="66sp"
-                android:layout_weight="2"
-                android:background="@color/transparent"
-                android:contentDescription="@string/StringValue"
-                android:scaleType="fitCenter"
-                android:src="@drawable/image_profile" />
-
-            <ImageButton
-                android:id="@+id/view_item_ibtn3"
-                android:layout_width="match_parent"
-                android:layout_height="66sp"
-                android:layout_weight="2"
-                android:background="@color/transparent"
-                android:contentDescription="@string/StringValue"
-                android:scaleType="fitCenter"
-                android:src="@drawable/image_profile" />
-
-            <ImageButton
-                android:id="@+id/view_item_ibtn4"
-                android:layout_width="match_parent"
-                android:layout_height="66sp"
-                android:layout_weight="2"
-                android:background="@color/transparent"
-                android:contentDescription="@string/StringValue"
-                android:scaleType="fitCenter"
-                android:src="@drawable/image_profile" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/view_item_row2"
-            android:padding="0sp"
-            android:layout_marginBottom="10sp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.4" />
-
-            <TextView
-                android:id="@+id/view_item_name1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:ellipsize="marquee"
-                android:fontFamily="@font/fontstyle"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="@string/user_name"
-                android:textAlignment="viewEnd"
-                app:drawableEndCompat="@drawable/ic_baseline_circle_24"
-                app:drawableTint="@color/green" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/view_item_name2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:ellipsize="marquee"
-                android:fontFamily="@font/fontstyle"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="@string/user_name"
-                android:textAlignment="viewEnd"
-                app:drawableEndCompat="@drawable/ic_baseline_circle_24"
-                app:drawableTint="@color/green" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/view_item_name3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:ellipsize="marquee"
-                android:fontFamily="@font/fontstyle"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="@string/user_name"
-                android:textAlignment="viewEnd"
-                app:drawableEndCompat="@drawable/ic_baseline_circle_24"
-                app:drawableTint="@color/orange" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/view_item_name4"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:ellipsize="marquee"
-                android:fontFamily="@font/fontstyle"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="@string/user_name"
-                android:textAlignment="viewEnd"
-                app:drawableEndCompat="@drawable/ic_baseline_circle_24"
-                app:drawableTint="@color/orange" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.6" />
-        </TableRow>
-
-        <TableRow android:id="@+id/view_item_row3">
-
-            <ImageButton
-                android:id="@+id/view_item_ibtn5"
-                android:layout_width="match_parent"
-                android:layout_height="66sp"
-                android:layout_weight="2"
-                android:background="@color/transparent"
-                android:contentDescription="@string/StringValue"
-                android:scaleType="fitCenter"
-                android:src="@drawable/image_profile" />
-
-            <ImageButton
-                android:id="@+id/view_item_ibtn6"
-                android:layout_width="match_parent"
-                android:layout_height="66sp"
-                android:layout_weight="2"
-                android:background="@color/transparent"
-                android:contentDescription="@string/StringValue"
-                android:scaleType="fitCenter"
-                android:src="@drawable/image_profile" />
-
-            <ImageButton
-                android:id="@+id/view_item_ibtn7"
-                android:layout_width="match_parent"
-                android:layout_height="66sp"
-                android:layout_weight="2"
-                android:background="@color/transparent"
-                android:contentDescription="@string/StringValue"
-                android:scaleType="fitCenter"
-                android:src="@drawable/image_profile" />
-
-            <ImageButton
-                android:id="@+id/view_item_ibtn8"
-                android:layout_width="match_parent"
-                android:layout_height="66sp"
-                android:layout_weight="2"
-                android:background="@color/transparent"
-                android:contentDescription="@string/StringValue"
-                android:scaleType="fitCenter"
-                android:src="@drawable/image_profile" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/view_item_row4"
-            android:padding="0sp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.4" />
-
-            <TextView
-                android:id="@+id/view_item_name5"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:ellipsize="marquee"
-                android:fontFamily="@font/fontstyle"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="@string/user_name"
-                android:textAlignment="viewEnd"
-                app:drawableEndCompat="@drawable/ic_baseline_circle_24"
-                app:drawableTint="@color/green" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/view_item_name6"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:ellipsize="marquee"
-                android:fontFamily="@font/fontstyle"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="@string/user_name"
-                android:textAlignment="viewEnd"
-                app:drawableEndCompat="@drawable/ic_baseline_circle_24"
-                app:drawableTint="@color/green" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/view_item_name7"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:ellipsize="marquee"
-                android:fontFamily="@font/fontstyle"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="@string/user_name"
-                android:textAlignment="viewEnd"
-                app:drawableEndCompat="@drawable/ic_baseline_circle_24"
-                app:drawableTint="@color/orange" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/view_item_name8"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:ellipsize="marquee"
-                android:fontFamily="@font/fontstyle"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="@string/user_name"
-                android:textAlignment="viewEnd"
-                app:drawableEndCompat="@drawable/ic_baseline_circle_24"
-                app:drawableTint="@color/orange" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.6" />
-        </TableRow>
-    </TableLayout>
-
+    </GridView>
+    <TextView
+        android:id="@+id/view_pager_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/test"
+        android:textSize="60sp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/test"
+        android:textSize="60sp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/test"
+        android:textSize="60sp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
