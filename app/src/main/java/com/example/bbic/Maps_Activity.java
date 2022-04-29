@@ -27,6 +27,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -49,6 +50,7 @@ import com.odsay.odsayandroidsdk.API;
 import com.odsay.odsayandroidsdk.ODsayData;
 import com.odsay.odsayandroidsdk.ODsayService;
 import com.odsay.odsayandroidsdk.OnResultCallbackListener;
+import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -181,6 +183,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private FusedLocationSource locationSource;
     private boolean drawerEnabled = false;
 
+    private ViewPager2 viewPager;
+    private WormDotsIndicator indicator;
+    private ConstraintLayout view_userpage;
+
     private NaverMap naverMap;
 
     private String allDust, weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city;
@@ -254,7 +260,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         });
 
         markersPosition = new Vector<LatLng>();
-        for (int x = 0; x < 100; ++x) {
+        /*for (int x = 0; x < 100; ++x) {
             for (int y = 0; y < 100; ++y) {
                 markersPosition.add(new LatLng(
                         initialPosition.latitude - (REFERANCE_LAT * x),
@@ -273,7 +279,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         initialPosition.longitude - (REFERANCE_LNG * y)
                 ));
             }
-        }
+        }*/
         // 카메라 이동 되면 호출 되는 이벤트
         naverMap.addOnCameraChangeListener(new NaverMap.OnCameraChangeListener() {
             @Override
@@ -385,10 +391,16 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
 
         //뷰페이저 설정
-        ViewPager2 viewPager = findViewById(R.id.view_pager);
-        ViewpagerAdapter adapter = new ViewpagerAdapter(setTextList());
-        viewPager.setAdapter(adapter);
+        viewPager = findViewById(R.id.view_pager);
+        ViewpagerAdapter pagerAdapter = new ViewpagerAdapter(setTextList());
+        viewPager.setAdapter(pagerAdapter);
 
+        viewPager.setOnClickListener(onClickListener);
+
+        indicator = (WormDotsIndicator) findViewById(R.id.dots_indicator);
+        indicator.setViewPager2(viewPager);
+
+        final ImageButton ibtn = (ImageButton)viewPager.findViewById(R.id.view_item_ibtn1);
         editText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
@@ -498,7 +510,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             Log.d("info:", info);
 
                         }
-
                     }
                 }catch (JSONException e) {
                     e.printStackTrace();
@@ -793,7 +804,5 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)||locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
-    /*private void intentPutExtra(Intent intent){
 
-    }*/
 }
