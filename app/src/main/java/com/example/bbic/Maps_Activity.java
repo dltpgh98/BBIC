@@ -208,6 +208,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private static int StationId;
     private static int stationClass;
 
+    ODsayService odsayService;
+
 
     //수정할수도 있음 ==============================================
     // 현재 카메라가 보고있는 위치
@@ -245,9 +247,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         geocoder = new Geocoder(this);
         this.naverMap = naverMap;
 
-        ODsayService odsayService = ODsayService.init(getApplicationContext(), "d/F477b1GZGKZgWCv8LynPEERmoxCdE1jSOojHzKNPM");
-        odsayService.setReadTimeout(5000);
-        odsayService.setConnectionTimeout(5000);
+        //ODsayService odsayService = ODsayService.init(getApplicationContext(), "d/F477b1GZGKZgWCv8LynPEERmoxCdE1jSOojHzKNPM");
+
 
         naverMap.setLayerGroupEnabled(LAYER_GROUP_TRANSIT,true);
         naverMap.setLocationSource(locationSource);
@@ -327,7 +328,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         infoWindow.open(naverMap);
 
                     }
-                },2500);
+                },1);
 
 
 
@@ -441,6 +442,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        odsayService = ODsayService.init(getApplicationContext(), "d/F477b1GZGKZgWCv8LynPEERmoxCdE1jSOojHzKNPM");
+        odsayService.setReadTimeout(5000);
+        odsayService.setConnectionTimeout(5000);
 
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
         gpsTracker = new GpsTracker(Maps_Activity.this);
@@ -609,8 +614,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     private void drawerInit(String myAddress){
         add = myAddress.split(" ");
-        area=add[1];
-        city=add[2];
+        area=add[0];
+        city=add[1];
         final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query="+area+" "+city+"날씨"; //웹크롤링 할 주소(1)
         final String covidURL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=코로나19"; //웹크롤링 할 주소(2)
         //스레드간 데이터 전달을 위한 번들 생성
