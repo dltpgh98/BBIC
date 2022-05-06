@@ -113,6 +113,8 @@ public class Login_Activity extends AppCompatActivity {
                     Log.d(TAG,"invoke: age" + user.getKakaoAccount().getAgeRange());
 
 
+
+
 //                    nickname.setText(user.getKakaoAccount().getProfile().getNickname());
 //
 //                    Glide.with(profileImage).load(user.getKakaoAccount().
