@@ -217,7 +217,7 @@
                 >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100sp"
+                    android:layout_height="110sp"
                     android:background="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -226,6 +226,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="1.0">
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/start_pos_tilay"
                         android:layout_width="280dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toTopOf="parent"
@@ -238,19 +239,23 @@
                             android:hint="출발지"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/end_pos_et"
-                        android:layout_width="280sp"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="280dp"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:hint="도착지"
-                        android:layout_marginTop="10dp"
-                        app:layout_constraintTop_toBottomOf="@id/start_pos_et"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintTop_toBottomOf="@id/start_pos_tilay"
+                        app:layout_constraintStart_toStartOf="parent">
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/end_pos_et"
+                            android:layout_width="280sp"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:hint="도착지" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
                     <ImageButton
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
-                        app:layout_constraintStart_toEndOf= "@id/start_pos_et"
+                        app:layout_constraintStart_toEndOf= "@id/start_pos_tilay"
                         app:layout_constraintEnd_toEndOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

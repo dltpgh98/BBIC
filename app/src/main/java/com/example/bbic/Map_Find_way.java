@@ -181,6 +181,7 @@ public class Map_Find_way extends Maps_Activity{
                             for(int length = 0; length < l_graPos.length();length++){
                                 double gPos_x = l_graPos.getJSONObject(length).getDouble("x");
                                 double gPos_y = l_graPos.getJSONObject(length).getDouble("y");
+
                                 Log.d("graPos test x:",gPos_x+"y:"+gPos_y);
                             }
                         }
