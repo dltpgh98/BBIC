@@ -1,20 +1,18 @@
 package com.example.bbic;
 
-import android.util.Log;
-
 public class StationList {
 
-    private String stationClass;
+    private int stationClass;
     private String stationName;
-    private String stationID;
+    private int stationID;
     private String x;
     private String y;
 
-    public String getStationClass() {
+    public int getStationClass() {
         return stationClass;
     }
 
-    public void setStationClass(String stationClass) {
+    public void setStationClass(int stationClass) {
         this.stationClass = stationClass;
     }
 
@@ -26,11 +24,11 @@ public class StationList {
         this.stationName = stationName;
     }
 
-    public String getStationID() {
+    public int getStationID() {
         return stationID;
     }
 
-    public void setStationID(String stationID) {
+    public void setStationID(int stationID) {
         this.stationID = stationID;
     }
 
@@ -50,7 +48,7 @@ public class StationList {
         this.y = y;
     }
 
-    public StationList(String stationClass, String stationName, String stationID, String x, String y) {
+    public StationList(int stationClass, String stationName, int stationID, String x, String y) {
         this.stationClass = stationClass;
         this.stationName = stationName;
         this.stationID = stationID;
