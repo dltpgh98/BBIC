@@ -49,7 +49,7 @@ public class Bookmark_Transit_bus extends Fragment {
 
         recyclerView.setAdapter(busAdapter);
 
-        TextView textView = (TextView) rootView.findViewById(R.id.textView2);
+        TextView textView = (TextView) rootView.findViewById(R.id.find_way_busOrSub);
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -3,6 +3,9 @@ package com.example.bbic;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.overlay.PathOverlay;
 import com.odsay.odsayandroidsdk.API;
@@ -123,6 +126,20 @@ public class Map_Find_way extends Maps_Activity{
                             path_s[1]=bus_path;
                             path_s[2]=sb_path;
                             Log.d("Path_s",path_s[0]+"");
+                            view_recyclerView = (RecyclerView) findViewById(R.id.view_RecyclerView);
+                            linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+                            view_recyclerView.setLayoutManager(linearLayoutManager);
+
+                            fArrayList = new ArrayList<>();
+                            find_way_listAdapter = new Find_way_listAdapter(fArrayList);
+                            view_recyclerView.setAdapter(find_way_listAdapter);
+
+
+                            if(path_s[2]!=null){
+                                for (int i = 0; i < path_s.length; i++){
+//                                    Find_way_Data find_way_data = new Find_way_Data(path_s[2].getJSONArray(i),path_s[2].getJSONArray())
+                                }
+                            }
 
 //                        JSONObject s_path = path.getJSONObject(i);
 //                        String mapObj = s_path.getJSONObject("info").getString("mapObj");

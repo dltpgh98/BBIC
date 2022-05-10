@@ -5,14 +5,19 @@
       <map>
         <entry key="..\:/BBIC/do/app/src/main/res/drawable-v24/circle.xml" value="0.2225" />
         <entry key="..\:/BBIC/do/app/src/main/res/drawable-v24/circle2.xml" value="0.2225" />
+        <entry key="..\:/BBIC/do/app/src/main/res/drawable/beige_radious.xml" value="0.329" />
         <entry key="..\:/BBIC/do/app/src/main/res/drawable/ic_baseline_circle_24.xml" value="0.2225" />
         <entry key="..\:/BBIC/do/app/src/main/res/drawable/layout_radious.xml" value="0.215" />
+        <entry key="..\:/BBIC/do/app/src/main/res/drawable/red_radious.xml" value="0.329" />
         <entry key="..\:/BBIC/do/app/src/main/res/drawable/sliding_corner.xml" value="0.215" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark.xml" value="0.215625" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark_place.xml" value="0.215625" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark_place_list.xml" value="0.30572916666666666" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/find_way_item.xml" value="0.5" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/map_find_way.xml" value="0.18489583333333334" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/map_find_way_map.xml" value="0.15729166666666666" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/viewpager_item.xml" value="0.1875" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/activity_main.xml" value="0.23097826086956522" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/bookmark.xml" value="0.25" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/bookmark_place.xml" value="0.18489583333333334" />
