@@ -25,6 +25,8 @@ import com.kakao.sdk.talk.model.Friend;
 import com.kakao.sdk.talk.model.Friends;
 import com.kakao.sdk.talk.model.FriendsContext;
 
+import org.w3c.dom.Document;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,9 +57,26 @@ public class FP_friend extends Fragment {
                 test.test1();
 
 
-                test.getArray();
+//                test.getArray();
+//
+//                System.out.println("가져온 카카오톡 친구목록" + Arrays.toString(test.getArray()));
 
-                System.out.println("가져온 카카오톡 친구목록" + Arrays.toString(test.getArray()));
+                new Thread() {
+                @Override
+                public void run() {
+                    Document doc;
+                    try {
+                        Thread.sleep(2000);
+                        test.getArray();
+                        System.out.println("가져온 카카오톡 친구목록" + Arrays.toString(test.getArray()));
+                        System.out.println("가져온 카카오톡 친구목록" + test.getArray()[0].friend_id);
+
+                        } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+
+                }
+            }.start();
 
 
 //                RequestQueue queue = Volley.newRequestQueue(rootView.getContext());
