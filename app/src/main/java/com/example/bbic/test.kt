@@ -4,7 +4,7 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import com.kakao.sdk.talk.TalkApiClient
 import com.kakao.sdk.talk.model.Friend
-
+//
 class test {
     var result : Int = 0;
     var array = Array<KakaoFriend?>(result){null}
@@ -36,7 +36,7 @@ class test {
                         val Image = friend_Image
                         val uuid = friend_uuid
 
-                        val kakaFriend = KakaoFriend(id, Nikname, Image, uuid)
+                            val kakaFriend = KakaoFriend(id, Nikname, Image, uuid)
 
                         array[x] = kakaFriend
                     }
