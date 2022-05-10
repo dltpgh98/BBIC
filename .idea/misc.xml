@@ -14,6 +14,7 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/drawer.xml" value="0.17603850050658562" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/loading.xml" value="0.18489583333333334" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/menu/navi_menu.xml" value="0.25" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/beige_radious.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_dialog.xml" value="0.261" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_a.xml" value="0.261" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_e.xml" value="0.261" />
@@ -27,6 +28,8 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_seventh.xml" value="0.261" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_su.xml" value="0.261" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_ui.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/circle2.xml" value="0.1405" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/ic_baseline_check.xml" value="0.1405" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.139" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/line_fifth.xml" value="0.261" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/line_first.xml" value="0.261" />
@@ -55,6 +58,7 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/bookmark_transit_subway.xml" value="0.16485507246376813" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/bookmark_transit_subway_list.xml" value="0.11197916666666667" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/drawer.xml" value="0.16983695652173914" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/find_way_item.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp.xml" value="0.22" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_add_kakaofriend.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_add_kakaofriend_item.xml" value="0.13333333333333333" />
