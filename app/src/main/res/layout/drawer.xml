@@ -194,6 +194,13 @@
             android:textColor="@color/black"
             android:textSize="16sp" />
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150sp"
+            android:layout_marginTop="650sp"
+            android:src="@drawable/icon_bbic_logo"
+            android:scaleType="centerCrop"/>
+
 
     </RelativeLayout>
 
