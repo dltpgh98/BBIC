@@ -21,7 +21,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kakao.sdk.talk.TalkApiClient;
+import com.kakao.sdk.talk.model.Friend;
+import com.kakao.sdk.talk.model.Friends;
+import com.kakao.sdk.talk.model.FriendsContext;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,6 +53,13 @@ public class FP_friend extends Fragment {
             public void onClick(View view) {
                 test test = new test();
                 test.test1();
+
+
+                test.getArray();
+
+                System.out.println("가져온 카카오톡 친구목록" + Arrays.toString(test.getArray()));
+
+
 //                RequestQueue queue = Volley.newRequestQueue(rootView.getContext());
 //                String url = "https://kapi.kakao.com/v1/api/talk/friends";
 //                StringRequest getRequest = new StringRequest(Request.Method.GET, url,
