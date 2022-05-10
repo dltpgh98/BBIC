@@ -3,78 +3,26 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/BBIC/app/src/main/res/drawable/green_radious.xml" value="0.2135" />
-        <entry key="..\:/BBIC/app/src/main/res/drawable/ic_baseline_check.xml" value="0.2135" />
-        <entry key="..\:/BBIC/app/src/main/res/drawable/ic_baseline_close.xml" value="0.2135" />
-        <entry key="..\:/BBIC/app/src/main/res/drawable/ic_delete.xml" value="0.2135" />
-        <entry key="..\:/BBIC/app/src/main/res/drawable/ic_search.xml" value="0.2135" />
-        <entry key="..\:/BBIC/app/src/main/res/drawable/layout_radious.xml" value="0.2655" />
-        <entry key="..\:/BBIC/app/src/main/res/drawable/layout_radious2.xml" value="0.2655" />
-        <entry key="..\:/BBIC/app/src/main/res/drawable/left_curve.xml" value="0.2135" />
-        <entry key="..\:/BBIC/app/src/main/res/drawable/loading_backgourd.xml" value="0.2945" />
-        <entry key="..\:/BBIC/app/src/main/res/drawable/red_radious.xml" value="0.2135" />
-        <entry key="..\:/BBIC/app/src/main/res/drawable/set_logo.xml" value="0.2945" />
-        <entry key="..\:/BBIC/app/src/main/res/layout/activity_main.xml" value="0.21822916666666667" />
-        <entry key="..\:/BBIC/app/src/main/res/layout/bookmark.xml" value="0.25" />
-        <entry key="..\:/BBIC/app/src/main/res/layout/bookmark_place.xml" value="0.22" />
-        <entry key="..\:/BBIC/app/src/main/res/layout/bookmark_place_abc.xml" value="0.1828125" />
-        <entry key="..\:/BBIC/app/src/main/res/layout/bookmark_transit.xml" value="0.21822916666666667" />
-        <entry key="..\:/BBIC/app/src/main/res/layout/fp.xml" value="0.22" />
-        <entry key="..\:/BBIC/app/src/main/res/layout/fp_friend.xml" value="0.33" />
-        <entry key="..\:/BBIC/app/src/main/res/layout/fp_friend_ask.xml" value="0.11927083333333334" />
-        <entry key="..\:/BBIC/app/src/main/res/layout/fp_friend_ask_list.xml" value="0.5" />
-        <entry key="..\:/BBIC/app/src/main/res/layout/fp_friend_list.xml" value="0.11927083333333334" />
-        <entry key="..\:/BBIC/app/src/main/res/layout/fp_friend_list_list.xml" value="0.5" />
-        <entry key="..\:/BBIC/app/src/main/res/layout/fp_promise.xml" value="0.1" />
-        <entry key="..\:/BBIC/app/src/main/res/layout/fp_promise_ask.xml" value="0.11927083333333334" />
-        <entry key="..\:/BBIC/app/src/main/res/layout/fp_promise_ask_list.xml" value="0.3619791666666667" />
-        <entry key="..\:/BBIC/app/src/main/res/layout/fp_promise_list.xml" value="0.11927083333333334" />
-        <entry key="..\:/BBIC/app/src/main/res/layout/fp_promise_list_list.xml" value="0.5" />
-        <entry key="..\:/BBIC/app/src/main/res/layout/loading.xml" value="0.21822916666666667" />
-        <entry key="..\:/BBIC/app/src/main/res/layout/promise_write.xml" value="0.25" />
-        <entry key="..\:/BBIC/app/src/main/res/layout/test.xml" value="0.21822916666666667" />
-        <entry key="..\:/BBIC/app/src/main/res/layout/viewpager_item.xml" value="0.21822916666666667" />
-        <entry key="..\:/FusionProject/BBIC-do/app/src/main/res/drawable/loading_backgourd.xml" value="0.2925" />
-        <entry key="..\:/FusionProject/BBIC-do/app/src/main/res/layout/drawer.xml" value="0.36614583333333334" />
-        <entry key="..\:/FusionProject/BBIC-do/app/src/main/res/layout/loading.xml" value="0.36614583333333334" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/circle.xml" value="0.191" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/corner.xml" value="0.191" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/ic_baseline_block.xml" value="0.191" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.191" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/bar.xml" value="0.1875" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/blue_radious.xml" value="0.191" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/header_stroke.xml" value="0.191" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_check.xml" value="0.1875" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_circle_24.xml" value="0.117" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_close.xml" value="0.191" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_directions_bus_24.xml" value="0.1875" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.1875" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_minimize_24.xml" value="0.1875" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.1875" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_star_24.xml" value="0.1" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_launcher_background.xml" value="0.191" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.1" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_search.xml" value="0.191" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/icon_plus.xml" value="0.191" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/layer_list.xml" value="0.21" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/layout_radious.xml" value="0.1875" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/left_curve.xml" value="0.1" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/loading_backgourd.xml" value="0.191" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/red_radious.xml" value="0.191" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/sliding_corner.xml" value="0.1" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/activity_main.xml" value="0.1828125" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/bookmark.xml" value="0.1828125" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/bookmark_place_abc.xml" value="0.17916666666666667" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/drawer.xml" value="0.17916666666666667" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/loading.xml" value="0.1890625" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/login.xml" value="0.3614583333333333" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/promise_write.xml" value="0.34629629629629627" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/test.xml" value="0.36614583333333334" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/viewpager_header.xml" value="0.3744207599629286" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/viewpager_item.xml" value="0.25718194254445964" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/menu/navi_menu.xml" value="0.17916666666666667" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.117" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/circle.xml" value="0.162" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/circle2.xml" value="0.162" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_directions_24.xml" value="0.162" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_directions_bus_24.xml" value="0.162" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_search.xml" value="0.162" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/icon_plus.xml" value="0.162" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/layout_radious.xml" value="0.162" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/left_curve.xml" value="0.162" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/red_radious.xml" value="0.162" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/sliding_corner.xml" value="0.162" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout-ldltr/setting.xml" value="0.33" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/drawer.xml" value="0.1875" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/subway.xml" value="0.1875" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/test.xml" value="0.1875" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/view_detail.xml" value="0.1875" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/view_division.xml" value="0.1875" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/view_header.xml" value="0.1875" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/viewpager_item.xml" value="0.1875" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/vvvvvvv.xml" value="0.33" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/activity_main.xml" value="0.23097826086956522" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/bookmark.xml" value="0.25" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/bookmark_place.xml" value="0.18489583333333334" />
@@ -86,13 +34,36 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/drawer.xml" value="0.17603850050658562" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/loading.xml" value="0.18489583333333334" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/menu/navi_menu.xml" value="0.25" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_dialog.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_a.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_e.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_eighth.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_fifth.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_first.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_kc.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_ku.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_m.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_second.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_seventh.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_su.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/bg_line_ui.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.139" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/line_fifth.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/line_first.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable-v24/line_m.xml" value="0.261" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/bar.xml" value="0.247" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/borderline.xml" value="0.1185" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/header_stroke.xml" value="0.2605" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/ic_baseline_circle_24.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/ic_baseline_keyboard_arrow_right.xml" value="0.2605" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.247" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/ic_launcher_background.xml" value="0.139" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/ic_search.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/sliding_corner.xml" value="0.247" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout-ldltr/drawer.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout-ldltr/setting.xml" value="0.2708860759493671" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout-ldltr/test.xml" value="0.17916666666666667" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/activity_main.xml" value="0.24380574826560952" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/bookmark.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/bookmark_place.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/bookmark_place_abc.xml" value="0.1" />
@@ -103,7 +74,8 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/bookmark_transit_bus_list.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/bookmark_transit_subway.xml" value="0.16485507246376813" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/bookmark_transit_subway_list.xml" value="0.11197916666666667" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/drawer.xml" value="0.16983695652173914" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp.xml" value="0.22" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_friend.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_friend_ask.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_friend_list.xml" value="0.16666666666666666" />
@@ -112,8 +84,12 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_promise_list.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/login.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/promise_write.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/subway.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/test.xml" value="0.17916666666666667" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/viewpager_item.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/test2.xml" value="0.15579710144927536" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/viewpager_header.xml" value="0.2015625" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/viewpager_item.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/xml/network_security_config.xml" value="0.17300724637681159" />
       </map>
     </option>
   </component>

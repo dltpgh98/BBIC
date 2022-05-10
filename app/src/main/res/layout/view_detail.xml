@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="250sp"
+    android:orientation="horizontal"
+    android:id="@+id/view_detail">
+
+    <ImageView
+        android:id="@+id/view_detail_thumbnail"
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:src="@drawable/circle"
+        android:layout_marginVertical="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="ContentDescription" />
+    <ImageButton
+        android:id="@+id/view_detail_back_ibtn"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:layout_margin="10sp"
+        android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+        android:background="@color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/view_detail_name"
+        android:layout_width="100sp"
+        android:layout_height="30sp"
+        android:layout_marginVertical="125sp"
+        android:text="김동훈"
+        android:textAlignment="center"
+        android:fontFamily="@font/fontstyle"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <ImageButton
+        android:id="@+id/view_detail_add_ibtn"
+        android:layout_width="80sp"
+        android:layout_height="80sp"
+        android:layout_marginVertical="160sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="10sp"
+        android:src="@drawable/alarm_add"
+        android:scaleType="fitCenter"
+        android:background="@color/white"
+        tools:ignore="ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/view_detail_list_ibtn"
+        android:layout_width="80sp"
+        android:layout_height="80sp"
+        android:layout_marginVertical="160sp"
+        app:layout_constraintStart_toStartOf="@id/view_detail_add_ibtn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/view_detail_location_ibtn"
+        android:src="@drawable/alarm_list"
+        android:scaleType="fitCenter"
+        android:background="@color/white"
+        tools:ignore="ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/view_detail_location_ibtn"
+        android:layout_width="80sp"
+        android:layout_height="80sp"
+        android:layout_marginVertical="160sp"
+        app:layout_constraintStart_toStartOf="@id/view_detail_list_ibtn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/view_detail_way_ibtn"
+        android:src="@drawable/friend_location"
+        android:scaleType="fitCenter"
+        android:background="@color/white"
+        tools:ignore="ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/view_detail_way_ibtn"
+        android:layout_width="80sp"
+        android:layout_height="80sp"
+        android:layout_marginVertical="160sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/find_to_way"
+        android:scaleType="fitCenter"
+        android:background="@color/white"
+        android:layout_marginEnd="10sp"
+        tools:ignore="ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/view_detail_add_friend_ibtn"
+        android:layout_width="80sp"
+        android:layout_height="80sp"
+        android:layout_marginVertical="160sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/add_friend"
+        android:scaleType="fitCenter"
+        android:background="@color/white"
+        tools:ignore="ContentDescription"
+        android:visibility="gone"/>
+
+    <ImageButton
+        android:id="@+id/view_detail_cancel_friend_ibtn"
+        android:layout_width="80sp"
+        android:layout_height="80sp"
+        android:layout_marginVertical="160sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/cancel_friend"
+        android:scaleType="fitCenter"
+        android:background="@color/white"
+        tools:ignore="ContentDescription"
+        android:visibility="gone"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -58,7 +58,7 @@ public class Bookmark extends AppCompatActivity {
                     break;
                 case R.id.drawer_menu_1:
                     Log.d("클릭", "onClick: ");
-                    Intent intent1 = new Intent(getApplicationContext(), FP.class);
+                    Intent intent1 = new Intent(getApplicationContext(), Maps_Activity.class);
                     intent1.putExtra("닉네임", name);
                     intent1.putExtra("프로필", address);
                     intent1.putExtra("미세먼지", fineDust);

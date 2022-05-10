@@ -32,8 +32,8 @@ public class FP_friend extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), Promise_write.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getContext(), Promise_write.class);
+//                startActivity(intent);
             }
         });
 

@@ -38,8 +38,7 @@ public class ViewpagerAdapter extends RecyclerView.Adapter<ViewpagerAdapter.View
     @Override
     public ViewpagerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = null;
-        if(mode == 0){ view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewpager_item, parent, false);}
-        else { view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewpager_header, parent, false);}
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewpager_item, parent, false);
         return new ViewHolder(view);
     }
 

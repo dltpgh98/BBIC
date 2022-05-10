@@ -75,7 +75,7 @@
             android:layout_marginTop="260sp"
             android:text="초미세먼지"
             android:textColor="@color/black"
-            android:textSize="13sp"/>
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/drawer_fine_text"
@@ -101,14 +101,14 @@
             android:id="@+id/drawer_covid_text"
             android:layout_width="match_parent"
             android:layout_height="15sp"
-            android:layout_marginTop="285sp"
             android:layout_marginLeft="25sp"
+            android:layout_marginTop="285sp"
             android:layout_marginRight="25sp"
             android:background="@drawable/corner"
-            android:textSize="12sp"
-            android:textColor="@color/white"
             android:text="전일 코로나 확진자 : 000,000"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/drawer_menu_1"
