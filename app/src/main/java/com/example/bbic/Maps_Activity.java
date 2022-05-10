@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
@@ -48,8 +51,10 @@ import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.odsay.odsayandroidsdk.ODsayService;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
+import org.json.JSONArray;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -165,6 +170,36 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                    Intent intent = new Intent(getApplicationContext(), Bookmark.class);
 //                    startActivity(intent);
                     break;
+                case  R.id.main_find_way_ibtn:
+
+                    view_Header.setVisibility(View.GONE);
+                    viewPager.setVisibility(View.GONE);
+                    indicator.setVisibility(View.GONE);
+                    find_way_page.setVisibility(View.VISIBLE);
+
+
+                    upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+//                    if(upPanelLayout.getPanelState().equals(SlidingUpPanelLayout.PanelState.COLLAPSED)){
+//                        view_Header.setVisibility(View.VISIBLE);
+//                        viewPager.setVisibility(View.VISIBLE);
+//                        indicator.setVisibility(View.VISIBLE);
+//                        find_way_page.setVisibility(View.GONE);
+//                    }
+                    break;
+                case R.id.view_find_way_ibtn:
+                    System.out.println("검색 버튼");
+
+                    String sPosEt = sPosEdit.getText().toString();
+                    String ePosEt = ePosEdit.getText().toString();
+
+                    System.out.print(sPosEt+"시작 "+ePosEt+"도착");
+
+                    if(sPosEt!=null&&ePosEt!=null){
+                        nameToPos(sPosEt,ePosEt);
+                    }
+                    else{
+                        System.out.println("찾을수 없는 장소입니다.");
+                    }
             }
         }
     }
@@ -179,19 +214,28 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
     private View drawerView;
-    private ImageButton menuIbtn, searchIbtn;
+    private ImageButton menuIbtn, searchIbtn, findWayIbtn, vFindIbtn;
     private TextView
             temText, fineText, ultraText, covidText, nickName, areaText;
     private ImageView weatherImage, profile;
     private String[] add;
-    private EditText editText;
+    private EditText editText, sPosEdit, ePosEdit;
     private Button[] drawerMenu = new Button[6];
     private FusedLocationSource locationSource;
     private boolean drawerEnabled = false;
 
+    protected JSONArray[] path;
+    protected RecyclerView view_recyclerView;
+    protected ArrayList<Find_way_Data> fArrayList;
+    protected Find_way_listAdapter find_way_listAdapter;
+    protected LinearLayoutManager linearLayoutManager;
+
+    private SlidingUpPanelLayout upPanelLayout;
+
     private ViewPager2 viewPager;
     private WormDotsIndicator indicator;
-    private ConstraintLayout view_userpage;
+    private ConstraintLayout view_userpage, view_Header;
+    private LinearLayout find_way_page;
 
     private NaverMap naverMap;
 
@@ -200,6 +244,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private Vector<LatLng> markersPosition;
     private Vector<Marker> activeMarkers;
 
+    private double[] sPos,ePos;
     private StationList[] StationLists;
     private static String y = "",x = "";
     private static Odsay odsay;
@@ -208,8 +253,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private static int StationId;
     private static int stationClass;
 
-    ODsayService odsayService;
-
+    public static ODsayService odsayService;
 
     //수정할수도 있음 ==============================================
     // 현재 카메라가 보고있는 위치
@@ -247,8 +291,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         geocoder = new Geocoder(this);
         this.naverMap = naverMap;
 
-        //ODsayService odsayService = ODsayService.init(getApplicationContext(), "d/F477b1GZGKZgWCv8LynPEERmoxCdE1jSOojHzKNPM");
-
+        odsayService = ODsayService.init(getApplicationContext(), "d/F477b1GZGKZgWCv8LynPEERmoxCdE1jSOojHzKNPM");
+        odsayService.setReadTimeout(5000);
+        odsayService.setConnectionTimeout(5000);
 
         naverMap.setLayerGroupEnabled(LAYER_GROUP_TRANSIT,true);
         naverMap.setLocationSource(locationSource);
@@ -328,7 +373,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         infoWindow.open(naverMap);
 
                     }
-                },1);
+                },2500);
 
 
 
@@ -443,10 +488,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        odsayService = ODsayService.init(getApplicationContext(), "d/F477b1GZGKZgWCv8LynPEERmoxCdE1jSOojHzKNPM");
-        odsayService.setReadTimeout(5000);
-        odsayService.setConnectionTimeout(5000);
-
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
         gpsTracker = new GpsTracker(Maps_Activity.this);
 
@@ -487,6 +528,17 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         nickName = (TextView) findViewById(R.id.drawer_profile_name); // 카카오톡 닉네임
         areaText = (TextView) findViewById(R.id.drawer_area_text);
         editText = (EditText) findViewById(R.id.main_search_et);
+        findWayIbtn = (ImageButton) findViewById(R.id.main_find_way_ibtn);
+
+
+        upPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.slide);
+        view_Header = (ConstraintLayout)findViewById(R.id.view_header);
+        viewPager = (ViewPager2)findViewById(R.id.view_pager);
+        indicator = (WormDotsIndicator)findViewById(R.id.dots_indicator);
+        find_way_page = (LinearLayout)findViewById(R.id.view_find_way_lay);
+        vFindIbtn = (ImageButton)findViewById(R.id.view_find_way_ibtn);
+        sPosEdit= (EditText)findViewById(R.id.start_pos_et);
+        ePosEdit= (EditText)findViewById(R.id.end_pos_et);
 
         drawerMenu[0] = (Button) findViewById(R.id.drawer_menu_1);
         drawerMenu[1] = (Button) findViewById(R.id.drawer_menu_2);
@@ -507,7 +559,30 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         drawerMenu[4].setOnClickListener(onClickListener);
         drawerMenu[5].setOnClickListener(onClickListener);
 
+//============================================================================================SlidingUpPanel
+        upPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View panel, float slideOffset) {
+//                Log.d("upPanel 내용 ", "onPanelSlide, offset " + slideOffset);
+            }
+
+            @Override
+            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+                Log.d("upPanel 바뀔때 내용 ", "onPanelStateChanged " + newState);
+                if(newState == (SlidingUpPanelLayout.PanelState.COLLAPSED)&&view_Header.getVisibility()==View.GONE){
+                    view_Header.setVisibility(View.VISIBLE);
+                    viewPager.setVisibility(View.VISIBLE);
+                    indicator.setVisibility(View.VISIBLE);
+                    find_way_page.setVisibility(View.GONE);
+                    Log.d("바꿈","");
+                }
+            }
+        });
+//===================================================================================================
+
         searchIbtn.setOnClickListener(onClickListener); // 검색 버튼 리스너
+        findWayIbtn.setOnClickListener(onClickListener);
+        vFindIbtn.setOnClickListener(onClickListener);
 
         Intent intent = getIntent();
         name = intent.getStringExtra("닉네임");
@@ -614,8 +689,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     private void drawerInit(String myAddress){
         add = myAddress.split(" ");
-        area=add[0];
-        city=add[1];
+        area=add[1];
+        city=add[2];
         final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query="+area+" "+city+"날씨"; //웹크롤링 할 주소(1)
         final String covidURL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=코로나19"; //웹크롤링 할 주소(2)
         //스레드간 데이터 전달을 위한 번들 생성
@@ -858,7 +933,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         });
         builder.create().show();//생성후 보여주기
     }
-//
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
@@ -882,6 +957,44 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)||locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
+    public void nameToPos(String sEtPosName, String eEtPosName){
+        List<Address> sAddressList = null;
+        List<Address> eAddressList = null;
+        String sLatitude="";
+        String sLongitude="";
+        String eLatitude = "";
+        String eLongitude = "";
+        try{
+            sAddressList = geocoder.getFromLocationName(sEtPosName,10);
+            eAddressList = geocoder.getFromLocationName(eEtPosName,10);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        String []sSplitStr = sAddressList.get(0).toString().split(",");
+        String []eSplitStr = eAddressList.get(0).toString().split(",");
+
+//            String sAddress = splitStr[0].substring(splitStr[0].indexOf("\"") + 1,splitStr[0].length() - 2); //주소
+
+        sLatitude= sSplitStr[10].substring(sSplitStr[10].indexOf("=")+1);
+        sLongitude= sSplitStr[12].substring(sSplitStr[12].indexOf("=")+1);
+
+        eLatitude= eSplitStr[10].substring(eSplitStr[10].indexOf("=")+1);
+        eLongitude= eSplitStr[12].substring(eSplitStr[12].indexOf("=")+1);
+
+        Map_Find_way mapFindWay = new Map_Find_way();
+        odsayService.requestSearchPubTransPath(sLongitude,sLatitude,eLongitude,eLatitude,"0","0","0",mapFindWay.Find_way);
+
+//            System.out.print("\n sLati"+latitude+"sLong"+longitude+"\n");
+        //odsayService.requestSearchPubTransPath("126.8881529057685","37.49185398304374",x,y,"0","0","0", mapFind_way.Find_way);
+
+//        LatLng Pos = new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude));
+//        double[] pos = new double[2];
+//        pos[0]=Double.parseDouble(sLatitude);
+//        pos[1]=Double.parseDouble(sLongitude);
+//        return pos;
     }
 
 }
