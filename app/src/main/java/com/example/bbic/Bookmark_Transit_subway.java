@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bbic.Bookmark_Adapter.PlaceData;
+import com.example.bbic.Bookmark_Adapter.Transit_BusAdapter;
 import com.example.bbic.Bookmark_Adapter.Transit_SubwayAdapter;
 
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class Bookmark_Transit_subway extends Fragment {
 
         recyclerView.setAdapter(subwayAdapter);
 
-        TextView textView = (TextView) rootView.findViewById(R.id.find_way_busOrSub);
+        TextView textView = (TextView) rootView.findViewById(R.id.textView2);
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override

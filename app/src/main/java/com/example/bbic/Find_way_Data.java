@@ -14,7 +14,7 @@ public class Find_way_Data {
     private int sub_iv;
     private int expansion_iv;
 
-    public Find_way_Data(JSONArray object,int onFoot_time,int bus_iv,int bus_time,int sub_iv,int sub_time,int total_time,int expansion_iv,String bus_num,String sub_num){  //통합(버스+지하철) 인덱스번호 3번
+    public Find_way_Data(JSONArray object, int onFoot_time, int bus_iv, int bus_time, int sub_iv, int sub_time, int total_time, int expansion_iv, String bus_num, String sub_num){  //통합(버스+지하철) 인덱스번호 3번
         this.object=object;
         this.onFoot_time=onFoot_time;
         this.bus_iv=bus_iv;

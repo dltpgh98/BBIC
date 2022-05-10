@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Find_way_listAdapter extends RecyclerView.Adapter<Find_way_listAdapter.FindWayListViewHolder> {
     private ArrayList<Find_way_Data> arrayList;

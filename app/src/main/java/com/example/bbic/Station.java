@@ -7,7 +7,7 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
-//잔재
+
 // 역정보 클래스
 public class Station implements Parcelable {
     public static final int EQUAL = 0;
