@@ -125,13 +125,8 @@ public class Map_Find_way extends Maps_Activity{
                             path_s[0]=sub_path;
                             path_s[1]=bus_path;
                             path_s[2]=sb_path;
-//
-                            System.out.println("===================테스트==================="+path_s[0]);
-
-                            view_recyclerView = findViewById(R.id.view_RecyclerView);
-
-                            System.out.println("===================테스트==================="+path_s[0]);
-
+                            Log.d("Path_s",path_s[0]+"");
+                            view_recyclerView = (RecyclerView) findViewById(R.id.view_RecyclerView);
                             linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                             view_recyclerView.setLayoutManager(linearLayoutManager);
 

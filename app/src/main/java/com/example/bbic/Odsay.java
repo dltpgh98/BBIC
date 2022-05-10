@@ -17,7 +17,7 @@ public class Odsay extends Maps_Activity {
     BusList[] busLists;
     int stationType;
     int count = 0;
-
+//
     public Odsay() {
     }
 
@@ -276,7 +276,8 @@ public class Odsay extends Maps_Activity {
 
                     }
                 }catch (JSONException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
+                    System.out.println("콜백 리스너 에러");
                 }
 
             }

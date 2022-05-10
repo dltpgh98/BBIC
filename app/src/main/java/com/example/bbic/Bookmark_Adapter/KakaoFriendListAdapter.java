@@ -17,13 +17,13 @@ public class KakaoFriendListAdapter extends BaseAdapter {
 
     Context mContext = null;
     LayoutInflater mLayoutInflater = null;
-    ArrayList<KakaoFriendData> Data;
-
-    public KakaoFriendListAdapter(Context mContext, ArrayList<KakaoFriendData> data) {
-        this.mContext = mContext;
-        Data = data;
-        mLayoutInflater = LayoutInflater.from(mContext);
-    }
+//    ArrayList<KakaoFriendData> Data;
+//
+//    public KakaoFriendListAdapter(Context mContext, ArrayList<KakaoFriendData> data) {
+//        this.mContext = mContext;
+//        Data = data;
+//        mLayoutInflater = LayoutInflater.from(mContext);
+//    }
 
 
     @Override
@@ -43,14 +43,14 @@ public class KakaoFriendListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-
-        View view1 = mLayoutInflater.inflate(R.layout.fp_add_kakaofriend_item, null);
-
-        ImageView imageView = (ImageView)view1.findViewById(R.id.fp_profile);
-        TextView textView = (TextView)view1.findViewById(R.id.fp_nickname);
-
-        Glide.with(view1).load(Data.get(i).getProfileThumbnailImage()).circleCrop().into(imageView);
-        textView.setText(Data.get(i).getProfileNickname());
-        return view1;
+//
+//        View view1 = mLayoutInflater.inflate(R.layout.fp_add_kakaofriend_item, null);
+//
+//        ImageView imageView = (ImageView)view1.findViewById(R.id.fp_profile);
+//        TextView textView = (TextView)view1.findViewById(R.id.fp_nickname);
+//
+//        Glide.with(view1).load(Data.get(i).getProfileThumbnailImage()).circleCrop().into(imageView);
+//        textView.setText(Data.get(i).getProfileNickname());
+        return view;
     }
 }
