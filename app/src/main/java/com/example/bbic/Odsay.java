@@ -17,7 +17,7 @@ public class Odsay extends Maps_Activity {
     BusList[] busLists;
     int stationType;
     int count = 0;
-
+//
     public Odsay() {
     }
 
@@ -206,7 +206,7 @@ public class Odsay extends Maps_Activity {
                 // API Value 는 API 호출 메소드 명을 따라갑니다.
                 //버스 정류장 아이디 검색 후 버스 정보 출력(해당 정류장의 버스번호, 운행 시간 등)
                 if (api == API.BUS_STATION_INFO) {
-
+//
                     String lane = odsayData.getJson().getJSONObject("result").getString("lane");
                     JSONArray laneArray = new JSONArray(lane);
                     for (int i = 0; i < laneArray.length(); i++){

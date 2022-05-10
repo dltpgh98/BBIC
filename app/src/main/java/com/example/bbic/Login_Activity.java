@@ -38,9 +38,6 @@ public class Login_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-
-
-
         login_btn = (Button) findViewById(R.id.login_btn);
         logout_btn = (Button) findViewById(R.id.logout);
         nickname = (TextView) findViewById(R.id.nickname);
@@ -111,6 +108,8 @@ public class Login_Activity extends AppCompatActivity {
                     Log.d(TAG,"invoke: gerder" + user.getKakaoAccount().getGender());
                     // 유저의 어카운트 정보에 나이
                     Log.d(TAG,"invoke: age" + user.getKakaoAccount().getAgeRange());
+
+
 
 
 //                    nickname.setText(user.getKakaoAccount().getProfile().getNickname());
