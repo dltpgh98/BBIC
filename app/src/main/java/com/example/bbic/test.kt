@@ -4,7 +4,7 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import com.kakao.sdk.talk.TalkApiClient
 import com.kakao.sdk.talk.model.Friend
-//
+
 class test {
     var result : Int = 0;
     var array = Array<KakaoFriend?>(result){null}
