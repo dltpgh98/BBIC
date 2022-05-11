@@ -25,7 +25,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Maps_Activity"/>
+        <activity android:name=".Maps_Activity"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".Login_Activity"/>
         <activity android:name=".Bookmark"/>
         <activity android:name=".FP"/>

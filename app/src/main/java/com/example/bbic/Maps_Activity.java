@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -169,6 +170,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 case R.id.main_search_ibtn:
 //                    Intent intent = new Intent(getApplicationContext(), Bookmark.class);
 //                    startActivity(intent);
+                    search_location();
                     break;
                 case  R.id.main_find_way_ibtn:
 
@@ -194,12 +196,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
                     System.out.print(sPosEt+"시작 "+ePosEt+"도착");
 
-                    if(sPosEt!=null&&ePosEt!=null){
+                    try{
                         nameToPos(sPosEt,ePosEt);
-                    }
-                    else{
+                    }catch (Exception e){
                         System.out.println("찾을수 없는 장소입니다.");
                     }
+                    keyboardmanager.hideSoftInputFromWindow(sPosEdit.getWindowToken(), 0);
+
             }
         }
     }
@@ -254,6 +257,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private static int stationClass;
 
     public static ODsayService odsayService;
+    private InputMethodManager keyboardmanager;
 
     //수정할수도 있음 ==============================================
     // 현재 카메라가 보고있는 위치
@@ -559,6 +563,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         drawerMenu[4].setOnClickListener(onClickListener);
         drawerMenu[5].setOnClickListener(onClickListener);
 
+        keyboardmanager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+
 //============================================================================================SlidingUpPanel
         upPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
@@ -613,50 +619,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
                 switch(i){
                     case  KeyEvent.KEYCODE_ENTER:
-                        if(editText.length() == 0){
-                            editText.requestFocus();
-                            break;
-                        }else{
-                            String str = editText.getText().toString();
-                            List<Address> addressList = null;
-                            try{
-                                addressList = geocoder.getFromLocationName(
-                                        str,//주소
-                                        10 // 최대겁색 결과 개수
-                                );
-                            }catch (IOException e){
-                                e.printStackTrace();
-                            }
-                            System.out.println(addressList.get(0).toString());
-                            //콤마를 기준으로 split
-                            String []splitStr = addressList.get(0).toString().split(",");
-                            String address = splitStr[0].substring(splitStr[0].indexOf("\"") + 1,splitStr[0].length() - 2); // 주소
-                            System.out.println(address);
-
-                            String latitude = splitStr[10].substring(splitStr[10].indexOf("=") + 1); // 위도
-                            String longitude = splitStr[12].substring(splitStr[12].indexOf("=") + 1); // 경도
-                            System.out.println(latitude);
-                            System.out.println(longitude);
-
-                            // 좌표(위도, 경도) 생성
-                            LatLng point = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
-                            // 마커 생성
-                            Marker marker = new Marker();
-                            marker.setPosition(point);
-                            // 마커 추가
-                            marker.setMap(naverMap);
-
-                            CameraUpdate cameraUpdate = CameraUpdate.scrollTo(point);
-                            naverMap.moveCamera(cameraUpdate);
-
-                        }
+                        search_location();
                         break;
                 }
                 editText.requestFocus();
                 return false;
             }
         });
-
 
 // ODSay ====================================================================================================================
 //        ODsayService odsayService = ODsayService.init(getApplicationContext(), "d/F477b1GZGKZgWCv8LynPEERmoxCdE1jSOojHzKNPM");
@@ -996,5 +965,43 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //        pos[1]=Double.parseDouble(sLongitude);
 //        return pos;
     }
+    private void search_location()
+    {
+        if(editText.length() == 0){
+            editText.requestFocus();
+        }else{
+            keyboardmanager.hideSoftInputFromWindow(sPosEdit.getWindowToken(), 0);
+            String str = editText.getText().toString();
+            List<Address> addressList = null;
+            try{
+                addressList = geocoder.getFromLocationName(
+                        str,//주소
+                        10 // 최대겁색 결과 개수
+                );
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+            System.out.println(addressList.get(0).toString());
+            //콤마를 기준으로 split
+            String []splitStr = addressList.get(0).toString().split(",");
+            String address = splitStr[0].substring(splitStr[0].indexOf("\"") + 1,splitStr[0].length() - 2); // 주소
+            System.out.println(address);
 
+            String latitude = splitStr[10].substring(splitStr[10].indexOf("=") + 1); // 위도
+            String longitude = splitStr[12].substring(splitStr[12].indexOf("=") + 1); // 경도
+            System.out.println(latitude);
+            System.out.println(longitude);
+
+            // 좌표(위도, 경도) 생성
+            LatLng point = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+            // 마커 생성
+            Marker marker = new Marker();
+            marker.setPosition(point);
+            // 마커 추가
+            marker.setMap(naverMap);
+
+            CameraUpdate cameraUpdate = CameraUpdate.scrollTo(point);
+            naverMap.moveCamera(cameraUpdate);
+        }
+    }
 }
