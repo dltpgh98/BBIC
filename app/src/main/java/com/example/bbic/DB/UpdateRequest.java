@@ -1,21 +1,18 @@
 package com.example.bbic.DB;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
-
-import org.jsoup.Connection;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class LogInRequest extends StringRequest{
+public class UpdateRequest extends StringRequest{
 
-    final static private String URL = "http://3.85.238.108/login.php";
+    final static private String URL = "http://3.85.238.108/update.php";
     private Map<String, String> map;
 
-    public LogInRequest(long k_code, String k_name, String k_email, String k_profile, Response.Listener<String> listener) {
+    public UpdateRequest(long k_code, String k_name, String k_email, String k_profile, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();

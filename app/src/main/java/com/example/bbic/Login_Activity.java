@@ -6,20 +6,32 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
 
+import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.bbic.DB.LogInRequest;
+import com.example.bbic.DB.UpdateRequest;
+import com.example.bbic.DB.ValidateRequest;
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
 import com.kakao.sdk.user.model.User;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -86,9 +98,6 @@ public class Login_Activity extends AppCompatActivity {
         });
         updateKakaoLoginUi();
 
-
-
-
     }
 
     private  void updateKakaoLoginUi() {
@@ -108,6 +117,85 @@ public class Login_Activity extends AppCompatActivity {
                     Log.d(TAG,"invoke: gerder" + user.getKakaoAccount().getGender());
                     // 유저의 어카운트 정보에 나이
                     Log.d(TAG,"invoke: age" + user.getKakaoAccount().getAgeRange());
+
+                    long k_code = user.getId();
+                    String k_name = user.getKakaoAccount().getProfile().getNickname();
+                    String k_email = user.getKakaoAccount().getEmail();
+                    String k_profile = user.getKakaoAccount().getProfile().getProfileImageUrl();
+
+                    Response.Listener<String> responseListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                System.out.println("아이디 중복체크");
+                                JSONObject jsonResponse = new JSONObject(response);
+                                boolean success = jsonResponse.getBoolean("success");
+                                if (success) {
+                                    //이미 존재하지 않음 테이블 생성해야함
+                                    Response.Listener<String> responseListener1 = new Response.Listener<String>() {// ************회원가입********************
+                                        @Override
+                                        public void onResponse(String response) {
+
+                                            try {
+                                                System.out.println("아무이름" + response);
+                                                JSONObject jsonObject = new JSONObject( response );
+                                                boolean success = jsonObject.getBoolean( "success" );
+                                                //회원가입 성공시
+
+                                                if (success) {
+
+                                                    //회원가입 실패시
+                                                } else {
+
+                                                }
+                                            }
+                                            catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    };
+                                    LogInRequest logInRequest = new LogInRequest( k_code, k_name, k_email, k_profile, responseListener1);
+                                    RequestQueue queue1 = Volley.newRequestQueue( Login_Activity.this );
+                                    queue1.add(logInRequest);
+                                }
+                                else {
+                                    //이미 존재하는 테이블 업데이트 필요
+                                    Response.Listener<String> responseListener2 = new Response.Listener<String>() {// ************회원가입********************
+                                        @Override
+                                        public void onResponse(String response) {
+
+                                            try {
+                                                System.out.println("아무이름" + response);
+                                                JSONObject jsonObject = new JSONObject( response );
+                                                boolean success = jsonObject.getBoolean( "success" );
+                                                //업데이트 성공시
+                                                if (success) {
+
+                                                    //업데이트 실패시
+                                                } else {
+
+                                                }
+                                            }
+                                            catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    };
+                                    UpdateRequest updateRequest = new UpdateRequest(k_code, k_name, k_email, k_profile, responseListener2);
+                                    RequestQueue queue2 = Volley.newRequestQueue( Login_Activity.this );
+                                    queue2.add(updateRequest);
+
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    ValidateRequest validateRequest = new ValidateRequest(k_code, responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(Login_Activity.this);
+                    queue.add(validateRequest);
+
+
 
 
 
