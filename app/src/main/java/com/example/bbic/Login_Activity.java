@@ -1,29 +1,21 @@
 package com.example.bbic;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
 
-import android.os.Handler;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
-import com.example.bbic.DB.LogInRequest;
+import com.example.bbic.DB.KakaoRequest;
 import com.example.bbic.DB.UpdateRequest;
 import com.example.bbic.DB.ValidateRequest;
 import com.kakao.sdk.auth.model.OAuthToken;
@@ -32,9 +24,6 @@ import com.kakao.sdk.user.model.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
@@ -155,9 +144,9 @@ public class Login_Activity extends AppCompatActivity {
                                             }
                                         }
                                     };
-                                    LogInRequest logInRequest = new LogInRequest( k_code, k_name, k_email, k_profile, responseListener1);
+                                    KakaoRequest kakaoRequest = new KakaoRequest( k_code, k_name, k_email, k_profile, responseListener1);
                                     RequestQueue queue1 = Volley.newRequestQueue( Login_Activity.this );
-                                    queue1.add(logInRequest);
+                                    queue1.add(kakaoRequest);
                                 }
                                 else {
                                     //이미 존재하는 테이블 업데이트 필요
@@ -210,6 +199,7 @@ public class Login_Activity extends AppCompatActivity {
 
                     Intent intent = new Intent(getApplicationContext(), Maps_Activity.class);
                     intent.putExtra("닉네임",user.getKakaoAccount().getProfile().getNickname());
+                    intent.putExtra("코드", user.getId());
                     intent.putExtra("프로필", user.getKakaoAccount().getProfile().getProfileImageUrl());
                     startActivity(intent);
                     finish();

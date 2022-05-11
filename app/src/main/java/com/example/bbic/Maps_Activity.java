@@ -124,6 +124,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     break;
                 case R.id.drawer_menu_3:
                     Intent intent3 = new Intent(getApplicationContext(), Bookmark.class);
+                    intent3.putExtra("코드", k_code);
                     intent3.putExtra("닉네임", name);
                     intent3.putExtra("프로필", address);
                     intent3.putExtra("미세먼지", fineDust);
@@ -140,6 +141,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     break;
                 case R.id.drawer_menu_5:
                     Intent intent5 = new Intent(getApplicationContext(), FP.class);
+                    intent5.putExtra("코드", k_code);
                     intent5.putExtra("닉네임", name);
                     intent5.putExtra("프로필", address);
                     intent5.putExtra("미세먼지", fineDust);
@@ -154,6 +156,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     break;
                 case R.id.drawer_menu_6:
                     Intent intent6 = new Intent(getApplicationContext(), Setting_Activity.class);
+                    intent6.putExtra("코드", k_code);
                     intent6.putExtra("닉네임", name);
                     intent6.putExtra("프로필", address);
                     intent6.putExtra("미세먼지", fineDust);
@@ -240,6 +243,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private NaverMap naverMap;
 
     private String allDust, weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city;
+    private long k_code;
     // 마커 정보 저장시킬 변수들 선언
     private Vector<LatLng> markersPosition;
     private Vector<Marker> activeMarkers;
@@ -586,6 +590,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         Intent intent = getIntent();
         name = intent.getStringExtra("닉네임");
+        k_code = intent.getLongExtra("코드",0);
         address = intent.getStringExtra("프로필");
         nickName.setText(name); // 카카오톡 프로필 닉네임
         Glide.with(this).load(address).circleCrop().into(profile); // 카카오톡 프로필 이미지
