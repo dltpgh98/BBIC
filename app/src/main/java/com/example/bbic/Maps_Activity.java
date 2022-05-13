@@ -315,7 +315,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             infoWindow.close();
             return true;
         });
-
         //infoWindow.open(naverMap);//인포윈도우 클릭 시
 
 //
@@ -324,8 +323,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         CameraUpdate cameraUpdate = CameraUpdate.scrollTo(initialPosition);
         naverMap.moveCamera(cameraUpdate);
-
-
 
         naverMap.setOnMapClickListener((point, coord) -> {
 
@@ -378,10 +375,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
                     }
                 },2500);
-
-
-
-
 //            new Thread() {
 //                @Override
 //                public void run() {

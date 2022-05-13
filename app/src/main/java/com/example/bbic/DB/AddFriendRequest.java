@@ -10,17 +10,16 @@ import java.util.Map;
 public class AddFriendRequest extends StringRequest {
 
     // 서버 URL 설정 ( PHP 파일 연동 )
-    final static private String URL = "http://3.85.238.108/addfriend.php";
+    final static private String URL = "http://3.85.238.108/friend.php";
     private Map<String, String> map;
 
     public AddFriendRequest(long k_code1, long k_code2, int f_staus, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
-        map.put("k_code1",k_code1 + "");
-        map.put("k_code2",k_code2 + "");
-        map.put("f_staus", f_staus + "");
-
+        map.put("K_code1",k_code1 + "");
+        map.put("K_code2",k_code2 + "");
+        map.put("F_staus", f_staus + "");
     }
 
     @Override

@@ -17,7 +17,7 @@ public class LocationPosRequest extends StringRequest {
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
-        map.put("k_code1",k_code + "");
+        map.put("k_code",k_code + "");
         map.put("c_code",c_code + "");
         map.put("l_name", l_name);
         map.put("l_address", l_address);

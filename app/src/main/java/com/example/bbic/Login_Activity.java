@@ -133,10 +133,10 @@ public class Login_Activity extends AppCompatActivity {
                                                 //회원가입 성공시
 
                                                 if (success) {
-
+                                                    System.out.println("회원가입 성공");
                                                     //회원가입 실패시
                                                 } else {
-
+                                                    System.out.println("회원가입 실패");
                                                 }
                                             }
                                             catch (JSONException e) {
@@ -144,7 +144,8 @@ public class Login_Activity extends AppCompatActivity {
                                             }
                                         }
                                     };
-                                    KakaoRequest kakaoRequest = new KakaoRequest( k_code, k_name, k_email, k_profile, responseListener1);
+                                    //ghost = 0 기본(공개)
+                                    KakaoRequest kakaoRequest = new KakaoRequest( k_code, k_name, k_email, k_profile, 0.0, 0.0, 0,responseListener1);
                                     RequestQueue queue1 = Volley.newRequestQueue( Login_Activity.this );
                                     queue1.add(kakaoRequest);
                                 }
@@ -160,10 +161,10 @@ public class Login_Activity extends AppCompatActivity {
                                                 boolean success = jsonObject.getBoolean( "success" );
                                                 //업데이트 성공시
                                                 if (success) {
-
+                                                    System.out.println("업데이트 성공");
                                                     //업데이트 실패시
                                                 } else {
-
+                                                    System.out.println("업데이트 실패");
                                                 }
                                             }
                                             catch (JSONException e) {
