@@ -17,7 +17,7 @@ import com.example.bbic.R;
 
 import java.util.ArrayList;
 
-public class    Friend_AskAdapter extends RecyclerView.Adapter<Friend_AskAdapter.FriendaskViewHolder> {
+public class Friend_AskAdapter extends RecyclerView.Adapter<Friend_AskAdapter.FriendaskViewHolder> {
     private ArrayList<PlaceData> arrayList;
 
     public Friend_AskAdapter(ArrayList<PlaceData> arrayList) {this.arrayList = arrayList;}

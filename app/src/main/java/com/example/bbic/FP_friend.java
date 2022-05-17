@@ -75,6 +75,9 @@ public class FP_friend extends Fragment {
                         exception.printStackTrace();
                     }
 
+                    Intent intent = new Intent(getContext(), FP_friend_add.class);
+                    startActivity(intent);
+
                 }
             }.start();
 

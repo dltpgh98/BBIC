@@ -168,6 +168,12 @@ public class PlaceData {
         this.promise_accept = promise_accept;
     }
 
+    public PlaceData(int friend_profile, int friend_accept, String friend_name) {
+       this.friend_profile = friend_profile;
+       this.friend_accept = friend_accept;
+       this.friend_name = friend_name;
+    }
+
     public int getPlace_iv() {
         return place_iv;
     }
