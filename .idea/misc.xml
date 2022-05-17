@@ -3,15 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/BBIC/do/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.1195" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/activity_backup.xml" value="0.12" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/activity_main.xml" value="0.12" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/blank.xml" value="0.1" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark_place_list.xml" value="0.20697463768115942" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark_transit_bus_list.xml" value="0.1" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/drawer.xml" value="0.209375" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/find_way_item.xml" value="0.5" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/find_way_list.xml" value="0.2740036231884058" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp.xml" value="0.33" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend.xml" value="0.25" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_add.xml" value="0.1" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_add_list.xml" value="0.1" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_ask.xml" value="0.25" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_list_list.xml" value="0.1" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/view_detail.xml" value="0.25677083333333334" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/view_find_way.xml" value="0.25677083333333334" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/view_header.xml" value="0.1859375" />

@@ -1,6 +1,7 @@
 package com.example.bbic;
 
 import static com.naver.maps.map.NaverMap.LAYER_GROUP_TRANSIT;
+import static java.security.AccessController.getContext;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -8,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
@@ -27,12 +29,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -62,6 +68,8 @@ import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -101,6 +109,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     //버튼 클릭 리스너 클래스
     class BtnOnClickListener implements View.OnClickListener {
+        private int sw = 0;
         @SuppressLint("NonConstantResourceId")
         @Override
         public void onClick(View view) {
@@ -152,6 +161,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
                     break;
                 case R.id.drawer_menu_5:
+                case R.id.view_header_setting_btn:
                     Intent intent5 = new Intent(getApplicationContext(), FP.class);
                     intent5.putExtra("닉네임", name);
                     intent5.putExtra("프로필", address);
@@ -216,14 +226,20 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     }
                     keyboardmanager.hideSoftInputFromWindow(sPosEdit.getWindowToken(), 0);
 
-//                    FragmentTransaction tf = getSupportFragmentManager().beginTransaction();
-                    //tf.detach(fw_frag).attach(fw_frag).commit();
-//                    tf.replace(R.id.view_fw_container,fw_frag);
-                    //tf.addToBackStack(null);
-                    //tf.commit();
-//                    Bundle bundle = new Bundle(1);
-//                    bundle.putString("odsay",result.toString());
-//                    fw_frag.setArguments(bundle);
+                case R.id.view_header_ghost_btn:
+
+                    switch(sw){
+                        case 0:
+                            sw = 1;
+                            headerGhostBtn.setImageResource(R.drawable.ghost2);
+                            break;
+
+                        case 1:
+                            sw = 0;
+                            headerGhostBtn.setImageResource(R.drawable.ghost1);
+                            break;
+                    }
+                    break;
             }
         }
     }
@@ -247,6 +263,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private Button[] drawerMenu = new Button[6];
     private FusedLocationSource locationSource;
     private boolean drawerEnabled = false;
+
+    private ImageView headerProfile;
+    private TextView headerName, headerCode;
+    private ImageView headerGhostBtn, headerSettingBtn;
+
 
     private JSONArray[] path;
     private JSONObject result;
@@ -572,6 +593,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         drawerMenu[4] = (Button) findViewById(R.id.drawer_menu_5);
         drawerMenu[5] = (Button) findViewById(R.id.drawer_menu_6);
 
+        headerProfile = (ImageView) findViewById(R.id.view_header_profile);
+        headerName = (TextView) findViewById(R.id.view_header_name);
+        headerCode = (TextView) findViewById(R.id.view_header_code);
+        headerGhostBtn = (ImageView) findViewById(R.id.view_header_ghost_btn);
+        headerSettingBtn = (ImageView) findViewById(R.id.view_header_setting_btn);
+
+
         //레이아웃에 네비게이션 드로어 설젇
         drawerLayout.setDrawerListener(drawerListener);
 
@@ -583,6 +611,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         drawerMenu[3].setOnClickListener(onClickListener);
         drawerMenu[4].setOnClickListener(onClickListener);
         drawerMenu[5].setOnClickListener(onClickListener);
+
+        headerGhostBtn.setOnClickListener(onClickListener);
+        headerSettingBtn.setOnClickListener(onClickListener);
 
         keyboardmanager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
 
@@ -634,6 +665,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }else{
             checkRunTimePermission();
         }
+
+        headerName.setText(name);
+        Glide.with(this).load(address).circleCrop().into(headerProfile);
+
 
         //뷰페이저 설정
         viewPager = findViewById(R.id.view_pager);
@@ -1115,6 +1150,14 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             CameraUpdate cameraUpdate = CameraUpdate.scrollTo(point);
             naverMap.moveCamera(cameraUpdate);
         }
+    }
+
+    public static Drawable getTintedDrawable(@NonNull final Context context,
+                                             @DrawableRes int drawableRes, @ColorRes int colorRes){
+        Drawable d = ContextCompat.getDrawable(context, drawableRes);
+        d = DrawableCompat.wrap(d);
+        DrawableCompat.setTint(d.mutate(), ContextCompat.getColor(context, colorRes));
+        return d;
     }
 
     public JSONArray[] getPath() {

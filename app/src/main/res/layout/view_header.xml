@@ -15,21 +15,19 @@
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintVertical_bias="1.0">
 
-    <ImageButton
+    <ImageView
         android:id="@+id/view_header_ghost_btn"
         android:layout_width="30sp"
         android:layout_height="30sp"
         android:background="@color/white"
-        app:tint="@color/PersianBlue"
-        android:tintMode="screen"
-        android:src="@drawable/ghost"
+        android:src="@drawable/ghost1"
         android:scaleType="fitCenter"
         android:layout_marginStart="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="@string/StringValue"/>
 
-    <ImageButton
+    <ImageView
         android:id="@+id/view_header_setting_btn"
         android:layout_width="30sp"
         android:layout_height="30sp"

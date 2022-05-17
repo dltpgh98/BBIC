@@ -14,29 +14,25 @@ import com.example.bbic.R;
 
 import java.util.ArrayList;
 
-public class Friend_AskAdapter extends RecyclerView.Adapter<Friend_AskAdapter.FriendaskViewHolder> {
+public class Friend_AddAdapter extends RecyclerView.Adapter<Friend_AddAdapter.FriendaddViewHolder> {
     private ArrayList<PlaceData> arrayList;
 
-    public Friend_AskAdapter(ArrayList<PlaceData> arrayList) {this.arrayList = arrayList;}
+    public Friend_AddAdapter(ArrayList<PlaceData> arrayList) {this.arrayList = arrayList;}
 
     @NonNull
     @Override
-    public FriendaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fp_friend_ask_list,parent,false);
-        FriendaskViewHolder holder = new FriendaskViewHolder(view);
+    public FriendaddViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fp_friend_add_list,parent,false);
+        FriendaddViewHolder holder = new FriendaddViewHolder(view);
 
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FriendaskViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FriendaddViewHolder holder, int position) {
 
         holder.friend_profile.setImageResource(arrayList.get(position).getFriend_profile());
-        holder.friend_stat.setImageResource(arrayList.get(position).getFriend_stat());
-        holder.friend_delete.setImageResource(arrayList.get(position).getFriend_delete());
         holder.friend_accept.setImageResource(arrayList.get(position).getFriend_accept());
-
-
         holder.friend_name.setText(arrayList.get(position).getFriend_name());
 
         holder.itemView.setTag(position);
@@ -44,14 +40,14 @@ public class Friend_AskAdapter extends RecyclerView.Adapter<Friend_AskAdapter.Fr
             @Override
             public void onClick(View view) {
                 String curName = holder.friend_name.getText().toString();
-                Toast.makeText(view.getContext(),curName, Toast.LENGTH_LONG).show();
+                Toast.makeText(view.getContext(),curName, Toast.LENGTH_SHORT).show();
             }
         });
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.friend_accept.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View view) {
-                remove(holder.getAdapterPosition());
-                return true;
+            public void onClick(View view) {
+                String curName = holder.friend_name.getText().toString();
+                Toast.makeText(view.getContext(),curName+"님에게 친구요청", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -74,20 +70,16 @@ public class Friend_AskAdapter extends RecyclerView.Adapter<Friend_AskAdapter.Fr
             ex.printStackTrace();
         }
     }
-    public class FriendaskViewHolder extends RecyclerView.ViewHolder{
+    public class FriendaddViewHolder extends RecyclerView.ViewHolder{
         protected ImageView friend_profile;
-        protected ImageView friend_stat;
-        protected ImageView friend_delete;
         protected ImageView friend_accept;
         protected TextView friend_name;
 
-        public FriendaskViewHolder(@NonNull View itemView){
+        public FriendaddViewHolder(@NonNull View itemView){
             super(itemView);
-            this.friend_profile = (ImageView) itemView.findViewById(R.id.ask_profile_iv);
-            this.friend_stat = (ImageView) itemView.findViewById(R.id.ask_pro_stat_iv);
-            this.friend_delete = (ImageView) itemView.findViewById(R.id.ask_delete_iv);
-            this.friend_accept = (ImageView) itemView.findViewById(R.id.ask_accept_iv); // 수락버튼
-            this.friend_name = (TextView) itemView.findViewById(R.id.ask_name);
+            this.friend_profile = (ImageView) itemView.findViewById(R.id.add_profile_iv);
+            this.friend_accept = (ImageView) itemView.findViewById(R.id.add_friend_iv); // 수락버튼
+            this.friend_name = (TextView) itemView.findViewById(R.id.add_name);
         }
     }
 }
