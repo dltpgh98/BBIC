@@ -2,7 +2,6 @@ package com.example.bbic;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,24 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.kakao.sdk.talk.TalkApiClient;
-import com.kakao.sdk.talk.model.Friend;
-import com.kakao.sdk.talk.model.Friends;
-import com.kakao.sdk.talk.model.FriendsContext;
 
 import org.w3c.dom.Document;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class FP_friend extends Fragment {
     FP_friend_list fp_friend_list;
@@ -74,6 +60,9 @@ public class FP_friend extends Fragment {
                         } catch (Exception exception) {
                         exception.printStackTrace();
                     }
+
+                    Intent intent = new Intent(getContext(), FP_friend_add.class);
+                    startActivity(intent);
 
                 }
             }.start();

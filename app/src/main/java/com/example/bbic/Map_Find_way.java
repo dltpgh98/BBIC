@@ -1,30 +1,30 @@
 package com.example.bbic;
 
-import android.os.Bundle;
 import android.util.Log;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.naver.maps.geometry.LatLng;
-import com.naver.maps.map.overlay.PathOverlay;
 import com.odsay.odsayandroidsdk.API;
 import com.odsay.odsayandroidsdk.ODsayData;
-import com.odsay.odsayandroidsdk.ODsayService;
 import com.odsay.odsayandroidsdk.OnResultCallbackListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class Map_Find_way extends Maps_Activity{
-    private JSONArray sub_path;
+    private JSONArray subWay_path;
     private JSONArray bus_path;
     private JSONArray sb_path;
+
+
+    private JSONObject result;
+
+    public JSONObject getResult() {
+        return result;
+    }
+
+    public void setResult(JSONObject result) {
+        this.result = result;
+    }
 
     private JSONArray[] path_s = new JSONArray[3];
 
@@ -43,32 +43,34 @@ public class Map_Find_way extends Maps_Activity{
                 if(api == API.SEARCH_PUB_TRANS_PATH){
 //                    int name = odsayData.getJson().getJSONObject("result").getJSONArray("path").length();
 //                    Log.d("Station name : ", name+"");
-                    sub_path = new JSONArray();
+//                    Log.d("Station name : ", odsayData.getJson().getJSONObject("result")+"");
+                    subWay_path = new JSONArray();
                     bus_path = new JSONArray();
                     sb_path = new JSONArray();
 
+                    result = odsayData.getJson().getJSONObject("result");
 
                     JSONArray path = odsayData.getJson().getJSONObject("result").getJSONArray("path");
 //                    Log.d("Path",path+"");
                     try{
                         if(odsayData.getJson().getJSONObject("result").getInt("searchType") == 0){
-                            for(int i=0; i < path.length() ; i++){
-                                try{
-//                                Log.d("aaaaa",path.getJSONObject(i).getJSONObject("info")+"");
-//                                Log.d("aaaaa",path.getJSONObject(i).getInt("pathType")+"");
-                                    if(path.getJSONObject(i).getInt("pathType") == 1){ // 지하철
-                                        sub_path.put(path.getJSONObject(i));
-//                                    Log.d("sub_ =======",i+""+path.getJSONObject(i)+"");
-                                    }
-                                    else if(path.getJSONObject(i).getInt("pathType") == 2){  // 버스
-                                        bus_path.put(path.getJSONObject(i));
-                                    }
-                                    else if(path.getJSONObject(i).getInt("pathType") == 3){ // 통합(버스+지하철)
-                                        sb_path.put(path.getJSONObject(i));
-                                    }
-                                }catch (Exception e){
-
-                                }
+//                            for(int i=0; i < path.length() ; i++){
+//                                try{
+////                                Log.d("aaaaa",path.getJSONObject(i).getJSONObject("info")+"");
+////                                Log.d("aaaaa",path.getJSONObject(i).getInt("pathType")+"");
+//                                    if(path.getJSONObject(i).getInt("pathType") == 3){ // 통합(버스+지하철)
+//                                        sb_path.put(path.getJSONObject(i));
+////                                    Log.d("sub_ =======",i+""+path.getJSONObject(i)+"");
+//                                    }
+//                                    else if(path.getJSONObject(i).getInt("pathType") == 2){  // 버스
+//                                        bus_path.put(path.getJSONObject(i));
+//                                    }
+//                                    else if(path.getJSONObject(i).getInt("pathType") == 1){ // 지하철
+//                                        subWay_path.put(path.getJSONObject(i));
+//                                    }
+//                                }catch (Exception e){
+//
+//                                }
 
 //                            int pathType = path.getJSONObject(i).getInt("pathType");
 //                            Log.d("pathType (1-지하철,2-버스,3-버스+지하철)결과종류 = ",pathType+"");
@@ -114,7 +116,7 @@ public class Map_Find_way extends Maps_Activity{
 //
 //                                }
 //                    }
-                            }
+//                            }
 //                            Log.d("subPath_length",sub_path.length()+"");
 //                            Log.d("bus_length",bus_path.length()+"");
 //                            Log.d("sb_length",sb_path.length()+"");
@@ -122,24 +124,29 @@ public class Map_Find_way extends Maps_Activity{
 //                            Log.d("bus_Path",bus_path+"");
 //                            Log.d("sb_Path",sb_path+"");
 //                            Log.d("=============================================","");
-                            path_s[0]=sub_path;
-                            path_s[1]=bus_path;
-                            path_s[2]=sb_path;
-                            Log.d("Path_s",path_s[0]+"");
-                            view_recyclerView = (RecyclerView) findViewById(R.id.view_RecyclerView);
-                            linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-                            view_recyclerView.setLayoutManager(linearLayoutManager);
+//                            path_s[0]= subWay_path;
+//                            path_s[1]=bus_path;
+//                            path_s[2]=sb_path;
 
-                            fArrayList = new ArrayList<>();
-                            find_way_listAdapter = new Find_way_listAdapter(fArrayList);
-                            view_recyclerView.setAdapter(find_way_listAdapter);
+//                            Log.d("걸어서 가는 시간",+"");
+//                            Log.d("Path_s",path_s[0]+"");
+//                            Log.d("==========================Path_s TEST=========================",""+path_s[0].getJSONObject(0).getJSONArray("subPath"));
+//                            Log.d("sub_path TEST=========================",""+sub_path.getJSONArray(0));
 
 
-                            if(path_s[2]!=null){
-                                for (int i = 0; i < path_s.length; i++){
-//                                    Find_way_Data find_way_data = new Find_way_Data(path_s[2].getJSONArray(i),path_s[2].getJSONArray())
-                                }
-                            }
+//                            view_recyclerView = (RecyclerView) findViewById(R.id.view_RecyclerView);
+//                            linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+//                            view_recyclerView.setLayoutManager(linearLayoutManager);
+//
+//                            fArrayList = new ArrayList<>();
+//                            find_way_listAdapter = new Find_way_listAdapter(fArrayList);
+//                            view_recyclerView.setAdapter(find_way_listAdapter);
+
+//                            if(path_s[2]!=null){
+//                                for (int i = 0; i < path_s.length; i++){
+////                                    Find_way_Data find_way_data = new Find_way_Data(path_s[2].getJSONArray(i),path_s[2].getJSONArray())
+//                                }
+//                            }
 
 //                        JSONObject s_path = path.getJSONObject(i);
 //                        String mapObj = s_path.getJSONObject("info").getString("mapObj");
@@ -168,10 +175,12 @@ public class Map_Find_way extends Maps_Activity{
 
                     }
 
+//                    Log.d("Path_s======밖에서==========",path_s[0]+"");
                 }
             }catch (JSONException e) {
                 e.printStackTrace();
             }
+//            Log.d("Path_s===========저 밖에서============",path_s[0]+"");
         }
         // 호출 실패 시 실행
         @Override

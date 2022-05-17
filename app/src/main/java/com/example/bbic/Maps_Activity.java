@@ -1,6 +1,7 @@
 package com.example.bbic;
 
 import static com.naver.maps.map.NaverMap.LAYER_GROUP_TRANSIT;
+import static java.security.AccessController.getContext;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -8,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
@@ -18,6 +20,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -26,14 +29,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -55,9 +64,12 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -97,6 +109,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     //버튼 클릭 리스너 클래스
     class BtnOnClickListener implements View.OnClickListener {
+        private int sw = 0;
         @SuppressLint("NonConstantResourceId")
         @Override
         public void onClick(View view) {
@@ -137,8 +150,18 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     finish();
                     break;
                 case R.id.drawer_menu_4:
+                    drawerLayout.closeDrawer(drawerView);
+
+                    view_Header.setVisibility(View.GONE);
+                    viewPager.setVisibility(View.GONE);
+                    indicator.setVisibility(View.GONE);
+                    find_way_page.setVisibility(View.VISIBLE);
+
+
+                    upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
                     break;
                 case R.id.drawer_menu_5:
+                case R.id.view_header_setting_btn:
                     Intent intent5 = new Intent(getApplicationContext(), FP.class);
                     intent5.putExtra("닉네임", name);
                     intent5.putExtra("프로필", address);
@@ -169,6 +192,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 case R.id.main_search_ibtn:
 //                    Intent intent = new Intent(getApplicationContext(), Bookmark.class);
 //                    startActivity(intent);
+                    search_location();
                     break;
                 case  R.id.main_find_way_ibtn:
 
@@ -179,6 +203,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
 
                     upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+
 //                    if(upPanelLayout.getPanelState().equals(SlidingUpPanelLayout.PanelState.COLLAPSED)){
 //                        view_Header.setVisibility(View.VISIBLE);
 //                        viewPager.setVisibility(View.VISIBLE);
@@ -194,12 +219,27 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
                     System.out.print(sPosEt+"시작 "+ePosEt+"도착");
 
-                    if(sPosEt!=null&&ePosEt!=null){
+                    try{
                         nameToPos(sPosEt,ePosEt);
-                    }
-                    else{
+                    }catch (Exception e){
                         System.out.println("찾을수 없는 장소입니다.");
                     }
+                    keyboardmanager.hideSoftInputFromWindow(sPosEdit.getWindowToken(), 0);
+
+                case R.id.view_header_ghost_btn:
+
+                    switch(sw){
+                        case 0:
+                            sw = 1;
+                            headerGhostBtn.setImageResource(R.drawable.ghost2);
+                            break;
+
+                        case 1:
+                            sw = 0;
+                            headerGhostBtn.setImageResource(R.drawable.ghost1);
+                            break;
+                    }
+                    break;
             }
         }
     }
@@ -224,18 +264,20 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private FusedLocationSource locationSource;
     private boolean drawerEnabled = false;
 
-    protected JSONArray[] path;
-    protected RecyclerView view_recyclerView;
-    protected ArrayList<Find_way_Data> fArrayList;
-    protected Find_way_listAdapter find_way_listAdapter;
-    protected LinearLayoutManager linearLayoutManager;
+    private ImageView headerProfile;
+    private TextView headerName, headerCode;
+    private ImageView headerGhostBtn, headerSettingBtn;
+
+
+    private JSONArray[] path;
+    private JSONObject result;
+
 
     private SlidingUpPanelLayout upPanelLayout;
 
     private ViewPager2 viewPager;
     private WormDotsIndicator indicator;
-    private ConstraintLayout view_userpage, view_Header;
-    private LinearLayout find_way_page;
+    private ConstraintLayout view_userpage, view_Header, find_way_page;
 
     private NaverMap naverMap;
 
@@ -254,6 +296,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private static int stationClass;
 
     public static ODsayService odsayService;
+    private InputMethodManager keyboardmanager;
+
+//    private Find_Way_Frag fw_frag;
 
     //수정할수도 있음 ==============================================
     // 현재 카메라가 보고있는 위치
@@ -334,9 +379,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             x = String.valueOf(infoWindow.getPosition().longitude);
             Map_Find_way mapFind_way =new Map_Find_way();
 
-            odsayService.requestSearchPubTransPath("126.8881529057685","37.49185398304374",x,y,"0","0","0", mapFind_way.Find_way);
-            odsayService.requestLoadLane("0:0@1673:1:25:27@2:2:233:239",mapFind_way.LoadLane);
-
+            //odsayService.requestSearchPubTransPath("126.8881529057685","37.49185398304374",x,y,"0","0","0", mapFind_way.Find_way);
+            //odsayService.requestLoadLane("0:0@1673:1:25:27@2:2:233:239",mapFind_way.LoadLane);
+//            Log.d("==============================onMapReady==============",""+path[0]);
 
             Log.d("위치 좌표 Y",String.valueOf(infoWindow.getPosition().latitude));
             Log.d("위치 좌표 X",String.valueOf(infoWindow.getPosition().longitude));
@@ -510,6 +555,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         mapFragment.getMapAsync(this);
 
 
+
         //이세호
         //버튼 클릭 리스너 클래스 객체 생성(클릭 이벤트를 위함)
         BtnOnClickListener onClickListener = new BtnOnClickListener();
@@ -535,7 +581,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         view_Header = (ConstraintLayout)findViewById(R.id.view_header);
         viewPager = (ViewPager2)findViewById(R.id.view_pager);
         indicator = (WormDotsIndicator)findViewById(R.id.dots_indicator);
-        find_way_page = (LinearLayout)findViewById(R.id.view_find_way_lay);
+        find_way_page = (ConstraintLayout)findViewById(R.id.view_find_way_lay);
         vFindIbtn = (ImageButton)findViewById(R.id.view_find_way_ibtn);
         sPosEdit= (EditText)findViewById(R.id.start_pos_et);
         ePosEdit= (EditText)findViewById(R.id.end_pos_et);
@@ -546,6 +592,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         drawerMenu[3] = (Button) findViewById(R.id.drawer_menu_4);
         drawerMenu[4] = (Button) findViewById(R.id.drawer_menu_5);
         drawerMenu[5] = (Button) findViewById(R.id.drawer_menu_6);
+
+        headerProfile = (ImageView) findViewById(R.id.view_header_profile);
+        headerName = (TextView) findViewById(R.id.view_header_name);
+        headerCode = (TextView) findViewById(R.id.view_header_code);
+        headerGhostBtn = (ImageView) findViewById(R.id.view_header_ghost_btn);
+        headerSettingBtn = (ImageView) findViewById(R.id.view_header_setting_btn);
+
 
         //레이아웃에 네비게이션 드로어 설젇
         drawerLayout.setDrawerListener(drawerListener);
@@ -558,6 +611,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         drawerMenu[3].setOnClickListener(onClickListener);
         drawerMenu[4].setOnClickListener(onClickListener);
         drawerMenu[5].setOnClickListener(onClickListener);
+
+        headerGhostBtn.setOnClickListener(onClickListener);
+        headerSettingBtn.setOnClickListener(onClickListener);
+
+        keyboardmanager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
 
 //============================================================================================SlidingUpPanel
         upPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
@@ -575,6 +633,18 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     indicator.setVisibility(View.VISIBLE);
                     find_way_page.setVisibility(View.GONE);
                     Log.d("바꿈","");
+                }
+                if(newState == (SlidingUpPanelLayout.PanelState.EXPANDED)&&result!=null){
+//                    Log.d("프래그먼트로 =============================",""+result);
+//                    FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
+//                    Find_Way_Frag find_way_frag = new Find_Way_Frag();
+//                    transaction.replace(R.id.view_fw_container,find_way_frag);
+//                    transaction.commit();
+//                    fw_frag = (Find_Way_Frag) getSupportFragmentManager().findFragmentById(R.id.view_fw_container);// 리스트 프래그먼트 위치
+//                    Bundle bundle = new Bundle(1);
+//                    bundle.putString("odsay",String.valueOf(result));
+//                    fw_frag.setArguments(bundle);
+//                    find_way_frag.setArguments(bundle);
                 }
             }
         });
@@ -596,6 +666,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             checkRunTimePermission();
         }
 
+        headerName.setText(name);
+        Glide.with(this).load(address).circleCrop().into(headerProfile);
+
+
         //뷰페이저 설정
         viewPager = findViewById(R.id.view_pager);
         ViewpagerAdapter pagerAdapter = new ViewpagerAdapter(setTextList());
@@ -613,49 +687,61 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
                 switch(i){
                     case  KeyEvent.KEYCODE_ENTER:
-                        if(editText.length() == 0){
-                            editText.requestFocus();
-                            break;
-                        }else{
-                            String str = editText.getText().toString();
-                            List<Address> addressList = null;
-                            try{
-                                addressList = geocoder.getFromLocationName(
-                                        str,//주소
-                                        10 // 최대겁색 결과 개수
-                                );
-                            }catch (IOException e){
-                                e.printStackTrace();
-                            }
-                            System.out.println(addressList.get(0).toString());
-                            //콤마를 기준으로 split
-                            String []splitStr = addressList.get(0).toString().split(",");
-                            String address = splitStr[0].substring(splitStr[0].indexOf("\"") + 1,splitStr[0].length() - 2); // 주소
-                            System.out.println(address);
-
-                            String latitude = splitStr[10].substring(splitStr[10].indexOf("=") + 1); // 위도
-                            String longitude = splitStr[12].substring(splitStr[12].indexOf("=") + 1); // 경도
-                            System.out.println(latitude);
-                            System.out.println(longitude);
-
-                            // 좌표(위도, 경도) 생성
-                            LatLng point = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
-                            // 마커 생성
-                            Marker marker = new Marker();
-                            marker.setPosition(point);
-                            // 마커 추가
-                            marker.setMap(naverMap);
-
-                            CameraUpdate cameraUpdate = CameraUpdate.scrollTo(point);
-                            naverMap.moveCamera(cameraUpdate);
-
-                        }
+                        search_location();
                         break;
                 }
                 editText.requestFocus();
                 return false;
             }
         });
+
+
+//                    fw_frag = (Find_Way_Frag) getSupportFragmentManager().findFragmentById(R.id.view_fw_container);// 리스트 프래그먼트 위치
+//                    Bundle bundle = new Bundle(1);
+//                    bundle.putString("odsay","TEST");
+//                    fw_frag.setArguments(bundle);
+
+
+
+
+//        if(upPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED&&path!=null){
+//
+//            view_recyclerView = (RecyclerView) findViewById(R.id.view_RecyclerView);
+//
+//            linearLayoutManager = new LinearLayoutManager(this);
+//
+//            view_recyclerView.setLayoutManager(linearLayoutManager);
+//
+//            fArrayList = new ArrayList<>();
+//            find_way_listAdapter = new Find_way_listAdapter(fArrayList);
+//            view_recyclerView.setAdapter(find_way_listAdapter);
+//            Log.d("리스트 만들기부분","");
+//
+//            Find_way_Data fwData = new Find_way_Data(9,R.color.yellow,24,R.color.black,24, 56,R.color.red);
+////
+////            Find_way_Data way_data = new Find_way_Data();
+//        }
+//        if(upPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED){
+//
+//            Log.d("리스트 만들기 전","");
+//            view_recyclerView = (RecyclerView) findViewById(R.id.view_RecyclerView);
+//            Log.d("리스트 선언부분","");
+//            linearLayoutManager = new LinearLayoutManager(this);
+//            Log.d("리니어메니저 선언 부분","");
+//            view_recyclerView.setLayoutManager(linearLayoutManager);
+//            Log.d("레이아웃 매니저 설정","");
+//            fArrayList = new ArrayList<>();
+//            find_way_listAdapter = new Find_way_listAdapter(fArrayList);
+//            Log.d("어뎁터 생성 부분","");
+//            view_recyclerView.setAdapter(find_way_listAdapter);
+//            Log.d("뷰에 어뎁터 설정 부분","");
+//
+//            Find_way_Data fwData = new Find_way_Data(9,R.color.yellow,24,R.color.black,24, 56,R.color.red);
+//            fArrayList.add(fwData);
+//            find_way_listAdapter.notifyDataSetChanged();
+////
+////            Find_way_Data way_data = new Find_way_Data();
+//        }
 
 
 // ODSay ====================================================================================================================
@@ -683,6 +769,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                if (api == API.BUS_STATION_INFO) {}
 //            }
 //        };
+
+    }
+    public void receiveMessage(Intent intent){
 
     }
 
@@ -986,6 +1075,33 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         Map_Find_way mapFindWay = new Map_Find_way();
         odsayService.requestSearchPubTransPath(sLongitude,sLatitude,eLongitude,eLatitude,"0","0","0",mapFindWay.Find_way);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {                                        //handler 객체 딜레이 (2초)끝나면 종료
+            @Override
+            public void run() {
+                path=mapFindWay.getPath_s();
+                result= mapFindWay.getResult();
+//                System.out.println("-----------------------result"+result);
+//                FragmentTransaction tf = getSupportFragmentManager().beginTransaction();
+//                        tf.detach(fw_frag).attach(fw_frag).commit();
+//                System.out.println("======================Test========================="+path[0]);
+
+                Bundle bundle = new Bundle();
+                if(result!=null) {
+                    bundle.putString("odsay", result.toString());
+
+                    Find_Way_Frag find_way_frag = new Find_Way_Frag();
+                    find_way_frag.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().add(R.id.view_fw_container, find_way_frag).commit();
+                }
+
+
+            }
+        }, 500);
+//        path = mapFindWay.getPath_s();
+
+//
+//        System.out.println("======================Test========================="+getPath().toString());
 
 //            System.out.print("\n sLati"+latitude+"sLong"+longitude+"\n");
         //odsayService.requestSearchPubTransPath("126.8881529057685","37.49185398304374",x,y,"0","0","0", mapFind_way.Find_way);
@@ -996,5 +1112,59 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //        pos[1]=Double.parseDouble(sLongitude);
 //        return pos;
     }
+    private void search_location()
+    {
+        if(editText.length() == 0){
+            editText.requestFocus();
+        }else{
+            keyboardmanager.hideSoftInputFromWindow(sPosEdit.getWindowToken(), 0);
+            String str = editText.getText().toString();
+            List<Address> addressList = null;
+            try{
+                addressList = geocoder.getFromLocationName(
+                        str,//주소
+                        10 // 최대겁색 결과 개수
+                );
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+            System.out.println(addressList.get(0).toString());
+            //콤마를 기준으로 split
+            String []splitStr = addressList.get(0).toString().split(",");
+            String address = splitStr[0].substring(splitStr[0].indexOf("\"") + 1,splitStr[0].length() - 2); // 주소
+            System.out.println(address);
 
+            String latitude = splitStr[10].substring(splitStr[10].indexOf("=") + 1); // 위도
+            String longitude = splitStr[12].substring(splitStr[12].indexOf("=") + 1); // 경도
+            System.out.println(latitude);
+            System.out.println(longitude);
+
+            // 좌표(위도, 경도) 생성
+            LatLng point = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+            // 마커 생성
+            Marker marker = new Marker();
+            marker.setPosition(point);
+            // 마커 추가
+            marker.setMap(naverMap);
+
+            CameraUpdate cameraUpdate = CameraUpdate.scrollTo(point);
+            naverMap.moveCamera(cameraUpdate);
+        }
+    }
+
+    public static Drawable getTintedDrawable(@NonNull final Context context,
+                                             @DrawableRes int drawableRes, @ColorRes int colorRes){
+        Drawable d = ContextCompat.getDrawable(context, drawableRes);
+        d = DrawableCompat.wrap(d);
+        DrawableCompat.setTint(d.mutate(), ContextCompat.getColor(context, colorRes));
+        return d;
+    }
+
+    public JSONArray[] getPath() {
+        return path;
+    }
+
+    public void setPath(JSONArray[] path) {
+        this.path = path;
+    }
 }

@@ -1,4 +1,5 @@
 package com.example.bbic.DB;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
@@ -6,18 +7,17 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ValidateRequest extends StringRequest {
-    //서버 url 설정(php파일 연동)
-    final static  private String URL="http://13.124.60.158/validate.php";
+public class AddSubwayRequest extends StringRequest{
+
+    final static private String URL = "http://3.85.238.108/subway.php";
     private Map<String, String> map;
 
-    public ValidateRequest(long K_code, Response.Listener<String> listener){
-        super(Method.POST, URL, listener,null);
+    public AddSubwayRequest(int s_code, long k_code, Response.Listener<String> listener) {
+        super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
-        map.put("K_code", K_code + "");
-
-        System.out.println("중복 확인 리퀘스트?");
+        map.put("S_code",s_code +"");
+        map.put("K_code", k_code + "");
     }
 
     @Override

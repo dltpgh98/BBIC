@@ -1,5 +1,6 @@
 package com.example.bbic;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,12 +46,20 @@ public class ViewpagerAdapter extends RecyclerView.Adapter<ViewpagerAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewpagerAdapter.ViewHolder holder, int position) {
 
-        if (mode==1){
+        if (mode == 1) {
             Glide.with(holder.itemView.getContext()).load(address).circleCrop().into(holder.profile);
             holder.name.setText(name);
             holder.code.setText(code);
+            holder.itemView.setTag(position);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("holder", "");
+                }
+            });
         }
     }
+
 
     @Override
     public int getItemCount() {

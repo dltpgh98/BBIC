@@ -25,12 +25,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Maps_Activity"/>
+        <activity android:name=".Maps_Activity"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".Login_Activity"/>
         <activity android:name=".Bookmark"/>
         <activity android:name=".FP"/>
         <activity android:name=".Promise_write"/>
         <activity android:name=".Setting_Activity"/>
+        <activity android:name=".FP_friend_add"/>
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="1s9u4lx3wq"

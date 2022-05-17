@@ -68,7 +68,7 @@ public class PlaceData {
     private int promise_delete;
     private int promise_accept;
 
-    public PlaceData(int place_iv, String place_name,String place_address) {        //3개 place
+    public PlaceData(int place_iv, String place_name, String place_address) {        //3개 place
 
         this.place_iv = place_iv;
         this.place_name = place_name;
@@ -95,8 +95,8 @@ public class PlaceData {
     }
 
 
-    public PlaceData(int bookmark_iv,String subway_this_name, String subway_left_direction, String subway_right_direction,    //22개 subway
-                     String subway_left_name1, String subway_left_time1, String subway_left_whole1, 
+    public PlaceData(int bookmark_iv, String subway_this_name, String subway_left_direction, String subway_right_direction,    //22개 subway
+                     String subway_left_name1, String subway_left_time1, String subway_left_whole1,
                      String subway_left_name2, String subway_left_time2, String subway_left_whole2,
                      String subway_left_name3, String subway_left_time3, String subway_left_whole3,
                      String subway_right_name1, String subway_right_time1, String subway_right_whole1,
@@ -166,6 +166,12 @@ public class PlaceData {
         this.promise_settime = promise_settime;
         this.promise_delete = promise_delete;
         this.promise_accept = promise_accept;
+    }
+
+    public PlaceData(int friend_profile, int friend_accept, String friend_name) {
+       this.friend_profile = friend_profile;
+       this.friend_accept = friend_accept;
+       this.friend_name = friend_name;
     }
 
     public int getPlace_iv() {

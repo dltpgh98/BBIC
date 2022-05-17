@@ -22,7 +22,5 @@ public class Promise_write extends AppCompatActivity {
                 finish();
             }
         });
-
-
     }
 }

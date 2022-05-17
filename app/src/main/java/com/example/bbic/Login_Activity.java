@@ -209,6 +209,7 @@ public class Login_Activity extends AppCompatActivity {
                     //logout_btn.setVisibility(View.VISIBLE);
 
                     Intent intent = new Intent(getApplicationContext(), Maps_Activity.class);
+                    intent.putExtra("코드",user.getId());
                     intent.putExtra("닉네임",user.getKakaoAccount().getProfile().getNickname());
                     intent.putExtra("프로필", user.getKakaoAccount().getProfile().getProfileImageUrl());
                     startActivity(intent);
