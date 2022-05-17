@@ -8,14 +8,14 @@ import java.util.Map;
 
 public class ValidateRequest extends StringRequest {
     //서버 url 설정(php파일 연동)
-    final static  private String URL="http://ec2-3-85-238-108.compute-1.amazonaws.com/validate.php";
+    final static  private String URL="http://13.124.60.158/validate.php";
     private Map<String, String> map;
 
-    public ValidateRequest(long k_code, Response.Listener<String> listener){
+    public ValidateRequest(long K_code, Response.Listener<String> listener){
         super(Method.POST, URL, listener,null);
 
         map = new HashMap<>();
-        map.put("K_code", k_code + "");
+        map.put("K_code", K_code + "");
 
         System.out.println("중복 확인 리퀘스트?");
     }
