@@ -118,6 +118,7 @@ public class Find_Way_Frag extends Fragment {
                                     ArrayList<String> subWayS = new ArrayList<>();
                                     StringBuilder aa= new StringBuilder();
 
+                                    String[] st = new String[10];
 
                                     for (int j = 0; j < subP.length(); j++) {
                                         int traffic = subP.getJSONObject(j).getInt("trafficType");
@@ -139,7 +140,7 @@ public class Find_Way_Frag extends Fragment {
                                                     bus_num = subP.getJSONObject(j).getJSONArray("lane").getJSONObject(0).getString("busNo");
                                                     Log.d("***************************busNum**********************", bus_num);
                                                     busS.add(bus_num);
-                                                    aa.append("bus:"+bus_num+"번 ");
+                                                    aa.append("버스:"+bus_num+"번 ");
 //                                                    busS[j]()
 
 //                                                    Log.d("***************************busNum**********************", subP.getJSONObject(j).getJSONArray("lane").getJSONObject(0).getString("busNo") + "");
@@ -148,9 +149,10 @@ public class Find_Way_Frag extends Fragment {
                                                     sub_time = subP.getJSONObject(j).getInt("sectionTime");
                                                     Log.d("***************************subTime**********************", sub_time+"");
                                                     sub_num = subP.getJSONObject(j).getJSONArray("lane").getJSONObject(0).getString("name");
+                                                    String cut = sub_num.replace("수도권","");
                                                     subWayS.add(sub_num);
                                                     Log.d("***************************subNum**********************", sub_num);
-                                                    aa.append(sub_num+" ");
+                                                    aa.append(cut+" ");
                                                     break;
                                                 default:
                                                     break;
@@ -174,8 +176,8 @@ public class Find_Way_Frag extends Fragment {
 //                                    expansion_iv;
 
                                     aa.append("총 시간:"+total_time+"분");
-                                    Find_way_Data fwData = new Find_way_Data(onFoot_time, bus_num, bus_time, sub_num, sub_time,total_time);
-//                                    Find_way_Data fwData = new Find_way_Data(aa);
+//                                    Find_way_Data fwData = new Find_way_Data(onFoot_time, bus_num, bus_time, sub_num, sub_time,total_time);
+                                    Find_way_Data fwData = new Find_way_Data(String.valueOf(aa));
                                     fArrayList.add(fwData);
                                     find_way_listAdapter.notifyDataSetChanged();
                                     Log.d("=========********한개 배열 끝*******=========","");

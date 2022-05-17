@@ -31,19 +31,23 @@ public class Find_way_listAdapter extends RecyclerView.Adapter<Find_way_listAdap
 
     @Override
     public void onBindViewHolder(@NonNull Find_way_listAdapter.CustomViewHolder holder, int position) {
-        if(arrayList.stream().count()<=2){
-            holder.bus_num.setText(arrayList.get(position).getTotalText());
-        }
-        else {
-            holder.onFoot.setText(String.valueOf(arrayList.get(position).getOnFoot_time())+"분");
-            holder.bus_num.setText(arrayList.get(position).getBus_num());
-            holder.bus_time.setText(String.valueOf(arrayList.get(position).getBus_time()));
-            holder.sub_num.setText(arrayList.get(position).getSub_num());
-            holder.sub_time.setText(String.valueOf(arrayList.get(position).getSub_time()));
-            holder.total_time.setText(String.valueOf(arrayList.get(position).getTotal_time()));
-            holder.expansion_iv.setImageResource(arrayList.get(position).getExpansion_iv());
-
-        }
+        Log.d("onBindViewHolder 밖",arrayList.size()+"");
+//        if(arrayList.size()==1){
+//            holder.onFoot.setText(arrayList.get(position).getTotalText());
+//            Log.d("onBindViewHolder 위",arrayList.size()+"");
+//        }
+//        else {
+//            Log.d("onBindViewHolder 아래",arrayList.size()+"");
+//            holder.onFoot.setText(String.valueOf(arrayList.get(position).getOnFoot_time())+"분");
+//            holder.bus_num.setText(arrayList.get(position).getBus_num());
+//            holder.bus_time.setText(String.valueOf(arrayList.get(position).getBus_time()));
+//            holder.sub_num.setText(arrayList.get(position).getSub_num());
+//            holder.sub_time.setText(String.valueOf(arrayList.get(position).getSub_time()));
+//            holder.total_time.setText(String.valueOf(arrayList.get(position).getTotal_time()));
+//            holder.expansion_iv.setImageResource(arrayList.get(position).getExpansion_iv());
+//
+//        }
+        holder.onFootGuid.setText(String.valueOf(arrayList.get(position).getTotalText()));
 
         holder.itemView.setTag(position);
 
@@ -75,14 +79,17 @@ public class Find_way_listAdapter extends RecyclerView.Adapter<Find_way_listAdap
         protected TextView total_time;
         protected ImageView expansion_iv;
 
+        protected TextView onFootGuid;
+
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.onFoot = (TextView) itemView.findViewById(R.id.find_way_on_foot);
-            this.bus_num = (TextView) itemView.findViewById(R.id.find_way_itemTransit_firstIv_iv);
-            this.bus_time = (TextView) itemView.findViewById(R.id.find_way_busOrSub_tv);
-            this.sub_num = (TextView) itemView.findViewById(R.id.find_way_itemTransit_twoIv_iv);
-            this.sub_time = (TextView) itemView.findViewById(R.id.find_way_subOrBus);
-            this.total_time = (TextView) itemView.findViewById(R.id.find_way_itemTime_tv);
+            this.onFootGuid = (TextView) itemView.findViewById(R.id.find_way_on_footGuide_tv);
+//            this.onFoot = (TextView) itemView.findViewById(R.id.find_way_on_foot);
+//            this.bus_num = (TextView) itemView.findViewById(R.id.find_way_itemTransit_firstIv_iv);
+//            this.bus_time = (TextView) itemView.findViewById(R.id.find_way_busOrSub_tv);
+//            this.sub_num = (TextView) itemView.findViewById(R.id.find_way_itemTransit_twoIv_iv);
+//            this.sub_time = (TextView) itemView.findViewById(R.id.find_way_subOrBus);
+//            this.total_time = (TextView) itemView.findViewById(R.id.find_way_itemTime_tv);
             this.expansion_iv = (ImageView) itemView.findViewById(R.id.find_way_itemExpansion_iv);
         }
     }

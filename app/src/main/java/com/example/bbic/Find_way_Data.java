@@ -17,22 +17,23 @@ public class Find_way_Data {
     private int sub_iv;
     private int expansion_iv;
 
-    private StringBuilder totalText;
+    private String totalText;
 
+//
+//    public Find_way_Data( int onFoot_time, String bus_num, int bus_time, String sub_num, int sub_time, int total_time){  //통합(버스+지하철) 인덱스번호 3번
+////        this.object=object;
+//        this.onFoot_time=onFoot_time;  //result.path[{subPath[0].sectionTime
+//        this.bus_num=bus_num;             //result.path[{
+//        this.bus_time=bus_time;
+//        this.sub_num=sub_num;
+//        this.sub_time=sub_time;
+//        this.total_time=total_time;
+//    }
 
-    public Find_way_Data( int onFoot_time, String bus_num, int bus_time, String sub_num, int sub_time, int total_time){  //통합(버스+지하철) 인덱스번호 3번
-//        this.object=object;
-        this.onFoot_time=onFoot_time;  //result.path[{subPath[0].sectionTime
-        this.bus_num=bus_num;             //result.path[{
-        this.bus_time=bus_time;
-        this.sub_num=sub_num;
-        this.sub_time=sub_time;
-        this.total_time=total_time;
-    }
-
-    public Find_way_Data(StringBuilder totalText) {
+    public Find_way_Data(String totalText) {
         this.totalText = totalText;
     }
+
 
     public int getTotal_time() {
         return total_time;
@@ -114,11 +115,11 @@ public class Find_way_Data {
         this.sub_iv = sub_iv;
     }
 
-    public StringBuilder getTotalText() {
+    public String getTotalText() {
         return totalText;
     }
 
-    public void setTotalText(StringBuilder totalText) {
+    public void setTotalText(String totalText) {
         this.totalText = totalText;
     }
 }
