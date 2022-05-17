@@ -21,6 +21,8 @@ public class UpdateRequest extends StringRequest{
         map.put("k_email",k_email);
         map.put("k_profile", k_profile);
 
+        System.out.println("실행은 하는지?");
+
     }
 
 

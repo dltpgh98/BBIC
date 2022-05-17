@@ -98,103 +98,22 @@ public class Login_Activity extends AppCompatActivity {
                 if (user!=null){
 
                     // 유저의 아이디
-                    Log.d(TAG,"invoke: id" + user.getId());
+                    Log.d(TAG,"invoke: id " + user.getId());
                     // 유저의 어카운트정보에 이메일
-                    Log.d(TAG,"invoke: nickname" + user.getKakaoAccount().getProfile().getNickname());
+                    Log.d(TAG,"invoke: nickname " + user.getKakaoAccount().getProfile().getNickname());
                     // 유저의 어카운트 정보의 프로파일에 닉네임
-                    Log.d(TAG,"invoke: email" + user.getKakaoAccount().getEmail());
+                    Log.d(TAG,"invoke: email " + user.getKakaoAccount().getEmail());
                     // 유저의 어카운트 파일의 성별
-                    Log.d(TAG,"invoke: gerder" + user.getKakaoAccount().getGender());
+                    Log.d(TAG,"invoke: gerder " + user.getKakaoAccount().getGender());
                     // 유저의 어카운트 정보에 나이
-                    Log.d(TAG,"invoke: age" + user.getKakaoAccount().getAgeRange());
+                    Log.d(TAG,"invoke: age " + user.getKakaoAccount().getAgeRange());
 
                     long k_code = user.getId();
                     String k_name = user.getKakaoAccount().getProfile().getNickname();
                     String k_email = user.getKakaoAccount().getEmail();
                     String k_profile = user.getKakaoAccount().getProfile().getProfileImageUrl();
+                    Validate(k_code, k_name, k_email, k_profile);
 
-                    Response.Listener<String> responseListener = new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            try {
-                                System.out.println("아이디 중복체크");
-                                JSONObject jsonResponse = new JSONObject(response);
-                                boolean success = jsonResponse.getBoolean("success");
-                                if (success) {
-                                    //이미 존재하지 않음 테이블 생성해야함
-                                    Response.Listener<String> responseListener1 = new Response.Listener<String>() {// ************회원가입********************
-                                        @Override
-                                        public void onResponse(String response) {
-
-                                            try {
-                                                System.out.println("아무이름" + response);
-                                                JSONObject jsonObject = new JSONObject( response );
-                                                boolean success = jsonObject.getBoolean( "success" );
-                                                //회원가입 성공시
-
-                                                if (success) {
-                                                    System.out.println("회원가입 성공");
-                                                    //회원가입 실패시
-                                                } else {
-                                                    System.out.println("회원가입 실패");
-                                                }
-                                            }
-                                            catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    };
-                                    //ghost = 0 기본(공개)
-                                    KakaoRequest kakaoRequest = new KakaoRequest( k_code, k_name, k_email, k_profile, 0.0, 0.0, 0,responseListener1);
-                                    RequestQueue queue1 = Volley.newRequestQueue( Login_Activity.this );
-                                    queue1.add(kakaoRequest);
-                                }
-                                else {
-                                    //이미 존재하는 테이블 업데이트 필요
-                                    Response.Listener<String> responseListener2 = new Response.Listener<String>() {// ************회원가입********************
-                                        @Override
-                                        public void onResponse(String response) {
-
-                                            try {
-                                                System.out.println("아무이름" + response);
-                                                JSONObject jsonObject = new JSONObject( response );
-                                                boolean success = jsonObject.getBoolean( "success" );
-                                                //업데이트 성공시
-                                                if (success) {
-                                                    System.out.println("업데이트 성공");
-                                                    //업데이트 실패시
-                                                } else {
-                                                    System.out.println("업데이트 실패");
-                                                }
-                                            }
-                                            catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    };
-                                    UpdateRequest updateRequest = new UpdateRequest(k_code, k_name, k_email, k_profile, responseListener2);
-                                    RequestQueue queue2 = Volley.newRequestQueue( Login_Activity.this );
-                                    queue2.add(updateRequest);
-
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    };
-                    ValidateRequest validateRequest = new ValidateRequest(k_code, responseListener);
-                    RequestQueue queue = Volley.newRequestQueue(Login_Activity.this);
-                    queue.add(validateRequest);
-
-
-
-
-
-
-//                    nickname.setText(user.getKakaoAccount().getProfile().getNickname());
-//
-//                    Glide.with(profileImage).load(user.getKakaoAccount().
-//                            getProfile().getProfileImageUrl()).circleCrop().into(profileImage);
                     login_btn.setVisibility(View.GONE);
                     //logout_btn.setVisibility(View.VISIBLE);
 
@@ -203,7 +122,7 @@ public class Login_Activity extends AppCompatActivity {
                     intent.putExtra("코드", user.getId());
                     intent.putExtra("프로필", user.getKakaoAccount().getProfile().getProfileImageUrl());
                     startActivity(intent);
-                    finish();
+                    //finish();
 
                 }else {
                     // 로그인이 되어 있지 않다면 위와 반대로
@@ -216,4 +135,92 @@ public class Login_Activity extends AppCompatActivity {
             }
         });
     }
+
+    void Update(Long k_code, String k_name, String k_email, String k_profile){
+
+        Response.Listener<String> responseListener2 = new Response.Listener<String>() {// ************회원가입********************
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    System.out.println("아무이름" + response);
+                    JSONObject jsonObject = new JSONObject( response );
+                    boolean success = jsonObject.getBoolean( "success" );
+                    //업데이트 성공시
+                    if (success) {
+                        System.out.println("업데이트 성공");
+                        //업데이트 실패시
+                    } else {
+                        System.out.println("업데이트 실패");
+                    }
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        UpdateRequest updateRequest = new UpdateRequest(k_code, k_name, k_email, k_profile, responseListener2);
+        RequestQueue queue2 = Volley.newRequestQueue( Login_Activity.this );
+        queue2.add(updateRequest);
+    }
+
+    void Validate(Long k_code, String k_name, String K_email, String K_profile){
+
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    System.out.println("코드 중복체크");
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+                    if (success) {
+                        System.out.println("제발");
+                        //테이블에 존재하지 않는 코드
+                        //MakeTable(k_code, k_name, K_email, K_profile);
+                    }
+                    else {
+                        System.out.println("오류");
+                        // 이미 존재하는 코드
+                        //Update(k_code, k_name, K_email, K_profile);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        ValidateRequest validateRequest = new ValidateRequest(k_code, responseListener);
+        RequestQueue queue = Volley.newRequestQueue(Login_Activity.this);
+        queue.add(validateRequest);
+    }
+
+    void MakeTable(Long k_code, String k_name, String k_email, String k_profile){
+
+        Response.Listener<String> responseListener1 = new Response.Listener<String>() {// ************회원가입********************
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    System.out.println("아무이름" + response);
+                    JSONObject jsonObject = new JSONObject( response );
+                    boolean success = jsonObject.getBoolean( "success" );
+                    //회원가입 성공시
+
+                    if (success) {
+                        System.out.println("회원가입 성공");
+                        //회원가입 실패시
+                    } else {
+                        System.out.println("회원가입 실패");
+                    }
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        //ghost = 0 기본(공개)
+        KakaoRequest kakaoRequest = new KakaoRequest( k_code, k_name, k_email, k_profile,0,responseListener1);
+        RequestQueue queue1 = Volley.newRequestQueue( Login_Activity.this );
+        queue1.add(kakaoRequest);
+    }
+
 }
