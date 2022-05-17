@@ -19,7 +19,6 @@ public class deleteFriendRequest extends StringRequest {
         map = new HashMap<>();
         map.put("K_code1",k_code1 + "");
         map.put("K_code2",k_code2 + "");
-        
     }
 
     @Override
