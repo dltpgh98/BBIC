@@ -1,9 +1,12 @@
 package com.example.bbic;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class Find_way_Data {
     private JSONArray object;
+    private JSONObject jo;
+
     private int onFoot_time;
     private int bus_time;
     private int sub_time;
@@ -14,20 +17,22 @@ public class Find_way_Data {
     private int sub_iv;
     private int expansion_iv;
 
-    public Find_way_Data(JSONArray object, int onFoot_time, int bus_iv, int bus_time, int sub_iv, int sub_time, int total_time, int expansion_iv, String bus_num, String sub_num){  //통합(버스+지하철) 인덱스번호 3번
-        this.object=object;
-        this.onFoot_time=onFoot_time;
-        this.bus_iv=bus_iv;
+    private StringBuilder totalText;
+
+
+    public Find_way_Data( int onFoot_time, String bus_num, int bus_time, String sub_num, int sub_time, int total_time){  //통합(버스+지하철) 인덱스번호 3번
+//        this.object=object;
+        this.onFoot_time=onFoot_time;  //result.path[{subPath[0].sectionTime
+        this.bus_num=bus_num;             //result.path[{
         this.bus_time=bus_time;
-        this.sub_iv=sub_iv;
+        this.sub_num=sub_num;
         this.sub_time=sub_time;
         this.total_time=total_time;
-        this.expansion_iv=expansion_iv;
-        this.bus_num=bus_num;
-        this.sub_num=sub_num;
     }
 
-
+    public Find_way_Data(StringBuilder totalText) {
+        this.totalText = totalText;
+    }
 
     public int getTotal_time() {
         return total_time;
@@ -107,5 +112,13 @@ public class Find_way_Data {
 
     public void setSub_iv(int sub_iv) {
         this.sub_iv = sub_iv;
+    }
+
+    public StringBuilder getTotalText() {
+        return totalText;
+    }
+
+    public void setTotalText(StringBuilder totalText) {
+        this.totalText = totalText;
     }
 }
