@@ -1,5 +1,7 @@
 package com.example.bbic;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -74,6 +76,8 @@ public class Find_Way_Frag extends Fragment {
             str = b.getString("odsay");
 //            Log.d("str",str);
             tabNum = 0;
+            tabNum = b.getInt("TabPos");
+            Log.d("===================================Fragment GetTabPos===============================",""+tabNum);
 
             try {
                 sub_path = new JSONArray();
@@ -125,14 +129,14 @@ public class Find_Way_Frag extends Fragment {
                                         Log.d("*************trafficType************************",subP.getJSONObject(j).getInt("trafficType")+"");
                                         try{
                                             switch (subP.getJSONObject(j).getInt("trafficType")) {
-                                                case 3:
+                                                case 3:  //도보
                                                     onFoot_time = subP.getJSONObject(j).getInt("sectionTime");
                                                     onFoot.add(onFoot_time);
                                                     aa.append("도보:"+onFoot_time+"분 ");
 //                                                    onFoot[j]=subP.getJSONObject(j).getInt("sectionTime");
                                                 Log.d("**********=======================**도보************************",onFoot_time+"");
                                                     break;
-                                                case 2:
+                                                case 2:  // 버스
                                                     bus_time = subP.getJSONObject(j).getInt("sectionTime");
 //                                                Log.d("***************************bus**********************", subP.getJSONObject(j)+"");
 //                                                    Log.d("***************************bus**********************", subP.getJSONObject(j).getInt("trafficType") + "");
@@ -145,7 +149,7 @@ public class Find_Way_Frag extends Fragment {
 
 //                                                    Log.d("***************************busNum**********************", subP.getJSONObject(j).getJSONArray("lane").getJSONObject(0).getString("busNo") + "");
                                                     break;
-                                                case 1:
+                                                case 1:  //지하철
                                                     sub_time = subP.getJSONObject(j).getInt("sectionTime");
                                                     Log.d("***************************subTime**********************", sub_time+"");
                                                     sub_num = subP.getJSONObject(j).getJSONArray("lane").getJSONObject(0).getString("name");
@@ -177,7 +181,7 @@ public class Find_Way_Frag extends Fragment {
 
                                     aa.append("총 시간:"+total_time+"분");
 //                                    Find_way_Data fwData = new Find_way_Data(onFoot_time, bus_num, bus_time, sub_num, sub_time,total_time);
-                                    Find_way_Data fwData = new Find_way_Data(String.valueOf(aa));
+                                    Find_way_Data fwData = new Find_way_Data(String.valueOf(aa),sb_path.getJSONObject(i));
                                     fArrayList.add(fwData);
                                     find_way_listAdapter.notifyDataSetChanged();
                                     Log.d("=========********한개 배열 끝*******=========","");
@@ -189,6 +193,178 @@ public class Find_Way_Frag extends Fragment {
                             }
                             break;
 
+                        case 1:
+                            for (int i = 0; i < bus_path.length(); i++) {
+                                try {
+                                    JSONArray subP = bus_path.getJSONObject(i).getJSONArray("subPath");
+                                    Log.d("***********************trafficType*************************",subP.getJSONObject(0).getInt("trafficType")+"");
+                                    total_time = bus_path.getJSONObject(i).getJSONObject("info").getInt("totalTime");
+                                    Log.d("***********************Total*************************",total_time+"");
+//                                    int[] onFoot=new int[4];
+//                                    String[] busS= new String[3];
+//                                    String[] subwayS= new String[3];
+
+                                    ArrayList<Integer> onFoot = new ArrayList<>();
+                                    ArrayList<String> busS = new ArrayList<>();
+                                    ArrayList<String> subWayS = new ArrayList<>();
+                                    StringBuilder aa= new StringBuilder();
+
+                                    String[] st = new String[10];
+
+                                    for (int j = 0; j < subP.length(); j++) {
+                                        int traffic = subP.getJSONObject(j).getInt("trafficType");
+                                        Log.d("*************trafficType************************",subP.getJSONObject(j).getInt("trafficType")+"");
+                                        try{
+                                            switch (subP.getJSONObject(j).getInt("trafficType")) {
+                                                case 3:
+                                                    onFoot_time = subP.getJSONObject(j).getInt("sectionTime");
+                                                    onFoot.add(onFoot_time);
+                                                    aa.append("도보:"+onFoot_time+"분 ");
+//                                                    onFoot[j]=subP.getJSONObject(j).getInt("sectionTime");
+                                                    Log.d("**********=======================**도보************************",onFoot_time+"");
+                                                    break;
+                                                case 2:
+                                                    bus_time = subP.getJSONObject(j).getInt("sectionTime");
+//                                                Log.d("***************************bus**********************", subP.getJSONObject(j)+"");
+//                                                    Log.d("***************************bus**********************", subP.getJSONObject(j).getInt("trafficType") + "");
+                                                    Log.d("***************************busTime**********************",bus_time+"");
+                                                    bus_num = subP.getJSONObject(j).getJSONArray("lane").getJSONObject(0).getString("busNo");
+                                                    Log.d("***************************busNum**********************", bus_num);
+                                                    busS.add(bus_num);
+                                                    aa.append("버스:"+bus_num+"번 ");
+//                                                    busS[j]()
+
+//                                                    Log.d("***************************busNum**********************", subP.getJSONObject(j).getJSONArray("lane").getJSONObject(0).getString("busNo") + "");
+                                                    break;
+//                                                case 1:
+//                                                    sub_time = subP.getJSONObject(j).getInt("sectionTime");
+//                                                    Log.d("***************************subTime**********************", sub_time+"");
+//                                                    sub_num = subP.getJSONObject(j).getJSONArray("lane").getJSONObject(0).getString("name");
+//                                                    String cut = sub_num.replace("수도권","");
+//                                                    subWayS.add(sub_num);
+//                                                    Log.d("***************************subNum**********************", sub_num);
+//                                                    aa.append(cut+" ");
+//                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                        }catch (Exception e){
+
+                                        }
+
+                                    }
+
+//                                    JSONArray subPath = path.getJSONObject(i).getJSONArray("sub_path");
+//                                    onFoot_time = subPath.getJSONObject(0).getInt("sectionTime");
+//                                    bus_time = subPath.getJSONObject();
+//
+//                                    sub_time;
+//                                    total_time;
+//                                    bus_num;
+//                                    sub_num;
+//                                    bus_iv;
+//                                    sub_iv;
+//                                    expansion_iv;
+
+                                    aa.append("총 시간:"+total_time+"분");
+//                                    Find_way_Data fwData = new Find_way_Data(onFoot_time, bus_num, bus_time, sub_num, sub_time,total_time);
+                                    Find_way_Data fwData = new Find_way_Data(String.valueOf(aa),bus_path.getJSONObject(i));
+                                    fArrayList.add(fwData);
+                                    find_way_listAdapter.notifyDataSetChanged();
+                                    Log.d("=========********한개 배열 끝*******=========","");
+                                    Log.d("=========********한개 배열 끝*******=========",aa+"");
+                                } catch (Exception e) {
+
+                                }
+
+                            }
+                            break;
+                        case 2:
+                            for (int i = 0; i < sub_path.length(); i++) {
+                                try {
+                                    JSONArray subP = sub_path.getJSONObject(i).getJSONArray("subPath");
+                                    Log.d("***********************trafficType*************************",subP.getJSONObject(0).getInt("trafficType")+"");
+                                    total_time = sub_path.getJSONObject(i).getJSONObject("info").getInt("totalTime");
+                                    Log.d("***********************Total*************************",total_time+"");
+//                                    int[] onFoot=new int[4];
+//                                    String[] busS= new String[3];
+//                                    String[] subwayS= new String[3];
+
+                                    ArrayList<Integer> onFoot = new ArrayList<>();
+                                    ArrayList<String> busS = new ArrayList<>();
+                                    ArrayList<String> subWayS = new ArrayList<>();
+                                    StringBuilder aa= new StringBuilder();
+
+                                    String[] st = new String[10];
+
+                                    for (int j = 0; j < subP.length(); j++) {
+                                        int traffic = subP.getJSONObject(j).getInt("trafficType");
+                                        Log.d("*************trafficType************************",subP.getJSONObject(j).getInt("trafficType")+"");
+                                        try{
+                                            switch (subP.getJSONObject(j).getInt("trafficType")) {
+                                                case 3:
+                                                    onFoot_time = subP.getJSONObject(j).getInt("sectionTime");
+                                                    onFoot.add(onFoot_time);
+                                                    aa.append("도보:"+onFoot_time+"분 ");
+//                                                    onFoot[j]=subP.getJSONObject(j).getInt("sectionTime");
+                                                    Log.d("**********=======================**도보************************",onFoot_time+"");
+                                                    break;
+//                                                case 2:
+//                                                    bus_time = subP.getJSONObject(j).getInt("sectionTime");
+////                                                Log.d("***************************bus**********************", subP.getJSONObject(j)+"");
+////                                                    Log.d("***************************bus**********************", subP.getJSONObject(j).getInt("trafficType") + "");
+//                                                    Log.d("***************************busTime**********************",bus_time+"");
+//                                                    bus_num = subP.getJSONObject(j).getJSONArray("lane").getJSONObject(0).getString("busNo");
+//                                                    Log.d("***************************busNum**********************", bus_num);
+//                                                    busS.add(bus_num);
+//                                                    aa.append("버스:"+bus_num+"번 ");
+////                                                    busS[j]()
+//
+////                                                    Log.d("***************************busNum**********************", subP.getJSONObject(j).getJSONArray("lane").getJSONObject(0).getString("busNo") + "");
+//                                                    break;
+                                                case 1:
+                                                    sub_time = subP.getJSONObject(j).getInt("sectionTime");
+                                                    Log.d("***************************subTime**********************", sub_time+"");
+                                                    sub_num = subP.getJSONObject(j).getJSONArray("lane").getJSONObject(0).getString("name");
+                                                    String cut = sub_num.replace("수도권","");
+                                                    subWayS.add(sub_num);
+                                                    Log.d("***************************subNum**********************", sub_num);
+                                                    aa.append(cut+" ");
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                        }catch (Exception e){
+
+                                        }
+
+                                    }
+
+//                                    JSONArray subPath = path.getJSONObject(i).getJSONArray("sub_path");
+//                                    onFoot_time = subPath.getJSONObject(0).getInt("sectionTime");
+//                                    bus_time = subPath.getJSONObject();
+//
+//                                    sub_time;
+//                                    total_time;
+//                                    bus_num;
+//                                    sub_num;
+//                                    bus_iv;
+//                                    sub_iv;
+//                                    expansion_iv;
+                                    aa.append("총 시간:"+total_time+"분");
+//                                    Log.d("========sub_Path===========",sub_path.getJSONObject(i)+"");
+//                                    Find_way_Data fwData = new Find_way_Data(onFoot_time, bus_num, bus_time, sub_num, sub_time,total_time);
+                                    Find_way_Data fwData = new Find_way_Data(String.valueOf(aa),sub_path.getJSONObject(i));
+                                    fArrayList.add(fwData);
+                                    find_way_listAdapter.notifyDataSetChanged();
+                                    Log.d("=========********한개 배열 끝*******=========","");
+                                    Log.d("=========********한개 배열 끝*******=========",aa+"");
+                                } catch (Exception e) {
+
+                                }
+
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -218,7 +394,37 @@ public class Find_Way_Frag extends Fragment {
 
 //
 //            Find_way_Data way_data = new Find_way_Data();
+
+        Intent intent = new Intent(rootView.getContext(),Maps_Activity.class);
+        intent.putExtra("jPos","Test");
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        rootView.getContext().startActivity(intent);
         return rootView;
     }
 
+
+    //
+//    @Override
+//    public void onDetach() {
+//        super.onDetach();
+//        Log.d("Fragment Detach","");
+//    }
+//
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        Log.d("Fragment onCreate","");
+//    }
+//
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        Log.d("Fragment onStart","");
+//    }
+//
+//    @Override
+//    public void onAttach(@NonNull Context context) {
+//        super.onAttach(context);
+//        Log.d("Fragment attach","");
+//    }
 }

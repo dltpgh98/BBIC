@@ -48,6 +48,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.tabs.TabLayout;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.CameraUpdate;
@@ -100,7 +101,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             } else {
 //                    y = String.valueOf(infoWindow.getPosition().latitude);
 //                    x = String.valueOf(infoWindow.getPosition().longitude);
-                    System.out.println("인포윈도우에서 정류장 이름 : " + StationName);
+                System.out.println("인포윈도우에서 정류장 이름 : " + StationName);
                 return StationName;
             }
 
@@ -110,13 +111,14 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     //버튼 클릭 리스너 클래스
     class BtnOnClickListener implements View.OnClickListener {
         private int sw = 0;
+
         @SuppressLint("NonConstantResourceId")
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
                 //case를 통해 id에 따른 클릭이벤트 실행
                 case R.id.menu_ibtn:
-                    if(!drawerEnabled) {
+                    if (!drawerEnabled) {
                         gpsTracker = new GpsTracker(Maps_Activity.this);
 
                         double latitude = gpsTracker.getLatitude();
@@ -124,9 +126,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
                         String myAddress = getCurrentAddress(latitude, longitude);
                         String[] add = myAddress.split(" ");
-                        Log.d("위치", add[1]+" "+add[2]);
+                        Log.d("위치", add[1] + " " + add[2]);
                         drawerInit(myAddress);
-                        drawerEnabled=true;
+                        drawerEnabled = true;
                     }
                     drawerLayout.openDrawer(drawerView);
                     break;
@@ -145,7 +147,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     intent3.putExtra("날씨", weather);
                     intent3.putExtra("도", area);
                     intent3.putExtra("시", city);
-                    intent3.putExtra("코로나",covidNum);
+                    intent3.putExtra("코로나", covidNum);
                     startActivity(intent3);
                     finish();
                     break;
@@ -171,7 +173,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     intent5.putExtra("날씨", weather);
                     intent5.putExtra("도", area);
                     intent5.putExtra("시", city);
-                    intent5.putExtra("코로나",covidNum);
+                    intent5.putExtra("코로나", covidNum);
                     startActivity(intent5);
                     finish();
                     break;
@@ -185,7 +187,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     intent6.putExtra("날씨", weather);
                     intent6.putExtra("도", area);
                     intent6.putExtra("시", city);
-                    intent6.putExtra("코로나",covidNum);
+                    intent6.putExtra("코로나", covidNum);
                     startActivity(intent6);
                     finish();
                     break;
@@ -194,7 +196,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                    startActivity(intent);
                     search_location();
                     break;
-                case  R.id.main_find_way_ibtn:
+                case R.id.main_find_way_ibtn:
 
                     view_Header.setVisibility(View.GONE);
                     viewPager.setVisibility(View.GONE);
@@ -217,18 +219,18 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     String sPosEt = sPosEdit.getText().toString();
                     String ePosEt = ePosEdit.getText().toString();
 
-                    System.out.print(sPosEt+"시작 "+ePosEt+"도착");
+                    System.out.print(sPosEt + "시작 " + ePosEt + "도착");
 
-                    try{
-                        nameToPos(sPosEt,ePosEt);
-                    }catch (Exception e){
+                    try {
+                        nameToPos(sPosEt, ePosEt);
+                    } catch (Exception e) {
                         System.out.println("찾을수 없는 장소입니다.");
                     }
                     keyboardmanager.hideSoftInputFromWindow(sPosEdit.getWindowToken(), 0);
 
                 case R.id.view_header_ghost_btn:
 
-                    switch(sw){
+                    switch (sw) {
                         case 0:
                             sw = 1;
                             headerGhostBtn.setImageResource(R.drawable.ghost2);
@@ -243,6 +245,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             }
         }
     }
+
     //위치 참조를 위한 객체
     GpsTracker gpsTracker;
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
@@ -270,10 +273,15 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
 
     private JSONArray[] path;
-    private JSONObject result;
+    private JSONObject result, meResult;
+    private String fw_pos_path;
 
 
     private SlidingUpPanelLayout upPanelLayout;
+    Bundle bundleFw;
+    int position;
+    FragmentTransaction ft;
+
 
     private ViewPager2 viewPager;
     private WormDotsIndicator indicator;
@@ -286,9 +294,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private Vector<LatLng> markersPosition;
     private Vector<Marker> activeMarkers;
 
-    private double[] sPos,ePos;
+    private double[] sPos, ePos;
     private StationList[] StationLists;
-    private static String y = "",x = "";
+    private static String y = "", x = "";
     private static Odsay odsay;
     private static Odsay bus_info;
     private static String StationName;
@@ -298,7 +306,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     public static ODsayService odsayService;
     private InputMethodManager keyboardmanager;
 
-//    private Find_Way_Frag fw_frag;
+    Find_Way_Frag fw_frag;
 
     //수정할수도 있음 ==============================================
     // 현재 카메라가 보고있는 위치
@@ -312,6 +320,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     public final static double REFERANCE_LNG = 1 / 88.74;
     public final static double REFERANCE_LAT_X3 = 3 / 109.958489129649955;
     public final static double REFERANCE_LNG_X3 = 3 / 88.74;
+
     public boolean withinSightMarker(LatLng currentPosition, LatLng markerPosition) {
         boolean withinSightMarkerLat = Math.abs(currentPosition.latitude - markerPosition.latitude) <= REFERANCE_LAT_X3;
         boolean withinSightMarkerLng = Math.abs(currentPosition.longitude - markerPosition.longitude) <= REFERANCE_LNG_X3;
@@ -324,7 +333,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             activeMarkers = new Vector<Marker>();
             return;
         }
-        for (Marker activeMarker: activeMarkers) {
+        for (Marker activeMarker : activeMarkers) {
             activeMarker.setMap(null);
         }
         activeMarkers = new Vector<Marker>();
@@ -340,14 +349,14 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         odsayService.setReadTimeout(5000);
         odsayService.setConnectionTimeout(5000);
 
-        naverMap.setLayerGroupEnabled(LAYER_GROUP_TRANSIT,true);
+        naverMap.setLayerGroupEnabled(LAYER_GROUP_TRANSIT, true);
         naverMap.setLocationSource(locationSource);
         naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
         LatLng initialPosition = new LatLng(37.506855, 127.066242);
 
         UiSettings uiSettings = naverMap.getUiSettings();
         uiSettings.setLocationButtonEnabled(true);
-        uiSettings.setLogoGravity(Gravity.RIGHT|Gravity.BOTTOM);
+        uiSettings.setLogoGravity(Gravity.RIGHT | Gravity.BOTTOM);
 
         InfoWindow infoWindow = new InfoWindow();
         infoWindow.setPosition(new LatLng(37.5666102, 126.9783881));
@@ -367,7 +376,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         naverMap.moveCamera(cameraUpdate);
 
 
-
         naverMap.setOnMapClickListener((point, coord) -> {
 
             odsay = new Odsay();
@@ -377,49 +385,55 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             y = "";
             y = String.valueOf(infoWindow.getPosition().latitude);
             x = String.valueOf(infoWindow.getPosition().longitude);
-            Map_Find_way mapFind_way =new Map_Find_way();
+            Map_Find_way mapFind_way = new Map_Find_way();
 
             //odsayService.requestSearchPubTransPath("126.8881529057685","37.49185398304374",x,y,"0","0","0", mapFind_way.Find_way);
             //odsayService.requestLoadLane("0:0@1673:1:25:27@2:2:233:239",mapFind_way.LoadLane);
 //            Log.d("==============================onMapReady==============",""+path[0]);
 
-            Log.d("위치 좌표 Y",String.valueOf(infoWindow.getPosition().latitude));
-            Log.d("위치 좌표 X",String.valueOf(infoWindow.getPosition().longitude));
-            odsayService.requestPointSearch(x,y,"5","1:2", odsay.pointSearch);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        System.out.println("배열의 크기 : " + odsay.getCount());
-                        if(odsay.getCount() >=1){
-                            StationLists = new StationList[odsay.getStationList().length];
-                            StationLists = odsay.getStationList();
-                            for (int i = 0; i < odsay.getCount(); i++){
+            Log.d("위치 좌표 Y", String.valueOf(infoWindow.getPosition().latitude));
+            Log.d("위치 좌표 X", String.valueOf(infoWindow.getPosition().longitude));
+            odsayService.requestPointSearch(x, y, "5", "1:2", odsay.pointSearch);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("배열의 크기 : " + odsay.getCount());
+                    if (odsay.getCount() >= 1) {
+                        StationLists = new StationList[odsay.getStationList().length];
+                        StationLists = odsay.getStationList();
+                        for (int i = 0; i < odsay.getCount(); i++) {
 
-                                System.out.println("가져온 배열" + StationLists[i].getStationClass());
-                                System.out.println("가져온 정류장 이름" + StationLists[i].getStationName());
-                                System.out.println("가져온 정류장 아이디" + StationLists[i].getStationID());
-                                System.out.println("가져온 정류장 " + StationLists[i].getX());
-                                System.out.println("가져온 정류장 " + StationLists[i].getY());
-                                StationName = StationLists[i].getStationName();
-                                System.out.println("정류장 이름 : " + StationName + "\n" + "반목문안에서의 배열의 크기 : " + odsay.getCount());
-                                StationId = StationLists[i].getStationID();
-                                stationClass = StationLists[i].getStationClass();
+                            System.out.println("가져온 배열" + StationLists[i].getStationClass());
+                            System.out.println("가져온 정류장 이름" + StationLists[i].getStationName());
+                            System.out.println("가져온 정류장 아이디" + StationLists[i].getStationID());
+                            System.out.println("가져온 정류장 " + StationLists[i].getX());
+                            System.out.println("가져온 정류장 " + StationLists[i].getY());
+                            StationName = StationLists[i].getStationName();
+                            System.out.println("정류장 이름 : " + StationName + "\n" + "반목문안에서의 배열의 크기 : " + odsay.getCount());
+                            StationId = StationLists[i].getStationID();
+                            stationClass = StationLists[i].getStationClass();
 
-                                if(stationClass == 1){
-                                    odsayService.requestBusStationInfo(String.valueOf(StationLists[i].getStationID()), odsay.busStationInfo);
-                                }else if(stationClass == 2){
-                                    odsayService.requestSubwayStationInfo(String.valueOf(StationId), odsay.subwayStationInfo);
-                                 }
-
+                            if (stationClass == 1) {
+                                odsayService.requestBusStationInfo(String.valueOf(StationLists[i].getStationID()), odsay.busStationInfo);
+                            } else if (stationClass == 2) {
+                                odsayService.requestSubwayStationInfo(String.valueOf(StationId), odsay.subwayStationInfo);
                             }
+
                         }
-
-                        infoWindow.setPosition(coord);
-                        infoWindow.open(naverMap);
-
                     }
-                },2500);
 
+                    infoWindow.setPosition(coord);
+                    infoWindow.open(naverMap);
+
+                }
+            }, 2500);
+//
+//            Intent intent = getIntent();
+//            Log.d("======================jObject=================================",intent.getStringExtra("jObject"));
+//            if(intent.getStringExtra("jObject")!=null){
+//                fw_pos_path = intent.getStringExtra("jObject");
+//                Log.d("======================jObject=================================",fw_pos_path);
+//            }
 
 
 
@@ -448,13 +462,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                    }
 //                }
 //            }.start();
-
-
-
-
-
-
-
 
 
 //            if(point_search.getCount() >= 1 ){
@@ -504,7 +511,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 freeActiveMarkers();
                 // 정의된 마커위치들중 가시거리 내에있는것들만 마커 생성
                 LatLng currentPosition = getCurrentPosition(naverMap);
-                for (LatLng markerPosition: markersPosition) {
+                for (LatLng markerPosition : markersPosition) {
                     if (!withinSightMarker(currentPosition, markerPosition))
                         continue;
                     Marker marker = new Marker();
@@ -536,13 +543,16 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
         gpsTracker = new GpsTracker(Maps_Activity.this);
 
+        fw_frag = new Find_Way_Frag();
+        Log.d("================fw_frag====================",fw_frag+"");
+
         double latitude = gpsTracker.getLatitude();
         double longitude = gpsTracker.getLongitude();
 
         String myAddress = getCurrentAddress(latitude, longitude);
         String[] add = myAddress.split(" ");
         //Log.d("위치", add[1]+" "+add[2]);
-        Log.d("위치 좌표", latitude +" "+longitude);
+        Log.d("위치 좌표", latitude + " " + longitude);
         drawerInit(myAddress);
 
         //도성대
@@ -554,7 +564,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
         mapFragment.getMapAsync(this);
 
+        bundleFw = new Bundle();
 
+        ft = getSupportFragmentManager().beginTransaction();
 
         //이세호
         //버튼 클릭 리스너 클래스 객체 생성(클릭 이벤트를 위함)
@@ -578,13 +590,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
 
         upPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.slide);
-        view_Header = (ConstraintLayout)findViewById(R.id.view_header);
-        viewPager = (ViewPager2)findViewById(R.id.view_pager);
-        indicator = (WormDotsIndicator)findViewById(R.id.dots_indicator);
-        find_way_page = (ConstraintLayout)findViewById(R.id.view_find_way_lay);
-        vFindIbtn = (ImageButton)findViewById(R.id.view_find_way_ibtn);
-        sPosEdit= (EditText)findViewById(R.id.start_pos_et);
-        ePosEdit= (EditText)findViewById(R.id.end_pos_et);
+        view_Header = (ConstraintLayout) findViewById(R.id.view_header);
+        viewPager = (ViewPager2) findViewById(R.id.view_pager);
+        indicator = (WormDotsIndicator) findViewById(R.id.dots_indicator);
+        find_way_page = (ConstraintLayout) findViewById(R.id.view_find_way_lay);
+        vFindIbtn = (ImageButton) findViewById(R.id.view_find_way_ibtn);
+        sPosEdit = (EditText) findViewById(R.id.start_pos_et);
+        ePosEdit = (EditText) findViewById(R.id.end_pos_et);
 
         drawerMenu[0] = (Button) findViewById(R.id.drawer_menu_1);
         drawerMenu[1] = (Button) findViewById(R.id.drawer_menu_2);
@@ -615,7 +627,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         headerGhostBtn.setOnClickListener(onClickListener);
         headerSettingBtn.setOnClickListener(onClickListener);
 
-        keyboardmanager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        keyboardmanager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
 //============================================================================================SlidingUpPanel
         upPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
@@ -627,14 +639,14 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
                 Log.d("upPanel 바뀔때 내용 ", "onPanelStateChanged " + newState);
-                if(newState == (SlidingUpPanelLayout.PanelState.COLLAPSED)&&view_Header.getVisibility()==View.GONE){
+                if (newState == (SlidingUpPanelLayout.PanelState.COLLAPSED) && view_Header.getVisibility() == View.GONE) {
                     view_Header.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.VISIBLE);
                     indicator.setVisibility(View.VISIBLE);
                     find_way_page.setVisibility(View.GONE);
-                    Log.d("바꿈","");
+                    Log.d("바꿈", "");
                 }
-                if(newState == (SlidingUpPanelLayout.PanelState.EXPANDED)&&result!=null){
+                if (newState == (SlidingUpPanelLayout.PanelState.EXPANDED) && result != null) {
 //                    Log.d("프래그먼트로 =============================",""+result);
 //                    FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
 //                    Find_Way_Frag find_way_frag = new Find_Way_Frag();
@@ -648,6 +660,60 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 }
             }
         });
+
+//===================================================================================================
+
+        TabLayout tabs = (TabLayout) findViewById(R.id.view_transport_table);
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+//                getSupportFragmentManager().beginTransaction().attach(find_way_frag).commitAllowingStateLoss();
+//                getSupportFragmentManager().beginTransaction().remove(find_way_frag);
+//                getSupportFragmentManager().beginTransaction().detach(find_way_frag);
+//                ft.detach(find_way_frag).attach(find_way_frag).setPrimaryNavigationFragment(find_way_frag).setReorderingAllowed(true).commitNowAllowingStateLoss();
+//                ft.detach(find_way_frag);
+//                getSupportFragmentManager().beginTransaction().remove(find_way_frag);
+                position = tab.getPosition();
+                Log.d("============fw_frag  bundle 추가후==========", fw_frag + "");
+                Log.d("============TabPosition==========", position + "");
+                bundleFw.putInt("TabPos", position);
+                fw_frag.setArguments(bundleFw);
+
+                frag_set(fw_frag);
+//                    Find_Way_Frag find_way_frag = new Find_Way_Frag();
+//                    transaction.replace(R.id.view_fw_container,fw_frag);
+//                    Find_Way_Frag fw_frag = (Find_Way_Frag) getSupportFragmentManager().findFragmentById(R.id.view_fw_container);// 리스트 프래그먼트 위치
+
+//                    find_way_frag.setArguments(bundleFw);
+//                fw_frag.setArguments(bundleFw);
+
+//                fw_frag = (Find_Way_Frag) getSupportFragmentManager().findFragmentById(R.id.view_fw_container);
+//
+//                Log.d("============fw_frag  bundle 추가후==========", fw_frag + "");
+////                getSupportFragmentManager().beginTransaction().detach(fw_frag).attach(fw_frag).setPrimaryNavigationFragment(fw_frag).setReorderingAllowed(true).commitNowAllowingStateLoss();
+////                ft.hide(fw_frag).commit();
+//                ft.detach(fw_frag).commitNowAllowingStateLoss();
+//                ft.attach(fw_frag).setPrimaryNavigationFragment(fw_frag).setReorderingAllowed(true).commitNowAllowingStateLoss();
+//                ft.detach(fw_frag).attach(fw_frag).setPrimaryNavigationFragment(fw_frag).setReorderingAllowed(true).commitNowAllowingStateLoss();
+
+                //ft.attach(find_way_frag).setPrimaryNavigationFragment(find_way_frag).setReorderingAllowed(true).commitNowAllowingStateLoss();
+//                getSupportFragmentManager().beginTransaction().attach(find_way_frag).setPrimaryNavigationFragment(find_way_frag).setReorderingAllowed(true).commitNowAllowingStateLoss();
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
+
 //===================================================================================================
 
         searchIbtn.setOnClickListener(onClickListener); // 검색 버튼 리스너
@@ -660,9 +726,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         nickName.setText(name); // 카카오톡 프로필 닉네임
         Glide.with(this).load(address).circleCrop().into(profile); // 카카오톡 프로필 이미지
 
-        if(!checkLocationServiceStatus()){
+        if (!checkLocationServiceStatus()) {
             showDialogForLocationServiceSetting();
-        }else{
+        } else {
             checkRunTimePermission();
         }
 
@@ -680,13 +746,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         indicator = (WormDotsIndicator) findViewById(R.id.dots_indicator);
         indicator.setViewPager2(viewPager);
 
-        final ImageButton ibtn = (ImageButton)viewPager.findViewById(R.id.view_item_ibtn1);
+        final ImageButton ibtn = (ImageButton) viewPager.findViewById(R.id.view_item_ibtn1);
 
         editText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                switch(i){
-                    case  KeyEvent.KEYCODE_ENTER:
+                switch (i) {
+                    case KeyEvent.KEYCODE_ENTER:
                         search_location();
                         break;
                 }
@@ -700,8 +766,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                    Bundle bundle = new Bundle(1);
 //                    bundle.putString("odsay","TEST");
 //                    fw_frag.setArguments(bundle);
-
-
 
 
 //        if(upPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED&&path!=null){
@@ -771,16 +835,17 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //        };
 
     }
-    public void receiveMessage(Intent intent){
+
+    public void receiveMessage(Intent intent) {
 
     }
 
 
-    private void drawerInit(String myAddress){
+    private void drawerInit(String myAddress) {
         add = myAddress.split(" ");
-        area=add[1];
-        city=add[2];
-        final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query="+area+" "+city+"날씨"; //웹크롤링 할 주소(1)
+        area = add[1];
+        city = add[2];
+        final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=" + area + " " + city + "날씨"; //웹크롤링 할 주소(1)
         final String covidURL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=코로나19"; //웹크롤링 할 주소(2)
         //스레드간 데이터 전달을 위한 번들 생성
         final Bundle bundle = new Bundle();
@@ -926,26 +991,26 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     @SuppressLint("MissingSuperCall")
     @Override
     //퍼미션 요청 결과를 받는 메소드
-    public void onRequestPermissionsResult(int permsRequestCode, @NonNull String[] permissions, @NonNull int[]grandResults) {
-        if (permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length){//요청 코드가 동일하고, 요청한 퍼미션 만큼 수신되었다면 실행
+    public void onRequestPermissionsResult(int permsRequestCode, @NonNull String[] permissions, @NonNull int[] grandResults) {
+        if (permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length) {//요청 코드가 동일하고, 요청한 퍼미션 만큼 수신되었다면 실행
             boolean check_result = true;
 
             //퍼미션이 모두 허용됫는지 체크
-            for (int result : grandResults){
-                if(result != PackageManager.PERMISSION_GRANTED){//허용이 아닐경우
+            for (int result : grandResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {//허용이 아닐경우
                     check_result = false;//false로 저장
                     break;
                 }
             }
 
-            if(check_result){
+            if (check_result) {
 
-            }else{//거부된 퍼미션이 있을경우
-                if(ActivityCompat.shouldShowRequestPermissionRationale(this,REQUIRED_PERMISSIONS[0])||ActivityCompat.shouldShowRequestPermissionRationale(this,REQUIRED_PERMISSIONS[1])){
+            } else {//거부된 퍼미션이 있을경우
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[0]) || ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[1])) {
 
                     Toast.makeText(Maps_Activity.this, "권한이 거부되었습니다. 앱을 다시 실행하여 권한을 허용해주세요", Toast.LENGTH_LONG).show();
                     finish();
-                }else{
+                } else {
                     Toast.makeText(Maps_Activity.this, "권한이 거부되었습니다. 설정(앱 정보)에서 권한을 허용해주세요", Toast.LENGTH_LONG).show();
                     finish();
                 }
@@ -953,62 +1018,62 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
     }
 
-    boolean checkRunTimePermission(){//런타임 퍼미션 처리
+    boolean checkRunTimePermission() {//런타임 퍼미션 처리
         //위치 퍼미션 체크
-        int hasFineLocationPermission = ContextCompat.checkSelfPermission(Maps_Activity.this,Manifest.permission.ACCESS_FINE_LOCATION);
-        int hasCoarseLocationPermission = ContextCompat.checkSelfPermission(Maps_Activity.this,Manifest.permission.ACCESS_COARSE_LOCATION);
+        int hasFineLocationPermission = ContextCompat.checkSelfPermission(Maps_Activity.this, Manifest.permission.ACCESS_FINE_LOCATION);
+        int hasCoarseLocationPermission = ContextCompat.checkSelfPermission(Maps_Activity.this, Manifest.permission.ACCESS_COARSE_LOCATION);
 
         if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED && hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED) {//퍼미션을 가지고있다면
             return true;
-        }else{//권한이 없다면
+        } else {//권한이 없다면
             Toast.makeText(Maps_Activity.this, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
             do {
-                if(ActivityCompat.shouldShowRequestPermissionRationale(Maps_Activity.this,REQUIRED_PERMISSIONS[0])){//권한 요청을 거부한적이 있을때
-                    ActivityCompat.requestPermissions(Maps_Activity.this, REQUIRED_PERMISSIONS,PERMISSIONS_REQUEST_CODE);//사용자에게 권한 요청
-                }else{//요청이 처음이라면
-                    ActivityCompat.requestPermissions(Maps_Activity.this, REQUIRED_PERMISSIONS,PERMISSIONS_REQUEST_CODE);//사용자에게 권한 요청
+                if (ActivityCompat.shouldShowRequestPermissionRationale(Maps_Activity.this, REQUIRED_PERMISSIONS[0])) {//권한 요청을 거부한적이 있을때
+                    ActivityCompat.requestPermissions(Maps_Activity.this, REQUIRED_PERMISSIONS, PERMISSIONS_REQUEST_CODE);//사용자에게 권한 요청
+                } else {//요청이 처음이라면
+                    ActivityCompat.requestPermissions(Maps_Activity.this, REQUIRED_PERMISSIONS, PERMISSIONS_REQUEST_CODE);//사용자에게 권한 요청
                 }
 
-                hasFineLocationPermission = ContextCompat.checkSelfPermission(Maps_Activity.this,Manifest.permission.ACCESS_FINE_LOCATION);
-                hasCoarseLocationPermission = ContextCompat.checkSelfPermission(Maps_Activity.this,Manifest.permission.ACCESS_COARSE_LOCATION);
-            }while (hasFineLocationPermission != PackageManager.PERMISSION_GRANTED && hasCoarseLocationPermission != PackageManager.PERMISSION_GRANTED);
+                hasFineLocationPermission = ContextCompat.checkSelfPermission(Maps_Activity.this, Manifest.permission.ACCESS_FINE_LOCATION);
+                hasCoarseLocationPermission = ContextCompat.checkSelfPermission(Maps_Activity.this, Manifest.permission.ACCESS_COARSE_LOCATION);
+            } while (hasFineLocationPermission != PackageManager.PERMISSION_GRANTED && hasCoarseLocationPermission != PackageManager.PERMISSION_GRANTED);
         }
         return true;
     }
 
-    public String getCurrentAddress(double latitude, double longitude){//주소 찾기
+    public String getCurrentAddress(double latitude, double longitude) {//주소 찾기
         geocoder = new Geocoder(this, Locale.getDefault());//역지오코딩 위한 지오코딩 객체 선언
 
         List<Address> addresses;//주소를 저장할 주소리스트 선언
 
-        try{
-            addresses = geocoder.getFromLocation(latitude,longitude,7);//매개변수로 입력받은 경도위도로 주소 찾기
-        }catch (IOException ioException){//에러시
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 7);//매개변수로 입력받은 경도위도로 주소 찾기
+        } catch (IOException ioException) {//에러시
             Toast.makeText(Maps_Activity.this, "지오코더 서비스 사용불가", Toast.LENGTH_SHORT).show();
             return "지오코더 서비스 사용불가";
-        }catch (IllegalArgumentException illegalArgumentException){
+        } catch (IllegalArgumentException illegalArgumentException) {
             Toast.makeText(Maps_Activity.this, "잘못된 GPS 좌표", Toast.LENGTH_SHORT).show();
             return "잘못된 GPS 좌표";
         }
 
-        if(addresses == null || addresses.size() == 0){//나온 주소가 없을때
+        if (addresses == null || addresses.size() == 0) {//나온 주소가 없을때
             Toast.makeText(this, "주소 미발견", Toast.LENGTH_SHORT).show();
             return "주소 미발견";
         }
 
         Address address = addresses.get(0);//주소객체에 주소값 저장
-        return address.getAddressLine(0).toString()+"\n";//리턴
+        return address.getAddressLine(0).toString() + "\n";//리턴
     }
 
-    private void showDialogForLocationServiceSetting(){//GPS 활성화가 안되있을때 허용하게 나오게 하는 다이알로그
+    private void showDialogForLocationServiceSetting() {//GPS 활성화가 안되있을때 허용하게 나오게 하는 다이알로그
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Maps_Activity.this);//다이얼로그 생성
         builder.setTitle("위치 서비스 비활성화");//타이틀 설정
-        builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n"+"위치 설정을 수정하실래요?");//내용 설정
+        builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n" + "위치 설정을 수정하실래요?");//내용 설정
         builder.setCancelable(true);//버튼 추가
-        builder.setPositiveButton("설정",new DialogInterface.OnClickListener(){//수락 버튼 설정
+        builder.setPositiveButton("설정", new DialogInterface.OnClickListener() {//수락 버튼 설정
             @Override
-            public void onClick(DialogInterface dialog, int id){
+            public void onClick(DialogInterface dialog, int id) {
                 Intent callGPSSettingIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivityForResult(callGPSSettingIntent, GPS_ENABLE_REQUEST_CODE);//권한 요청창 뜨게끔
             }
@@ -1024,15 +1089,15 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        switch (requestCode){
+        switch (requestCode) {
 
             case GPS_ENABLE_REQUEST_CODE:
-                if(checkLocationServiceStatus()){
-                    if(checkLocationServiceStatus()){
-                        Log.d("위치권한 확인","true");
+                if (checkLocationServiceStatus()) {
+                    if (checkLocationServiceStatus()) {
+                        Log.d("위치권한 확인", "true");
                         checkRunTimePermission();
                         return;
                     }
@@ -1042,62 +1107,77 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
     }
 
-    public boolean checkLocationServiceStatus(){
+    public boolean checkLocationServiceStatus() {
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)||locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
-    public void nameToPos(String sEtPosName, String eEtPosName){
+    public void nameToPos(String sEtPosName, String eEtPosName) {
         List<Address> sAddressList = null;
         List<Address> eAddressList = null;
-        String sLatitude="";
-        String sLongitude="";
+        String sLatitude = "";
+        String sLongitude = "";
         String eLatitude = "";
         String eLongitude = "";
-        try{
-            sAddressList = geocoder.getFromLocationName(sEtPosName,10);
-            eAddressList = geocoder.getFromLocationName(eEtPosName,10);
+        try {
+            sAddressList = geocoder.getFromLocationName(sEtPosName, 10);
+            eAddressList = geocoder.getFromLocationName(eEtPosName, 10);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        String []sSplitStr = sAddressList.get(0).toString().split(",");
-        String []eSplitStr = eAddressList.get(0).toString().split(",");
+        String[] sSplitStr = sAddressList.get(0).toString().split(",");
+        String[] eSplitStr = eAddressList.get(0).toString().split(",");
 
 //            String sAddress = splitStr[0].substring(splitStr[0].indexOf("\"") + 1,splitStr[0].length() - 2); //주소
 
-        sLatitude= sSplitStr[10].substring(sSplitStr[10].indexOf("=")+1);
-        sLongitude= sSplitStr[12].substring(sSplitStr[12].indexOf("=")+1);
+        sLatitude = sSplitStr[10].substring(sSplitStr[10].indexOf("=") + 1);
+        sLongitude = sSplitStr[12].substring(sSplitStr[12].indexOf("=") + 1);
 
-        eLatitude= eSplitStr[10].substring(eSplitStr[10].indexOf("=")+1);
-        eLongitude= eSplitStr[12].substring(eSplitStr[12].indexOf("=")+1);
+        eLatitude = eSplitStr[10].substring(eSplitStr[10].indexOf("=") + 1);
+        eLongitude = eSplitStr[12].substring(eSplitStr[12].indexOf("=") + 1);
 
         Map_Find_way mapFindWay = new Map_Find_way();
-        odsayService.requestSearchPubTransPath(sLongitude,sLatitude,eLongitude,eLatitude,"0","0","0",mapFindWay.Find_way);
+        odsayService.requestSearchPubTransPath(sLongitude, sLatitude, eLongitude, eLatitude, "0", "0", "0", mapFindWay.Find_way);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {                                        //handler 객체 딜레이 (2초)끝나면 종료
             @Override
             public void run() {
-                path=mapFindWay.getPath_s();
-                result= mapFindWay.getResult();
+                path = mapFindWay.getPath_s();
+                result = mapFindWay.getResult();
 //                System.out.println("-----------------------result"+result);
 //                FragmentTransaction tf = getSupportFragmentManager().beginTransaction();
 //                        tf.detach(fw_frag).attach(fw_frag).commit();
 //                System.out.println("======================Test========================="+path[0]);
 
-                Bundle bundle = new Bundle();
-                if(result!=null) {
-                    bundle.putString("odsay", result.toString());
+                if (result != null) {
 
-                    Find_Way_Frag find_way_frag = new Find_Way_Frag();
-                    find_way_frag.setArguments(bundle);
-                    getSupportFragmentManager().beginTransaction().add(R.id.view_fw_container, find_way_frag).commit();
+                    bundleFw.putString("odsay", result.toString());
+                    fw_frag.setArguments(bundleFw);
+                    frag_set(fw_frag);
+                    meResult = result;
+//                    if (meResult == null) {
+//                        meResult = result;
+//                        fw_frag.setArguments(bundleFw);
+////                    getSupportFragmentManager().beginTransaction().remove(find_way_frag).commitAllowingStateLoss();
+//                        frag_set();
+////                        getSupportFragmentManager().beginTransaction().add(R.id.view_fw_container, fw_frag).
+////                                setPrimaryNavigationFragment(fw_frag).setReorderingAllowed(true).commitNowAllowingStateLoss();
+//
+//                    } else if (meResult != null) {
+//                        Log.d("===================meResult", meResult + "");
+//                        fw_frag.setArguments(bundleFw);
+//                        getSupportFragmentManager().beginTransaction().detach(getSupportFragmentManager().getPrimaryNavigationFragment());
+//                        getSupportFragmentManager().beginTransaction().attach(fw_frag).setPrimaryNavigationFragment(fw_frag).setReorderingAllowed(true).commitNowAllowingStateLoss();
+//                    }
+
+                    Log.d("Position", position + "");
+                    Log.d("=========================================fw_frag=====================================", fw_frag + "");
                 }
 
-
             }
-        }, 500);
+        }, 550);
 //        path = mapFindWay.getPath_s();
 
 //
@@ -1112,26 +1192,26 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //        pos[1]=Double.parseDouble(sLongitude);
 //        return pos;
     }
-    private void search_location()
-    {
-        if(editText.length() == 0){
+
+    private void search_location() {
+        if (editText.length() == 0) {
             editText.requestFocus();
-        }else{
+        } else {
             keyboardmanager.hideSoftInputFromWindow(sPosEdit.getWindowToken(), 0);
             String str = editText.getText().toString();
             List<Address> addressList = null;
-            try{
+            try {
                 addressList = geocoder.getFromLocationName(
                         str,//주소
                         10 // 최대겁색 결과 개수
                 );
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             System.out.println(addressList.get(0).toString());
             //콤마를 기준으로 split
-            String []splitStr = addressList.get(0).toString().split(",");
-            String address = splitStr[0].substring(splitStr[0].indexOf("\"") + 1,splitStr[0].length() - 2); // 주소
+            String[] splitStr = addressList.get(0).toString().split(",");
+            String address = splitStr[0].substring(splitStr[0].indexOf("\"") + 1, splitStr[0].length() - 2); // 주소
             System.out.println(address);
 
             String latitude = splitStr[10].substring(splitStr[10].indexOf("=") + 1); // 위도
@@ -1153,11 +1233,25 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     }
 
     public static Drawable getTintedDrawable(@NonNull final Context context,
-                                             @DrawableRes int drawableRes, @ColorRes int colorRes){
+                                             @DrawableRes int drawableRes, @ColorRes int colorRes) {
         Drawable d = ContextCompat.getDrawable(context, drawableRes);
         d = DrawableCompat.wrap(d);
         DrawableCompat.setTint(d.mutate(), ContextCompat.getColor(context, colorRes));
         return d;
+    }
+
+    public void frag_set(Find_Way_Frag fw_frag) {
+        if (meResult == null&&result!=null) {
+            Log.d("===================fw_frag============", "" + fw_frag);
+            getSupportFragmentManager().beginTransaction().add(R.id.view_fw_container, fw_frag).commit();
+        } else if (meResult != null||result !=meResult&&result!=null) {
+            Log.d("===================fw_frag============", "" + fw_frag);
+            fw_frag = (Find_Way_Frag) getSupportFragmentManager().findFragmentById(R.id.view_fw_container);
+
+            ft.detach(fw_frag).commitNowAllowingStateLoss();
+            ft.attach(fw_frag).setPrimaryNavigationFragment(fw_frag).setReorderingAllowed(true).commitNowAllowingStateLoss();
+        }
+
     }
 
     public JSONArray[] getPath() {
@@ -1167,4 +1261,73 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     public void setPath(JSONArray[] path) {
         this.path = path;
     }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("onStop()","");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("onStart()","");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("onRestart()","");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("onDestroy()","");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+            Intent intent = getIntent();
+//            Log.d("======================jObject=================================",intent.getStringExtra("jObject"));
+            Log.d("onResume()","");
+            if(intent.getStringExtra("jObject")!=null){
+                fw_pos_path = intent.getStringExtra("jObject");
+                Log.d("======================jObject=================================",fw_pos_path);
+            }
+    }
+
+    @Override
+    protected void onResumeFragments() {
+        super.onResumeFragments();
+        Log.d("onResumeFragments()","");
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

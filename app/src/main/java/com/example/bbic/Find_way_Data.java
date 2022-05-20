@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 public class Find_way_Data {
     private JSONArray object;
-    private JSONObject jo;
+    private JSONObject jObject;
 
     private int onFoot_time;
     private int bus_time;
@@ -30,8 +30,9 @@ public class Find_way_Data {
 //        this.total_time=total_time;
 //    }
 
-    public Find_way_Data(String totalText) {
+    public Find_way_Data(String totalText,JSONObject jObject) {
         this.totalText = totalText;
+        this.jObject = jObject;
     }
 
 
@@ -121,5 +122,13 @@ public class Find_way_Data {
 
     public void setTotalText(String totalText) {
         this.totalText = totalText;
+    }
+
+    public JSONObject getjObject() {
+        return jObject;
+    }
+
+    public void setjObject(JSONObject jObject) {
+        this.jObject = jObject;
     }
 }

@@ -1,5 +1,7 @@
 package com.example.bbic;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +12,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
+
 public class Find_way_listAdapter extends RecyclerView.Adapter<Find_way_listAdapter.CustomViewHolder> {
-    ArrayList<Find_way_Data> arrayList;
+    private ArrayList<Find_way_Data> arrayList;
+//    private ArrayList<Find_way_Data> mListener;
+
+//    private Context context;
+//    ItemClickListener itemClickListener;
+
+//    public void setListener(ArrayList<Find_way_Data> arraylist){
+//        this.mListener = arrayList;
+//    }
+
 
     public Find_way_listAdapter(ArrayList<Find_way_Data> arrayList) {
         this.arrayList = arrayList;
@@ -50,8 +64,25 @@ public class Find_way_listAdapter extends RecyclerView.Adapter<Find_way_listAdap
         holder.onFootGuid.setText(String.valueOf(arrayList.get(position).getTotalText()));
 
         holder.itemView.setTag(position);
-
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Log.d("=================================position===============================",arrayList.get(position).getjObject()+"");
+////                Intent intent = new Intent(view.getContext(),Maps_Activity.class);
+////                intent.putExtra("jObject",String.valueOf(arrayList.get(position).getjObject());
+////                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+////                view.getContext().startActivity(intent);
+////                view.getContext().startActivity(intent.putExtra("jObject",String.valueOf(arrayList.get(position).getjObject())).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+//
+//            }
+//        });
     }
+
+    public interface ItemClickListener
+    {
+        void onItemClick(Find_way_Data data);
+    }
+
 
     @Override
     public int getItemCount() {
@@ -80,6 +111,7 @@ public class Find_way_listAdapter extends RecyclerView.Adapter<Find_way_listAdap
         protected ImageView expansion_iv;
 
         protected TextView onFootGuid;
+
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -157,3 +189,4 @@ public class Find_way_listAdapter extends RecyclerView.Adapter<Find_way_listAdap
 //        }
 //    }
 }
+
