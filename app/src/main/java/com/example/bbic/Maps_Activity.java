@@ -42,6 +42,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.bbic.DB.UpdatePosRequest;
+import com.example.bbic.DB.UpdateRequest;
 import com.example.bbic.DB.ValidateRequest;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
@@ -69,6 +71,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
 
 //ver 0.0.1
@@ -281,7 +285,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         boolean withinSightMarkerLng = Math.abs(currentPosition.longitude - markerPosition.longitude) <= REFERANCE_LNG_X3;
         return withinSightMarkerLat && withinSightMarkerLng;
     }
-
     // 지도상에 표시되고있는 마커들 지도에서 삭제
     private void freeActiveMarkers() {
         if (activeMarkers == null) {
@@ -339,6 +342,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             y = String.valueOf(infoWindow.getPosition().latitude);
             x = String.valueOf(infoWindow.getPosition().longitude);
             Map_Find_way mapFind_way =new Map_Find_way();
+
 
             odsayService.requestSearchPubTransPath("126.8881529057685","37.49185398304374",x,y,"0","0","0", mapFind_way.Find_way);
             odsayService.requestLoadLane("0:0@1673:1:25:27@2:2:233:239",mapFind_way.LoadLane);
@@ -511,6 +515,50 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
         mapFragment.getMapAsync(this);
 
+        Response.Listener<String> responseListenerPos = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    System.out.println("업데이트" + response);
+                    //JSONObject jsonObject = new JSONObject( response );
+                    //boolean success = jsonObject.getBoolean( "success" );
+                    boolean success = Boolean.parseBoolean(response);
+                    System.out.println(success);
+                    //업데이트 성공시
+                    if (success) {
+                        System.out.println("업데이트 성공");
+                        //업데이트 실패시
+                    } else {
+                        System.out.println("업데이트 실패");
+                    }
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+
+                UpdatePosRequest updatePosRequest = new UpdatePosRequest(k_code, gpsTracker.getLongitude(), gpsTracker.getLatitude(), responseListenerPos);
+                RequestQueue queuePos = Volley.newRequestQueue( Maps_Activity.this );
+                queuePos.add(updatePosRequest);
+            }
+        };
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                timer.schedule(timerTask, 0, 3000);
+                System.out.println(k_code);
+                System.out.println("맵" + gpsTracker.getLongitude());
+                System.out.println("맵" + gpsTracker.getLatitude());
+            }
+        }, 5000);
 
         //이세호
         //버튼 클릭 리스너 클래스 객체 생성(클릭 이벤트를 위함)

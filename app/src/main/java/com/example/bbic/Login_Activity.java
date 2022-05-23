@@ -111,8 +111,12 @@ public class Login_Activity extends AppCompatActivity {
                     long k_code = user.getId();
                     String k_name = user.getKakaoAccount().getProfile().getNickname();
                     String k_email = user.getKakaoAccount().getEmail();
+
+                    if(k_email == null){
+                        k_email = "";
+                    }
                     String k_profile = user.getKakaoAccount().getProfile().getProfileImageUrl();
-                    Validate(k_code, k_name, k_email, k_profile);
+                    Validate(k_code, k_name, k_email, k_profile, 0.0, 0.0, 1);
 
                     login_btn.setVisibility(View.GONE);
                     //logout_btn.setVisibility(View.VISIBLE);
@@ -143,9 +147,11 @@ public class Login_Activity extends AppCompatActivity {
             public void onResponse(String response) {
 
                 try {
-                    System.out.println("아무이름" + response);
+                    System.out.println("업데이트" + response);
                     JSONObject jsonObject = new JSONObject( response );
                     boolean success = jsonObject.getBoolean( "success" );
+                    //boolean success = Boolean.parseBoolean(response);
+                    System.out.println(success);
                     //업데이트 성공시
                     if (success) {
                         System.out.println("업데이트 성공");
@@ -154,7 +160,7 @@ public class Login_Activity extends AppCompatActivity {
                         System.out.println("업데이트 실패");
                     }
                 }
-                catch (JSONException e) {
+                catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -164,7 +170,7 @@ public class Login_Activity extends AppCompatActivity {
         queue2.add(updateRequest);
     }
 
-    void Validate(Long k_code, String k_name, String K_email, String K_profile){
+    void Validate(Long k_code, String k_name, String K_email, String K_profile, double K_long, double K_lat, int K_ghost){
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
@@ -174,14 +180,13 @@ public class Login_Activity extends AppCompatActivity {
                     JSONObject jsonResponse = new JSONObject(response);
                     boolean success = jsonResponse.getBoolean("success");
                     if (success) {
-                        System.out.println("제발");
-                        //테이블에 존재하지 않는 코드
-                        //MakeTable(k_code, k_name, K_email, K_profile);
+                        System.out.println("테이블 이미 존재함");
+                        Update(k_code, k_name, K_email, K_profile);
                     }
                     else {
-                        System.out.println("오류");
-                        // 이미 존재하는 코드
-                        //Update(k_code, k_name, K_email, K_profile);
+                        System.out.println("존재하지 않음 테이블 생성해야함");
+                        MakeTable(k_code, k_name, K_email, K_profile, K_long, K_lat, K_ghost);
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -193,14 +198,14 @@ public class Login_Activity extends AppCompatActivity {
         queue.add(validateRequest);
     }
 
-    void MakeTable(Long k_code, String k_name, String k_email, String k_profile){
+    void MakeTable(Long k_code, String k_name, String k_email, String k_profile, double K_long, double K_lat, int K_ghost){
 
         Response.Listener<String> responseListener1 = new Response.Listener<String>() {// ************회원가입********************
             @Override
             public void onResponse(String response) {
 
                 try {
-                    System.out.println("아무이름" + response);
+                    System.out.println("테이블 생성" + response);
                     JSONObject jsonObject = new JSONObject( response );
                     boolean success = jsonObject.getBoolean( "success" );
                     //회원가입 성공시
@@ -218,7 +223,7 @@ public class Login_Activity extends AppCompatActivity {
             }
         };
         //ghost = 0 기본(공개)
-        KakaoRequest kakaoRequest = new KakaoRequest( k_code, k_name, k_email, k_profile,0,responseListener1);
+        KakaoRequest kakaoRequest = new KakaoRequest( k_code, k_name, k_email, k_profile, K_long, K_lat, K_ghost,responseListener1);
         RequestQueue queue1 = Volley.newRequestQueue( Login_Activity.this );
         queue1.add(kakaoRequest);
     }
