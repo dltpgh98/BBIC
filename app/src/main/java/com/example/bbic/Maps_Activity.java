@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
@@ -59,12 +60,15 @@ import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
+import com.naver.maps.map.overlay.PathOverlay;
+import com.naver.maps.map.overlay.PolygonOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.odsay.odsayandroidsdk.ODsayService;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -74,6 +78,7 @@ import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
@@ -274,13 +279,20 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     private JSONArray[] path;
     private JSONObject result, meResult;
-    private String fw_pos_path;
+    private String fw_pos_path, mapObject;
+    private Find_Way_Frag fw_frag;
+    private Map_Find_way mapFindWay;
 
+    private double[] latiPos, longPos;
+    private double sLatiPos, sLongPos, eLatiPos, eLongPos;
+    private String mapObjectPos;
+    private ArrayList<LatLng> findPosArray;
 
     private SlidingUpPanelLayout upPanelLayout;
-    Bundle bundleFw;
-    int position;
-    FragmentTransaction ft;
+    private Bundle bundleFw;
+    private int position;
+    private FragmentTransaction ft;
+    private PathOverlay pathOver;
 
 
     private ViewPager2 viewPager;
@@ -294,7 +306,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private Vector<LatLng> markersPosition;
     private Vector<Marker> activeMarkers;
 
-    private double[] sPos, ePos;
+
+
     private StationList[] StationLists;
     private static String y = "", x = "";
     private static Odsay odsay;
@@ -306,7 +319,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     public static ODsayService odsayService;
     private InputMethodManager keyboardmanager;
 
-    Find_Way_Frag fw_frag;
+
 
     //수정할수도 있음 ==============================================
     // 현재 카메라가 보고있는 위치
@@ -358,6 +371,18 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         uiSettings.setLocationButtonEnabled(true);
         uiSettings.setLogoGravity(Gravity.RIGHT | Gravity.BOTTOM);
 
+//        if(fw_pos_path != null){
+//            pathOver = new PathOverlay();
+//            pathOver.setCoords(Arrays.asList(
+//                    new LatLng(37.57152, 126.97714),
+//                    new LatLng(37.56607, 126.98268),
+//                    new LatLng(37.56445, 126.97707),
+//                    new LatLng(37.55855, 126.97822)
+//            ));
+//            pathOver.setMap(naverMap);
+//        }
+
+
         InfoWindow infoWindow = new InfoWindow();
         infoWindow.setPosition(new LatLng(37.5666102, 126.9783881));
         infoWindow.setAdapter(new InfoWindowAdapter(this));
@@ -378,6 +403,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         naverMap.setOnMapClickListener((point, coord) -> {
 
+
             odsay = new Odsay();
             bus_info = new Odsay();
             StationName = "";
@@ -385,11 +411,57 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             y = "";
             y = String.valueOf(infoWindow.getPosition().latitude);
             x = String.valueOf(infoWindow.getPosition().longitude);
+
+//                    if(fw_pos_path != null){
+//            pathOver = new PathOverlay();
+//            pathOver.setCoords(Arrays.asList(
+//                    new LatLng(37.57152, 126.97714),
+//                    new LatLng(37.56607, 126.98268),
+//                    new LatLng(37.56445, 126.97707),
+//                    new LatLng(37.55855, 126.97822)
+//            ));
+//            pathOver.setMap(naverMap);
+//        }
             Map_Find_way mapFind_way = new Map_Find_way();
 
-            //odsayService.requestSearchPubTransPath("126.8881529057685","37.49185398304374",x,y,"0","0","0", mapFind_way.Find_way);
-            //odsayService.requestLoadLane("0:0@1673:1:25:27@2:2:233:239",mapFind_way.LoadLane);
+//            odsayService.requestSearchPubTransPath("126.8881529057685","37.49185398304374",x,y,"0","0","0", mapFind_way.Find_way);
+//            odsayService.requestLoadLane("0:0@1673:1:25:27@2:2:233:239",mapFind_way.LoadLane);
 //            Log.d("==============================onMapReady==============",""+path[0]);
+
+
+            if (fw_pos_path != null) {
+                Log.d("=================null아니다~!~!!~!~!~======================", "");
+
+
+
+//                if(latiPos ==null){
+//                    try {
+//                        mapObject = mapObjectPos;
+//                        odsayService.requestLoadLane(mapObject, mapFindWay.LoadLane);
+//                    } catch (Exception e) {
+////                    e.printStackTrace();
+//                    }
+//
+//                }
+
+                latiPos = new double[mapFindWay.getPosCount()];
+                longPos = new double[mapFindWay.getPosCount()];
+                latiPos = mapFindWay.getgPos_y();
+                longPos = mapFindWay.getgPos_x();
+//                Log.d("======================1-1-1-1-1-1-=============",""+latiPos[0]);
+//                LatLng
+                pathOver= new PathOverlay();
+                findPosArray = new ArrayList<>();
+                LatLng  lArray = new LatLng(0,0);
+                for (int i = 0; i < mapFindWay.getPosCount(); i++){
+                    lArray = new LatLng(latiPos[i],longPos[i]);
+                    findPosArray.add(lArray);
+                }
+                Log.d("arrayList===================================",findPosArray+"");
+                pathOver.setCoords(findPosArray);
+                pathOver.setColor(Color.RED);
+                pathOver.setMap(naverMap);
+            }
 
             Log.d("위치 좌표 Y", String.valueOf(infoWindow.getPosition().latitude));
             Log.d("위치 좌표 X", String.valueOf(infoWindow.getPosition().longitude));
@@ -423,18 +495,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     }
 
                     infoWindow.setPosition(coord);
+                    Log.d("===========coord=================", coord + "");
                     infoWindow.open(naverMap);
 
                 }
             }, 2500);
-//
-//            Intent intent = getIntent();
-//            Log.d("======================jObject=================================",intent.getStringExtra("jObject"));
-//            if(intent.getStringExtra("jObject")!=null){
-//                fw_pos_path = intent.getStringExtra("jObject");
-//                Log.d("======================jObject=================================",fw_pos_path);
-//            }
-
 
 
 //            new Thread() {
@@ -523,6 +588,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         });
     }
 
+
     public void onRequestPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
             if (!locationSource.isActivated()) {
@@ -535,6 +601,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -544,7 +611,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         gpsTracker = new GpsTracker(Maps_Activity.this);
 
         fw_frag = new Find_Way_Frag();
-        Log.d("================fw_frag====================",fw_frag+"");
+        mapFindWay = new Map_Find_way();
 
         double latitude = gpsTracker.getLatitude();
         double longitude = gpsTracker.getLongitude();
@@ -646,18 +713,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     find_way_page.setVisibility(View.GONE);
                     Log.d("바꿈", "");
                 }
-                if (newState == (SlidingUpPanelLayout.PanelState.EXPANDED) && result != null) {
-//                    Log.d("프래그먼트로 =============================",""+result);
-//                    FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
-//                    Find_Way_Frag find_way_frag = new Find_Way_Frag();
-//                    transaction.replace(R.id.view_fw_container,find_way_frag);
-//                    transaction.commit();
-//                    fw_frag = (Find_Way_Frag) getSupportFragmentManager().findFragmentById(R.id.view_fw_container);// 리스트 프래그먼트 위치
-//                    Bundle bundle = new Bundle(1);
-//                    bundle.putString("odsay",String.valueOf(result));
-//                    fw_frag.setArguments(bundle);
-//                    find_way_frag.setArguments(bundle);
-                }
             }
         });
 
@@ -711,7 +766,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
             }
         });
-
 
 
 //===================================================================================================
@@ -843,8 +897,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     private void drawerInit(String myAddress) {
         add = myAddress.split(" ");
-        area = add[1];
-        city = add[2];
+        area = add[0];
+        city = add[1];
         final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=" + area + " " + city + "날씨"; //웹크롤링 할 주소(1)
         final String covidURL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=코로나19"; //웹크롤링 할 주소(2)
         //스레드간 데이터 전달을 위한 번들 생성
@@ -1033,7 +1087,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 } else {//요청이 처음이라면
                     ActivityCompat.requestPermissions(Maps_Activity.this, REQUIRED_PERMISSIONS, PERMISSIONS_REQUEST_CODE);//사용자에게 권한 요청
                 }
-
                 hasFineLocationPermission = ContextCompat.checkSelfPermission(Maps_Activity.this, Manifest.permission.ACCESS_FINE_LOCATION);
                 hasCoarseLocationPermission = ContextCompat.checkSelfPermission(Maps_Activity.this, Manifest.permission.ACCESS_COARSE_LOCATION);
             } while (hasFineLocationPermission != PackageManager.PERMISSION_GRANTED && hasCoarseLocationPermission != PackageManager.PERMISSION_GRANTED);
@@ -1138,7 +1191,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         eLatitude = eSplitStr[10].substring(eSplitStr[10].indexOf("=") + 1);
         eLongitude = eSplitStr[12].substring(eSplitStr[12].indexOf("=") + 1);
 
-        Map_Find_way mapFindWay = new Map_Find_way();
         odsayService.requestSearchPubTransPath(sLongitude, sLatitude, eLongitude, eLatitude, "0", "0", "0", mapFindWay.Find_way);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {                                        //handler 객체 딜레이 (2초)끝나면 종료
@@ -1241,10 +1293,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     }
 
     public void frag_set(Find_Way_Frag fw_frag) {
-        if (meResult == null&&result!=null) {
+        if (meResult == null && result != null) {
             Log.d("===================fw_frag============", "" + fw_frag);
             getSupportFragmentManager().beginTransaction().add(R.id.view_fw_container, fw_frag).commit();
-        } else if (meResult != null||result !=meResult&&result!=null) {
+        } else if (meResult != null || result != meResult && result != null) {
             Log.d("===================fw_frag============", "" + fw_frag);
             fw_frag = (Find_Way_Frag) getSupportFragmentManager().findFragmentById(R.id.view_fw_container);
 
@@ -1254,6 +1306,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     }
 
+
+
+
     public JSONArray[] getPath() {
         return path;
     }
@@ -1262,48 +1317,115 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         this.path = path;
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        Log.d("onNewIntent()", "");
+        if (intent.getStringExtra("jObject") != null) {
+            fw_pos_path = intent.getStringExtra("jObject");
+            try {
+                JSONObject pos = new JSONObject(fw_pos_path);
+                Log.d("======================jObject=================================", fw_pos_path);
+
+                ArrayList<LatLng> total_finde_pos_array = new ArrayList<>();
+                try {
+//                    total_finde_pos_array.add(new LatLng());
+                    mapObjectPos = pos.getJSONObject("info").getString("mapObj");
+                    String split_mapObject[] =mapObjectPos.split("@");
+                    for (int i = 0; i < split_mapObject.length; i++){
+                        odsayService.requestLoadLane("0:0@"+split_mapObject[i],mapFindWay.LoadLane);
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                            }
+                        },200);
+                    }
+                    mapObject = "0:0@" + pos.getJSONObject("info").getString("mapObj");
+                    odsayService.requestLoadLane(mapObject, mapFindWay.LoadLane);
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            MapDraw();
+                        }
+                    },500);
+
+                } catch (Exception e) {
+//                    e.printStackTrace();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void MapDraw(){
+        if (fw_pos_path != null) {
+            Log.d("=================null아니다~!~!!~!~!~======================", "");
+
+            pathOver= new PathOverlay();
+
+            findPosArray = new ArrayList<>();
+
+            findPosArray = mapFindWay.getFindWay_LatLngArrayList();
+
+            pathOver.setMap(null);
+
+
+
+            pathOver.setCoords(findPosArray);
+
+            pathOver.setColor(Color.RED);
+
+            pathOver.setMap(naverMap);
+        }
+    }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d("onStop()","");
+        Log.d("onStop()", "");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("onStart()","");
+        Log.d("onStart()", "");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d("onRestart()","");
+        Log.d("onRestart()", "");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("onDestroy()","");
+        Log.d("onDestroy()", "");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-            Intent intent = getIntent();
-//            Log.d("======================jObject=================================",intent.getStringExtra("jObject"));
-            Log.d("onResume()","");
-            if(intent.getStringExtra("jObject")!=null){
-                fw_pos_path = intent.getStringExtra("jObject");
-                Log.d("======================jObject=================================",fw_pos_path);
-            }
+//
+//            Intent intent = getIntent();
+////            Log.d("======================jObject=================================",intent.getStringExtra("jObject"));
+//            Log.d("onResume()","");
+//            if(intent.getStringExtra("jObject")!=null){
+//                fw_pos_path = intent.getStringExtra("jObject");
+//                Log.d("======================jObject=================================",fw_pos_path);
+//            }
     }
 
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
-        Log.d("onResumeFragments()","");
+        Log.d("onResumeFragments()", "");
     }
 }
 

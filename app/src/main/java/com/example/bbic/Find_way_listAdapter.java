@@ -45,7 +45,7 @@ public class Find_way_listAdapter extends RecyclerView.Adapter<Find_way_listAdap
 
     @Override
     public void onBindViewHolder(@NonNull Find_way_listAdapter.CustomViewHolder holder, int position) {
-        Log.d("onBindViewHolder 밖",arrayList.size()+"");
+//        Log.d("onBindViewHolder 밖",arrayList.size()+"");
 //        if(arrayList.size()==1){
 //            holder.onFoot.setText(arrayList.get(position).getTotalText());
 //            Log.d("onBindViewHolder 위",arrayList.size()+"");
@@ -64,18 +64,17 @@ public class Find_way_listAdapter extends RecyclerView.Adapter<Find_way_listAdap
         holder.onFootGuid.setText(String.valueOf(arrayList.get(position).getTotalText()));
 
         holder.itemView.setTag(position);
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                Log.d("=================================position===============================",arrayList.get(position).getjObject()+"");
-////                Intent intent = new Intent(view.getContext(),Maps_Activity.class);
-////                intent.putExtra("jObject",String.valueOf(arrayList.get(position).getjObject());
-////                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-////                view.getContext().startActivity(intent);
-////                view.getContext().startActivity(intent.putExtra("jObject",String.valueOf(arrayList.get(position).getjObject())).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
-//
-//            }
-//        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("=================================position===============================",arrayList.get(position).getjObject()+"");
+                Intent intent = new Intent(view.getContext(),Maps_Activity.class);
+                intent.putExtra("jObject",String.valueOf(arrayList.get(position).getjObject()));
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                view.getContext().startActivity(intent);
+//                view.getContext().startActivity(intent.putExtra("jObject",String.valueOf(arrayList.get(position).getjObject())).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+            }
+        });
     }
 
     public interface ItemClickListener

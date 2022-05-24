@@ -2,6 +2,7 @@ package com.example.bbic;
 
 import android.util.Log;
 
+import com.naver.maps.geometry.LatLng;
 import com.odsay.odsayandroidsdk.API;
 import com.odsay.odsayandroidsdk.ODsayData;
 import com.odsay.odsayandroidsdk.OnResultCallbackListener;
@@ -10,11 +11,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Map_Find_way extends Maps_Activity{
-    private JSONArray subWay_path;
-    private JSONArray bus_path;
-    private JSONArray sb_path;
+import java.util.ArrayList;
 
+public class Map_Find_way extends Maps_Activity{
+//    private JSONArray subWay_path;
+//    private JSONArray bus_path;
+//    private JSONArray sb_path;
+//
+
+
+    private JSONArray l_graPos;
 
     private JSONObject result;
 
@@ -36,6 +42,14 @@ public class Map_Find_way extends Maps_Activity{
         this.path_s = path_s;
     }
 
+    public JSONArray getL_graPos() {
+        return l_graPos;
+    }
+
+    public void setL_graPos(JSONArray l_graPos) {
+        this.l_graPos = l_graPos;
+    }
+
     public OnResultCallbackListener Find_way = new OnResultCallbackListener() {
         @Override
         public void onSuccess(ODsayData odsayData, API api) {
@@ -44,16 +58,16 @@ public class Map_Find_way extends Maps_Activity{
 //                    int name = odsayData.getJson().getJSONObject("result").getJSONArray("path").length();
 //                    Log.d("Station name : ", name+"");
 //                    Log.d("Station name : ", odsayData.getJson().getJSONObject("result")+"");
-                    subWay_path = new JSONArray();
-                    bus_path = new JSONArray();
-                    sb_path = new JSONArray();
+//                    subWay_path = new JSONArray();
+//                    bus_path = new JSONArray();
+//                    sb_path = new JSONArray();
 
                     result = odsayData.getJson().getJSONObject("result");
 
                     JSONArray path = odsayData.getJson().getJSONObject("result").getJSONArray("path");
 //                    Log.d("Path",path+"");
-                    try{
-                        if(odsayData.getJson().getJSONObject("result").getInt("searchType") == 0){
+//                    try{
+//                        if(odsayData.getJson().getJSONObject("result").getInt("searchType") == 0){
 //                            for(int i=0; i < path.length() ; i++){
 //                                try{
 ////                                Log.d("aaaaa",path.getJSONObject(i).getJSONObject("info")+"");
@@ -170,10 +184,10 @@ public class Map_Find_way extends Maps_Activity{
 //                        }catch (Exception e){
 //                            e.printStackTrace();
 //                        }
-                        }
-                    }catch (Exception e){
-
-                    }
+//                        }
+//                    }catch (Exception e){
+//
+//                    }
 
 //                    Log.d("Path_s======밖에서==========",path_s[0]+"");
                 }
@@ -190,6 +204,44 @@ public class Map_Find_way extends Maps_Activity{
 
     };
 
+    double[] gPos_x;
+    double[] gPos_y;
+    int posCount;
+
+    private ArrayList<LatLng> findWay_LatLngArrayList;
+
+    public ArrayList<LatLng> getFindWay_LatLngArrayList() {
+        return findWay_LatLngArrayList;
+    }
+
+    public void setFindWay_LatLngArrayList(ArrayList<LatLng> findWay_LatLngArrayList) {
+        this.findWay_LatLngArrayList = findWay_LatLngArrayList;
+    }
+
+    public double[] getgPos_x() {
+        return gPos_x;
+    }
+
+    public void setgPos_x(double[] gPos_x) {
+        this.gPos_x = gPos_x;
+    }
+
+    public double[] getgPos_y() {
+        return gPos_y;
+    }
+
+    public void setgPos_y(double[] gPos_y) {
+        this.gPos_y = gPos_y;
+    }
+
+    public int getPosCount() {
+        return posCount;
+    }
+
+    public void setPosCount(int posCount) {
+        this.posCount = posCount;
+    }
+
     public OnResultCallbackListener LoadLane = new OnResultCallbackListener() {
         @Override
         public void onSuccess(ODsayData odsayData, API api) {
@@ -197,19 +249,33 @@ public class Map_Find_way extends Maps_Activity{
                 if(api == API.LOAD_LANE){
                     JSONObject l_result = odsayData.getJson().getJSONObject("result");
                     JSONArray laneArray = l_result.getJSONArray("lane");
+                    LatLng l_pos;
+                    findWay_LatLngArrayList = new ArrayList<>();
                     for (int i = 0; i < laneArray.length(); i++){
                         JSONArray l_sectionArray = laneArray.getJSONObject(i).getJSONArray("section");
                         Log.d("l_sectionArray",l_sectionArray+"");
                         Log.d("l_sectionArray",l_sectionArray.length()+"");
                         for (int j = 0; j < l_sectionArray.length(); j++){
-                            JSONArray l_graPos = l_sectionArray.getJSONObject(j).getJSONArray("graphPos");
+                            l_graPos = l_sectionArray.getJSONObject(j).getJSONArray("graphPos");
                             Log.d("graPos test",l_graPos+"");
-                            for(int length = 0; length < l_graPos.length();length++){
-                                double gPos_x = l_graPos.getJSONObject(length).getDouble("x");
-                                double gPos_y = l_graPos.getJSONObject(length).getDouble("y");
+                            posCount = l_graPos.length();
+//                            gPos_x = new double[l_graPos.length()];
+//                            gPos_y = new double[l_graPos.length()];
 
-                                Log.d("graPos test x:",gPos_x+"y:"+gPos_y);
+
+                            for(int length = 0; length < l_graPos.length();length++){
+                                l_pos = new LatLng( l_graPos.getJSONObject(length).getDouble("y"),l_graPos.getJSONObject(length).getDouble("x"));
+                                Log.d("l_graPos.length()=====================",""+l_graPos.length());
+                                findWay_LatLngArrayList.add(l_pos);
+//                                gPos_x[length] = l_graPos.getJSONObject(length).getDouble("x");
+//                                gPos_y[length] = l_graPos.getJSONObject(length).getDouble("y");
+
+//                                Log.d("graPos test x:",gPos_x[length]+"y:"+gPos_y[length]);
+
+                                Log.d("count=============",""+posCount);
+                                Log.d("Length()=============",""+length);
                             }
+                            Log.d("findWayLatLng=============",""+findWay_LatLngArrayList);
                         }
 
 
