@@ -36,7 +36,7 @@ public class Loading_Activity extends AppCompatActivity {
         if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED && hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED) {//퍼미션을 가지고있다면
             Log.d("포그라운드 위치권한","TRUE");
         }else{//권한이 없다면
-            Toast.makeText(Loading_Activity.this, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+            //Toast.makeText(Loading_Activity.this, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
             do {
                 if(ActivityCompat.shouldShowRequestPermissionRationale(Loading_Activity.this,REQUIRED_PERMISSIONS[0])){//권한 요청을 거부한적이 있을때
                     ActivityCompat.requestPermissions(Loading_Activity.this, REQUIRED_PERMISSIONS,PERMISSIONS_REQUEST_CODE);//사용자에게 권한 요청

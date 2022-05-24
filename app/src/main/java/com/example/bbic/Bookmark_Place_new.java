@@ -39,16 +39,6 @@ public class Bookmark_Place_new extends Fragment {
 
         recyclerView.setAdapter(placeAdapter);
 
-        TextView textView = (TextView) rootView.findViewById(R.id.place_new_tv);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PlaceData placeData = new PlaceData(R.drawable.setting_menu_f,"장소","부천 부계동");
-                arrayList.add(placeData);
-                placeAdapter.notifyDataSetChanged();
-            }
-        });
-
         return rootView;
     }
 }

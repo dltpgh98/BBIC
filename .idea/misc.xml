@@ -17,6 +17,7 @@
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout-ldltr/setting.xml" value="0.33" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/activity_backup.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/bookmark.xml" value="0.1" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/bookmark_place.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/bookmark_place_abc.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/bookmark_place_list.xml" value="0.1875" />
@@ -28,6 +29,7 @@
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/bookmark_transit_subway_list.xml" value="0.24437299035369775" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/drawer.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/find_way_item.xml" value="0.1875" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/fp.xml" value="0.1" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/fp_add_kakaofriend.xml" value="0.33" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/fp_add_kakaofriend_item.xml" value="0.2930591259640103" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/fp_friend.xml" value="0.1875" />
@@ -45,7 +47,7 @@
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/promise_write.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/subway.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/test.xml" value="0.1875" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/view_detail.xml" value="0.1875" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/view_detail.xml" value="0.25" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/view_division.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/view_header.xml" value="0.33" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/viewpager_item.xml" value="0.1875" />

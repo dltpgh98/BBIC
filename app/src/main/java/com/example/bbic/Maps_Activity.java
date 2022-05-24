@@ -46,6 +46,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
+import com.example.bbic.Bookmark_Adapter.ViewPager_Item_Adapter;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.CameraUpdate;
@@ -56,6 +57,7 @@ import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
+import com.naver.maps.map.overlay.OverlayImage;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.odsay.odsayandroidsdk.ODsayService;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -183,8 +185,17 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     break;
                 case  R.id.main_find_way_ibtn:
 
+                    if(viewPager.getVisibility()==View.VISIBLE) {
+                        viewSwitch = false;
+                        viewPager.setVisibility(View.GONE);
+                    }
+                    else if(viewDetail.getVisibility()==View.VISIBLE){
+                        viewSwitch = true;
+                        viewDetail.setVisibility(View.GONE);
+                    }
+
                     view_Header.setVisibility(View.GONE);
-                    viewPager.setVisibility(View.GONE);
+
                     indicator.setVisibility(View.GONE);
                     find_way_page.setVisibility(View.VISIBLE);
 
@@ -264,8 +275,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     private ViewPager2 viewPager;
     private WormDotsIndicator indicator;
-    private ConstraintLayout view_userpage, view_Header;
+    private ConstraintLayout viewDetail, view_Header;
     private LinearLayout find_way_page;
+    private boolean viewSwitch;
 
     private NaverMap naverMap;
 
@@ -479,11 +491,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                ));
 //                markersPosition.add(new LatLng(
 //                        initialPosition.latitude - (REFERANCE_LAT * x),
-//                        initialPosition.longitude - (REFERANCE_LNG * y)
-//                ));
-//            }
-//        }
-        // 카메라 이동 되면 호출 되는 이벤트
         naverMap.addOnCameraChangeListener(new NaverMap.OnCameraChangeListener() {
             @Override
             public void onCameraChange(int reason, boolean animated) {
@@ -494,12 +501,20 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     if (!withinSightMarker(currentPosition, markerPosition))
                         continue;
                     Marker marker = new Marker();
+//                    Drawable d;
+//                    OverlayImage img;
+//                    marker.setIcon();
                     marker.setPosition(markerPosition);
                     marker.setMap(naverMap);
                     activeMarkers.add(marker);
                 }
             }
-        });
+        });//                        initialPosition.longitude - (REFERANCE_LNG * y)
+//                ));
+//            }
+//        }
+        // 카메라 이동 되면 호출 되는 이벤트
+
     }
 
     public void onRequestPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -565,6 +580,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         upPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.slide);
         view_Header = (ConstraintLayout)findViewById(R.id.view_header);
         viewPager = (ViewPager2)findViewById(R.id.view_pager);
+        viewDetail = (ConstraintLayout)findViewById(R.id.view_detail);
         indicator = (WormDotsIndicator)findViewById(R.id.dots_indicator);
         find_way_page = (LinearLayout)findViewById(R.id.view_find_way_lay);
         vFindIbtn = (ImageButton)findViewById(R.id.view_find_way_ibtn);
@@ -601,6 +617,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         keyboardmanager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
 
+        viewSwitch = false;
+
 //============================================================================================SlidingUpPanel
         upPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
@@ -613,8 +631,15 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 Log.d("upPanel 바뀔때 내용 ", "onPanelStateChanged " + newState);
                 if(newState == (SlidingUpPanelLayout.PanelState.COLLAPSED)&&view_Header.getVisibility()==View.GONE){
                     view_Header.setVisibility(View.VISIBLE);
-                    viewPager.setVisibility(View.VISIBLE);
-                    indicator.setVisibility(View.VISIBLE);
+                    if(viewSwitch == false){
+                        viewPager.setVisibility(View.VISIBLE);
+                        viewDetail.setVisibility(View.GONE);
+                        indicator.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        viewPager.setVisibility(View.GONE);
+                        viewDetail.setVisibility(View.VISIBLE);
+                    }
                     find_way_page.setVisibility(View.GONE);
                     Log.d("바꿈","");
                 }
@@ -639,19 +664,62 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
 
         headerName.setText(name);
+//      headerCode.setText();
         Glide.with(this).load(address).circleCrop().into(headerProfile);
+
+        List<String> t1 = new ArrayList<>();
+        List<String> t2 = new ArrayList<>();
+        List<Long> t3 = new ArrayList<>();
+        List<Integer> t4 = new ArrayList<>();
+
+        t1.add("김동훈");
+        t1.add("이세호");
+        t1.add("도성대");
+        t1.add("김동훈");
+        t1.add("이세호");
+        t1.add("도성대");
+        t1.add("김동훈");
+
+
+        t2.add(address);
+        t2.add(address);
+        t2.add(address);
+        t2.add(address);
+        t2.add(address);
+        t2.add(address);
+        t2.add(address);
+        t2.add(address);
+
+        t3.add(1L);
+        t3.add(2L);
+        t3.add(3L);
+        t3.add(1L);
+        t3.add(2L);
+        t3.add(3L);
+        t3.add(1L);
+        t3.add(2L);
+
+        t4.add(1);
+        t4.add(0);
+        t4.add(2);
+        t4.add(1);
+        t4.add(0);
+        t4.add(2);
+        t4.add(1);
+        t4.add(0);
+
 
         //뷰페이저 설정
         viewPager = findViewById(R.id.view_pager);
-        ViewpagerAdapter pagerAdapter = new ViewpagerAdapter(setTextList());
-        viewPager.setAdapter(pagerAdapter);
+        ViewPager_Item_Adapter itemAdapter = new ViewPager_Item_Adapter(this,t1,t2,t3,t4);
+        viewPager.setAdapter(itemAdapter);
+        //ViewpagerAdapter pagerAdapter = new ViewpagerAdapter(setTextList());
+        //viewPager.setAdapter(pagerAdapter);
 
         viewPager.setOnClickListener(onClickListener);
 
         indicator = (WormDotsIndicator) findViewById(R.id.dots_indicator);
         indicator.setViewPager2(viewPager);
-
-        final ImageButton ibtn = (ImageButton)viewPager.findViewById(R.id.view_item_ibtn1);
 
         editText.setOnKeyListener(new View.OnKeyListener() {
             @Override

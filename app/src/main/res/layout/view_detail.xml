@@ -33,7 +33,7 @@
         android:layout_width="100sp"
         android:layout_height="30sp"
         android:layout_marginVertical="125sp"
-        android:text="김동훈"
+        android:text="@string/user_name"
         android:textAlignment="center"
         android:fontFamily="@font/fontstyle"
         android:textSize="20sp"

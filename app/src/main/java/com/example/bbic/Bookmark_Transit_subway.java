@@ -52,7 +52,7 @@ public class Bookmark_Transit_subway extends Fragment {
 
         recyclerView.setAdapter(subwayAdapter);
 
-        TextView textView = (TextView) rootView.findViewById(R.id.textView2);
+        /*TextView textView = (TextView) rootView.findViewById(R.id.textView2);
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +69,7 @@ public class Bookmark_Transit_subway extends Fragment {
                 arrayList.add(placeData);
                 subwayAdapter.notifyDataSetChanged();
             }
-        });
+        });*/
 
         return rootView;
     }
