@@ -1,7 +1,6 @@
 package com.example.bbic;
 
 import static com.naver.maps.map.NaverMap.LAYER_GROUP_TRANSIT;
-import static java.security.AccessController.getContext;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -26,7 +25,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,9 +41,6 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
@@ -60,8 +55,8 @@ import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
+import com.naver.maps.map.overlay.MultipartPathOverlay;
 import com.naver.maps.map.overlay.PathOverlay;
-import com.naver.maps.map.overlay.PolygonOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.odsay.odsayandroidsdk.ODsayService;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -73,8 +68,6 @@ import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -285,14 +278,16 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     private double[] latiPos, longPos;
     private double sLatiPos, sLongPos, eLatiPos, eLongPos;
+    private LatLng sLatLngPos, eLatLngPos;
     private String mapObjectPos;
-    private ArrayList<LatLng> findPosArray;
+    private ArrayList<LatLng> findPosArrayOne, findPosArrayTwo, findPosArrayTree, findPosArrayFour;
 
     private SlidingUpPanelLayout upPanelLayout;
     private Bundle bundleFw;
     private int position;
     private FragmentTransaction ft;
-    private PathOverlay pathOver;
+    private MultipartPathOverlay pathOver;
+    private PathOverlay pathOverlay;
 
 
     private ViewPager2 viewPager;
@@ -307,7 +302,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private Vector<Marker> activeMarkers;
 
 
-
     private StationList[] StationLists;
     private static String y = "", x = "";
     private static Odsay odsay;
@@ -318,7 +312,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     public static ODsayService odsayService;
     private InputMethodManager keyboardmanager;
-
 
 
     //수정할수도 있음 ==============================================
@@ -422,46 +415,45 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //            ));
 //            pathOver.setMap(naverMap);
 //        }
-            Map_Find_way mapFind_way = new Map_Find_way();
+//            Map_Find_way mapFind_way = new Map_Find_way();
 
 //            odsayService.requestSearchPubTransPath("126.8881529057685","37.49185398304374",x,y,"0","0","0", mapFind_way.Find_way);
 //            odsayService.requestLoadLane("0:0@1673:1:25:27@2:2:233:239",mapFind_way.LoadLane);
 //            Log.d("==============================onMapReady==============",""+path[0]);
 
-
-            if (fw_pos_path != null) {
-                Log.d("=================null아니다~!~!!~!~!~======================", "");
-
-
-
-//                if(latiPos ==null){
-//                    try {
-//                        mapObject = mapObjectPos;
-//                        odsayService.requestLoadLane(mapObject, mapFindWay.LoadLane);
-//                    } catch (Exception e) {
-////                    e.printStackTrace();
-//                    }
 //
+//            if (fw_pos_path != null) {
+//                Log.d("=================null아니다~!~!!~!~!~======================", "");
+//
+//
+////                if(latiPos ==null){
+////                    try {
+////                        mapObject = mapObjectPos;
+////                        odsayService.requestLoadLane(mapObject, mapFindWay.LoadLane);
+////                    } catch (Exception e) {
+//////                    e.printStackTrace();
+////                    }
+////
+////                }
+//
+//                latiPos = new double[mapFindWay.getPosCount()];
+//                longPos = new double[mapFindWay.getPosCount()];
+//                latiPos = mapFindWay.getgPos_y();
+//                longPos = mapFindWay.getgPos_x();
+////                Log.d("======================1-1-1-1-1-1-=============",""+latiPos[0]);
+////                LatLng
+//                pathOver = new PathOverlay();
+//                findPosArrayOne = new ArrayList<>();
+//                LatLng lArray = new LatLng(0, 0);
+//                for (int i = 0; i < mapFindWay.getPosCount(); i++) {
+//                    lArray = new LatLng(latiPos[i], longPos[i]);
+//                    findPosArrayOne.add(lArray);
 //                }
-
-                latiPos = new double[mapFindWay.getPosCount()];
-                longPos = new double[mapFindWay.getPosCount()];
-                latiPos = mapFindWay.getgPos_y();
-                longPos = mapFindWay.getgPos_x();
-//                Log.d("======================1-1-1-1-1-1-=============",""+latiPos[0]);
-//                LatLng
-                pathOver= new PathOverlay();
-                findPosArray = new ArrayList<>();
-                LatLng  lArray = new LatLng(0,0);
-                for (int i = 0; i < mapFindWay.getPosCount(); i++){
-                    lArray = new LatLng(latiPos[i],longPos[i]);
-                    findPosArray.add(lArray);
-                }
-                Log.d("arrayList===================================",findPosArray+"");
-                pathOver.setCoords(findPosArray);
-                pathOver.setColor(Color.RED);
-                pathOver.setMap(naverMap);
-            }
+//                Log.d("arrayList===================================", findPosArrayOne + "");
+//                pathOver.setCoords(findPosArrayOne);
+//                pathOver.setColor(Color.RED);
+//                pathOver.setMap(naverMap);
+//            }
 
             Log.d("위치 좌표 Y", String.valueOf(infoWindow.getPosition().latitude));
             Log.d("위치 좌표 X", String.valueOf(infoWindow.getPosition().longitude));
@@ -1191,6 +1183,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         eLatitude = eSplitStr[10].substring(eSplitStr[10].indexOf("=") + 1);
         eLongitude = eSplitStr[12].substring(eSplitStr[12].indexOf("=") + 1);
 
+        sLatLngPos = new LatLng( Double.valueOf(sLatitude),Double.valueOf(sLongitude));
+        eLatLngPos = new LatLng(Double.valueOf(eLatitude), Double.valueOf(eLongitude));
+
         odsayService.requestSearchPubTransPath(sLongitude, sLatitude, eLongitude, eLatitude, "0", "0", "0", mapFindWay.Find_way);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {                                        //handler 객체 딜레이 (2초)끝나면 종료
@@ -1307,8 +1302,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     }
 
 
-
-
     public JSONArray[] getPath() {
         return path;
     }
@@ -1332,17 +1325,49 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 try {
 //                    total_finde_pos_array.add(new LatLng());
                     mapObjectPos = pos.getJSONObject("info").getString("mapObj");
-                    String split_mapObject[] =mapObjectPos.split("@");
-                    for (int i = 0; i < split_mapObject.length; i++){
-                        odsayService.requestLoadLane("0:0@"+split_mapObject[i],mapFindWay.LoadLane);
-                        Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
+                    String split_mapObject[] = mapObjectPos.split("@");
 
-                            }
-                        },200);
-                    }
+//                    findPosArrayOne = new ArrayList<>();
+//                    findPosArrayTwo = new ArrayList<>();
+//                    findPosArrayTree = new ArrayList<>();
+//                    findPosArrayFour = new ArrayList<>();
+//
+//                    findPosArrayOne.add(sLatLngPos);
+//                    LatLng lastEndFindPos = new LatLng(0,0);
+//
+//                    for (int i = 0; i < split_mapObject.length; i++) {
+//                        odsayService.requestLoadLane("0:0@" + split_mapObject[i], mapFindWay.LoadLane);
+//                        int count = i;
+//                        Handler handler = new Handler();
+//                        handler.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//
+//
+//                                switch (count) {
+//                                    case 0:
+//                                        findPosArrayOne.addAll(mapFindWay.getFindWay_LatLngArrayList());
+//                                        lastEndFindPos= (0,0);
+//                                        break;
+//                                    case 1:
+//                                        findPosArrayTwo.addAll(mapFindWay.getFindWay_LatLngArrayList());
+//                                        break;
+//                                    case 2:
+//                                        findPosArrayTree.addAll(mapFindWay.getFindWay_LatLngArrayList());
+//                                        break;
+//                                    case 3:
+//                                        findPosArrayFour.addAll(mapFindWay.getFindWay_LatLngArrayList());
+//                                        break;
+//                                    default:
+//                                        break;
+//                                }
+//                            }
+//                        }, 200);
+//                    }
+//                    pathOver = new MultipartPathOverlay();
+//                    pathOver.setCoordParts(Arrays.asList(Arrays.asList(sLatLngPos,findPosArrayOne.get(0)),findPosArrayOne,findPosArrayTwo,find));
+//                    findPosArrayOne.add(eLatLngPos);
+//
                     mapObject = "0:0@" + pos.getJSONObject("info").getString("mapObj");
                     odsayService.requestLoadLane(mapObject, mapFindWay.LoadLane);
                     Handler handler = new Handler();
@@ -1363,25 +1388,26 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
     }
 
-    public void MapDraw(){
+    public void MapDraw() {
         if (fw_pos_path != null) {
             Log.d("=================null아니다~!~!!~!~!~======================", "");
 
-            pathOver= new PathOverlay();
+            pathOverlay = new PathOverlay();
 
-            findPosArray = new ArrayList<>();
+            pathOverlay.setMap(null);
+            findPosArrayOne = new ArrayList<>();
+            findPosArrayOne.add(sLatLngPos);
 
-            findPosArray = mapFindWay.getFindWay_LatLngArrayList();
+            findPosArrayOne.addAll(mapFindWay.getFindWay_LatLngArrayList());
+            findPosArrayOne.add(eLatLngPos);
+//            pathOverlay.setCoords(Arrays.asList(eLatLngPos,findPosArrayOne.get(0)));
+//            pathOverlay.setMap(naverMap);
 
-            pathOver.setMap(null);
+            pathOverlay.setCoords(findPosArrayOne);
 
+            pathOverlay.setColor(Color.RED);
 
-
-            pathOver.setCoords(findPosArray);
-
-            pathOver.setColor(Color.RED);
-
-            pathOver.setMap(naverMap);
+            pathOverlay.setMap(naverMap);
         }
     }
 

@@ -209,13 +209,23 @@ public class Map_Find_way extends Maps_Activity{
     int posCount;
 
     private ArrayList<LatLng> findWay_LatLngArrayList;
+    private LatLng findWay_endPosLatLng;
 
     public ArrayList<LatLng> getFindWay_LatLngArrayList() {
         return findWay_LatLngArrayList;
     }
 
+    public LatLng getFindWay_endPosLatLng() {
+        return findWay_endPosLatLng;
+    }
+
+    public void setFindWay_endPosLatLng(LatLng findWay_endPosLatLng) {
+        this.findWay_endPosLatLng = findWay_endPosLatLng;
+    }
+
     public void setFindWay_LatLngArrayList(ArrayList<LatLng> findWay_LatLngArrayList) {
         this.findWay_LatLngArrayList = findWay_LatLngArrayList;
+
     }
 
     public double[] getgPos_x() {
@@ -275,6 +285,8 @@ public class Map_Find_way extends Maps_Activity{
                                 Log.d("count=============",""+posCount);
                                 Log.d("Length()=============",""+length);
                             }
+                            findWay_endPosLatLng = new LatLng( l_graPos.getJSONObject(posCount-1).getDouble("y"),l_graPos.getJSONObject(posCount-1).getDouble("x"));
+                            Log.d("endLatLng=============",""+findWay_endPosLatLng);
                             Log.d("findWayLatLng=============",""+findWay_LatLngArrayList);
                         }
 
