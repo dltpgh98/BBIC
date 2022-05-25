@@ -5,8 +5,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -22,11 +20,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -130,6 +123,7 @@ public class Bookmark extends AppCompatActivity {
         setContentView(R.layout.bookmark);
 
         getHashKey();
+
 
         bookmark_place = new Bookmark_Place();
         bookmark_transit = new Bookmark_Transit();

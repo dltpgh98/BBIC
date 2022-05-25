@@ -4,24 +4,25 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bbic.Bookmark_Adapter.Friend_ListAdapter;
-import com.example.bbic.Bookmark_Adapter.PlaceData;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FP_friend_list extends Fragment {
 
-    private ArrayList<PlaceData> arrayList;
-    private Friend_ListAdapter listAdapter;
-    private RecyclerView recyclerView;
-    private LinearLayoutManager linearLayoutManager;
+
+    private ListView listView;
+    private FriendListAdapter adapter;
+    private List<Friend> friendList;
+    Bundle bundle; // 프래그먼트 간의 데이터 전달 시 필요
 
     @Nullable
     @Override
@@ -29,19 +30,53 @@ public class FP_friend_list extends Fragment {
         //return super.onCreateView(inflater, container, savedInstanceState);
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fp_friend_list, container, false);
 
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.friend_list_rv);
-        linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
+        listView = (ListView) rootView.findViewById(R.id.friend_list_rv);
+        friendList = new ArrayList<Friend>();
 
-        listAdapter = new Friend_ListAdapter(arrayList);
-        arrayList = new ArrayList<>();
+        adapter = new FriendListAdapter(getContext(), friendList);
+        listView.setAdapter(adapter);
 
-        for(int i = 1; i<=10 ; i++ ){
-            if(i%2==0)
-                arrayList.add(new PlaceData(R.drawable.image_profile,R.color.green,R.drawable.setting_menu_f,i+"번째 테스트"));
+        String getFriend = null;
+
+        if(getArguments() != null){
+            getFriend = getArguments().getString("friendlist");
+            System.out.println("friendlist 친구 목록 확인 : " + getFriend);
         }
-        listAdapter.setArrayList(arrayList);
-        recyclerView.setAdapter(listAdapter);
+
+        try{
+            JSONObject jsonObject = new JSONObject(getFriend);
+            System.out.println(getFriend);
+            JSONArray jsonArray = jsonObject.getJSONArray("response");
+            int count = 0;
+
+            long userCode;
+            long friendCode;
+            String friendName;
+            String friendEmail;
+            String friendProfile;
+            double friendLong;
+            double friendLat;
+            int friendGhost;
+
+            while(count < jsonArray.length()){
+                JSONObject object = jsonArray.getJSONObject(count);
+                userCode = object.getLong("F.K_code1");
+                friendCode = object.getLong("F.K_code2");
+                friendName = object.getString("K.K_name");
+                friendEmail = object.getString("K.K_email");
+                friendProfile = object.getString("K.K_profile");
+                friendLong = object.getDouble("K.K_long");
+                friendLat = object.getDouble("K.K_lat");
+                friendGhost = object.getInt("K.K_ghost");
+
+                Friend friend = new Friend(userCode, friendCode, friendName, friendEmail, friendProfile, friendGhost, friendLong, friendLat);
+                friendList.add(friend);
+                count++;
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         return rootView;
     }

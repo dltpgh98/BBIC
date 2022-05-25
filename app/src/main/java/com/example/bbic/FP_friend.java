@@ -1,5 +1,6 @@
 package com.example.bbic;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -35,7 +37,7 @@ public class FP_friend extends Fragment {
     FP_friend_list fp_friend_list;
     FP_friend_ask fp_friend_ask;
     FloatingActionButton fab;
-
+    Bundle bundle;
 
     @Nullable
     @Override
@@ -45,10 +47,24 @@ public class FP_friend extends Fragment {
 
         //TalkApiClient.getInstance().friends(null, null, null);
 
-
         fp_friend_list = new FP_friend_list(); //목록 버튼
         fp_friend_ask = new FP_friend_ask(); // 요청 버튼
         fab = rootView.findViewById(R.id.fb_fab_btn);
+
+        String friendlist = "";
+
+        if(getArguments() != null){
+            friendlist = getArguments().getString("friendlist");
+            System.out.println("FP_friend에서 받은 friendllist 확인 : " + friendlist);
+        }
+
+        bundle = new Bundle();
+        bundle.putString("friendlist", friendlist);
+        FragmentTransaction transaction =getActivity().getSupportFragmentManager().beginTransaction();
+        fp_friend_list.setArguments(bundle);
+        transaction.replace(R.id.fp_container, fp_friend_list);
+        transaction.commit();
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

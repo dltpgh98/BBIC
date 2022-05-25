@@ -46,7 +46,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1' // 탭레이아웃
     implementation files('libs/ODsayAndroidSDK.aar') // odsay
 
-    implementation "com.kakao.sdk:v2-user:2.4.2" // 카카오 로그인
+    implementation "com.kakao.sdk:v2-user:2.9.0" // 카카오 로그인
     implementation "com.kakao.sdk:v2-talk:2.9.0" // 친구, 메시지(카카오톡)
     implementation "com.kakao.sdk:v2-story:2.4.2" // 카카오스토리
     implementation "com.kakao.sdk:v2-link:2.4.2" // 메시지(카카오링크)

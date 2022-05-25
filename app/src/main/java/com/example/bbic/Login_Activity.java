@@ -50,10 +50,10 @@ public class Login_Activity extends AppCompatActivity {
             public Unit invoke(OAuthToken oAuthToken, Throwable throwable) {
                 // 이때 토큰이 전달이 되면 로그인이 성공한 것이고 토큰이 전달되지 않았다면 로그인 실패
                 if (oAuthToken != null) {
-
+                    Log.i("user", oAuthToken.getAccessToken() + " " + oAuthToken.getRefreshToken());
                 }
                 if (throwable != null) {
-
+                    Log.w(TAG, "invoke: " + throwable.getLocalizedMessage());
                 }
                 updateKakaoLoginUi();
                 return null;

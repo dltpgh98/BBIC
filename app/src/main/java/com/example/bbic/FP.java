@@ -1,6 +1,7 @@
 package com.example.bbic;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,13 +23,19 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class FP extends AppCompatActivity {
     TabLayout tabRoot;
     FP_friend fp_friend;
     FP_promise fp_promise;
+    Bundle bundle;
 
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
@@ -125,7 +132,6 @@ public class FP extends AppCompatActivity {
 
 
 
-        fp_friend = new FP_friend();
         fp_promise = new FP_promise();
 
 
@@ -134,8 +140,7 @@ public class FP extends AppCompatActivity {
         tabRoot.addTab(tabRoot.newTab().setText("친구"));
         tabRoot.addTab(tabRoot.newTab().setText("약속"));
 
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_friend).commit();
+        new BackgroundTask().execute();//파싱
 
         tabRoot.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -310,4 +315,77 @@ public class FP extends AppCompatActivity {
 
         return itemList;
     }
+
+class BackgroundTask extends AsyncTask<Void, Void, String> {
+
+    String target;
+
+    @Override
+    protected void onPreExecute() {
+        target = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/friendlist.php";
+    }
+
+    @Override
+    protected String doInBackground(Void... voids) {
+
+        try{
+            URL url = new URL(target);
+
+            HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+
+            InputStream inputStream = httpURLConnection.getInputStream();
+
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String temp;
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            while((temp = bufferedReader.readLine()) != null){
+                      stringBuilder.append(temp + "\n");
+            }
+
+            bufferedReader.close();
+            inputStream.close();
+            httpURLConnection.disconnect();
+            return stringBuilder.toString().trim();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    protected void onProgressUpdate(Void... values) {
+        super.onProgressUpdate(values);
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+
+        bundle = new Bundle();
+        bundle.putString("friendlist",result);
+        System.out.println("친구 목록확인 " + result);
+        fp_friend = new FP_friend();
+        fp_friend.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().add(R.id.fp_tab_container, fp_friend).commit();
+    }
+
+
+
+    @Override
+    protected void onCancelled(String s) {
+        super.onCancelled(s);
+    }
+
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
+    }
+
+
+}
+
+
 }
