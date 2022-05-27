@@ -1,4 +1,4 @@
-package com.example.bbic;
+package com.example.bbic.Bookmark;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,9 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bbic.Bookmark_Adapter.PlaceData;
-import com.example.bbic.Bookmark_Adapter.Transit_BusAdapter;
-import com.example.bbic.Bookmark_Adapter.Transit_SubwayAdapter;
+import com.example.bbic.Adapter.PlaceData;
+import com.example.bbic.Adapter.Transit_SubwayAdapter;
+import com.example.bbic.R;
 
 import java.util.ArrayList;
 

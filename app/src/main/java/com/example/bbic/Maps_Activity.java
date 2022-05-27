@@ -42,9 +42,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.bbic.Bookmark.Bookmark;
 import com.example.bbic.DB.UpdatePosRequest;
-import com.example.bbic.DB.UpdateRequest;
-import com.example.bbic.DB.ValidateRequest;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.CameraUpdate;
@@ -61,8 +60,6 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -160,6 +157,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     intent5.putExtra("도", area);
                     intent5.putExtra("시", city);
                     intent5.putExtra("코로나",covidNum);
+                    intent5.putExtra("friendlist", friendlist);
                     startActivity(intent5);
                     finish();
                     break;
@@ -251,7 +249,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     private NaverMap naverMap;
 
-    private String allDust, weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city;
+    private String allDust, weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, friendlist;
     private long k_code;
     // 마커 정보 저장시킬 변수들 선언
     private Vector<LatLng> markersPosition;
@@ -640,6 +638,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         address = intent.getStringExtra("프로필");
         nickName.setText(name); // 카카오톡 프로필 닉네임
         Glide.with(this).load(address).circleCrop().into(profile); // 카카오톡 프로필 이미지
+
+
+        friendlist = intent.getStringExtra("friendlist"); //친구 목록
 
         if(!checkLocationServiceStatus()){
             showDialogForLocationServiceSetting();

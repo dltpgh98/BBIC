@@ -1,4 +1,4 @@
-package com.example.bbic;
+package com.example.bbic.Bookmark;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.bbic.R;
 
 public class Bookmark_Transit extends Fragment {
     Bookmark_Transit_bus bookmark_transit_bus;

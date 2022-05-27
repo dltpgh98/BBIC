@@ -1,4 +1,4 @@
-package com.example.bbic;
+package com.example.bbic.Bookmark;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,8 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bbic.Bookmark_Adapter.PlaceAdapter;
-import com.example.bbic.Bookmark_Adapter.PlaceData;
+import com.example.bbic.Adapter.PlaceAdapter;
+import com.example.bbic.Adapter.PlaceData;
+import com.example.bbic.R;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,14 @@ public class Bookmark_Place_new extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //return super.onCreateView(inflater, container, savedInstanceState);
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.bookmark_place_new, container, false);
+
+        String locationposlist = null;
+
+        if(getArguments() != null){
+            locationposlist = getArguments().getString("locationposlist");
+            System.out.println("locationposlist 장소 목록 확인 : " + locationposlist);
+        }
+
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.place_new_rv);
         linearLayoutManager = new LinearLayoutManager(getActivity());

@@ -104,11 +104,8 @@ public class Subway extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.subway);
 
-
-
         //버튼 클릭 리스너 클래스 객체 생성(클릭 이벤트를 위함)
         BtnOnClickListener onClickListener = new BtnOnClickListener();
-
 
         //각 객체의 참조값을 넣어줌
         drawerLayout = (DrawerLayout) findViewById(R.id.main_activity);
@@ -150,8 +147,6 @@ public class Subway extends AppCompatActivity {
         address = intent.getStringExtra("프로필");
         nickName.setText(name); // 카카오톡 프로필 닉네임
         Glide.with(this).load(address).circleCrop().into(profile); // 카카오톡 프로필 이미지
-
-
 
 
 //        subway.setOnTouchListener(new View.OnTouchListener() {

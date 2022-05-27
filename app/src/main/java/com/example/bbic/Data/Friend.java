@@ -1,9 +1,10 @@
-package com.example.bbic;
+package com.example.bbic.Data;
 
 public class Friend {
 
     long userKakapCode;
     long friendKakaoCode;
+    int friendStatus;
     String friendName;
     String friendEmail;
     String friendProfileURL;
@@ -25,6 +26,14 @@ public class Friend {
 
     public void setFriendKakaoCode(long friendKakaoCode) {
         this.friendKakaoCode = friendKakaoCode;
+    }
+
+    public int getFriendStatus() {
+        return friendStatus;
+    }
+
+    public void setFriendStatus(int friendStatus) {
+        this.friendStatus = friendStatus;
     }
 
     public String getFriendName() {
@@ -75,9 +84,10 @@ public class Friend {
         this.friendLat = friendLat;
     }
 
-    public Friend(long userKakapCode, long friendKakaoCode, String friendName, String friendEmail, String friendProfileURL, int friendGhost, double friendlong, double friendLat) {
+    public Friend(long userKakapCode, long friendKakaoCode, int friendStatus, String friendName, String friendEmail, String friendProfileURL, int friendGhost, double friendlong, double friendLat) {
         this.userKakapCode = userKakapCode;
         this.friendKakaoCode = friendKakaoCode;
+        this.friendStatus = friendStatus;
         this.friendName = friendName;
         this.friendEmail = friendEmail;
         this.friendProfileURL = friendProfileURL;

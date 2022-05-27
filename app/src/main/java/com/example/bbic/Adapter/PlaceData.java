@@ -1,4 +1,4 @@
-package com.example.bbic.Bookmark_Adapter;
+package com.example.bbic.Adapter;
 
 public class PlaceData {
     //place

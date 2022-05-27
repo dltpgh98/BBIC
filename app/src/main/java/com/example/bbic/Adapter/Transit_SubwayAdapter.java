@@ -1,4 +1,4 @@
-package com.example.bbic.Bookmark_Adapter;
+package com.example.bbic.Adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bbic.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class Transit_SubwayAdapter extends RecyclerView.Adapter<Transit_SubwayAdapter.SubwayCustomViewHolder>{
     private ArrayList<PlaceData> arrayList;

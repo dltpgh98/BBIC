@@ -37,7 +37,8 @@ public class FP_friend extends Fragment {
     FP_friend_list fp_friend_list;
     FP_friend_ask fp_friend_ask;
     FloatingActionButton fab;
-    Bundle bundle;
+    Bundle bundlelist;
+    Bundle bundleask;
 
     @Nullable
     @Override
@@ -48,22 +49,28 @@ public class FP_friend extends Fragment {
         //TalkApiClient.getInstance().friends(null, null, null);
 
         fp_friend_list = new FP_friend_list(); //목록 버튼
-        fp_friend_ask = new FP_friend_ask(); // 요청 버튼
+        fp_friend_ask = new FP_friend_ask(); // 요청 버튼//벌써 여기서 문제
         fab = rootView.findViewById(R.id.fb_fab_btn);
 
         String friendlist = "";
+        long userCode = 0;
 
         if(getArguments() != null){
             friendlist = getArguments().getString("friendlist");
+            userCode = getArguments().getLong("userCode");
             System.out.println("FP_friend에서 받은 friendllist 확인 : " + friendlist);
-        }
+            System.out.println("프렌드에서 유저의 카카오코드 확인" + userCode);
+        }//여기까지도 잘됨
 
-        bundle = new Bundle();
-        bundle.putString("friendlist", friendlist);
-        FragmentTransaction transaction =getActivity().getSupportFragmentManager().beginTransaction();
-        fp_friend_list.setArguments(bundle);
-        transaction.replace(R.id.fp_container, fp_friend_list);
-        transaction.commit();
+        bundlelist = new Bundle();
+        bundlelist.putString("friendlist", friendlist);
+        bundlelist.putLong("userCode", userCode);
+        FragmentTransaction transactionlist =getActivity().getSupportFragmentManager().beginTransaction();
+        fp_friend_list.setArguments(bundlelist);
+        transactionlist.replace(R.id.fp_container, fp_friend_list);
+        transactionlist.commit();//ㅇㅋ
+
+
 
 
         fab.setOnClickListener(new View.OnClickListener() {

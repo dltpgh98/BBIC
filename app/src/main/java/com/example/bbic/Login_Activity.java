@@ -1,6 +1,7 @@
 package com.example.bbic;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -25,6 +26,12 @@ import com.kakao.sdk.user.model.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
 
@@ -33,6 +40,7 @@ public class Login_Activity extends AppCompatActivity {
     private TextView nickname;
     private ImageView profileImage;
     private static final String TAG = "Login_Activity";
+    private String str;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +51,8 @@ public class Login_Activity extends AppCompatActivity {
         logout_btn = (Button) findViewById(R.id.logout);
         nickname = (TextView) findViewById(R.id.nickname);
         profileImage = (ImageView) findViewById(R.id.profile);
+
+        new BackgroundTask().execute();//파싱
 
         // 카카오가 설치되어 있는지 확인 하는 메서드또한 카카오에서 제공 콜백 객체를 이용함
         Function2<OAuthToken, Throwable, Unit> callback = new Function2<OAuthToken, Throwable, Unit>() {
@@ -125,6 +135,8 @@ public class Login_Activity extends AppCompatActivity {
                     intent.putExtra("닉네임",user.getKakaoAccount().getProfile().getNickname());
                     intent.putExtra("코드", user.getId());
                     intent.putExtra("프로필", user.getKakaoAccount().getProfile().getProfileImageUrl());
+                    intent.putExtra("friendlist", str);// 친구목록 배열 전달
+                    System.out.println("로그인 액티비티 친구목록: " + str);
                     startActivity(intent);
                     //finish();
 
@@ -227,5 +239,69 @@ public class Login_Activity extends AppCompatActivity {
         RequestQueue queue1 = Volley.newRequestQueue( Login_Activity.this );
         queue1.add(kakaoRequest);
     }
+
+    class BackgroundTask extends AsyncTask<Void, Void, String> {
+
+        String target;
+
+        @Override
+        protected void onPreExecute() {
+            target = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/friendlist.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try{
+                URL url = new URL(target);
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String temp;
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while((temp = bufferedReader.readLine()) != null){
+                    stringBuilder.append(temp + "\n");
+                }
+
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            str = result;
+        }
+
+        @Override
+        protected void onCancelled(String s) {
+            super.onCancelled(s);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+
+    }
+
 
 }

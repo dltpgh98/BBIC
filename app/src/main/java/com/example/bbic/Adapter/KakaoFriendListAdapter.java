@@ -1,17 +1,10 @@
-package com.example.bbic.Bookmark_Adapter;
+package com.example.bbic.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.example.bbic.R;
-
-import java.util.ArrayList;
 
 public class KakaoFriendListAdapter extends BaseAdapter {
 

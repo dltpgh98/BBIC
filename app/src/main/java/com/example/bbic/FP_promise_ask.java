@@ -11,9 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bbic.Bookmark_Adapter.PlaceData;
-import com.example.bbic.Bookmark_Adapter.Promise_AskAdapter;
-import com.example.bbic.Bookmark_Adapter.Promise_ListAdapter;
+import com.example.bbic.Adapter.PlaceData;
+import com.example.bbic.Adapter.Promise_AskAdapter;
 
 import java.util.ArrayList;
 

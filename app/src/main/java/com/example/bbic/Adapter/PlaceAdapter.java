@@ -1,4 +1,4 @@
-package com.example.bbic.Bookmark_Adapter;
+package com.example.bbic.Adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;

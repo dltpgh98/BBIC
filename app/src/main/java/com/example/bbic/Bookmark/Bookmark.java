@@ -1,9 +1,10 @@
-package com.example.bbic;
+package com.example.bbic.Bookmark;
 
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -18,8 +19,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bumptech.glide.Glide;
+import com.example.bbic.FP;
+import com.example.bbic.Maps_Activity;
+import com.example.bbic.R;
+import com.example.bbic.Setting_Activity;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -38,7 +48,8 @@ public class Bookmark extends AppCompatActivity {
     private ImageView weatherImage, profile;
     private Button[] drawerMenu = new Button[6];
 
-    private String weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city;
+    private String weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, str;
+    Bundle bundle;
 
     //버튼 클릭 리스너 클래스
     class BtnOnClickListener implements View.OnClickListener{
@@ -124,16 +135,12 @@ public class Bookmark extends AppCompatActivity {
 
         getHashKey();
 
-
-        bookmark_place = new Bookmark_Place();
         bookmark_transit = new Bookmark_Transit();
 
         tabRoot = findViewById(R.id.bookmark_tab_root);
         tabRoot.removeAllTabs();
         tabRoot.addTab(tabRoot.newTab().setText("장소"));
         tabRoot.addTab(tabRoot.newTab().setText("대중교통"));
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.bookmark_tab_container, bookmark_place).commit();
 
         tabRoot.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -212,6 +219,9 @@ public class Bookmark extends AppCompatActivity {
 
         nickName.setText(name); // 카카오톡 프로필 닉네임
         Glide.with(this).load(address).circleCrop().into(profile); // 카카오톡 프로필 이미지
+
+
+        new BackgroundTask().execute();//파싱 실행
     }
 
     private void drawer_input() {
@@ -328,5 +338,136 @@ public class Bookmark extends AppCompatActivity {
                 Log.e("KeyHash", "Unable to get MessageDigest. signature=" + signature, e);
             }
         }
+    }
+
+    class BackgroundTask extends AsyncTask<Void, Void, String> {
+
+        String target;
+
+        @Override
+        protected void onPreExecute() {
+            target = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/locationposlist.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try{
+                URL url = new URL(target);
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String temp;
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while((temp = bufferedReader.readLine()) != null){
+                    stringBuilder.append(temp + "\n");
+                }
+
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            bundle = new Bundle();
+            bundle.putString("locationposlist",result);
+            System.out.println("장소 목록확인 " + result);
+            bookmark_place = new Bookmark_Place();
+            bookmark_place.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().add(R.id.bookmark_tab_container, bookmark_place).commit();
+        }
+
+        @Override
+        protected void onCancelled(String s) {
+            super.onCancelled(s);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+
+    }
+
+    class BackgroundTask1 extends AsyncTask<Void, Void, String> {
+
+        String target;
+
+        @Override
+        protected void onPreExecute() {
+            target = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/subwaylist.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try{
+                URL url = new URL(target);
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String temp;
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while((temp = bufferedReader.readLine()) != null){
+                    stringBuilder.append(temp + "\n");
+                }
+
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            str = result;
+        }
+
+        @Override
+        protected void onCancelled(String s) {
+            super.onCancelled(s);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+
     }
 }
