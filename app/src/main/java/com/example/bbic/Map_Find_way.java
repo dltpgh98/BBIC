@@ -14,11 +14,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class Map_Find_way extends Maps_Activity{
-//    private JSONArray subWay_path;
-//    private JSONArray bus_path;
-//    private JSONArray sb_path;
-//
-
 
     private JSONArray l_graPos;
 
@@ -263,11 +258,11 @@ public class Map_Find_way extends Maps_Activity{
                     findWay_LatLngArrayList = new ArrayList<>();
                     for (int i = 0; i < laneArray.length(); i++){
                         JSONArray l_sectionArray = laneArray.getJSONObject(i).getJSONArray("section");
-                        Log.d("l_sectionArray",l_sectionArray+"");
-                        Log.d("l_sectionArray",l_sectionArray.length()+"");
+//                        Log.d("l_sectionArray",l_sectionArray+"");
+//                        Log.d("l_sectionArray",l_sectionArray.length()+"");
                         for (int j = 0; j < l_sectionArray.length(); j++){
                             l_graPos = l_sectionArray.getJSONObject(j).getJSONArray("graphPos");
-                            Log.d("graPos test",l_graPos+"");
+//                            Log.d("graPos test",l_graPos+"");
                             posCount = l_graPos.length();
 //                            gPos_x = new double[l_graPos.length()];
 //                            gPos_y = new double[l_graPos.length()];
@@ -275,19 +270,19 @@ public class Map_Find_way extends Maps_Activity{
 
                             for(int length = 0; length < l_graPos.length();length++){
                                 l_pos = new LatLng( l_graPos.getJSONObject(length).getDouble("y"),l_graPos.getJSONObject(length).getDouble("x"));
-                                Log.d("l_graPos.length()=====================",""+l_graPos.length());
+//                                Log.d("l_graPos.length()=====================",""+l_graPos.length());
                                 findWay_LatLngArrayList.add(l_pos);
 //                                gPos_x[length] = l_graPos.getJSONObject(length).getDouble("x");
 //                                gPos_y[length] = l_graPos.getJSONObject(length).getDouble("y");
 
 //                                Log.d("graPos test x:",gPos_x[length]+"y:"+gPos_y[length]);
 
-                                Log.d("count=============",""+posCount);
-                                Log.d("Length()=============",""+length);
+//                                Log.d("count=============",""+posCount);
+//                                Log.d("Length()=============",""+length);
                             }
                             findWay_endPosLatLng = new LatLng( l_graPos.getJSONObject(posCount-1).getDouble("y"),l_graPos.getJSONObject(posCount-1).getDouble("x"));
-                            Log.d("endLatLng=============",""+findWay_endPosLatLng);
-                            Log.d("findWayLatLng=============",""+findWay_LatLngArrayList);
+//                            Log.d("endLatLng=============",""+findWay_endPosLatLng);
+//                            Log.d("findWayLatLng=============",""+findWay_LatLngArrayList);
                         }
 
 

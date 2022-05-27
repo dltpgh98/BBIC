@@ -2,7 +2,9 @@ package com.example.bbic;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,8 @@ import java.util.ArrayList;
 
 public class Find_way_listAdapter extends RecyclerView.Adapter<Find_way_listAdapter.CustomViewHolder> {
     private ArrayList<Find_way_Data> arrayList;
+    private SparseBooleanArray mSelectedItems = new SparseBooleanArray(0);
+    private int changePos = -1;
 //    private ArrayList<Find_way_Data> mListener;
 
 //    private Context context;
@@ -61,17 +65,39 @@ public class Find_way_listAdapter extends RecyclerView.Adapter<Find_way_listAdap
 //            holder.expansion_iv.setImageResource(arrayList.get(position).getExpansion_iv());
 //
 //        }
+
+        if(changePos==position){
+            holder.itemView.setBackgroundColor(Color.parseColor("#a6787878"));
+        }
+        if(changePos != position) {
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+        }
+
+
         holder.onFootGuid.setText(String.valueOf(arrayList.get(position).getTotalText()));
 
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("=================================position===============================",arrayList.get(position).getjObject()+"");
+//                Log.d("=================================position===============================",arrayList.get(position).getjObject()+"");
+
+                changePos =position;
+//                if(mSelectedItems.get(position,false)){
+//                    mSelectedItems.put(position,false);
+//                    holder.itemView.setBackgroundColor(Color.WHITE);
+//                }else{
+//                    mSelectedItems.put(position,true);
+//                    holder.itemView.setBackgroundColor(Color.parseColor("#c6787878"));
+//                }
+
                 Intent intent = new Intent(view.getContext(),Maps_Activity.class);
                 intent.putExtra("jObject",String.valueOf(arrayList.get(position).getjObject()));
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 view.getContext().startActivity(intent);
+                notifyDataSetChanged();
+
+
 //                view.getContext().startActivity(intent.putExtra("jObject",String.valueOf(arrayList.get(position).getjObject())).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
             }
         });
@@ -85,8 +111,8 @@ public class Find_way_listAdapter extends RecyclerView.Adapter<Find_way_listAdap
 
     @Override
     public int getItemCount() {
-        Log.d("겟 아이템(Find_way_listAdapter,getItemCount)","");
-        Log.d("겟 아이템",""+arrayList.size());
+//        Log.d("겟 아이템(Find_way_listAdapter,getItemCount)","");
+//        Log.d("겟 아이템",""+arrayList.size());
         return (null!=arrayList ? arrayList.size() : 0 );
     }
 

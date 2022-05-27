@@ -17,16 +17,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0">
+            <ImageButton
+                android:id="@+id/posEdit_change_ibtn"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/edit_change"
+                android:background="@color/transparent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/start_pos_tilay"
-                android:layout_width="280dp"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toEndOf="@id/posEdit_change_ibtn">
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/start_pos_et"
-                    android:layout_width="280sp"
+                    android:layout_width="240sp"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/transparent"
                     android:text=""
@@ -34,14 +43,14 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="280dp"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
                 app:layout_constraintTop_toBottomOf="@id/start_pos_tilay"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toEndOf="@id/posEdit_change_ibtn">
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/end_pos_et"
-                    android:layout_width="280sp"
+                    android:layout_width="240sp"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/transparent"
                     android:text=""
@@ -52,6 +61,9 @@
                 android:id="@+id/view_find_way_ibtn"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
+                android:src="@drawable/ic_search"
+                android:background="@drawable/beige_radious"
+                android:layout_marginEnd="10dp"
                 app:layout_constraintStart_toEndOf= "@id/start_pos_tilay"
                 app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

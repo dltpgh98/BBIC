@@ -4,6 +4,7 @@ import static com.naver.maps.map.NaverMap.LAYER_GROUP_TRANSIT;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,7 +32,6 @@ import android.widget.Toast;
 
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,6 +47,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.naver.maps.geometry.LatLng;
+import com.naver.maps.geometry.LatLngBounds;
+import com.naver.maps.map.CameraAnimation;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.LocationTrackingMode;
@@ -56,6 +59,7 @@ import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.MultipartPathOverlay;
+import com.naver.maps.map.overlay.OverlayImage;
 import com.naver.maps.map.overlay.PathOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.odsay.odsayandroidsdk.ODsayService;
@@ -71,7 +75,6 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
@@ -201,7 +204,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     indicator.setVisibility(View.GONE);
                     find_way_page.setVisibility(View.VISIBLE);
 
-
                     upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
 
 //                    if(upPanelLayout.getPanelState().equals(SlidingUpPanelLayout.PanelState.COLLAPSED)){
@@ -240,6 +242,14 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             break;
                     }
                     break;
+                case R.id.posEdit_change_ibtn:
+                    String startEdit = sPosEdit.getText().toString();
+                    //String endEdit = ePosEdit.getText().toString();
+                    sPosEdit.setText(ePosEdit.getText().toString());
+                    ePosEdit.setText(startEdit);
+                    ePosEdit.setSelection(ePosEdit.length());
+                    sPosEdit.setSelection(sPosEdit.length());
+                    break;
             }
         }
     }
@@ -255,7 +265,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
     private View drawerView;
-    private ImageButton menuIbtn, searchIbtn, findWayIbtn, vFindIbtn;
+    private ImageButton menuIbtn, searchIbtn, findWayIbtn, vFindIbtn, vEditChangeFindIbtn;
     private TextView
             temText, fineText, ultraText, covidText, nickName, areaText;
     private ImageView weatherImage, profile;
@@ -270,7 +280,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private ImageView headerGhostBtn, headerSettingBtn;
 
 
-    private JSONArray[] path;
+    //    private JSONArray[] path;
     private JSONObject result, meResult;
     private String fw_pos_path, mapObject;
     private Find_Way_Frag fw_frag;
@@ -384,6 +394,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             return true;
         });
 
+
         //infoWindow.open(naverMap);//인포윈도우 클릭 시
 
 //
@@ -405,55 +416,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             y = String.valueOf(infoWindow.getPosition().latitude);
             x = String.valueOf(infoWindow.getPosition().longitude);
 
-//                    if(fw_pos_path != null){
-//            pathOver = new PathOverlay();
-//            pathOver.setCoords(Arrays.asList(
-//                    new LatLng(37.57152, 126.97714),
-//                    new LatLng(37.56607, 126.98268),
-//                    new LatLng(37.56445, 126.97707),
-//                    new LatLng(37.55855, 126.97822)
-//            ));
-//            pathOver.setMap(naverMap);
-//        }
-//            Map_Find_way mapFind_way = new Map_Find_way();
-
-//            odsayService.requestSearchPubTransPath("126.8881529057685","37.49185398304374",x,y,"0","0","0", mapFind_way.Find_way);
-//            odsayService.requestLoadLane("0:0@1673:1:25:27@2:2:233:239",mapFind_way.LoadLane);
-//            Log.d("==============================onMapReady==============",""+path[0]);
-
-//
-//            if (fw_pos_path != null) {
-//                Log.d("=================null아니다~!~!!~!~!~======================", "");
-//
-//
-////                if(latiPos ==null){
-////                    try {
-////                        mapObject = mapObjectPos;
-////                        odsayService.requestLoadLane(mapObject, mapFindWay.LoadLane);
-////                    } catch (Exception e) {
-//////                    e.printStackTrace();
-////                    }
-////
-////                }
-//
-//                latiPos = new double[mapFindWay.getPosCount()];
-//                longPos = new double[mapFindWay.getPosCount()];
-//                latiPos = mapFindWay.getgPos_y();
-//                longPos = mapFindWay.getgPos_x();
-////                Log.d("======================1-1-1-1-1-1-=============",""+latiPos[0]);
-////                LatLng
-//                pathOver = new PathOverlay();
-//                findPosArrayOne = new ArrayList<>();
-//                LatLng lArray = new LatLng(0, 0);
-//                for (int i = 0; i < mapFindWay.getPosCount(); i++) {
-//                    lArray = new LatLng(latiPos[i], longPos[i]);
-//                    findPosArrayOne.add(lArray);
-//                }
-//                Log.d("arrayList===================================", findPosArrayOne + "");
-//                pathOver.setCoords(findPosArrayOne);
-//                pathOver.setColor(Color.RED);
-//                pathOver.setMap(naverMap);
-//            }
 
             Log.d("위치 좌표 Y", String.valueOf(infoWindow.getPosition().latitude));
             Log.d("위치 좌표 X", String.valueOf(infoWindow.getPosition().longitude));
@@ -604,6 +566,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         fw_frag = new Find_Way_Frag();
         mapFindWay = new Map_Find_way();
+        pathOverlay = new PathOverlay();
 
         double latitude = gpsTracker.getLatitude();
         double longitude = gpsTracker.getLongitude();
@@ -653,6 +616,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         viewPager = (ViewPager2) findViewById(R.id.view_pager);
         indicator = (WormDotsIndicator) findViewById(R.id.dots_indicator);
         find_way_page = (ConstraintLayout) findViewById(R.id.view_find_way_lay);
+        vEditChangeFindIbtn = (ImageButton) findViewById(R.id.posEdit_change_ibtn);
         vFindIbtn = (ImageButton) findViewById(R.id.view_find_way_ibtn);
         sPosEdit = (EditText) findViewById(R.id.start_pos_et);
         ePosEdit = (EditText) findViewById(R.id.end_pos_et);
@@ -765,6 +729,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         searchIbtn.setOnClickListener(onClickListener); // 검색 버튼 리스너
         findWayIbtn.setOnClickListener(onClickListener);
         vFindIbtn.setOnClickListener(onClickListener);
+        vEditChangeFindIbtn.setOnClickListener(onClickListener);
 
         Intent intent = getIntent();
         name = intent.getStringExtra("닉네임");
@@ -1165,9 +1130,12 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         String sLongitude = "";
         String eLatitude = "";
         String eLongitude = "";
+        String reNameStartEditTxt = sEtPosName.replace(" ", "_");
+        String reNameEndEditTxt = eEtPosName.replace(" ", "_");
+
         try {
-            sAddressList = geocoder.getFromLocationName(sEtPosName, 10);
-            eAddressList = geocoder.getFromLocationName(eEtPosName, 10);
+            sAddressList = geocoder.getFromLocationName(reNameStartEditTxt, 10);
+            eAddressList = geocoder.getFromLocationName(reNameEndEditTxt, 10);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1183,7 +1151,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         eLatitude = eSplitStr[10].substring(eSplitStr[10].indexOf("=") + 1);
         eLongitude = eSplitStr[12].substring(eSplitStr[12].indexOf("=") + 1);
 
-        sLatLngPos = new LatLng( Double.valueOf(sLatitude),Double.valueOf(sLongitude));
+        sLatLngPos = new LatLng(Double.valueOf(sLatitude), Double.valueOf(sLongitude));
         eLatLngPos = new LatLng(Double.valueOf(eLatitude), Double.valueOf(eLongitude));
 
         odsayService.requestSearchPubTransPath(sLongitude, sLatitude, eLongitude, eLatitude, "0", "0", "0", mapFindWay.Find_way);
@@ -1191,7 +1159,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         handler.postDelayed(new Runnable() {                                        //handler 객체 딜레이 (2초)끝나면 종료
             @Override
             public void run() {
-                path = mapFindWay.getPath_s();
+//                path = mapFindWay.getPath_s();
                 result = mapFindWay.getResult();
 //                System.out.println("-----------------------result"+result);
 //                FragmentTransaction tf = getSupportFragmentManager().beginTransaction();
@@ -1199,32 +1167,28 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                System.out.println("======================Test========================="+path[0]);
 
                 if (result != null) {
+                    LatLngBounds latLngBounds = new LatLngBounds(sLatLngPos, eLatLngPos);
+//                    Marker marker = new Marker();
+//                    marker.setPosition(eLatLngPos);
+//                    marker.setMap(naverMap);
+
+
+                    CameraUpdate cameraUpdate = CameraUpdate.fitBounds(latLngBounds, 100, 130, 100, 1100);
+//                    cameraUpdate.animate(CameraAnimation.Easing);
+
+                    naverMap.moveCamera(cameraUpdate);
 
                     bundleFw.putString("odsay", result.toString());
                     fw_frag.setArguments(bundleFw);
                     frag_set(fw_frag);
                     meResult = result;
-//                    if (meResult == null) {
-//                        meResult = result;
-//                        fw_frag.setArguments(bundleFw);
-////                    getSupportFragmentManager().beginTransaction().remove(find_way_frag).commitAllowingStateLoss();
-//                        frag_set();
-////                        getSupportFragmentManager().beginTransaction().add(R.id.view_fw_container, fw_frag).
-////                                setPrimaryNavigationFragment(fw_frag).setReorderingAllowed(true).commitNowAllowingStateLoss();
-//
-//                    } else if (meResult != null) {
-//                        Log.d("===================meResult", meResult + "");
-//                        fw_frag.setArguments(bundleFw);
-//                        getSupportFragmentManager().beginTransaction().detach(getSupportFragmentManager().getPrimaryNavigationFragment());
-//                        getSupportFragmentManager().beginTransaction().attach(fw_frag).setPrimaryNavigationFragment(fw_frag).setReorderingAllowed(true).commitNowAllowingStateLoss();
-//                    }
 
                     Log.d("Position", position + "");
                     Log.d("=========================================fw_frag=====================================", fw_frag + "");
                 }
 
             }
-        }, 550);
+        }, 500);
 //        path = mapFindWay.getPath_s();
 
 //
@@ -1301,15 +1265,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     }
 
-
-    public JSONArray[] getPath() {
-        return path;
-    }
-
-    public void setPath(JSONArray[] path) {
-        this.path = path;
-    }
-
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -1376,7 +1331,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         public void run() {
                             MapDraw();
                         }
-                    },500);
+                    }, 500);
 
                 } catch (Exception e) {
 //                    e.printStackTrace();
@@ -1392,7 +1347,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         if (fw_pos_path != null) {
             Log.d("=================null아니다~!~!!~!~!~======================", "");
 
-            pathOverlay = new PathOverlay();
 
             pathOverlay.setMap(null);
             findPosArrayOne = new ArrayList<>();
@@ -1405,9 +1359,24 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
             pathOverlay.setCoords(findPosArrayOne);
 
-            pathOverlay.setColor(Color.RED);
+
+            switch (position) {
+                case 0:
+                    pathOverlay.setColor(Color.RED);
+                    break;
+                case 1:
+                    pathOverlay.setColor(Color.GREEN);
+                    break;
+                case 2:
+                    pathOverlay.setColor(Color.BLUE);
+                    break;
+                default:
+                    break;
+            }
 
             pathOverlay.setMap(naverMap);
+
+
         }
     }
 
@@ -1454,28 +1423,3 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         Log.d("onResumeFragments()", "");
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
