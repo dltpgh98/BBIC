@@ -6,6 +6,9 @@ import static java.security.AccessController.getContext;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +17,7 @@ import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
@@ -37,6 +41,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -237,6 +242,15 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             break;
                     }
                     break;
+
+                case R.id.main_test_btn:
+                    Log.d("Foreground", "onClick: ");
+                    Intent intent = new Intent(getApplicationContext(), Maps_Activity.class);
+                    intent.setAction("startForeground");
+
+                    onStartForegroundService(view);
+                    startService(intent);
+                    break;
             }
         }
     }
@@ -251,7 +265,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
     private View drawerView;
-    private ImageButton menuIbtn, searchIbtn, findWayIbtn, vFindIbtn;
+    private ImageButton menuIbtn, searchIbtn, findWayIbtn, vFindIbtn, testiBtn;
     private TextView
             temText, fineText, ultraText, covidText, nickName, areaText;
     private ImageView weatherImage, profile;
@@ -584,6 +598,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         indicator = (WormDotsIndicator)findViewById(R.id.dots_indicator);
         find_way_page = (LinearLayout)findViewById(R.id.view_find_way_lay);
         vFindIbtn = (ImageButton)findViewById(R.id.view_find_way_ibtn);
+        testiBtn = (ImageButton)findViewById(R.id.main_test_btn);
+        testiBtn.setOnClickListener(onClickListener);
         sPosEdit= (EditText)findViewById(R.id.start_pos_et);
         ePosEdit= (EditText)findViewById(R.id.end_pos_et);
 
@@ -1112,11 +1128,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
     }
 
-    public static Drawable getTintedDrawable(@NonNull final Context context,
-                                             @DrawableRes int drawableRes, @ColorRes int colorRes){
-        Drawable d = ContextCompat.getDrawable(context, drawableRes);
-        d = DrawableCompat.wrap(d);
-        DrawableCompat.setTint(d.mutate(), ContextCompat.getColor(context, colorRes));
-        return d;
+    private void onStartForegroundService(View view) {
+        Intent intent = new Intent(this, Maps_Activity.class);
+        intent.setAction("startForeground");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent);
+        } else {
+            startService(intent);
+        }
     }
 }

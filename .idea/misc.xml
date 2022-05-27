@@ -5,6 +5,8 @@
       <map>
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/circle.xml" value="0.162" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/circle2.xml" value="0.162" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/corner.xml" value="0.1805" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/gpsBtn.xml" value="0.1805" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.1" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_directions_24.xml" value="0.162" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_directions_bus_24.xml" value="0.162" />
@@ -17,6 +19,7 @@
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout-ldltr/setting.xml" value="0.33" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/activity_backup.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/blank.xml" value="0.2916666666666667" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/bookmark.xml" value="0.1" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/bookmark_place.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/bookmark_place_abc.xml" value="0.1875" />
@@ -43,6 +46,7 @@
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/fp_promise_ask_list.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/fp_promise_list.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/fp_promise_list_list.xml" value="0.1875" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/loading.xml" value="0.33" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/login.xml" value="0.25" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/promise_write.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/subway.xml" value="0.1875" />
