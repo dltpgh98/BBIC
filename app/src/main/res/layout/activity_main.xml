@@ -105,6 +105,13 @@
                 android:visibility="gone"/>
                 <!-- 길찾기 부분 끝 -->
 
+            <include layout ="@layout/place_info_window"
+                android:visibility="gone"/>
+            <!--장소 정보창-->
+
+            <include layout ="@layout/subway_info_window"
+                android:visibility="visible"/>
+            <!--지하철 정보창-->
             </LinearLayout>
 
         </com.sothree.slidinguppanel.SlidingUpPanelLayout>

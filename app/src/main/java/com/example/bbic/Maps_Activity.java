@@ -667,7 +667,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     viewPager.setVisibility(View.VISIBLE);
                     indicator.setVisibility(View.VISIBLE);
                     find_way_page.setVisibility(View.GONE);
-                    Log.d("바꿈", "");
+                    pathOverlay.setMap(null);
+//                    Log.d("바꿈", "");
                 }
             }
         });
@@ -685,8 +686,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                ft.detach(find_way_frag);
 //                getSupportFragmentManager().beginTransaction().remove(find_way_frag);
                 position = tab.getPosition();
-                Log.d("============fw_frag  bundle 추가후==========", fw_frag + "");
-                Log.d("============TabPosition==========", position + "");
+//                Log.d("============fw_frag  bundle 추가후==========", fw_frag + "");
+//                Log.d("============TabPosition==========", position + "");
                 bundleFw.putInt("TabPos", position);
                 fw_frag.setArguments(bundleFw);
 
@@ -1183,8 +1184,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     frag_set(fw_frag);
                     meResult = result;
 
-                    Log.d("Position", position + "");
-                    Log.d("=========================================fw_frag=====================================", fw_frag + "");
+//                    Log.d("Position", position + "");
+//                    Log.d("=========================================fw_frag=====================================", fw_frag + "");
                 }
 
             }
@@ -1253,10 +1254,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     public void frag_set(Find_Way_Frag fw_frag) {
         if (meResult == null && result != null) {
-            Log.d("===================fw_frag============", "" + fw_frag);
+//            Log.d("===================fw_frag============", "" + fw_frag);
             getSupportFragmentManager().beginTransaction().add(R.id.view_fw_container, fw_frag).commit();
         } else if (meResult != null || result != meResult && result != null) {
-            Log.d("===================fw_frag============", "" + fw_frag);
+//            Log.d("===================fw_frag============", "" + fw_frag);
             fw_frag = (Find_Way_Frag) getSupportFragmentManager().findFragmentById(R.id.view_fw_container);
 
             ft.detach(fw_frag).commitNowAllowingStateLoss();
@@ -1345,7 +1346,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     public void MapDraw() {
         if (fw_pos_path != null) {
-            Log.d("=================null아니다~!~!!~!~!~======================", "");
+//            Log.d("=================null아니다~!~!!~!~!~======================", "");
 
 
             pathOverlay.setMap(null);

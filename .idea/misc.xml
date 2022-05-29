@@ -3,29 +3,42 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/BBIC/do/app/src/main/res/drawable-v24/beige_radious.xml" value="0.1965" />
         <entry key="..\:/BBIC/do/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.1195" />
+        <entry key="..\:/BBIC/do/app/src/main/res/drawable/ic_baseline_keyboard_arrow_right.xml" value="0.2535" />
+        <entry key="..\:/BBIC/do/app/src/main/res/drawable/ic_baseline_star_24.xml" value="0.1965" />
         <entry key="..\:/BBIC/do/app/src/main/res/drawable/mark_test.xml" value="0.25" />
+        <entry key="..\:/BBIC/do/app/src/main/res/drawable/place_info_sharing.xml" value="0.1965" />
+        <entry key="..\:/BBIC/do/app/src/main/res/drawable/subway_station_background.xml" value="0.1965" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/activity_backup.xml" value="0.12" />
-        <entry key="..\:/BBIC/do/app/src/main/res/layout/activity_main.xml" value="1.1" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/blank.xml" value="0.1" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark.xml" value="0.16927083333333334" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark_place.xml" value="0.16927083333333334" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark_place_abc.xml" value="0.16927083333333334" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark_place_list.xml" value="0.20697463768115942" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark_place_new.xml" value="0.15476699444206926" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark_transit.xml" value="0.16927083333333334" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark_transit_bus.xml" value="0.16927083333333334" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark_transit_bus_list.xml" value="0.1" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark_transit_subway.xml" value="0.15476699444206926" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark_transit_subway_list.xml" value="0.5" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/drawer.xml" value="0.209375" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/find_way_item.xml" value="0.33" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/find_way_list.xml" value="0.2740036231884058" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp.xml" value="0.33" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_add_kakaofriend_item.xml" value="0.15476699444206926" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend.xml" value="0.25" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_add.xml" value="0.1" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_add_list.xml" value="0.1" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_ask.xml" value="0.25" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_list_list.xml" value="0.25" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/place_info_window.xml" value="0.33" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/subway.xml" value="0.15476699444206926" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/subway_info_window.xml" value="0.25" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/view_detail.xml" value="0.25677083333333334" />
-        <entry key="..\:/BBIC/do/app/src/main/res/layout/view_find_way.xml" value="0.5" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/view_division.xml" value="0.15476699444206926" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/view_find_way.xml" value="0.33" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/view_header.xml" value="0.1859375" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/circle.xml" value="0.162" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/circle2.xml" value="0.162" />
