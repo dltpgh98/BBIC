@@ -67,10 +67,9 @@ public class FP_friend extends Fragment {
         bundlelist.putLong("userCode", userCode);
         FragmentTransaction transactionlist =getActivity().getSupportFragmentManager().beginTransaction();
         fp_friend_list.setArguments(bundlelist);
+        fp_friend_ask.setArguments(bundlelist);
         transactionlist.replace(R.id.fp_container, fp_friend_list);
-        transactionlist.commit();//ㅇㅋ
-
-
+        transactionlist.commit();//
 
 
         fab.setOnClickListener(new View.OnClickListener() {
