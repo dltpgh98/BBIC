@@ -242,15 +242,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             break;
                     }
                     break;
-
-                case R.id.main_test_btn:
-                    Log.d("Foreground", "onClick: ");
-                    Intent intent = new Intent(getApplicationContext(), Maps_Activity.class);
-                    intent.setAction("startForeground");
-
-                    onStartForegroundService(view);
-                    startService(intent);
-                    break;
             }
         }
     }
@@ -292,7 +283,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private ConstraintLayout viewDetail, view_Header;
     private LinearLayout find_way_page;
     private boolean viewSwitch;
-
+    private Intent serviceIntent;
     private NaverMap naverMap;
 
     private String allDust, weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city;
@@ -548,6 +539,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
         gpsTracker = new GpsTracker(Maps_Activity.this);
 
@@ -598,8 +591,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         indicator = (WormDotsIndicator)findViewById(R.id.dots_indicator);
         find_way_page = (LinearLayout)findViewById(R.id.view_find_way_lay);
         vFindIbtn = (ImageButton)findViewById(R.id.view_find_way_ibtn);
-        testiBtn = (ImageButton)findViewById(R.id.main_test_btn);
-        testiBtn.setOnClickListener(onClickListener);
         sPosEdit= (EditText)findViewById(R.id.start_pos_et);
         ePosEdit= (EditText)findViewById(R.id.end_pos_et);
 
@@ -749,6 +740,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 return false;
             }
         });
+
+        startService();
 
 // ODSay ====================================================================================================================
 //        ODsayService odsayService = ODsayService.init(getApplicationContext(), "d/F477b1GZGKZgWCv8LynPEERmoxCdE1jSOojHzKNPM");
@@ -1128,13 +1121,16 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
     }
 
-    private void onStartForegroundService(View view) {
-        Intent intent = new Intent(this, Maps_Activity.class);
-        intent.setAction("startForeground");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(intent);
-        } else {
-            startService(intent);
-        }
+    public void startService(){
+        serviceIntent = new Intent(this,ForegroundService.class);
+        startService(serviceIntent);
     }
+
+    public void stopService(){
+        serviceIntent = new Intent(this,ForegroundService.class);
+        stopService(serviceIntent);
+    }
+
+
+
 }
