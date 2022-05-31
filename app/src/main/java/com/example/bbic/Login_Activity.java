@@ -260,22 +260,17 @@ public class Login_Activity extends AppCompatActivity {
                 InputStream inputStream = httpURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                 String temp;
-                System.out.println("=====================================temp 생성후========================================"+bufferedReader.readLine()+"");
+
                 StringBuilder stringBuilder = new StringBuilder();
-                System.out.println("==============================================================================="+bufferedReader.readLine()+"");
-                temp = bufferedReader.readLine();
-                System.out.println("=======================================temp 초기화========================================"+temp);
-                while(temp != null){
-                    System.out.println("==================================bufferedReader============================================="+bufferedReader.readLine());
-                    System.out.println("==================================temp============================================="+temp);
+
+                while((temp = bufferedReader.readLine()) != null){
+
                     stringBuilder.append(temp + "\n");
-                    System.out.println("==============================================================================="+stringBuilder);
+
                 }
-                System.out.println("=================================temp=============================================="+temp);
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
-                Log.d("================================trim()===================",stringBuilder.toString().trim());
                 return stringBuilder.toString().trim();
 
             }catch (Exception e){
