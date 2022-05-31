@@ -273,7 +273,6 @@ public class Odsay extends Maps_Activity {
                             System.out.println("stationClass : " +stationClass + "\n" + "stationName : " + stationName +"\n" + "count" + count);
                         }
 
-
                     }
                 }catch (JSONException e) {
                     //e.printStackTrace();

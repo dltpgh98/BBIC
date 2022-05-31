@@ -31,11 +31,14 @@
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend.xml" value="0.25" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_add.xml" value="0.1" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_add_list.xml" value="0.1" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_add_window.xml" value="0.30055579307396324" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_ask.xml" value="0.25" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_ask_list.xml" value="0.25" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_list_list.xml" value="0.25" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_request_window.xml" value="0.30055579307396324" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/place_info_window.xml" value="0.33" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/subway.xml" value="0.15476699444206926" />
-        <entry key="..\:/BBIC/do/app/src/main/res/layout/subway_info_window.xml" value="0.25" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/subway_info_window.xml" value="0.6560247167868177" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/view_detail.xml" value="0.25677083333333334" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/view_division.xml" value="0.15476699444206926" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/view_find_way.xml" value="0.33" />

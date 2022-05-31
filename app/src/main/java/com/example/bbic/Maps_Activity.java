@@ -446,11 +446,17 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             }
 
                         }
+                        infoWindow.setPosition(coord);
+                        Log.d("===========if coord=================", coord + "");
+                        infoWindow.open(naverMap);
+
+                    }
+                    else{
+                        infoWindow.setPosition(coord);
+                        Log.d("===========coord=================", coord + "");
+                        infoWindow.open(naverMap);
                     }
 
-                    infoWindow.setPosition(coord);
-                    Log.d("===========coord=================", coord + "");
-                    infoWindow.open(naverMap);
 
                 }
             }, 2500);
@@ -1057,6 +1063,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         List<Address> addresses;//주소를 저장할 주소리스트 선언
 
+
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 7);//매개변수로 입력받은 경도위도로 주소 찾기
         } catch (IOException ioException) {//에러시
@@ -1099,24 +1106,24 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         builder.create().show();//생성후 보여주기
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        switch (requestCode) {
-
-            case GPS_ENABLE_REQUEST_CODE:
-                if (checkLocationServiceStatus()) {
-                    if (checkLocationServiceStatus()) {
-                        Log.d("위치권한 확인", "true");
-                        checkRunTimePermission();
-                        return;
-                    }
-                }
-
-                break;
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        switch (requestCode) {
+//
+//            case GPS_ENABLE_REQUEST_CODE:
+//                if (checkLocationServiceStatus()) {
+//                    if (checkLocationServiceStatus()) {
+//                        Log.d("위치권한 확인", "true");
+//                        checkRunTimePermission();
+//                        return;
+//                    }
+//                }
+//
+//                break;
+//        }
+//    }
 
     public boolean checkLocationServiceStatus() {
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -1204,6 +1211,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //        pos[1]=Double.parseDouble(sLongitude);
 //        return pos;
     }
+
 
     private void search_location() {
         if (editText.length() == 0) {
@@ -1423,4 +1431,5 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         super.onResumeFragments();
         Log.d("onResumeFragments()", "");
     }
+
 }
