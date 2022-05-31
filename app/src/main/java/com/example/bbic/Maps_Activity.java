@@ -627,31 +627,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         viewSwitch = false;
 
 //============================================================================================SlidingUpPanel
-        upPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
-            @Override
-            public void onPanelSlide(View panel, float slideOffset) {
-//                Log.d("upPanel 내용 ", "onPanelSlide, offset " + slideOffset);
-            }
-
-            @Override
-            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-                Log.d("upPanel 바뀔때 내용 ", "onPanelStateChanged " + newState);
-                if(newState == (SlidingUpPanelLayout.PanelState.COLLAPSED)&&view_Header.getVisibility()==View.GONE){
-                    view_Header.setVisibility(View.VISIBLE);
-                    if(viewSwitch == false){
-                        viewPager.setVisibility(View.VISIBLE);
-                        viewDetail.setVisibility(View.GONE);
-                        indicator.setVisibility(View.VISIBLE);
-                    }
-                    else {
-                        viewPager.setVisibility(View.GONE);
-                        viewDetail.setVisibility(View.VISIBLE);
-                    }
-                    find_way_page.setVisibility(View.GONE);
-                    Log.d("바꿈","");
-                }
-            }
-        });
 //===================================================================================================
 
         searchIbtn.setOnClickListener(onClickListener); // 검색 버튼 리스너
@@ -742,6 +717,36 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         });
 
         startService();
+
+        upPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View panel, float slideOffset) {
+//                Log.d("upPanel 내용 ", "onPanelSlide, offset " + slideOffset);
+            }
+
+            @Override
+            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+                Log.d("upPanel 바뀔때 내용 ", "onPanelStateChanged " + newState);
+                if(itemAdapter.getEvent()==true)
+                {
+                    itemAdapter.getDialog().cancel();
+                }
+                if(newState == (SlidingUpPanelLayout.PanelState.COLLAPSED)&&view_Header.getVisibility()==View.GONE){
+                    view_Header.setVisibility(View.VISIBLE);
+                    if(viewSwitch == false){
+                        viewPager.setVisibility(View.VISIBLE);
+                        viewDetail.setVisibility(View.GONE);
+                        indicator.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        viewPager.setVisibility(View.GONE);
+                        viewDetail.setVisibility(View.VISIBLE);
+                    }
+                    find_way_page.setVisibility(View.GONE);
+                    Log.d("바꿈","");
+                }
+            }
+        });
 
 // ODSay ====================================================================================================================
 //        ODsayService odsayService = ODsayService.init(getApplicationContext(), "d/F477b1GZGKZgWCv8LynPEERmoxCdE1jSOojHzKNPM");

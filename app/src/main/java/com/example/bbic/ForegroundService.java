@@ -47,7 +47,7 @@ public class ForegroundService extends Service {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"1");
         builder.setSmallIcon(R.mipmap.ic_launcher);
         NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle();
-        style.bigText("BBIC is running");
+        style.bigText(null);
         style.setBigContentTitle(null);
         style.setSummaryText("위치 확인중");
         builder.setContentText(null);
@@ -56,6 +56,8 @@ public class ForegroundService extends Service {
         builder.setStyle(style);
         builder.setWhen(0);
         builder.setShowWhen(false);
+        builder.setSmallIcon(R.drawable.ic_stat_bus_alert);
+        builder.setBadgeIconType(NotificationCompat.BADGE_ICON_NONE);
 
         Intent notificationIntent = new Intent(this,Maps_Activity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,notificationIntent, FLAG_IMMUTABLE);

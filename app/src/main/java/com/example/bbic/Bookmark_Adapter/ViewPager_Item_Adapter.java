@@ -1,12 +1,18 @@
 package com.example.bbic.Bookmark_Adapter;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +29,9 @@ public class ViewPager_Item_Adapter extends RecyclerView.Adapter<ViewPager_Item_
     private final List<Long> friend_code;
     private List<Integer> friend_status;
     private Context context;
+    private AlertDialog.Builder builder;
+    private Dialog dialog;
+    private boolean event;
 
     private final static int pageItemsCount = 8;
     private final static int pageConstant = 1;
@@ -51,11 +60,21 @@ public class ViewPager_Item_Adapter extends RecyclerView.Adapter<ViewPager_Item_
                @Override
                public void onClick(View view) {
                    Log.d("test", " input : ok");
-                   AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                   builder.setTitle("인사말").setMessage("반갑습니다");
-                   AlertDialog alertDialog = builder.create();
+                   builder = new AlertDialog.Builder(context);
+                   dialog = new Dialog(context,R.style.Theme_TransparentBackground);
+                   dialog.setContentView(R.layout.view_detail);
+                   WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
+                   layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+                   layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                   dialog.getWindow().setAttributes((WindowManager.LayoutParams)layoutParams);
+                   dialog.getWindow().setGravity(Gravity.BOTTOM);
+                   dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                   dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                   dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                           WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
 
-                   alertDialog.show();
+                   dialog.show();
+                   event = true;
                }
            });
         }
@@ -66,6 +85,14 @@ public class ViewPager_Item_Adapter extends RecyclerView.Adapter<ViewPager_Item_
         int page = friend_name.size()/pageItemsCount+pageConstant;
         Log.d("itemSize ", "Size : " + page);
         return page;
+    }
+
+    public Dialog getDialog(){
+        return dialog;
+    }
+
+    public boolean getEvent(){
+        return event;
     }
 
     public class PagerHolder extends RecyclerView.ViewHolder {
