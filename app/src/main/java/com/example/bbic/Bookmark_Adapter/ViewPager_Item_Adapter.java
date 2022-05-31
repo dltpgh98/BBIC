@@ -1,9 +1,11 @@
 package com.example.bbic.Bookmark_Adapter;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -13,17 +15,64 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.bbic.Bookmark;
+import com.example.bbic.FP;
+import com.example.bbic.GpsTracker;
+import com.example.bbic.Maps_Activity;
 import com.example.bbic.R;
+import com.example.bbic.Setting_Activity;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.List;
 
 public class ViewPager_Item_Adapter extends RecyclerView.Adapter<ViewPager_Item_Adapter.PagerHolder> {
+
+    class BtnOnClickListener implements View.OnClickListener {
+        @SuppressLint("NonConstantResourceId")
+        @Override
+        public void onClick(View view) {
+            int count;
+            switch (view.getId()) {
+                //case를 통해 id에 따른 클릭이벤트 실행
+                case R.id.view_detail_back_ibtn:
+                    dialog.dismiss();
+                    break;
+
+                case R.id.view_item_ibtn1:
+                    startDialog(0);
+                    break;
+                case R.id.view_item_ibtn2:
+                    startDialog(1);
+                    break;
+                case R.id.view_item_ibtn3:
+                    startDialog(2);
+                    break;
+                case R.id.view_item_ibtn4:
+                    startDialog(3);
+                    break;
+                case R.id.view_item_ibtn5:
+                    startDialog(4);
+                    break;
+                case R.id.view_item_ibtn6:
+                    startDialog(5);
+                    break;
+                case R.id.view_item_ibtn7:
+                    startDialog(6);
+                    break;
+                case R.id.view_item_ibtn8:
+                    startDialog(7);
+                    break;
+            }
+        }
+    }
 
     private final List<String> friend_name, friend_profile;
     private final List<Long> friend_code;
@@ -33,8 +82,11 @@ public class ViewPager_Item_Adapter extends RecyclerView.Adapter<ViewPager_Item_
     private Dialog dialog;
     private boolean event;
 
+    private ImageView detail_thumbnail;
+    private ImageButton detail_back_ibtn, detail_add_ibtn, detail_list_ibtn, detail_location_ibtn, detail_way_ibtn, detail_addFriend_ibtn, detail_cancelFriend_ibtn;
+    private TextView detail_name;
+
     private final static int pageItemsCount = 8;
-    private final static int pageConstant = 1;
 
     public ViewPager_Item_Adapter(Context context, List<String> friend_name, List<String> friend_profile, List<Long> friend_code, List<Integer> friend_status) {
         this.context = context;
@@ -53,36 +105,21 @@ public class ViewPager_Item_Adapter extends RecyclerView.Adapter<ViewPager_Item_
 
     @Override
     public void onBindViewHolder(@NonNull PagerHolder holder, int position) {
+        BtnOnClickListener onClickListener = new BtnOnClickListener();
+
         for(int i = 0; i < friend_name.size(); i++)
         {
-           holder.nameHolder[i].setText(friend_name.get(i));
-           holder.profileHolder[i].setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View view) {
-                   Log.d("test", " input : ok");
-                   builder = new AlertDialog.Builder(context);
-                   dialog = new Dialog(context,R.style.Theme_TransparentBackground);
-                   dialog.setContentView(R.layout.view_detail);
-                   WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
-                   layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-                   layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                   dialog.getWindow().setAttributes((WindowManager.LayoutParams)layoutParams);
-                   dialog.getWindow().setGravity(Gravity.BOTTOM);
-                   dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                   dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-                   dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
-                           WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
-
-                   dialog.show();
-                   event = true;
-               }
-           });
+            Log.d("test", "onBindViewHolder: "+friend_name.get(i)+"("+i+")");
+            Log.d("test", "onBindViewHolder: "+friend_profile.get(i));
+            holder.nameHolder[i].setText(friend_name.get(i));
+            Glide.with(context).load(friend_profile.get(i)).circleCrop().into(holder.profileHolder[i]);
+            holder.profileHolder[i].setOnClickListener(onClickListener);
         }
     }
 
     @Override
     public int getItemCount() {
-        int page = friend_name.size()/pageItemsCount+pageConstant;
+        int page = friend_name.size()/pageItemsCount;
         Log.d("itemSize ", "Size : " + page);
         return page;
     }
@@ -93,6 +130,53 @@ public class ViewPager_Item_Adapter extends RecyclerView.Adapter<ViewPager_Item_
 
     public boolean getEvent(){
         return event;
+    }
+
+    private void startDialog(int index){
+        BtnOnClickListener onClickListener = new BtnOnClickListener();
+
+        builder = new AlertDialog.Builder(context);
+        dialog = new Dialog(context,R.style.Theme_TransparentBackground);
+        dialog.setContentView(R.layout.view_detail);
+        WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes((WindowManager.LayoutParams)layoutParams);
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+
+        detail_thumbnail = dialog.findViewById(R.id.view_detail_thumbnail);
+        Glide.with(context).load(friend_profile.get(index)).circleCrop().into(detail_thumbnail);
+
+        detail_name = dialog.findViewById(R.id.view_detail_name);
+        detail_name.setText(friend_name.get(index));
+
+        detail_back_ibtn = dialog.findViewById(R.id.view_detail_back_ibtn);
+        detail_back_ibtn.setOnClickListener(onClickListener);
+
+        detail_add_ibtn = dialog.findViewById(R.id.view_detail_add_ibtn);
+        detail_add_ibtn.setOnClickListener(onClickListener);
+
+        detail_list_ibtn = dialog.findViewById(R.id.view_detail_list_ibtn);
+        detail_list_ibtn.setOnClickListener(onClickListener);
+
+        detail_location_ibtn = dialog.findViewById(R.id.view_detail_location_ibtn);
+        detail_location_ibtn.setOnClickListener(onClickListener);
+
+        detail_way_ibtn = dialog.findViewById(R.id.view_detail_way_ibtn);
+        detail_way_ibtn.setOnClickListener(onClickListener);
+
+        detail_addFriend_ibtn = dialog.findViewById(R.id.view_detail_add_friend_ibtn);
+        detail_addFriend_ibtn.setOnClickListener(onClickListener);
+
+        detail_cancelFriend_ibtn = dialog.findViewById(R.id.view_detail_cancel_friend_ibtn);
+        detail_cancelFriend_ibtn.setOnClickListener(onClickListener);
+
+        dialog.show();
+        event = true;
     }
 
     public class PagerHolder extends RecyclerView.ViewHolder {

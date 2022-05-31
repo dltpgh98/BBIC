@@ -661,7 +661,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         t1.add("이세호");
         t1.add("도성대");
         t1.add("김동훈");
-
+        t1.add("이세호");
 
         t2.add(address);
         t2.add(address);
@@ -729,7 +729,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 Log.d("upPanel 바뀔때 내용 ", "onPanelStateChanged " + newState);
                 if(itemAdapter.getEvent()==true)
                 {
-                    itemAdapter.getDialog().cancel();
+                    itemAdapter.getDialog().dismiss();
                 }
                 if(newState == (SlidingUpPanelLayout.PanelState.COLLAPSED)&&view_Header.getVisibility()==View.GONE){
                     view_Header.setVisibility(View.VISIBLE);
