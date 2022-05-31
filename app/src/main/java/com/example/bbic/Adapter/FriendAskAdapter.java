@@ -1,18 +1,14 @@
 package com.example.bbic.Adapter;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Color;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -22,9 +18,7 @@ import com.example.bbic.DB.AcceptFriendRequest;
 import com.example.bbic.DB.deleteAskFriendRequest;
 import com.example.bbic.Data.Friend;
 import com.example.bbic.FP.FP_friend_ask;
-import com.example.bbic.FP.FP_friend_list;
 import com.example.bbic.R;
-import com.example.bbic.ViewpagerAdapter;
 
 import org.json.JSONObject;
 

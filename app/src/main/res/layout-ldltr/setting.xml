@@ -47,125 +47,12 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/setting_menu_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/setting_header">
-
-            <TextView
-               android:layout_width="match_parent"
-               android:layout_height="50sp"
-               android:background="@drawable/header_stroke"
-               android:fontFamily="@font/fontstyle"
-               android:paddingStart="20sp"
-               android:paddingTop="12sp"
-               android:text="자동 새로고침 간격"
-               android:textAlignment="viewStart"
-               android:textSize="20sp"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-           <TextView
-               android:layout_width="80dp"
-               android:layout_height="50dp"
-               android:background="@drawable/header_stroke"
-               android:fontFamily="@font/fontstyle"
-               android:paddingTop="12sp"
-               android:layout_marginEnd="40sp"
-               android:text="30초"
-               android:textAlignment="viewEnd"
-               android:textSize="20sp"
-               app:layout_constraintTop_toTopOf="parent"
-               app:layout_constraintRight_toRightOf="parent"/>
-
-           <ImageButton
-               android:id="@+id/setting_button_1"
-               android:layout_width="30dp"
-               android:layout_height="50dp"
-               android:src="@drawable/ic_baseline_keyboard_arrow_right"
-               android:background="@color/transparent"
-               android:layout_marginEnd="10sp"
-               android:contentDescription="TODO"
-               app:layout_constraintTop_toTopOf="parent"
-               app:layout_constraintRight_toRightOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/setting_menu_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/setting_menu_1">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50sp"
-                android:background="@drawable/header_stroke"
-                android:fontFamily="@font/fontstyle"
-                android:paddingStart="20sp"
-                android:paddingTop="12sp"
-                android:text="계정정보"
-                android:textAlignment="viewStart"
-                android:textSize="20sp"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="50dp"
-                android:background="@drawable/header_stroke"
-                android:fontFamily="@font/fontstyle"
-                android:paddingTop="12sp"
-                android:layout_marginEnd="40sp"
-                android:text="김동훈"
-                android:textAlignment="viewEnd"
-                android:textSize="20sp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintRight_toRightOf="parent"/>
-
-            <ImageButton
-                android:id="@+id/setting_button_2"
-                android:layout_width="30dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_baseline_keyboard_arrow_right"
-                android:background="@color/transparent"
-                android:layout_marginEnd="10sp"
-                android:contentDescription="TODO"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintRight_toRightOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/setting_margin_1"
-            android:layout_width="match_parent"
-            android:layout_height="10sp"
-            android:background="#CCCCCC"
-            android:fontFamily="@font/fontstyle"
-            android:paddingStart="20sp"
-            android:paddingTop="12sp"
-            android:text=""
-            android:textColor="#AAAAAA"
-            android:textAlignment="viewStart"
-            android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@id/setting_menu_2"/>
-
-        <TextView
-            android:id="@+id/setting_sub_1"
-            android:layout_width="match_parent"
-            android:layout_height="35sp"
-            android:background="@drawable/header_stroke"
-            android:fontFamily="@font/fontstyle"
-            android:paddingStart="20sp"
-            android:paddingTop="12sp"
-            android:text="약관 및 정책"
-            android:textColor="#AAAAAA"
-            android:textAlignment="viewStart"
-            android:textSize="15sp"
-            app:layout_constraintTop_toBottomOf="@id/setting_margin_1"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/setting_menu_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/setting_sub_1">
+            app:layout_constraintTop_toBottomOf="@id/setting_header">
 
             <TextView
                 android:layout_width="match_parent"

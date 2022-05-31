@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +47,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.bbic.Adapter.ViewPager_Item_Adapter;
 import com.example.bbic.Bookmark.Bookmark;
 import com.example.bbic.DB.UpdatePosRequest;
 import com.example.bbic.FP.FP;
@@ -142,6 +144,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     drawerLayout.closeDrawer(drawerView);
                     break;
                 case R.id.drawer_menu_2:
+
                     break;
                 case R.id.drawer_menu_3:
                     Intent intent3 = new Intent(getApplicationContext(), Bookmark.class);
@@ -180,9 +183,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     intent5.putExtra("날씨", weather);
                     intent5.putExtra("도", area);
                     intent5.putExtra("시", city);
-                    intent5.putExtra("코로나",covidNum);
+                    intent5.putExtra("코로나", covidNum);
                     intent5.putExtra("friendlist", friendlist);
-                    Log.d("friendlist 과연?",friendlist);
+                    Log.d("friendlist 과연?", friendlist);
                     startActivity(intent5);
 //                    finish();
                     break;
@@ -206,9 +209,18 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     search_location();
                     break;
                 case R.id.main_find_way_ibtn:
+                    if (viewPager.getVisibility() == View.VISIBLE) {
+                        viewSwitch = false;
+                        viewPager.setVisibility(View.GONE);
+                    }
+//                    else if (viewDetail.getVisibility() == View.VISIBLE) {
+//                        viewSwitch = true;
+//                        viewDetail.setVisibility(View.GONE);
+//                    }
+
 
                     view_Header.setVisibility(View.GONE);
-                    viewPager.setVisibility(View.GONE);
+
                     indicator.setVisibility(View.GONE);
                     find_way_page.setVisibility(View.VISIBLE);
 
@@ -273,7 +285,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
     private View drawerView;
-    private ImageButton menuIbtn, searchIbtn, findWayIbtn, vFindIbtn, vEditChangeFindIbtn;
+    private ImageButton menuIbtn, searchIbtn, findWayIbtn, vFindIbtn, vEditChangeFindIbtn, testiBtn;
     private TextView
             temText, fineText, ultraText, covidText, nickName, areaText;
     private ImageView weatherImage, profile;
@@ -310,8 +322,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     private ViewPager2 viewPager;
     private WormDotsIndicator indicator;
-    private ConstraintLayout view_userpage, view_Header, find_way_page;
-
+    private ConstraintLayout view_Header,find_way_page;
+    private boolean viewSwitch;
+    private Intent serviceIntent;
     private NaverMap naverMap;
 
     private String allDust, weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, friendlist;
@@ -459,8 +472,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         Log.d("===========if coord=================", coord + "");
                         infoWindow.open(naverMap);
 
-                    }
-                    else{
+                    } else {
                         infoWindow.setPosition(coord);
                         Log.d("===========coord=================", coord + "");
                         infoWindow.open(naverMap);
@@ -622,8 +634,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     } else {
                         System.out.println("업데이트 실패");
                     }
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -635,7 +646,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             public void run() {
 
                 UpdatePosRequest updatePosRequest = new UpdatePosRequest(k_code, gpsTracker.getLongitude(), gpsTracker.getLatitude(), responseListenerPos);
-                RequestQueue queuePos = Volley.newRequestQueue( Maps_Activity.this );
+                RequestQueue queuePos = Volley.newRequestQueue(Maps_Activity.this);
                 queuePos.add(updatePosRequest);
             }
         };
@@ -713,7 +724,121 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         keyboardmanager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
+        viewSwitch = false;
+
 //============================================================================================SlidingUpPanel
+//        upPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+//            @Override
+//            public void onPanelSlide(View panel, float slideOffset) {
+////                Log.d("upPanel 내용 ", "onPanelSlide, offset " + slideOffset);
+//            }
+//
+//            @Override
+//            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+//                Log.d("upPanel 바뀔때 내용 ", "onPanelStateChanged " + newState);
+//                if (newState == (SlidingUpPanelLayout.PanelState.COLLAPSED) && view_Header.getVisibility() == View.GONE) {
+//                    view_Header.setVisibility(View.VISIBLE);
+//                    viewPager.setVisibility(View.VISIBLE);
+//                    indicator.setVisibility(View.VISIBLE);
+//                    find_way_page.setVisibility(View.GONE);
+//                    pathOverlay.setMap(null);
+////                    Log.d("바꿈", "");
+//                }
+//            }
+//        });
+
+        searchIbtn.setOnClickListener(onClickListener); // 검색 버튼 리스너
+        findWayIbtn.setOnClickListener(onClickListener);
+        vFindIbtn.setOnClickListener(onClickListener);
+        vEditChangeFindIbtn.setOnClickListener(onClickListener);
+
+        Intent intent = getIntent();
+        name = intent.getStringExtra("닉네임");
+        address = intent.getStringExtra("프로필");
+        k_code = intent.getLongExtra("코드", 0);
+        nickName.setText(name); // 카카오톡 프로필 닉네임
+        Glide.with(this).load(address).circleCrop().into(profile); // 카카오톡 프로필 이미지
+
+
+        friendlist = intent.getStringExtra("friendlist"); //친구 목록
+
+
+        if (!checkLocationServiceStatus()) {
+            showDialogForLocationServiceSetting();
+        } else {
+            checkRunTimePermission();
+        }
+
+        headerName.setText(name);
+//      headerCode.setText();
+        Glide.with(this).load(address).circleCrop().into(headerProfile);
+
+        List<String> t1 = new ArrayList<>();
+        List<String> t2 = new ArrayList<>();
+        List<Long> t3 = new ArrayList<>();
+        List<Integer> t4 = new ArrayList<>();
+
+        t1.add("김동훈");
+        t1.add("이세호");
+        t1.add("도성대");
+        t1.add("김동훈");
+        t1.add("이세호");
+        t1.add("도성대");
+        t1.add("김동훈");
+        t1.add("이세호");
+
+        t2.add(address);
+        t2.add(address);
+        t2.add(address);
+        t2.add(address);
+        t2.add(address);
+        t2.add(address);
+        t2.add(address);
+        t2.add(address);
+
+        t3.add(1L);
+        t3.add(2L);
+        t3.add(3L);
+        t3.add(1L);
+        t3.add(2L);
+        t3.add(3L);
+        t3.add(1L);
+        t3.add(2L);
+
+        t4.add(1);
+        t4.add(0);
+        t4.add(2);
+        t4.add(1);
+        t4.add(0);
+        t4.add(2);
+        t4.add(1);
+        t4.add(0);
+
+
+
+        //뷰페이저 설정
+        viewPager = findViewById(R.id.view_pager);
+        ViewPager_Item_Adapter itemAdapter = new ViewPager_Item_Adapter(this, t1, t2, t3, t4);
+        viewPager.setAdapter(itemAdapter);
+
+        viewPager.setOnClickListener(onClickListener);
+
+        indicator = (WormDotsIndicator) findViewById(R.id.dots_indicator);
+        indicator.setViewPager2(viewPager);
+
+
+        editText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                switch (i) {
+                    case KeyEvent.KEYCODE_ENTER:
+                        search_location();
+                        break;
+                }
+                editText.requestFocus();
+                return false;
+            }
+        });
         upPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
@@ -723,16 +848,31 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
                 Log.d("upPanel 바뀔때 내용 ", "onPanelStateChanged " + newState);
-                if (newState == (SlidingUpPanelLayout.PanelState.COLLAPSED) && view_Header.getVisibility() == View.GONE) {
+                if(itemAdapter.getEvent()==true)
+                {
+                    itemAdapter.getDialog().cancel();
+                }
+                if(newState == (SlidingUpPanelLayout.PanelState.COLLAPSED)&&view_Header.getVisibility()==View.GONE){
                     view_Header.setVisibility(View.VISIBLE);
-                    viewPager.setVisibility(View.VISIBLE);
-                    indicator.setVisibility(View.VISIBLE);
+                    if(viewSwitch == false){
+                        viewPager.setVisibility(View.VISIBLE);
+//                        viewDetail.setVisibility(View.GONE);
+                        indicator.setVisibility(View.VISIBLE);
+                        pathOverlay.setMap(null);
+                    }
+                    else {
+                        viewPager.setVisibility(View.GONE);
+//                        viewDetail.setVisibility(View.VISIBLE);
+                    }
                     find_way_page.setVisibility(View.GONE);
-                    pathOverlay.setMap(null);
-//                    Log.d("바꿈", "");
+                    Log.d("바꿈","");
                 }
             }
         });
+
+//        startService();
+
+
 
 //===================================================================================================
 
@@ -787,56 +927,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
 
 //===================================================================================================
-
-        searchIbtn.setOnClickListener(onClickListener); // 검색 버튼 리스너
-        findWayIbtn.setOnClickListener(onClickListener);
-        vFindIbtn.setOnClickListener(onClickListener);
-        vEditChangeFindIbtn.setOnClickListener(onClickListener);
-
-        Intent intent = getIntent();
-        name = intent.getStringExtra("닉네임");
-        address = intent.getStringExtra("프로필");
-        nickName.setText(name); // 카카오톡 프로필 닉네임
-        Glide.with(this).load(address).circleCrop().into(profile); // 카카오톡 프로필 이미지
-
-
-        friendlist = intent.getStringExtra("friendlist"); //친구 목록
-
-
-        if (!checkLocationServiceStatus()) {
-            showDialogForLocationServiceSetting();
-        } else {
-            checkRunTimePermission();
-        }
-
-        headerName.setText(name);
-        Glide.with(this).load(address).circleCrop().into(headerProfile);
-
-
-        //뷰페이저 설정
-        viewPager = findViewById(R.id.view_pager);
-        ViewpagerAdapter pagerAdapter = new ViewpagerAdapter(setTextList());
-        viewPager.setAdapter(pagerAdapter);
-
-        viewPager.setOnClickListener(onClickListener);
-
-        indicator = (WormDotsIndicator) findViewById(R.id.dots_indicator);
-        indicator.setViewPager2(viewPager);
-
-        final ImageButton ibtn = (ImageButton) viewPager.findViewById(R.id.view_item_ibtn1);
-
-        editText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                switch (i) {
-                    case KeyEvent.KEYCODE_ENTER:
-                        search_location();
-                        break;
-                }
-                editText.requestFocus();
-                return false;
-            }
-        });
 
 
 //                    fw_frag = (Find_Way_Frag) getSupportFragmentManager().findFragmentById(R.id.view_fw_container);// 리스트 프래그먼트 위치
@@ -1199,27 +1289,29 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         String eLongitude = "";
         String reNameStartEditTxt = sEtPosName.replace(" ", "_");
         String reNameEndEditTxt = eEtPosName.replace(" ", "_");
-
+        Log.d("test=================NameToPos======================",sEtPosName+"================"+eEtPosName);
         try {
             sAddressList = geocoder.getFromLocationName(reNameStartEditTxt, 10);
             eAddressList = geocoder.getFromLocationName(reNameEndEditTxt, 10);
+            Log.d("test=================NameToPos======================",geocoder.getFromLocationName(reNameStartEditTxt, 10)+"================"+eAddressList);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         String[] sSplitStr = sAddressList.get(0).toString().split(",");
         String[] eSplitStr = eAddressList.get(0).toString().split(",");
-
+        Log.d("=================split======================",sSplitStr+"================"+eSplitStr);
 //            String sAddress = splitStr[0].substring(splitStr[0].indexOf("\"") + 1,splitStr[0].length() - 2); //주소
 
         sLatitude = sSplitStr[10].substring(sSplitStr[10].indexOf("=") + 1);
         sLongitude = sSplitStr[12].substring(sSplitStr[12].indexOf("=") + 1);
-
+        Log.d("=================sLongit======================",sLatitude+"================"+sLongitude);
         eLatitude = eSplitStr[10].substring(eSplitStr[10].indexOf("=") + 1);
         eLongitude = eSplitStr[12].substring(eSplitStr[12].indexOf("=") + 1);
-
+        Log.d("=================eLongit======================",eLatitude+"================"+eLongitude);
         sLatLngPos = new LatLng(Double.valueOf(sLatitude), Double.valueOf(sLongitude));
         eLatLngPos = new LatLng(Double.valueOf(eLatitude), Double.valueOf(eLongitude));
+        Log.d("Lati=================Long======================",sLatLngPos+"================"+eLatLngPos);
 
         odsayService.requestSearchPubTransPath(sLongitude, sLatitude, eLongitude, eLatitude, "0", "0", "0", mapFindWay.Find_way);
         Handler handler = new Handler();
@@ -1446,6 +1538,16 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
 
         }
+    }
+
+    public void startService(){
+        serviceIntent = new Intent(this,ForegroundService.class);
+        startService(serviceIntent);
+    }
+
+    public void stopService(){
+        serviceIntent = new Intent(this,ForegroundService.class);
+        stopService(serviceIntent);
     }
 
     @Override
