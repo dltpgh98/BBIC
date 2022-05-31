@@ -342,8 +342,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             Map_Find_way mapFind_way =new Map_Find_way();
 
 
-            odsayService.requestSearchPubTransPath("126.8881529057685","37.49185398304374",x,y,"0","0","0", mapFind_way.Find_way);
-            odsayService.requestLoadLane("0:0@1673:1:25:27@2:2:233:239",mapFind_way.LoadLane);
+//            odsayService.requestSearchPubTransPath("126.8881529057685","37.49185398304374",x,y,"0","0","0", mapFind_way.Find_way);
+//            odsayService.requestLoadLane("0:0@1673:1:25:27@2:2:233:239",mapFind_way.LoadLane);
 
 
             Log.d("위치 좌표 Y",String.valueOf(infoWindow.getPosition().latitude));
@@ -375,10 +375,14 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                  }
 
                             }
+                            infoWindow.setPosition(coord);
+                            infoWindow.open(naverMap);
+                        }else{
+                            infoWindow.setPosition(coord);
+                            infoWindow.open(naverMap);
                         }
 
-                        infoWindow.setPosition(coord);
-                        infoWindow.open(naverMap);
+
 
                     }
                 },2500);

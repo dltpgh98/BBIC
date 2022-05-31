@@ -2,6 +2,7 @@ package com.example.bbic;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,6 +30,11 @@ import com.kakao.sdk.talk.model.FriendsContext;
 
 import org.w3c.dom.Document;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,6 +45,7 @@ public class FP_friend extends Fragment {
     FloatingActionButton fab;
     Bundle bundlelist;
     Bundle bundleask;
+    long userCode = 0;
 
     @Nullable
     @Override
@@ -53,97 +60,55 @@ public class FP_friend extends Fragment {
         fab = rootView.findViewById(R.id.fb_fab_btn);
 
         String friendlist = "";
-        long userCode = 0;
 
-        if(getArguments() != null){
-            friendlist = getArguments().getString("friendlist");
+        if (getArguments() != null) {
+            //friendlist = getArguments().getString("friendlist");
             userCode = getArguments().getLong("userCode");
-            System.out.println("FP_friend에서 받은 friendllist 확인 : " + friendlist);
-            System.out.println("프렌드에서 유저의 카카오코드 확인" + userCode);
+            //System.out.println("FP_friend에서 받은 friendllist 확인 : " + friendlist);
+            //System.out.println("프렌드에서 유저의 카카오코드 확인" + userCode);
         }//여기까지도 잘됨
 
-        bundlelist = new Bundle();
-        bundlelist.putString("friendlist", friendlist);
-        bundlelist.putLong("userCode", userCode);
-        FragmentTransaction transactionlist =getActivity().getSupportFragmentManager().beginTransaction();
-        fp_friend_list.setArguments(bundlelist);
-        fp_friend_ask.setArguments(bundlelist);
-        transactionlist.replace(R.id.fp_container, fp_friend_list);
-        transactionlist.commit();//
 
+        new BackgroundTask().execute();
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 test test = new test();
                 test.test1();
-
-
 //                test.getArray();
 //
 //                System.out.println("가져온 카카오톡 친구목록" + Arrays.toString(test.getArray()));
 
                 new Thread() {
-                @Override
-                public void run() {
-                    Document doc;
-                    try {
-                        Thread.sleep(2000);
-                        test.getArray();
-                        System.out.println("가져온 카카오톡 친구목록" + Arrays.toString(test.getArray()));
-                        System.out.println("가져온 카카오톡 친구목록" + test.getArray()[0].friend_id);
+                    @Override
+                    public void run() {
+                        Document doc;
+                        try {
+                            Thread.sleep(2000);
+                            test.getArray();
+                            System.out.println("가져온 카카오톡 친구목록" + Arrays.toString(test.getArray()));
+                            System.out.println("가져온 카카오톡 친구목록" + test.getArray()[0].getFriend_id());
 
                         } catch (Exception exception) {
-                        exception.printStackTrace();
+                            exception.printStackTrace();
+                        }
+
                     }
+                }.start();
 
-                }
-            }.start();
-
-
-//                RequestQueue queue = Volley.newRequestQueue(rootView.getContext());
-//                String url = "https://kapi.kakao.com/v1/api/talk/friends";
-//                StringRequest getRequest = new StringRequest(Request.Method.GET, url,
-//                        new Response.Listener<String>() {
-//                            @Override
-//                            public void onResponse(String response) {
-//                                // response
-//                                Log.d("Response", response);
-//                            }
-//                        },
-//                        new Response.ErrorListener() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//                                // TODO Auto-generated method stub
-//                                Log.d("ERROR", "error => " + error.toString());
-//                            }
-//                        }
-//                ) {
-//                    @Override
-//                    publ
-//                    ic String getBodyContentType() {
-//                        return "application/json; charset=utf-8";
-//                    }
-//                    @Override
-//                    public Map<String, String> getHeaders() throws AuthFailureError {
-//                        Map<String, String> params = new HashMap<String, String>();
-//                        params.put("Authorization","Bearer " + "fed0a3b742a6c362284f565bbe4eb6c2");
-//                        //params.put("Accept-Language", "fr");
-//
-//                        return params;
-//                    }
-//                };
-//                queue.add(getRequest);
             }
         });
 
 
-        getChildFragmentManager().beginTransaction().replace(R.id.fp_container, fp_friend_list).commit();
+        //getChildFragmentManager().beginTransaction().replace(R.id.fp_container, fp_friend_list).commit();
 
         Button btn = rootView.findViewById(R.id.fp_leftTab_btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                ft.detach(getParentFragment()).attach(getParentFragment()).commit();
                 getChildFragmentManager().beginTransaction().replace(R.id.fp_container, fp_friend_list).commit();
             }
         });
@@ -159,4 +124,76 @@ public class FP_friend extends Fragment {
 
         return rootView;
     }
+
+    class BackgroundTask extends AsyncTask<Void, Void, String> {
+        String target;
+
+        @Override
+        protected void onPreExecute() {
+            target = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/friendlist.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+                URL url = new URL(target);
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String temp;
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((temp = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(temp + "\n");
+                }
+
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            System.out.println("파싱 부분 : " + result);
+            bundlelist = new Bundle();
+            bundlelist.putString("friendlist", result);
+            bundlelist.putLong("userCode", userCode);
+            FragmentTransaction transactionlist = getActivity().getSupportFragmentManager().beginTransaction();
+            fp_friend_list.setArguments(bundlelist);
+            fp_friend_ask.setArguments(bundlelist);
+            transactionlist.replace(R.id.fp_container, fp_friend_list);
+            transactionlist.commit();//
+        }
+
+        @Override
+        protected void onCancelled(String s) {
+            super.onCancelled(s);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+
+    }
+
 }

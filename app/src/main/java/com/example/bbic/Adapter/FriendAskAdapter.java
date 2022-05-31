@@ -1,7 +1,9 @@
 package com.example.bbic.Adapter;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Color;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -22,6 +25,7 @@ import com.example.bbic.Data.Friend;
 import com.example.bbic.FP_friend_ask;
 import com.example.bbic.FP_friend_list;
 import com.example.bbic.R;
+import com.example.bbic.ViewpagerAdapter;
 
 import org.json.JSONObject;
 
@@ -62,11 +66,6 @@ public class FriendAskAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-//        if (view == null) {
-//            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            view = inflater.inflate(R.layout.fp_friend_list_list, viewGroup, false);
-//        }
-
         View v = View.inflate(context, R.layout.fp_friend_ask_list, null);
 
         ImageView profile = (ImageView) v.findViewById(R.id.ask_profile_iv);
@@ -87,6 +86,7 @@ public class FriendAskAdapter extends BaseAdapter {
         if (status == 2) {
             friendstatus.setBackgroundColor(Color.BLUE);
         }
+
         ImageButton deletebutton = (ImageButton)v.findViewById(R.id.ask_delete_iv);
         deletebutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,7 +125,8 @@ public class FriendAskAdapter extends BaseAdapter {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
-
+                            friends.remove(i);
+                            notifyDataSetChanged();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -135,12 +136,11 @@ public class FriendAskAdapter extends BaseAdapter {
                 AcceptFriendRequest acceptFriendRequest = new AcceptFriendRequest(friends.get(i).getUserKakapCode(), friends.get(i).getFriendKakaoCode(), responseListener);
                 RequestQueue queue = Volley.newRequestQueue(view.getContext());
                 queue.add(acceptFriendRequest);
-                friends.remove(i);
-                notifyDataSetChanged();
+
             }
         });
 
-        v.setTag(friends.get(i).getUserKakapCode());
+        //v.setTag(friends.get(i).getUserKakapCode());
         return v;
     }
 }
