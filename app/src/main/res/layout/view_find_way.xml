@@ -106,7 +106,7 @@
         android:id="@+id/view_fw_container"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:name="com.example.bbic.Find_Way_Frag"
+        android:name="com.example.bbic.FindWay.Find_Way_Frag"
         app:layout_constraintTop_toBottomOf="@id/view_transport_table"/>
 
 

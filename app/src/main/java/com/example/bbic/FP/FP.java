@@ -1,4 +1,4 @@
-package com.example.bbic;
+package com.example.bbic.FP;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,10 +15,31 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.bbic.Bookmark.Bookmark;
-import com.example.bbic.FP.FP;
+import com.example.bbic.Maps_Activity;
+import com.example.bbic.R;
+import com.example.bbic.Setting_Activity;
+import com.google.android.material.tabs.TabLayout;
 
-public class Setting_Activity extends AppCompatActivity {
+import java.util.ArrayList;
 
+public class FP extends AppCompatActivity {
+    TabLayout tabRoot;
+    FP_friend fp_friend;
+    FP_promise fp_promise;
+    Bundle bundle;
+
+    //참조를 위한 각 객체 생성
+    private DrawerLayout drawerLayout;
+    private View drawerView;
+    private ImageButton menuIbtn, homeIbtn;
+    private TextView
+            temText, fineText, ultraText, covidText, nickName, areaText;
+    private ImageView weatherImage, profile;
+
+    private Button[] drawerMenu = new Button[6];
+
+    private String weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, friendlist;
+    private long userCode;
     //버튼 클릭 리스너 클래스
     class BtnOnClickListener implements View.OnClickListener{
         @Override
@@ -29,7 +50,6 @@ public class Setting_Activity extends AppCompatActivity {
                     drawerLayout.openDrawer(drawerView);
                     break;
                 case R.id.drawer_menu_1:
-                    Log.d("클릭", "onClick: ");
                     Intent intent1 = new Intent(getApplicationContext(), Maps_Activity.class);
                     intent1.putExtra("닉네임", name);
                     intent1.putExtra("프로필", address);
@@ -46,7 +66,6 @@ public class Setting_Activity extends AppCompatActivity {
                 case R.id.drawer_menu_2:
                     break;
                 case R.id.drawer_menu_3:
-                    System.out.println("click");
                     Intent intent3 = new Intent(getApplicationContext(), Bookmark.class);
                     intent3.putExtra("닉네임", name);
                     intent3.putExtra("프로필", address);
@@ -63,54 +82,100 @@ public class Setting_Activity extends AppCompatActivity {
                 case R.id.drawer_menu_4:
                     break;
                 case R.id.drawer_menu_5:
-                    Intent intent5 = new Intent(getApplicationContext(), FP.class);
-                    intent5.putExtra("닉네임", name);
-                    intent5.putExtra("프로필", address);
-                    intent5.putExtra("미세먼지", fineDust);
-                    intent5.putExtra("초미세먼지", ultraFineDust);
-                    intent5.putExtra("온도", tem);
-                    intent5.putExtra("날씨", weather);
-                    intent5.putExtra("도", area);
-                    intent5.putExtra("시", city);
-                    intent5.putExtra("코로나",covidNum);
-                    startActivity(intent5);
-                    finish();
-                    break;
-                case R.id.drawer_menu_6:
                     drawerLayout.closeDrawer(drawerView);
                     break;
-
+                case R.id.drawer_menu_6:
+                    Intent intent6 = new Intent(getApplicationContext(), Setting_Activity.class);
+                    intent6.putExtra("닉네임", name);
+                    intent6.putExtra("프로필", address);
+                    intent6.putExtra("미세먼지", fineDust);
+                    intent6.putExtra("초미세먼지", ultraFineDust);
+                    intent6.putExtra("온도", tem);
+                    intent6.putExtra("날씨", weather);
+                    intent6.putExtra("도", area);
+                    intent6.putExtra("시", city);
+                    intent6.putExtra("코로나",covidNum);
+                    startActivity(intent6);
+                    finish();
+                    break;
+                case R.id.home_btn:
+                    Intent home = new Intent(getApplicationContext(), Maps_Activity.class);
+                    home.putExtra("닉네임", name);
+                    home.putExtra("프로필", address);
+                    home.putExtra("미세먼지", fineDust);
+                    home.putExtra("초미세먼지", ultraFineDust);
+                    home.putExtra("온도", tem);
+                    home.putExtra("날씨", weather);
+                    home.putExtra("도", area);
+                    home.putExtra("시", city);
+                    home.putExtra("코로나",covidNum);
+                    startActivity(home);
+                    finish();
+                    break;
             }
         }
     }
 
-    //참조를 위한 각 객체 생성
-    private DrawerLayout drawerLayout;
-    private View drawerView;
-    private ImageButton menuIbtn, searchIbtn;
-    private TextView
-            temText, fineText, ultraText, covidText, nickName, areaText;
-    private ImageView weatherImage, profile;
-
-    private Button[] drawerMenu = new Button[6];
-
-
-
-    private final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=경기도부천시날씨"; //웹크롤링 할 주소(1)
-    private final String covidURL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=코로나19"; //웹크롤링 할 주소(2)
-    private String weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.setting);
+        setContentView(R.layout.fp);
 
+        fp_promise = new FP_promise();
+        fp_friend = new FP_friend();
+
+        tabRoot = findViewById(R.id.fp_tab_root);
+        tabRoot.removeAllTabs();
+        tabRoot.addTab(tabRoot.newTab().setText("친구"));
+        tabRoot.addTab(tabRoot.newTab().setText("약속"));
+
+
+        tabRoot.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch(tab.getPosition())
+                {
+                    case 0:
+                        bundle = new Bundle();
+                        bundle.putString("friendlist",friendlist);
+                        bundle.putLong("userCode", userCode);
+                        System.out.println("fp에서 유저코드 확인" + userCode);
+                        System.out.println("친구 목록확인 " + friendlist);
+                        fp_friend.setArguments(bundle);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_friend).commit();
+                        break;
+                    case 1:
+                        bundle = new Bundle();
+                        bundle.putString("friendlist",friendlist);
+                        bundle.putLong("userCode", userCode);
+                        System.out.println("fp에서 유저코드 확인" + userCode);
+                        System.out.println("친구 목록확인 " + friendlist);
+                        fp_friend.setArguments(bundle);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_promise).commit();
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        //버튼 클릭 리스너 클래스 객체 생성(클릭 이벤트를 위함)
         BtnOnClickListener onClickListener = new BtnOnClickListener();
+
 
         //각 객체의 참조값을 넣어줌
         drawerLayout = (DrawerLayout) findViewById(R.id.main_activity);
         drawerView = (View) findViewById(R.id.drawer_main);
         menuIbtn = (ImageButton) findViewById(R.id.menu_ibtn);
+        homeIbtn = (ImageButton) findViewById(R.id.home_btn); // 홈화면(지도)
         temText = (TextView) findViewById(R.id.drawer_tem_text);
         fineText = (TextView) findViewById(R.id.drawer_fine_text);
         ultraText = (TextView) findViewById(R.id.drawer_ultra_text);
@@ -132,6 +197,7 @@ public class Setting_Activity extends AppCompatActivity {
 
         //버튼의 클릭 리스너 설정
         menuIbtn.setOnClickListener(onClickListener);
+        homeIbtn.setOnClickListener(onClickListener);
         drawerMenu[0].setOnClickListener(onClickListener);
         drawerMenu[1].setOnClickListener(onClickListener);
         drawerMenu[2].setOnClickListener(onClickListener);
@@ -140,6 +206,7 @@ public class Setting_Activity extends AppCompatActivity {
         drawerMenu[5].setOnClickListener(onClickListener);
 
         Intent intent = getIntent();
+        userCode = intent.getLongExtra("코드",0);
         name = intent.getStringExtra("닉네임");
         address = intent.getStringExtra("프로필");
         area = intent.getStringExtra("도");
@@ -149,10 +216,21 @@ public class Setting_Activity extends AppCompatActivity {
         fineDust = intent.getStringExtra("미세먼지");
         ultraFineDust = intent.getStringExtra("초미세먼지");
         covidNum = intent.getStringExtra("코로나");
+        friendlist = intent.getStringExtra("friendlist");
         drawer_input();
 
         nickName.setText(name); // 카카오톡 프로필 닉네임
         Glide.with(this).load(address).circleCrop().into(profile); // 카카오톡 프로필 이미지
+
+
+
+        bundle = new Bundle();
+        bundle.putString("friendlist",friendlist);
+        bundle.putLong("userCode", userCode);
+        System.out.println("fp에서 유저코드 확인" + userCode);
+        System.out.println("친구 목록확인 " + friendlist);
+        fp_friend.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().add(R.id.fp_tab_container, fp_friend).commit();//여긴 잘됨
     }
 
     private void drawer_input() {
@@ -215,6 +293,7 @@ public class Setting_Activity extends AppCompatActivity {
                 Log.d("날씨 명", weather);
         }
     }
+
     //드로어 이벤트 리스너
     DrawerLayout.DrawerListener drawerListener = new DrawerLayout.DrawerListener() {
         @Override
@@ -237,4 +316,16 @@ public class Setting_Activity extends AppCompatActivity {
 
         }
     };
+    protected ArrayList setTextList(){
+
+        ArrayList<String> itemList = new ArrayList();
+        itemList.add("Page 1");
+        itemList.add("Page 2");
+        itemList.add("Page 3");
+        itemList.add("Page 4");
+        itemList.add("Page 5");
+
+        return itemList;
+    }
+
 }

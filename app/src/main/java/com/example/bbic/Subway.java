@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bumptech.glide.Glide;
+import com.example.bbic.FP.FP;
 import com.github.chrisbanes.photoview.PhotoView;
 
 import org.jsoup.Jsoup;
@@ -37,7 +38,7 @@ public class Subway extends AppCompatActivity {
     private ImageView weatherImage, profile;
     private String name, address;
     private PhotoView subway;
-//    private SubwayMapTouchPoint subwayMapTouchPoint;
+    //    private SubwayMapTouchPoint subwayMapTouchPoint;
     public static final Locale DEFAULT_LOCALE = Locale.KOREAN;
     private int id[] = new int[3];
     private int x[] = new int[3];
@@ -104,11 +105,8 @@ public class Subway extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.subway);
 
-
-
         //버튼 클릭 리스너 클래스 객체 생성(클릭 이벤트를 위함)
         BtnOnClickListener onClickListener = new BtnOnClickListener();
-
 
         //각 객체의 참조값을 넣어줌
         drawerLayout = (DrawerLayout) findViewById(R.id.main_activity);
@@ -150,8 +148,6 @@ public class Subway extends AppCompatActivity {
         address = intent.getStringExtra("프로필");
         nickName.setText(name); // 카카오톡 프로필 닉네임
         Glide.with(this).load(address).circleCrop().into(profile); // 카카오톡 프로필 이미지
-
-
 
 
 //        subway.setOnTouchListener(new View.OnTouchListener() {

@@ -4,7 +4,6 @@ import static com.naver.maps.map.NaverMap.LAYER_GROUP_TRANSIT;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,7 +20,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,11 +42,18 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.bbic.Bookmark.Bookmark;
+import com.example.bbic.DB.UpdatePosRequest;
+import com.example.bbic.FP.FP;
+import com.example.bbic.FindWay.Find_Way_Frag;
+import com.example.bbic.FindWay.Map_Find_way;
 import com.google.android.material.tabs.TabLayout;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.geometry.LatLngBounds;
-import com.naver.maps.map.CameraAnimation;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.LocationTrackingMode;
@@ -59,14 +64,12 @@ import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.MultipartPathOverlay;
-import com.naver.maps.map.overlay.OverlayImage;
 import com.naver.maps.map.overlay.PathOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.odsay.odsayandroidsdk.ODsayService;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -77,6 +80,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
 
 //ver 0.0.1
@@ -166,6 +171,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 case R.id.drawer_menu_5:
                 case R.id.view_header_setting_btn:
                     Intent intent5 = new Intent(getApplicationContext(), FP.class);
+                    intent5.putExtra("코드", k_code);
                     intent5.putExtra("닉네임", name);
                     intent5.putExtra("프로필", address);
                     intent5.putExtra("미세먼지", fineDust);
@@ -174,9 +180,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     intent5.putExtra("날씨", weather);
                     intent5.putExtra("도", area);
                     intent5.putExtra("시", city);
-                    intent5.putExtra("코로나", covidNum);
+                    intent5.putExtra("코로나",covidNum);
+                    intent5.putExtra("friendlist", friendlist);
+                    Log.d("friendlist 과연?",friendlist);
                     startActivity(intent5);
-                    finish();
+//                    finish();
                     break;
                 case R.id.drawer_menu_6:
                     Intent intent6 = new Intent(getApplicationContext(), Setting_Activity.class);
@@ -306,7 +314,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     private NaverMap naverMap;
 
-    private String allDust, weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city;
+    private String allDust, weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, friendlist;
+    private long k_code;
     // 마커 정보 저장시킬 변수들 선언
     private Vector<LatLng> markersPosition;
     private Vector<Marker> activeMarkers;
@@ -596,6 +605,52 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         ft = getSupportFragmentManager().beginTransaction();
 
+        Response.Listener<String> responseListenerPos = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    System.out.println("업데이트" + response);
+                    //JSONObject jsonObject = new JSONObject( response );
+                    //boolean success = jsonObject.getBoolean( "success" );
+                    boolean success = Boolean.parseBoolean(response);
+                    System.out.println(success);
+                    //업데이트 성공시
+                    if (success) {
+                        System.out.println("업데이트 성공");
+                        //업데이트 실패시
+                    } else {
+                        System.out.println("업데이트 실패");
+                    }
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+
+                UpdatePosRequest updatePosRequest = new UpdatePosRequest(k_code, gpsTracker.getLongitude(), gpsTracker.getLatitude(), responseListenerPos);
+                RequestQueue queuePos = Volley.newRequestQueue( Maps_Activity.this );
+                queuePos.add(updatePosRequest);
+            }
+        };
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                timer.schedule(timerTask, 0, 3000);
+                System.out.println(k_code);
+                System.out.println("맵" + gpsTracker.getLongitude());
+                System.out.println("맵" + gpsTracker.getLatitude());
+            }
+        }, 5000);
+
+
         //이세호
         //버튼 클릭 리스너 클래스 객체 생성(클릭 이벤트를 위함)
         BtnOnClickListener onClickListener = new BtnOnClickListener();
@@ -743,6 +798,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         address = intent.getStringExtra("프로필");
         nickName.setText(name); // 카카오톡 프로필 닉네임
         Glide.with(this).load(address).circleCrop().into(profile); // 카카오톡 프로필 이미지
+
+
+        friendlist = intent.getStringExtra("friendlist"); //친구 목록
+
 
         if (!checkLocationServiceStatus()) {
             showDialogForLocationServiceSetting();
