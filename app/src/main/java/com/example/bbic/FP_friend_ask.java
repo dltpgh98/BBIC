@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -36,6 +37,7 @@ public class FP_friend_ask extends Fragment {
     long userKakaoCode = 0;
     private String str;
     FP_friend fp_friend;
+    ImageButton imageButton;
 
     @Nullable
     @Override
@@ -46,6 +48,7 @@ public class FP_friend_ask extends Fragment {
         listView = (ListView) rootView.findViewById(R.id.friend_ask_rv);
         friendList = new ArrayList<Friend>();
         userFriendlist = new ArrayList<Friend>();
+
 
 
         adapter = new FriendAskAdapter(getContext(), friendList, userFriendlist, this);
@@ -106,9 +109,6 @@ public class FP_friend_ask extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-//        FragmentTransaction ft = getFragmentManager().beginTransaction();
-//        ft.detach(this).attach(this).commit();
 
         return rootView;
     }

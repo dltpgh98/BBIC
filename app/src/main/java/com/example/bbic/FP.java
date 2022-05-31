@@ -219,8 +219,6 @@ public class FP extends AppCompatActivity {
         nickName.setText(name); // 카카오톡 프로필 닉네임
         Glide.with(this).load(address).circleCrop().into(profile); // 카카오톡 프로필 이미지
 
-
-
         bundle = new Bundle();
         //bundle.putString("friendlist",friendlist);
         bundle.putLong("userCode", userCode);
