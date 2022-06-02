@@ -74,6 +74,11 @@ public class Subway extends AppCompatActivity {
                     drawerLayout.closeDrawer(drawerView);
                     break;
                 case R.id.drawer_menu_4:
+                    Intent intent4 = new Intent(getApplicationContext(), Maps_Activity.class);
+                    intent4.putExtra("openFindWay",1);
+                    intent4.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent4);
+                    finish();
                     break;
                 case R.id.drawer_menu_5:
                     Intent intent5 = new Intent(getApplicationContext(), FP.class);
@@ -93,6 +98,7 @@ public class Subway extends AppCompatActivity {
                     Intent home = new Intent(getApplicationContext(), Maps_Activity.class);
                     home.putExtra("닉네임", name);
                     home.putExtra("프로필", address);
+                    home.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(home);
                     finish();
                     break;

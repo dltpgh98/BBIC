@@ -37,6 +37,7 @@
         <activity android:name=".Maps_Activity"
             android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".Login_Activity"/>
+        <activity android:name=".Subway"/>
         <activity android:name=".Bookmark.Bookmark"/>
         <activity android:name=".FP.FP"/>
         <activity android:name=".FP.Promise_write"/>

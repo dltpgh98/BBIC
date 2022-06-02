@@ -177,17 +177,18 @@
             app:layout_constraintTop_toBottomOf="@id/linearLayout" />  <!--검색 버튼-->
 
         <ImageButton
-            android:id="@+id/main_test_btn"
-            android:layout_width="50sp"
-            android:layout_height="50sp"
-            app:tint="@color/PersianBlue"
+            android:id="@+id/main_findWay_overlay_clear_ibtn"
+            android:layout_width="45sp"
+            android:layout_height="45sp"
+            app:tint="@color/confirm_text_color"
             android:background="@drawable/circle2"
             android:contentDescription="@string/StringValue"
             android:elevation="50sp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_baseline_directions_24"
+            android:src="@drawable/ic_baseline_close"
             android:layout_marginTop="65dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="10dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/linearLayout" />  <!--검색 버튼-->
 

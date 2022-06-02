@@ -60,6 +60,7 @@ public class FP extends AppCompatActivity {
                     intent1.putExtra("도", area);
                     intent1.putExtra("시", city);
                     intent1.putExtra("코로나",covidNum);
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent1);
                     finish();
                     break;
