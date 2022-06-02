@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -112,6 +113,7 @@ public class ViewPager_Item_Adapter extends RecyclerView.Adapter<ViewPager_Item_
             Log.d("test", "onBindViewHolder: "+friend_name.get(i)+"("+i+")");
             Log.d("test", "onBindViewHolder: "+friend_profile.get(i));
             holder.nameHolder[i].setText(friend_name.get(i));
+            //holder.nameHolder[i].setCompoundDrawableTintList(Color.);
             Glide.with(context).load(friend_profile.get(i)).circleCrop().into(holder.profileHolder[i]);
             holder.profileHolder[i].setOnClickListener(onClickListener);
         }

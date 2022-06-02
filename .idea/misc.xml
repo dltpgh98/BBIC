@@ -7,9 +7,15 @@
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/circle2.xml" value="0.162" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/corner.xml" value="0.1805" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/gpsBtn.xml" value="0.1805" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/ic_baseline_circle_24.xml" value="0.1935" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/ic_circle_online.xml" value="0.1935" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.1" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_check.xml" value="0.1935" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_circle_24.xml" value="0.1935" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_directions_24.xml" value="0.162" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_directions_bus_24.xml" value="0.162" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_keyboard_arrow_right.xml" value="0.1935" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1935" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_search.xml" value="0.162" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/icon_plus.xml" value="0.162" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/layout_radious.xml" value="0.162" />
@@ -54,7 +60,7 @@
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/view_detail.xml" value="0.25" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/view_division.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/view_header.xml" value="0.33" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/viewpager_item.xml" value="0.1875" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/viewpager_item.xml" value="0.25" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/vvvvvvv.xml" value="0.33" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/activity_main.xml" value="0.23097826086956522" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/bookmark.xml" value="0.25" />
