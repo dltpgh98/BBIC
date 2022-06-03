@@ -1540,6 +1540,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             Log.d("sssssssss",""+intent.getIntExtra("openFindWay",0));
             findWayIbtn.callOnClick();
         }
+        if(upPanelLayout.getPanelState()==SlidingUpPanelLayout.PanelState.EXPANDED){
+            Log.d("asdfasdfasdfasfafsdafasdfadfadfasdf","");
+            upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        }
+
     }
 
     public void MapDraw() {
