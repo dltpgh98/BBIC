@@ -18,6 +18,7 @@ import com.example.bbic.Bookmark.Bookmark;
 import com.example.bbic.Maps_Activity;
 import com.example.bbic.R;
 import com.example.bbic.Setting_Activity;
+import com.example.bbic.Subway;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -49,25 +50,41 @@ public class FP extends AppCompatActivity {
                 case R.id.menu_ibtn:
                     drawerLayout.openDrawer(drawerView);
                     break;
-                case R.id.drawer_menu_1:
+                case R.id.drawer_menu_1://지도
                     Intent intent1 = new Intent(getApplicationContext(), Maps_Activity.class);
-                    intent1.putExtra("닉네임", name);
-                    intent1.putExtra("프로필", address);
-                    intent1.putExtra("미세먼지", fineDust);
-                    intent1.putExtra("초미세먼지", ultraFineDust);
-                    intent1.putExtra("온도", tem);
-                    intent1.putExtra("날씨", weather);
-                    intent1.putExtra("도", area);
-                    intent1.putExtra("시", city);
-                    intent1.putExtra("코로나",covidNum);
+//                    intent1.putExtra("닉네임", name);
+//                    intent1.putExtra("프로필", address);
+//                    intent1.putExtra("미세먼지", fineDust);
+//                    intent1.putExtra("초미세먼지", ultraFineDust);
+//                    intent1.putExtra("온도", tem);
+//                    intent1.putExtra("날씨", weather);
+//                    intent1.putExtra("도", area);
+//                    intent1.putExtra("시", city);
+//                    intent1.putExtra("코로나",covidNum);
+
                     intent1.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent1);
                     finish();
                     break;
                 case R.id.drawer_menu_2:
+                    Intent intent2 = new Intent(getApplicationContext(), Subway.class);
+                    intent2.putExtra("코드",userCode);
+                    intent2.putExtra("닉네임", name);
+                    intent2.putExtra("프로필", address);
+                    intent2.putExtra("미세먼지", fineDust);
+                    intent2.putExtra("초미세먼지", ultraFineDust);
+                    intent2.putExtra("온도", tem);
+                    intent2.putExtra("날씨", weather);
+                    intent2.putExtra("도", area);
+                    intent2.putExtra("시", city);
+                    intent2.putExtra("코로나",covidNum);
+                    intent2.putExtra("friendlist",friendlist);
+                    startActivity(intent2);
+                    finish();
                     break;
                 case R.id.drawer_menu_3:
                     Intent intent3 = new Intent(getApplicationContext(), Bookmark.class);
+                    intent3.putExtra("코드",userCode);
                     intent3.putExtra("닉네임", name);
                     intent3.putExtra("프로필", address);
                     intent3.putExtra("미세먼지", fineDust);
@@ -77,16 +94,23 @@ public class FP extends AppCompatActivity {
                     intent3.putExtra("도", area);
                     intent3.putExtra("시", city);
                     intent3.putExtra("코로나",covidNum);
+                    intent3.putExtra("friendlist",friendlist);
                     startActivity(intent3);
                     finish();
                     break;
                 case R.id.drawer_menu_4:
+                    Intent intent4 = new Intent(getApplicationContext(), Maps_Activity.class);
+                    intent4.putExtra("openFindWay",1);
+                    intent4.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent4);
+                    finish();
                     break;
                 case R.id.drawer_menu_5:
                     drawerLayout.closeDrawer(drawerView);
                     break;
                 case R.id.drawer_menu_6:
                     Intent intent6 = new Intent(getApplicationContext(), Setting_Activity.class);
+                    intent6.putExtra("코드",userCode);
                     intent6.putExtra("닉네임", name);
                     intent6.putExtra("프로필", address);
                     intent6.putExtra("미세먼지", fineDust);
@@ -96,11 +120,13 @@ public class FP extends AppCompatActivity {
                     intent6.putExtra("도", area);
                     intent6.putExtra("시", city);
                     intent6.putExtra("코로나",covidNum);
+                    intent6.putExtra("friendlist",friendlist);
                     startActivity(intent6);
                     finish();
                     break;
                 case R.id.home_btn:
                     Intent home = new Intent(getApplicationContext(), Maps_Activity.class);
+                    home.putExtra("코드",userCode);
                     home.putExtra("닉네임", name);
                     home.putExtra("프로필", address);
                     home.putExtra("미세먼지", fineDust);
@@ -110,6 +136,8 @@ public class FP extends AppCompatActivity {
                     home.putExtra("도", area);
                     home.putExtra("시", city);
                     home.putExtra("코로나",covidNum);
+                    home.putExtra("friendlist",friendlist);
+                    home.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(home);
                     finish();
                     break;

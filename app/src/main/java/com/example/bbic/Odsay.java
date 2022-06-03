@@ -255,6 +255,7 @@ public class Odsay extends Maps_Activity {
                     //해당의 위치의 좌표 검색으로 버스 정류장인지 지하철 역인지 판단
                     if (api == API.POINT_SEARCH) {
 
+                        System.out.println("pointSearch : "+odsayData.getJson()+"   api: "+ api);
                         String station = odsayData.getJson().getJSONObject("result").getString("station");
                         JSONArray stationAraay = new JSONArray(station);
                         for (int i = 0; i < stationAraay.length(); i++){

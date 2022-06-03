@@ -150,6 +150,17 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 case R.id.drawer_menu_2:
                     Intent intent2 = new Intent(getApplicationContext(),Subway.class);
                     drawerLayout.closeDrawer(drawerView);
+                    intent2.putExtra("코드", k_code);
+                    intent2.putExtra("닉네임", name);
+                    intent2.putExtra("프로필", address);
+                    intent2.putExtra("미세먼지", fineDust);
+                    intent2.putExtra("초미세먼지", ultraFineDust);
+                    intent2.putExtra("온도", tem);
+                    intent2.putExtra("날씨", weather);
+                    intent2.putExtra("도", area);
+                    intent2.putExtra("시", city);
+                    intent2.putExtra("코로나", covidNum);
+                    intent2.putExtra("friendlist", friendlist);
                     startActivity(intent2);
                     break;
                 case R.id.drawer_menu_3:
@@ -165,6 +176,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     intent3.putExtra("시", city);
                     intent3.putExtra("코로나", covidNum);
                     intent3.putExtra("friendlist", friendlist);
+                    drawerLayout.closeDrawer(drawerView);
                     startActivity(intent3);
 //                    finish();
                     break;
@@ -210,6 +222,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     intent6.putExtra("시", city);
                     intent6.putExtra("코로나", covidNum);
                     intent6.putExtra("friendlist", friendlist);
+                    drawerLayout.closeDrawer(drawerView);
                     startActivity(intent6);
 //                    finish();
                     break;
@@ -456,6 +469,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             Log.d("위치 좌표 Y", String.valueOf(infoWindow.getPosition().latitude));
             Log.d("위치 좌표 X", String.valueOf(infoWindow.getPosition().longitude));
             odsayService.requestPointSearch(x, y, "5", "1:2", odsay.pointSearch);
+//            odsayService.requestPointSearch(x, y, "5", "1:2", odsay.pointSearch);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -889,7 +903,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             }
         });
 
-        startService();
+//        startService();
 
 
 

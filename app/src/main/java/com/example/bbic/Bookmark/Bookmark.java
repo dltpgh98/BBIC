@@ -23,6 +23,7 @@ import com.example.bbic.FP.FP;
 import com.example.bbic.Maps_Activity;
 import com.example.bbic.R;
 import com.example.bbic.Setting_Activity;
+import com.example.bbic.Subway;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.BufferedReader;
@@ -78,6 +79,20 @@ public class Bookmark extends AppCompatActivity {
                     startActivity(intent1);
                     break;
                 case R.id.drawer_menu_2:
+                    Intent intent2 = new Intent(getApplicationContext(), Subway.class);
+                    intent2.putExtra("코드",k_code);
+                    intent2.putExtra("닉네임", name);
+                    intent2.putExtra("프로필", address);
+                    intent2.putExtra("미세먼지", fineDust);
+                    intent2.putExtra("초미세먼지", ultraFineDust);
+                    intent2.putExtra("온도", tem);
+                    intent2.putExtra("날씨", weather);
+                    intent2.putExtra("도", area);
+                    intent2.putExtra("시", city);
+                    intent2.putExtra("코로나",covidNum);
+                    intent2.putExtra("friendlist",friendlist);
+                    startActivity(intent2);
+                    finish();
                     break;
                 case R.id.drawer_menu_3:
                     drawerLayout.closeDrawer(drawerView);
