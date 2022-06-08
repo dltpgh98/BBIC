@@ -366,9 +366,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     // 마커 정보 저장시킬 변수들 선언
     private Vector<LatLng> markersPosition;
     private Vector<Marker> activeMarkers;
-    private ArrayList<String> friendMarkerNameList;
-    private ArrayList<Object> testtt;
     private ArrayList<FriendMarker> friendMarker;
+
+    //친구 마커 위치들
+    private MapFriendMarkerTread mapTread;
+    private JSONObject friendListObject;
 
 
     private StationList[] StationLists;
@@ -470,55 +472,102 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         naverMap.setOnMapClickListener((point, coord) -> {
 
+            stopService();
 
             odsay = new Odsay();
             bus_info = new Odsay();
             StationName = "";
             x = "";
             y = "";
-            y = String.valueOf(infoWindow.getPosition().latitude);
-            x = String.valueOf(infoWindow.getPosition().longitude);
+            y = String.valueOf(coord.latitude);
+            x = String.valueOf(coord.longitude);
 
-
-            odsayService.requestPointSearch(x, y, "5", "1:2", odsay.pointSearch);
-//            odsayService.requestPointSearch(x, y, "5", "1:2", odsay.pointSearch);
-            new Handler().postDelayed(new Runnable() {
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("배열의 크기 : " + odsay.getCount());
-                    if (odsay.getCount() >= 1) {
-                        StationLists = new StationList[odsay.getStationList().length];
-                        StationLists = odsay.getStationList();
-                        for (int i = 0; i < odsay.getCount(); i++) {
+                    odsayService.requestPointSearch(x, y, "5", "1:2", odsay.pointSearch);
+                    if((odsay.getCount()>=1)!=true){
+                        Log.d("========if=========x: ",x+"  y: " +y);
+                    }
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            System.out.println("배열의 크기 : " + odsay.getCount());
+                            if (odsay.getCount() >= 1) {
+                                StationLists = new StationList[odsay.getStationList().length];
+                                StationLists = odsay.getStationList();
+                                for (int i = 0; i < odsay.getCount(); i++) {
 
-                            System.out.println("가져온 배열" + StationLists[i].getStationClass());
-                            System.out.println("가져온 정류장 이름" + StationLists[i].getStationName());
-                            System.out.println("가져온 정류장 아이디" + StationLists[i].getStationID());
-                            System.out.println("가져온 정류장 " + StationLists[i].getX());
-                            System.out.println("가져온 정류장 " + StationLists[i].getY());
-                            StationName = StationLists[i].getStationName();
-                            System.out.println("정류장 이름 : " + StationName + "\n" + "반목문안에서의 배열의 크기 : " + odsay.getCount());
-                            StationId = StationLists[i].getStationID();
-                            stationClass = StationLists[i].getStationClass();
+                                    System.out.println("가져온 배열" + StationLists[i].getStationClass());
+                                    System.out.println("가져온 정류장 이름" + StationLists[i].getStationName());
+                                    System.out.println("가져온 정류장 아이디" + StationLists[i].getStationID());
+                                    System.out.println("가져온 정류장 " + StationLists[i].getX());
+                                    System.out.println("가져온 정류장 " + StationLists[i].getY());
+                                    StationName = StationLists[i].getStationName();
+                                    System.out.println("정류장 이름 : " + StationName + "\n" + "반목문안에서의 배열의 크기 : " + odsay.getCount());
+                                    StationId = StationLists[i].getStationID();
+                                    stationClass = StationLists[i].getStationClass();
 
-                            if (stationClass == 1) {
-                                odsayService.requestBusStationInfo(String.valueOf(StationLists[i].getStationID()), odsay.busStationInfo);
-                            } else if (stationClass == 2) {
-                                odsayService.requestSubwayStationInfo(String.valueOf(StationId), odsay.subwayStationInfo);
+                                    if (stationClass == 1) {
+                                        odsayService.requestBusStationInfo(String.valueOf(StationLists[i].getStationID()), odsay.busStationInfo);
+                                    } else if (stationClass == 2) {
+                                        odsayService.requestSubwayStationInfo(String.valueOf(StationId), odsay.subwayStationInfo);
+                                    }
+
+                                }
+                                infoWindow.setPosition(coord);
+                                infoWindow.open(naverMap);
+
+                            } else {
+                                infoWindow.setPosition(coord);
+                                infoWindow.open(naverMap);
                             }
 
+                            startService();
                         }
-                        infoWindow.setPosition(coord);
-                        infoWindow.open(naverMap);
-
-                    } else {
-                        infoWindow.setPosition(coord);
-                        infoWindow.open(naverMap);
-                    }
-
-
+                    },450);
                 }
-            }, 2500);
+            },200);
+
+//            odsayService.requestPointSearch(x, y, "5", "1:2", odsay.pointSearch);
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    System.out.println("배열의 크기 : " + odsay.getCount());
+//                    if (odsay.getCount() >= 1) {
+//                        StationLists = new StationList[odsay.getStationList().length];
+//                        StationLists = odsay.getStationList();
+//                        for (int i = 0; i < odsay.getCount(); i++) {
+//
+//                            System.out.println("가져온 배열" + StationLists[i].getStationClass());
+//                            System.out.println("가져온 정류장 이름" + StationLists[i].getStationName());
+//                            System.out.println("가져온 정류장 아이디" + StationLists[i].getStationID());
+//                            System.out.println("가져온 정류장 " + StationLists[i].getX());
+//                            System.out.println("가져온 정류장 " + StationLists[i].getY());
+//                            StationName = StationLists[i].getStationName();
+//                            System.out.println("정류장 이름 : " + StationName + "\n" + "반목문안에서의 배열의 크기 : " + odsay.getCount());
+//                            StationId = StationLists[i].getStationID();
+//                            stationClass = StationLists[i].getStationClass();
+//
+//                            if (stationClass == 1) {
+//                                odsayService.requestBusStationInfo(String.valueOf(StationLists[i].getStationID()), odsay.busStationInfo);
+//                            } else if (stationClass == 2) {
+//                                odsayService.requestSubwayStationInfo(String.valueOf(StationId), odsay.subwayStationInfo);
+//                            }
+//
+//                        }
+//                        infoWindow.setPosition(coord);
+//                        infoWindow.open(naverMap);
+//
+//                    } else {
+//                        infoWindow.setPosition(coord);
+//                        infoWindow.open(naverMap);
+//                    }
+//
+//
+//                }
+//            }, 2500);
 
 
 //            new Thread() {
@@ -569,7 +618,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
 
         markersPosition = new Vector<LatLng>();
-        friendMarkerNameList = new ArrayList<>();
+
+        //=======
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -585,6 +635,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         Timer timer = new Timer();
         timer.schedule(task, new Date(), 5000);
+        //========
+
 //        for (int x = 0; x < 100; ++x) {
 //            for (int y = 0; y < 100; ++y) {
 //                markersPosition.add(new LatLng(
@@ -723,7 +775,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //        }
 //    }
 
-    private JSONObject friendListObject;
 
     public void onRequestPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
@@ -737,7 +788,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    private MapFriendMarkerTread mapTread;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1028,7 +1081,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             }
         });
 
-//        startService();
+        startService();
 
 
 //===================================================================================================
@@ -1384,6 +1437,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     }
 
     public void nameToPos(String sEtPosName, String eEtPosName) {
+        stopService();
+
         List<Address> sAddressList = null;
         List<Address> eAddressList = null;
         String sLatitude = "";
@@ -1412,40 +1467,54 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         eLatLngPos = new LatLng(Double.valueOf(eLatitude), Double.valueOf(eLongitude));
         Handler handler = new Handler();
 
-        odsayService.requestSearchPubTransPath(sLongitude, sLatitude, eLongitude, eLatitude, "0", "0", "0", mapFindWay.Find_way);
+        String finalSLongitude = sLongitude;
+        String finalSLatitude = sLatitude;
+        String finalELongitude = eLongitude;
+        String finalELatitude = eLatitude;
 
-        handler.postDelayed(new Runnable() {                                        //handler 객체 딜레이 (2초)끝나면 종료
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                odsayService.requestSearchPubTransPath(finalSLongitude, finalSLatitude, finalELongitude, finalELatitude, "0", "0", "0", mapFindWay.Find_way);
+                handler.postDelayed(new Runnable() {                                        //handler 객체 딜레이 (0.45초)끝나면 종료
+                    @Override
+                    public void run() {
 //                path = mapFindWay.getPath_s();
-                result = mapFindWay.getResult();
+                        result = mapFindWay.getResult();
 //                System.out.println("-----------------------result"+result);
 //                FragmentTransaction tf = getSupportFragmentManager().beginTransaction();
 //                        tf.detach(fw_frag).attach(fw_frag).commit();
 //                System.out.println("======================Test========================="+path[0]);
 
-                if (result != null) {
-                    LatLngBounds latLngBounds = new LatLngBounds(sLatLngPos, eLatLngPos);
+                        if (result != null) {
+                            LatLngBounds latLngBounds = new LatLngBounds(sLatLngPos, eLatLngPos);
 //                    Marker marker = new Marker();
 //                    marker.setPosition(eLatLngPos);
 //                    marker.setMap(naverMap);
 
 
-                    CameraUpdate cameraUpdate = CameraUpdate.fitBounds(latLngBounds, 100, 130, 100, 1100);
+                            CameraUpdate cameraUpdate = CameraUpdate.fitBounds(latLngBounds, 100, 130, 100, 1100);
 //                    cameraUpdate.animate(CameraAnimation.Easing);
 
-                    naverMap.moveCamera(cameraUpdate);
+                            naverMap.moveCamera(cameraUpdate);
 
-                    bundleFw.putString("odsay", result.toString());
-                    fw_frag.setArguments(bundleFw);
-                    frag_set(fw_frag);
-                    meResult = result;
+                            bundleFw.putString("odsay", result.toString());
+                            bundleFw.putString("StartName", sEtPosName);
+                            bundleFw.putString("EndName", eEtPosName);
+                            fw_frag.setArguments(bundleFw);
+                            frag_set(fw_frag);
+                            meResult = result;
 
 
-                }
-
+                        }
+                        startService();
+                    }
+                }, 450);
             }
-        }, 500);
+        },100);
+
+
+
 //        path = mapFindWay.getPath_s();
 
 //
@@ -1528,6 +1597,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         if (intent.getStringExtra("jObject") != null) {
             fw_pos_path = intent.getStringExtra("jObject");
             try {
+                stopService();
                 JSONObject pos = new JSONObject(fw_pos_path);
 
                 ArrayList<LatLng> total_finde_pos_array = new ArrayList<>();
@@ -1578,14 +1648,23 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                    findPosArrayOne.add(eLatLngPos);
 //
                     mapObject = "0:0@" + pos.getJSONObject("info").getString("mapObj");
-                    odsayService.requestLoadLane(mapObject, mapFindWay.LoadLane);
+
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            MapDraw();
+                            odsayService.requestLoadLane(mapObject, mapFindWay.LoadLane);
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    MapDraw();
+
+                                    startService();
+                                }
+                            }, 450);
+
                         }
-                    }, 500);
+                    },200);
 
                 } catch (Exception e) {
 //                    e.printStackTrace();

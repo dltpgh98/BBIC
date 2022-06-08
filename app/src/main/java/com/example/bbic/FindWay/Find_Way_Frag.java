@@ -28,6 +28,8 @@ public class Find_Way_Frag extends Fragment {
     private Find_way_listAdapter find_way_listAdapter;
     private LinearLayoutManager linearLayoutManager;
     private String str;
+    private String startName;
+    private String endName;
 
     private int tabNum;
 
@@ -75,6 +77,8 @@ public class Find_Way_Frag extends Fragment {
 
         if (b != null) {
             str = b.getString("odsay");
+            startName = b.getString("StartName");
+            endName = b.getString("EndName");
 //            Log.d("str",str);
             tabNum = 0;
             tabNum = b.getInt("TabPos");
@@ -126,6 +130,7 @@ public class Find_Way_Frag extends Fragment {
                                     String[] st = new String[10];
 
                                     posListString.append("총 시간:"+total_time+"분|| ");
+                                    posListString.append("("+startName+" >> "+endName+") ");
 
                                     for (int j = 0; j < subP.length(); j++) {
                                         int traffic = subP.getJSONObject(j).getInt("trafficType");
