@@ -257,7 +257,7 @@ public class FP extends AppCompatActivity {
         bundle.putString("friendlist",friendlist);
         bundle.putLong("userCode", userCode);
         System.out.println("fp에서 유저코드 확인" + userCode);
-        System.out.println("친구 목록확인 " + friendlist);
+        System.out.println(" == " + friendlist);
         fp_friend.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().add(R.id.fp_tab_container, fp_friend).commit();//여긴 잘됨
     }
