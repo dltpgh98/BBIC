@@ -278,6 +278,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         System.out.println("찾을수 없는 장소입니다.");
                     }
                     keyboardmanager.hideSoftInputFromWindow(sPosEdit.getWindowToken(), 0);
+                    break;
 //                    startService();
                 case R.id.view_header_ghost_btn:
 
@@ -304,6 +305,31 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 case R.id.main_findWay_overlay_clear_ibtn:
                     pathOverlay.setMap(null);
                     findWayOverlayClearIBtn.setVisibility(View.GONE);
+                    break;
+                case R.id.main_findWay_friend_ibtn:  //친구 길찾기 버튼 Test
+                    findWayIbtn.callOnClick();
+                    try {
+
+                        String friendName=friendListObject.getJSONArray("response").getJSONObject(0).getString("K.K_name");
+                        friendLat = friendListObject.getJSONArray("response").getJSONObject(0).getDouble("K.K_lat");
+                        friendLong = friendListObject.getJSONArray("response").getJSONObject(0).getDouble("K.K_long");
+
+                        sPosEdit.setText("내 위치");
+                        ePosEdit.setText(friendName);
+                        Handler handler =new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                vFindIbtn.callOnClick();
+                            }
+                        },1000);
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
             }
         }
     }
@@ -372,6 +398,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private MapFriendMarkerTread mapTread;
     private JSONObject friendListObject;
 
+    private double friendLat,friendLong;
 
     private StationList[] StationLists;
     private static String y = "", x = "";
@@ -701,69 +728,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         });
     }
 
-    class MapFriendMarkerTread {
-        public MapFriendMarkerTread() {
-
-        }
-
-        public void run() throws JSONException {
-
-            try {
-                friendListObject = new JSONObject(friendlist);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            JSONArray friendLiArray;
-            friendLiArray = friendListObject.getJSONArray("response");
-            ArrayList<LatLng> friendPosArray = new ArrayList<>();
-            for (int i = 0; i < friendLiArray.length(); i++) {
-//                System.out.println("======================================================좌표 추가====================");
-
-                friendPosArray.add(new LatLng(friendLiArray.getJSONObject(i).getDouble("K.K_lat"), friendLiArray.getJSONObject(i).getDouble("K.K_long")));
-//                friendLiArray.getJSONObject(i).getDouble("K.K_long");
-//                friendLiArray.getJSONObject(i).getDouble("K.K_lat");
-            }
-//            System.out.println("======================================================좌표===================="+friendPosArray.size());
-            for (int count = 0; count < friendPosArray.size(); count++) {
-//                markersPosition.add(new LatLng(friendLiArray.getJSONObject(count).getDouble("K.K_lat"), friendLiArray.getJSONObject(count).getDouble("K.K_long")));
-//                System.out.println("=====================================================이름코드===================="+friendLiArray.getJSONObject(count).getString("F.K_code2"));
-//                System.out.println("=====================================================상태===================="+friendLiArray.getJSONObject(count).getString("F.F_status"));
-//                System.out.println("=====================================================횟수===================="+count);
-//                System.out.println("=====================================================고스트 상황===================="+friendLiArray.getJSONObject(count).getInt("K.K_ghost"));
-                switch (friendLiArray.getJSONObject(count).getInt("F.F_status")) {
-                    case 0:
-                        System.out.println("좌표 추가====================");
-//                        markersPosition.add(count,friendPosArray.get(count));
-                        markersPosition.add(friendPosArray.get(count));
-                        break;
-                    case 1: //
-                        System.out.println("1좌표 추가====================");
-                        if(friendLiArray.getJSONObject(count).getString("K.K_name").equals(name)){
-//                            System.out.println("+======+++===+++===+++==++==++=");
-                            break;
-                        }
-                        markersPosition.add(friendPosArray.get(count));
-                        friendMarker.add(new FriendMarker(friendPosArray.get(count),friendLiArray.getJSONObject(count).getString("K.K_name"),friendLiArray.getJSONObject(count).getString("K.K_profile")));
-//                        markersPosition.get(count);
-//                        friendMarkerNameList.add(friendLiArray.getJSONObject(count).getString("K.K_name"));
-//                        System.out.println("=====================================================좌표===================="+markersPosition.get(count));
-//                        System.out.println("=====================================================이름코드===================="+friendLiArray.getJSONObject(count).getString("F.K_code2"));
-//                        System.out.println("=====================================================이름===================="+friendLiArray.getJSONObject(count).getString("K.K_name"));
-//                        System.out.println("  ");
-                        break;
-                    case 2:
-                        System.out.println("2좌표 추가====================");
-                        markersPosition.add(friendPosArray.get(count));
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-
-        }
-
-    }
 //
 //    class TestThread extends Thread {
 //        @Override
@@ -891,8 +855,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         nickName = (TextView) findViewById(R.id.drawer_profile_name); // 카카오톡 닉네임
         areaText = (TextView) findViewById(R.id.drawer_area_text);
         editText = (EditText) findViewById(R.id.main_search_et);
-        findWayIbtn = (ImageButton) findViewById(R.id.main_find_way_ibtn);
-
+        findWayIbtn = (ImageButton) findViewById(R.id.main_find_way_ibtn);  // 화면상 길찾기 버튼
 
         upPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.slide);
         view_Header = (ConstraintLayout) findViewById(R.id.view_header);
@@ -905,6 +868,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         ePosEdit = (EditText) findViewById(R.id.end_pos_et);
 
         findWayOverlayClearIBtn = (ImageButton) findViewById(R.id.main_findWay_overlay_clear_ibtn);
+
+
+        ImageButton friendTest_btn = (ImageButton) findViewById(R.id.main_findWay_friend_ibtn);
+        friendTest_btn.setOnClickListener(onClickListener);
+
 
         drawerMenu[0] = (Button) findViewById(R.id.drawer_menu_1);
         drawerMenu[1] = (Button) findViewById(R.id.drawer_menu_2);
@@ -1439,38 +1407,60 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     public void nameToPos(String sEtPosName, String eEtPosName) {
         stopService();
 
+
         List<Address> sAddressList = null;
         List<Address> eAddressList = null;
         String sLatitude = "";
         String sLongitude = "";
         String eLatitude = "";
         String eLongitude = "";
-        String reNameStartEditTxt = sEtPosName.replace(" ", "_");
-        String reNameEndEditTxt = eEtPosName.replace(" ", "_");
 
-        try {
-            sAddressList = geocoder.getFromLocationName(reNameStartEditTxt, 10);
-            eAddressList = geocoder.getFromLocationName(reNameEndEditTxt, 10);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(sEtPosName.equals("내 위치")){
+            Log.d("테스트 if===========","");
+            sLatitude = String.valueOf(gpsTracker.getLatitude());
+            sLongitude = String.valueOf(gpsTracker.getLongitude());
+            eLatitude = String.valueOf(friendLat);
+            eLongitude = String.valueOf(friendLong);
+
+            Log.d("========================","sLatitude :"+sLatitude+"  sLong :"+sLongitude+"  eLat :"+eLatitude+"  eLong :"+eLongitude);
+
+            sLatLngPos = new LatLng(Double.valueOf(sLatitude), Double.valueOf(sLongitude));
+            eLatLngPos = new LatLng(Double.valueOf(eLatitude), Double.valueOf(eLongitude));
         }
-        String[] sSplitStr = sAddressList.get(0).toString().split(",");
-        String[] eSplitStr = eAddressList.get(0).toString().split(",");
+        else{
+            Log.d("테스트else===========","");
 
-        sLatitude = sSplitStr[10].substring(sSplitStr[10].indexOf("=") + 1);
-        sLongitude = sSplitStr[12].substring(sSplitStr[12].indexOf("=") + 1);
+            String reNameStartEditTxt = sEtPosName.replace(" ", "_");
+            String reNameEndEditTxt = eEtPosName.replace(" ", "_");
 
-        eLatitude = eSplitStr[10].substring(eSplitStr[10].indexOf("=") + 1);
-        eLongitude = eSplitStr[12].substring(eSplitStr[12].indexOf("=") + 1);
+            try {
+                sAddressList = geocoder.getFromLocationName(reNameStartEditTxt, 10);
+                eAddressList = geocoder.getFromLocationName(reNameEndEditTxt, 10);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            String[] sSplitStr = sAddressList.get(0).toString().split(",");
+            String[] eSplitStr = eAddressList.get(0).toString().split(",");
 
-        sLatLngPos = new LatLng(Double.valueOf(sLatitude), Double.valueOf(sLongitude));
-        eLatLngPos = new LatLng(Double.valueOf(eLatitude), Double.valueOf(eLongitude));
+            sLatitude = sSplitStr[10].substring(sSplitStr[10].indexOf("=") + 1);
+            sLongitude = sSplitStr[12].substring(sSplitStr[12].indexOf("=") + 1);
+
+            eLatitude = eSplitStr[10].substring(eSplitStr[10].indexOf("=") + 1);
+            eLongitude = eSplitStr[12].substring(eSplitStr[12].indexOf("=") + 1);
+
+
+
+            sLatLngPos = new LatLng(Double.valueOf(sLatitude), Double.valueOf(sLongitude));
+            eLatLngPos = new LatLng(Double.valueOf(eLatitude), Double.valueOf(eLongitude));
+        }
+
         Handler handler = new Handler();
 
         String finalSLongitude = sLongitude;
         String finalSLatitude = sLatitude;
         String finalELongitude = eLongitude;
         String finalELatitude = eLatitude;
+        Log.d("========================","sLatitude :"+sLatitude+"  sLong :"+sLongitude+"  eLat :"+eLatitude+"  eLong :"+eLongitude);
 
         handler.postDelayed(new Runnable() {
             @Override
@@ -1481,6 +1471,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     public void run() {
 //                path = mapFindWay.getPath_s();
                         result = mapFindWay.getResult();
+                        System.out.println(result +"=========================================");
 //                System.out.println("-----------------------result"+result);
 //                FragmentTransaction tf = getSupportFragmentManager().beginTransaction();
 //                        tf.detach(fw_frag).attach(fw_frag).commit();
@@ -1499,8 +1490,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             naverMap.moveCamera(cameraUpdate);
 
                             bundleFw.putString("odsay", result.toString());
-                            bundleFw.putString("StartName", sEtPosName);
-                            bundleFw.putString("EndName", eEtPosName);
+                            bundleFw.putString("StartName", String.valueOf(sPosEdit.getText()));
+                            bundleFw.putString("EndName",  String.valueOf(ePosEdit.getText()));
                             fw_frag.setArguments(bundleFw);
                             frag_set(fw_frag);
                             meResult = result;
@@ -1509,9 +1500,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         }
                         startService();
                     }
-                }, 450);
+                }, 500);
             }
-        },100);
+        },50);
 
 
 
@@ -1682,6 +1673,72 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //        }
 
     }
+
+
+    class MapFriendMarkerTread {
+        public MapFriendMarkerTread() {
+
+        }
+
+        public void run() throws JSONException {
+
+            try {
+                friendListObject = new JSONObject(friendlist);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            JSONArray friendLiArray;
+            friendLiArray = friendListObject.getJSONArray("response");
+            ArrayList<LatLng> friendPosArray = new ArrayList<>();
+            for (int i = 0; i < friendLiArray.length(); i++) {
+//                System.out.println("======================================================좌표 추가====================");
+
+                friendPosArray.add(new LatLng(friendLiArray.getJSONObject(i).getDouble("K.K_lat"), friendLiArray.getJSONObject(i).getDouble("K.K_long")));
+//                friendLiArray.getJSONObject(i).getDouble("K.K_long");
+//                friendLiArray.getJSONObject(i).getDouble("K.K_lat");
+            }
+//            System.out.println("======================================================좌표===================="+friendPosArray.size());
+            for (int count = 0; count < friendPosArray.size(); count++) {
+//                markersPosition.add(new LatLng(friendLiArray.getJSONObject(count).getDouble("K.K_lat"), friendLiArray.getJSONObject(count).getDouble("K.K_long")));
+//                System.out.println("=====================================================이름코드===================="+friendLiArray.getJSONObject(count).getString("F.K_code2"));
+//                System.out.println("=====================================================상태===================="+friendLiArray.getJSONObject(count).getString("F.F_status"));
+//                System.out.println("=====================================================횟수===================="+count);
+//                System.out.println("=====================================================고스트 상황===================="+friendLiArray.getJSONObject(count).getInt("K.K_ghost"));
+                switch (friendLiArray.getJSONObject(count).getInt("F.F_status")) {
+                    case 0:
+//                        System.out.println("좌표 추가====================");
+////                        markersPosition.add(count,friendPosArray.get(count));
+//                        markersPosition.add(friendPosArray.get(count));
+                        break;
+                    case 1: //
+                        System.out.println("1좌표 추가====================");
+                        if(friendLiArray.getJSONObject(count).getString("K.K_name").equals(name)){
+//                            System.out.println("+======+++===+++===+++==++==++=");
+                            break;
+                        }
+                        markersPosition.add(friendPosArray.get(count));
+                        friendMarker.add(new FriendMarker(friendPosArray.get(count),friendLiArray.getJSONObject(count).getString("K.K_name"),friendLiArray.getJSONObject(count).getString("K.K_profile")));
+//                        markersPosition.get(count);
+//                        friendMarkerNameList.add(friendLiArray.getJSONObject(count).getString("K.K_name"));
+//                        System.out.println("=====================================================좌표===================="+markersPosition.get(count));
+//                        System.out.println("=====================================================이름코드===================="+friendLiArray.getJSONObject(count).getString("F.K_code2"));
+//                        System.out.println("=====================================================이름===================="+friendLiArray.getJSONObject(count).getString("K.K_name"));
+//                        System.out.println("  ");
+                        break;
+                    case 2:
+//                        System.out.println("2좌표 추가====================");
+//                        markersPosition.add(friendPosArray.get(count));
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+        }
+
+    }
+
 
     public void MapDraw() {
         if (fw_pos_path != null) {
