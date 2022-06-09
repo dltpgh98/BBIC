@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/transparent"
                     android:text=""
-                    android:hint="출발지"/>
+                    android:hint="출발지" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout

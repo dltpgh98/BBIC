@@ -907,6 +907,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         viewSwitch = false;
 
+
 //============================================================================================SlidingUpPanel
 //        upPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
 //            @Override
@@ -1077,6 +1078,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         });
 
 
+
+
 //===================================================================================================
 //
 //
@@ -1125,6 +1128,26 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 ////            Find_way_Data way_data = new Find_way_Data();
 //        }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        long backPressedTime = 0;
+        long tempTime = System.currentTimeMillis();
+        long intervalTime = tempTime - backPressedTime;
+
+        if(upPanelLayout.getPanelState()==SlidingUpPanelLayout.PanelState.EXPANDED||upPanelLayout.getPanelState()==SlidingUpPanelLayout.PanelState.ANCHORED){
+            upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        }else if(drawerEnabled){
+            drawerLayout.closeDrawer(drawerView);
+        }else if(0<=System.currentTimeMillis()&& 2000>= System.currentTimeMillis()){
+            finish();
+        }    else
+        {
+            backPressedTime = tempTime;
+            Toast.makeText(getApplicationContext(), "한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void receiveMessage(Intent intent) {
