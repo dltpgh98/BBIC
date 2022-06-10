@@ -1,9 +1,16 @@
 package com.example.bbic;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -14,8 +21,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bumptech.glide.Glide;
+import com.example.bbic.Adapter.ViewPager_Item_Adapter;
 import com.example.bbic.Bookmark.Bookmark;
 import com.example.bbic.FP.FP;
+//import com.google.android.gms.oss.licenses.OssLicensesMenuActivity;
 
 public class Setting_Activity extends AppCompatActivity {
 
@@ -106,7 +115,19 @@ public class Setting_Activity extends AppCompatActivity {
                 case R.id.drawer_menu_6:
                     drawerLayout.closeDrawer(drawerView);
                     break;
-
+                case R.id.setting_oss_btn:
+                    //startActivity(new Intent(view.getContext(), OssLicensesMenuActivity.class));
+                    break;
+                case R.id.home_btn:
+                    Intent intent = new Intent(getApplicationContext(), Maps_Activity.class);
+//
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent);
+                    finish();
+                    break;
+                case R.id.setting_personal_btn:
+                    startDialog();
+                    break;
             }
         }
     }
@@ -114,19 +135,21 @@ public class Setting_Activity extends AppCompatActivity {
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
     private View drawerView;
-    private ImageButton menuIbtn, searchIbtn;
+    private ImageButton menuIbtn, searchIbtn, homeBtn, ossBtn, personalBtn;
     private TextView
             temText, fineText, ultraText, covidText, nickName, areaText;
     private ImageView weatherImage, profile;
 
     private Button[] drawerMenu = new Button[6];
 
-
-
     private final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=경기도부천시날씨"; //웹크롤링 할 주소(1)
     private final String covidURL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=코로나19"; //웹크롤링 할 주소(2)
     private String weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city,friendlist;
     private long k_code;
+
+    private ImageButton diaBackBtn;
+    private Dialog dialog;
+    private TextView diaText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,6 +171,10 @@ public class Setting_Activity extends AppCompatActivity {
         nickName = (TextView)findViewById(R.id.drawer_profile_name); // 카카오톡 닉네임
         areaText = (TextView) findViewById(R.id.drawer_area_text);
 
+        homeBtn = (ImageButton) findViewById(R.id.home_btn);
+        ossBtn = (ImageButton) findViewById(R.id.setting_oss_btn);
+        personalBtn = (ImageButton) findViewById(R.id.setting_personal_btn);
+
         drawerMenu[0] = (Button) findViewById(R.id.drawer_menu_1);
         drawerMenu[1] = (Button) findViewById(R.id.drawer_menu_2);
         drawerMenu[2] = (Button) findViewById(R.id.drawer_menu_3);
@@ -166,6 +193,10 @@ public class Setting_Activity extends AppCompatActivity {
         drawerMenu[3].setOnClickListener(onClickListener);
         drawerMenu[4].setOnClickListener(onClickListener);
         drawerMenu[5].setOnClickListener(onClickListener);
+
+        homeBtn.setOnClickListener(onClickListener);
+        ossBtn.setOnClickListener(onClickListener);
+        personalBtn.setOnClickListener(onClickListener);
 
         Intent intent = getIntent();
         k_code = intent.getLongExtra("코드",0);
@@ -267,4 +298,27 @@ public class Setting_Activity extends AppCompatActivity {
 
         }
     };
+
+    private void startDialog(){
+
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.personal_processing);
+        WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+        dialog.getWindow().setAttributes((WindowManager.LayoutParams)layoutParams);
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.setCancelable(true);
+        diaBackBtn = dialog.findViewById(R.id.personal_back_btn);
+        diaBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        diaText = dialog.findViewById(R.id.personal_text);
+        diaText.setMovementMethod(new ScrollingMovementMethod());
+
+        dialog.show();
+    }
 }

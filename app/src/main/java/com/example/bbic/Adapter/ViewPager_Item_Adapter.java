@@ -107,15 +107,18 @@ public class ViewPager_Item_Adapter extends RecyclerView.Adapter<ViewPager_Item_
     @Override
     public void onBindViewHolder(@NonNull PagerHolder holder, int position) {
         BtnOnClickListener onClickListener = new BtnOnClickListener();
-
-        for(int i = 0; i < friend_name.size(); i++)
+        int i;
+        for(i = 0; i < friend_name.size(); i++)
         {
             Log.d("test", "onBindViewHolder: "+friend_name.get(i)+"("+i+")");
             Log.d("test", "onBindViewHolder: "+friend_profile.get(i));
             holder.nameHolder[i].setText(friend_name.get(i));
             //holder.nameHolder[i].setCompoundDrawableTintList(Color.);
-            Glide.with(context).load(friend_profile.get(i)).circleCrop().into(holder.profileHolder[i]);
+            Glide.with(context).load(friend_profile.get(i)).fitCenter().circleCrop().into(holder.profileHolder[i]);
             holder.profileHolder[i].setOnClickListener(onClickListener);
+        }
+        for(;i<8;i++){
+            Glide.with(context).load("https://cdn.discordapp.com/attachments/885795271454384128/984121267068223568/5a22b25fd0d5271f.png").fitCenter().circleCrop().into(holder.profileHolder[i]);
         }
     }
 

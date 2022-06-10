@@ -50,6 +50,7 @@ import com.bumptech.glide.Glide;
 import com.example.bbic.Adapter.ViewPager_Item_Adapter;
 import com.example.bbic.Bookmark.Bookmark;
 import com.example.bbic.DB.UpdatePosRequest;
+import com.example.bbic.Data.Friend;
 import com.example.bbic.FP.FP;
 import com.example.bbic.FindWay.Find_Way_Frag;
 import com.example.bbic.FindWay.Map_Find_way;
@@ -72,6 +73,7 @@ import com.odsay.odsayandroidsdk.ODsayService;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -79,6 +81,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -109,12 +113,12 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             } else {
 //                    y = String.valueOf(infoWindow.getPosition().latitude);
 //                    x = String.valueOf(infoWindow.getPosition().longitude);
-                System.out.println("인포윈도우에서 정류장 이름 : " + StationName);
                 return StationName;
             }
 
         }
     }
+
 
     //버튼 클릭 리스너 클래스
     class BtnOnClickListener implements View.OnClickListener {
@@ -139,6 +143,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         drawerEnabled = true;
                     }
                     try{
+                        if(upPanelLayout.getPanelState()==SlidingUpPanelLayout.PanelState.EXPANDED){
+                            upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                        }
                         keyboardmanager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
                     }catch (Exception e){
                     }
@@ -204,7 +211,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     intent5.putExtra("시", city);
                     intent5.putExtra("코로나", covidNum);
                     intent5.putExtra("friendlist", friendlist);
-//                    Log.d("friendlist 과연?", friendlist);
                     drawerLayout.closeDrawer(drawerView);
                     startActivity(intent5);
 //                    finish();
@@ -257,9 +263,30 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                    }
                     break;
                 case R.id.view_find_way_ibtn:
-//                    stopService();
-                    System.out.println("검색 버튼");
-                    pathOverlay.setMap(null);
+
+                    stopService();
+
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            pathOverlay.setMap(null);
+                            String sPosEt = sPosEdit.getText().toString();
+                            String ePosEt = ePosEdit.getText().toString();
+
+                            System.out.print(sPosEt + "시작 " + ePosEt + "도착");
+
+                            try {
+                                nameToPos(sPosEt, ePosEt);
+
+                            } catch (Exception e) {
+                                Log.e("findwayThread", "Exception : "+e.toString());
+                            }
+                            keyboardmanager.hideSoftInputFromWindow(sPosEdit.getWindowToken(), 0);
+                        }
+                    },500);
+
+                    /*pathOverlay.setMap(null);
                     String sPosEt = sPosEdit.getText().toString();
                     String ePosEt = ePosEdit.getText().toString();
 
@@ -270,8 +297,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     } catch (Exception e) {
                         System.out.println("찾을수 없는 장소입니다.");
                     }
-                    keyboardmanager.hideSoftInputFromWindow(sPosEdit.getWindowToken(), 0);
-//                    startService();
+                    keyboardmanager.hideSoftInputFromWindow(sPosEdit.getWindowToken(), 0);*/
+                    break;
+
                 case R.id.view_header_ghost_btn:
 
                     switch (sw) {
@@ -465,9 +493,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             y = String.valueOf(infoWindow.getPosition().latitude);
             x = String.valueOf(infoWindow.getPosition().longitude);
 
-
-            Log.d("위치 좌표 Y", String.valueOf(infoWindow.getPosition().latitude));
-            Log.d("위치 좌표 X", String.valueOf(infoWindow.getPosition().longitude));
             odsayService.requestPointSearch(x, y, "5", "1:2", odsay.pointSearch);
 //            odsayService.requestPointSearch(x, y, "5", "1:2", odsay.pointSearch);
             new Handler().postDelayed(new Runnable() {
@@ -497,12 +522,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
                         }
                         infoWindow.setPosition(coord);
-                        Log.d("===========if coord=================", coord + "");
                         infoWindow.open(naverMap);
 
                     } else {
                         infoWindow.setPosition(coord);
-                        Log.d("===========coord=================", coord + "");
                         infoWindow.open(naverMap);
                     }
 
@@ -628,8 +651,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         String myAddress = getCurrentAddress(latitude, longitude);
         String[] add = myAddress.split(" ");
-        //Log.d("위치", add[1]+" "+add[2]);
-        Log.d("위치 좌표", latitude + " " + longitude);
         drawerInit(myAddress);
 
         //도성대
@@ -650,17 +671,15 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             public void onResponse(String response) {
 
                 try {
-                    System.out.println("업데이트" + response);
                     //JSONObject jsonObject = new JSONObject( response );
                     //boolean success = jsonObject.getBoolean( "success" );
                     boolean success = Boolean.parseBoolean(response);
-                    System.out.println(success);
                     //업데이트 성공시
                     if (success) {
-                        System.out.println("업데이트 성공");
+
                         //업데이트 실패시
                     } else {
-                        System.out.println("업데이트 실패");
+
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -683,9 +702,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void run() {
                 timer.schedule(timerTask, 0, 3000);
-                System.out.println(k_code);
-                System.out.println("맵" + gpsTracker.getLongitude());
-                System.out.println("맵" + gpsTracker.getLatitude());
             }
         }, 5000);
 
@@ -791,46 +807,47 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         nickName.setText(name); // 카카오톡 프로필 닉네임
         Glide.with(this).load(address).circleCrop().into(profile); // 카카오톡 프로필 이미지
 
+        friendlist = intent.getStringExtra("friendlist");
         List<String> friendNameList = new ArrayList<>();
         List<String> friendProfileList = new ArrayList<>();
         List<Long> friendCodeList = new ArrayList<>();
         List<Integer> friendStatusList = new ArrayList<>();
+        List<Integer> friendGhostList = new ArrayList<>();
 
-        friendlist = intent.getStringExtra("friendlist"); //친구 목록
-        friendlist = friendlist.replace("{","");
-        friendlist = friendlist.replace("[","");
-        friendlist = friendlist.replace("}","");
-        friendlist = friendlist.replace("]","");
-        friendlist = friendlist.replace("\\","");
-        friendlist = friendlist.replace("\"","");
-        friendlist = friendlist.substring(11);
-        String[] strList = friendlist.split(",");
+        try {
+            JSONObject jsonObject = new JSONObject(friendlist);
+            JSONArray jsonArray = jsonObject.getJSONArray("response");
+            int count = 0;
 
-        int check = 0;
+            long userCode;
+            long friendCode;
+            int friendStatus;
+            String friendName;
+            String friendProfile;
+            int friendGhost;
 
-        Log.d("k_code", String.valueOf(k_code));
-        for(int i=0;i<strList.length;i++){
-            strList[i] = strList[i].substring(strList[i].indexOf(":")+1);
-            if(i%9==0&&strList[i].equals(String.valueOf(k_code))){
-                check=1;
+            while (count < jsonArray.length()) {
+                JSONObject object = jsonArray.getJSONObject(count);
+                userCode = object.getLong("F.K_code1");
+                friendCode = object.getLong("F.K_code2");
+                friendStatus = object.getInt("F.F_status");
+                friendName = object.getString("K.K_name");
+                friendProfile = object.getString("K.K_profile");
+                friendGhost = object.getInt("K.K_ghost");
+
+                if(userCode == k_code) {
+                    friendCodeList.add(friendCode);
+                    friendNameList.add(friendName);
+                    friendStatusList.add(friendStatus);
+                    friendProfileList.add(friendProfile);
+                    friendGhostList.add(friendGhost);
+                }
+
+                count++;
             }
 
-            if(i%9==1&&check==1){
-                friendCodeList.add(Long.parseLong(strList[i]));
-            }
-
-            if(i%9==2&&check==1){
-                friendStatusList.add(Integer.parseInt(strList[i]));
-            }
-
-            if(i%9==3&&check==1){
-                friendNameList.add(strList[i]);
-            }
-
-            if(i%9==5&&check==1){
-                friendProfileList.add(strList[i]);
-            }
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         if (!checkLocationServiceStatus()) {
@@ -874,7 +891,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-                Log.d("upPanel 바뀔때 내용 ", "onPanelStateChanged " + newState);
                 if(itemAdapter.getEvent()==true)
                 {
                     itemAdapter.getDialog().cancel();
@@ -893,12 +909,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                        viewDetail.setVisibility(View.VISIBLE);
                     }
                     find_way_page.setVisibility(View.GONE);
-                    Log.d("바꿈","");
                 }
             }
         });
 
-//        startService();
+        startService();
 
 
 
@@ -1144,7 +1159,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 break;
             default:
                 weatherImage.setImageResource(R.drawable.ic_baseline_block);
-                Log.d("날씨 명", weather);
         }
     }
 
@@ -1152,17 +1166,14 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     DrawerLayout.DrawerListener drawerListener = new DrawerLayout.DrawerListener() {
         @Override
         public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-            System.out.println("opening");
         }
 
         @Override
         public void onDrawerOpened(@NonNull View drawerView) {
-            System.out.println("open");
         }
 
         @Override
         public void onDrawerClosed(@NonNull View drawerView) {
-            System.out.println("close");
         }
 
         @Override
@@ -1245,6 +1256,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             addresses = geocoder.getFromLocation(latitude, longitude, 7);//매개변수로 입력받은 경도위도로 주소 찾기
         } catch (IOException ioException) {//에러시
             Toast.makeText(Maps_Activity.this, "지오코더 서비스 사용불가", Toast.LENGTH_SHORT).show();
+            Log.d("getCurrnetAddress", ioException.toString());
             return "지오코더 서비스 사용불가";
         } catch (IllegalArgumentException illegalArgumentException) {
             Toast.makeText(Maps_Activity.this, "잘못된 GPS 좌표", Toast.LENGTH_SHORT).show();
@@ -1317,29 +1329,23 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         String eLongitude = "";
         String reNameStartEditTxt = sEtPosName.replace(" ", "_");
         String reNameEndEditTxt = eEtPosName.replace(" ", "_");
-        Log.d("test=================NameToPos======================",sEtPosName+"================"+eEtPosName);
         try {
             sAddressList = geocoder.getFromLocationName(reNameStartEditTxt, 10);
             eAddressList = geocoder.getFromLocationName(reNameEndEditTxt, 10);
-            Log.d("test=================NameToPos======================",geocoder.getFromLocationName(reNameStartEditTxt, 10)+"================"+eAddressList);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         String[] sSplitStr = sAddressList.get(0).toString().split(",");
         String[] eSplitStr = eAddressList.get(0).toString().split(",");
-        Log.d("=================split======================",sSplitStr+"================"+eSplitStr);
 //            String sAddress = splitStr[0].substring(splitStr[0].indexOf("\"") + 1,splitStr[0].length() - 2); //주소
 
         sLatitude = sSplitStr[10].substring(sSplitStr[10].indexOf("=") + 1);
         sLongitude = sSplitStr[12].substring(sSplitStr[12].indexOf("=") + 1);
-        Log.d("=================sLongit======================",sLatitude+"================"+sLongitude);
         eLatitude = eSplitStr[10].substring(eSplitStr[10].indexOf("=") + 1);
         eLongitude = eSplitStr[12].substring(eSplitStr[12].indexOf("=") + 1);
-        Log.d("=================eLongit======================",eLatitude+"================"+eLongitude);
         sLatLngPos = new LatLng(Double.valueOf(sLatitude), Double.valueOf(sLongitude));
         eLatLngPos = new LatLng(Double.valueOf(eLatitude), Double.valueOf(eLongitude));
-        Log.d("Lati=================Long======================",sLatLngPos+"================"+eLatLngPos);
         Handler handler = new Handler();
 
         odsayService.requestSearchPubTransPath(sLongitude, sLatitude, eLongitude, eLatitude, "0", "0", "0", mapFindWay.Find_way);
@@ -1408,16 +1414,12 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println(addressList.get(0).toString());
             //콤마를 기준으로 split
             String[] splitStr = addressList.get(0).toString().split(",");
             String address = splitStr[0].substring(splitStr[0].indexOf("\"") + 1, splitStr[0].length() - 2); // 주소
-            System.out.println(address);
 
             String latitude = splitStr[10].substring(splitStr[10].indexOf("=") + 1); // 위도
             String longitude = splitStr[12].substring(splitStr[12].indexOf("=") + 1); // 경도
-            System.out.println(latitude);
-            System.out.println(longitude);
 
             // 좌표(위도, 경도) 생성
             LatLng point = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
@@ -1458,13 +1460,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
-        Log.d("=================================================onNewIntent()================", intent+"");
-        Log.d("=================================================onNewIntent()================", intent.getIntExtra("openFindWay",0)+"");
         if (intent.getStringExtra("jObject") != null) {
             fw_pos_path = intent.getStringExtra("jObject");
             try {
                 JSONObject pos = new JSONObject(fw_pos_path);
-                Log.d("======================jObject=================================", fw_pos_path);
 
                 ArrayList<LatLng> total_finde_pos_array = new ArrayList<>();
                 try {
@@ -1532,14 +1531,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             }
         }
         if(intent.getIntExtra("openFindWay",0)==1){
-            Log.d("sssssssss",""+intent.getIntExtra("openFindWay",0));
             findWayIbtn.callOnClick();
         }
-        if(upPanelLayout.getPanelState()==SlidingUpPanelLayout.PanelState.EXPANDED){
-            Log.d("asdfasdfasdfasfafsdafasdfadfadfasdf","");
-            upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-        }
-
     }
 
     public void MapDraw() {
@@ -1632,6 +1625,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     protected void onResumeFragments() {
         super.onResumeFragments();
         Log.d("=====================================onResumeFragments()", "");
+    }
+
+    protected String uniToKsc(String uni) throws UnsupportedEncodingException{
+        return new String (uni.getBytes("8859_1"),"KSC5601");
     }
 
 }
