@@ -19,10 +19,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bumptech.glide.Glide;
-import com.example.bbic.FP;
+import com.example.bbic.FP.FP;
 import com.example.bbic.Maps_Activity;
 import com.example.bbic.R;
 import com.example.bbic.Setting_Activity;
+import com.example.bbic.Subway;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.BufferedReader;
@@ -48,7 +49,8 @@ public class Bookmark extends AppCompatActivity {
     private ImageView weatherImage, profile;
     private Button[] drawerMenu = new Button[6];
 
-    private String weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, str;
+    private String weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, friendlist, locationlist, buslist, subwaylist;
+    private long k_code;
     Bundle bundle;
 
     //버튼 클릭 리스너 클래스
@@ -63,27 +65,48 @@ public class Bookmark extends AppCompatActivity {
                 case R.id.drawer_menu_1:
                     Log.d("클릭", "onClick: ");
                     Intent intent1 = new Intent(getApplicationContext(), Maps_Activity.class);
-                    intent1.putExtra("닉네임", name);
-                    intent1.putExtra("프로필", address);
-                    intent1.putExtra("미세먼지", fineDust);
-                    intent1.putExtra("초미세먼지", ultraFineDust);
-                    intent1.putExtra("온도", tem);
-                    intent1.putExtra("날씨", weather);
-                    intent1.putExtra("도", area);
-                    intent1.putExtra("시", city);
-                    intent1.putExtra("코로나",covidNum);
+//                    intent1.putExtra("닉네임", name);
+//                    intent1.putExtra("프로필", address);
+//                    intent1.putExtra("미세먼지", fineDust);
+//                    intent1.putExtra("초미세먼지", ultraFineDust);
+//                    intent1.putExtra("온도", tem);
+//                    intent1.putExtra("날씨", weather);
+//                    intent1.putExtra("도", area);
+//                    intent1.putExtra("시", city);
+//                    intent1.putExtra("코로나",covidNum);
+//
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent1);
-                    finish();
                     break;
                 case R.id.drawer_menu_2:
+                    Intent intent2 = new Intent(getApplicationContext(), Subway.class);
+                    intent2.putExtra("코드",k_code);
+                    intent2.putExtra("닉네임", name);
+                    intent2.putExtra("프로필", address);
+                    intent2.putExtra("미세먼지", fineDust);
+                    intent2.putExtra("초미세먼지", ultraFineDust);
+                    intent2.putExtra("온도", tem);
+                    intent2.putExtra("날씨", weather);
+                    intent2.putExtra("도", area);
+                    intent2.putExtra("시", city);
+                    intent2.putExtra("코로나",covidNum);
+                    intent2.putExtra("friendlist",friendlist);
+                    startActivity(intent2);
+                    finish();
                     break;
                 case R.id.drawer_menu_3:
                     drawerLayout.closeDrawer(drawerView);
                     break;
                 case R.id.drawer_menu_4:
+                    Intent intent4 = new Intent(getApplicationContext(), Maps_Activity.class);
+                    intent4.putExtra("openFindWay",1);
+                    intent4.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent4);
+                    finish();
                     break;
                 case R.id.drawer_menu_5:
                     Intent intent5 = new Intent(getApplicationContext(), FP.class);
+                    intent5.putExtra("코드",k_code);
                     intent5.putExtra("닉네임", name);
                     intent5.putExtra("프로필", address);
                     intent5.putExtra("미세먼지", fineDust);
@@ -93,11 +116,13 @@ public class Bookmark extends AppCompatActivity {
                     intent5.putExtra("도", area);
                     intent5.putExtra("시", city);
                     intent5.putExtra("코로나",covidNum);
+                    intent5.putExtra("friendlist",friendlist);
                     startActivity(intent5);
                     finish();
                     break;
                 case R.id.drawer_menu_6:
                     Intent intent6 = new Intent(getApplicationContext(), Setting_Activity.class);
+                    intent6.putExtra("코드", k_code);
                     intent6.putExtra("닉네임", name);
                     intent6.putExtra("프로필", address);
                     intent6.putExtra("미세먼지", fineDust);
@@ -107,20 +132,22 @@ public class Bookmark extends AppCompatActivity {
                     intent6.putExtra("도", area);
                     intent6.putExtra("시", city);
                     intent6.putExtra("코로나",covidNum);
+                    intent6.putExtra("friendlist",friendlist);
                     startActivity(intent6);
                     finish();
                     break;
                 case R.id.home_btn:
                     Intent home = new Intent(getApplicationContext(), Maps_Activity.class);
-                    home.putExtra("닉네임", name);
-                    home.putExtra("프로필", address);
-                    home.putExtra("미세먼지", fineDust);
-                    home.putExtra("초미세먼지", ultraFineDust);
-                    home.putExtra("온도", tem);
-                    home.putExtra("날씨", weather);
-                    home.putExtra("도", area);
-                    home.putExtra("시", city);
-                    home.putExtra("코로나",covidNum);
+//                    home.putExtra("닉네임", name);
+//                    home.putExtra("프로필", address);
+//                    home.putExtra("미세먼지", fineDust);
+//                    home.putExtra("초미세먼지", ultraFineDust);
+//                    home.putExtra("온도", tem);
+//                    home.putExtra("날씨", weather);
+//                    home.putExtra("도", area);
+//                    home.putExtra("시", city);
+//                    home.putExtra("코로나",covidNum);
+                    home.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(home);
                     finish();
                     break;
@@ -148,9 +175,19 @@ public class Bookmark extends AppCompatActivity {
                 switch(tab.getPosition())
                 {
                     case 0:
+                        //new BackgroundTask_location().execute();
+                        bundle = new Bundle();
+                        bundle.putString("locationposlist",locationlist);
+                        bundle.putLong("userCode",k_code);
+                        bookmark_place.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction().replace(R.id.bookmark_tab_container, bookmark_place).commit();
                         break;
                     case 1:
+                        //new BackgroundTask_Subway().execute();
+                        bundle = new Bundle();
+                        bundle.putString("subwaylist", subwaylist);
+                        bundle.putLong("userCode", k_code);
+                        bookmark_transit.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction().replace(R.id.bookmark_tab_container, bookmark_transit).commit();
                         break;
                 }
@@ -206,6 +243,7 @@ public class Bookmark extends AppCompatActivity {
         drawerMenu[5].setOnClickListener(onClickListener);
 
         Intent intent = getIntent();
+        k_code = intent.getLongExtra("코드",0);
         name = intent.getStringExtra("닉네임");
         address = intent.getStringExtra("프로필");
         area = intent.getStringExtra("도");
@@ -215,13 +253,30 @@ public class Bookmark extends AppCompatActivity {
         fineDust = intent.getStringExtra("미세먼지");
         ultraFineDust = intent.getStringExtra("초미세먼지");
         covidNum = intent.getStringExtra("코로나");
+        friendlist = intent.getStringExtra("friendlist");
+        locationlist = intent.getStringExtra("locationlist");
+        subwaylist = intent.getStringExtra("subwaylist");
+
+        System.out.println("locationlist : " +locationlist);
+        System.out.println("subwaylist : " + subwaylist);
         drawer_input();
 
         nickName.setText(name); // 카카오톡 프로필 닉네임
         Glide.with(this).load(address).circleCrop().into(profile); // 카카오톡 프로필 이미지
 
 
-        new BackgroundTask().execute();//파싱 실행
+        new BackgroundTask_location().execute();//파싱 실행
+        new BackgroundTask_Subway().execute();
+
+        bundle = new Bundle();
+        bundle.putString("locationposlist",locationlist);
+        bundle.putString("subwaylist",subwaylist);
+        System.out.println("장소 목록확인 " + locationlist);
+        bundle.putLong("userCode",k_code);
+        bookmark_place = new Bookmark_Place();
+        bookmark_place.setArguments(bundle);
+        bookmark_transit.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().add(R.id.bookmark_tab_container, bookmark_place).commit();
     }
 
     private void drawer_input() {
@@ -340,7 +395,7 @@ public class Bookmark extends AppCompatActivity {
         }
     }
 
-    class BackgroundTask extends AsyncTask<Void, Void, String> {
+    class BackgroundTask_location extends AsyncTask<Void, Void, String> {
 
         String target;
 
@@ -387,12 +442,9 @@ public class Bookmark extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            bundle = new Bundle();
-            bundle.putString("locationposlist",result);
-            System.out.println("장소 목록확인 " + result);
-            bookmark_place = new Bookmark_Place();
-            bookmark_place.setArguments(bundle);
-            getSupportFragmentManager().beginTransaction().add(R.id.bookmark_tab_container, bookmark_place).commit();
+
+            System.out.println("북마크에서 장소리스트 확인" + result);
+            locationlist = result;
         }
 
         @Override
@@ -408,7 +460,7 @@ public class Bookmark extends AppCompatActivity {
 
     }
 
-    class BackgroundTask1 extends AsyncTask<Void, Void, String> {
+    class BackgroundTask_Subway extends AsyncTask<Void, Void, String> {
 
         String target;
 
@@ -455,7 +507,9 @@ public class Bookmark extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            str = result;
+
+            subwaylist  = result;
+            System.out.println("북마크에서 지하철 리스트 확인" + result);
         }
 
         @Override

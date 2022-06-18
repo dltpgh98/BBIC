@@ -1,5 +1,4 @@
 package com.example.bbic.Adapter;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
@@ -18,7 +17,7 @@ import com.bumptech.glide.Glide;
 import com.example.bbic.DB.AcceptFriendRequest;
 import com.example.bbic.DB.deleteAskFriendRequest;
 import com.example.bbic.Data.Friend;
-import com.example.bbic.FP_friend_ask;
+import com.example.bbic.FP.FP_friend_ask;
 import com.example.bbic.R;
 
 import org.json.JSONObject;
@@ -32,7 +31,6 @@ public class FriendAskAdapter extends BaseAdapter {
     private List<Friend> userFriends;
     private List<Friend> userFriendsStatus;
     private Fragment parentActivity;
-
 
     public FriendAskAdapter(Context context, List<Friend> friends, List<Friend> userFriends, FP_friend_ask parentActivity) {
         this.context = context;
@@ -62,9 +60,9 @@ public class FriendAskAdapter extends BaseAdapter {
 
         View v = View.inflate(context, R.layout.fp_friend_ask_list, null);
 
-        ImageView profile = (ImageView) v.findViewById(R.id.list_profile_iv);
-        TextView friendName = (TextView) v.findViewById(R.id.list_name);
-        ImageView friendstatus = (ImageView) v.findViewById(R.id.list_pro_stat_iv);
+        ImageView profile = (ImageView) v.findViewById(R.id.ask_profile_iv);
+        TextView friendName = (TextView) v.findViewById(R.id.ask_name);
+        ImageView friendstatus = (ImageView) v.findViewById(R.id.ask_pro_stat_iv);
 
         int status = friends.get(i).getFriendGhost();
         Glide.with(context).load(friends.get(i).getFriendProfileURL()).circleCrop().into(profile); // 친구프로필
@@ -81,7 +79,7 @@ public class FriendAskAdapter extends BaseAdapter {
             friendstatus.setBackgroundColor(Color.BLUE);
         }
 
-        ImageButton deletebutton = (ImageButton)v.findViewById(R.id.ask_delete_iv);
+        ImageButton deletebutton = (ImageButton)v.findViewById(R.id.ask_delete_ibtn);
         deletebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

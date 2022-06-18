@@ -84,8 +84,8 @@ public class Friend {
         this.friendLat = friendLat;
     }
 
-    public Friend(long userKakaoCode, long friendKakaoCode, int friendStatus, String friendName, String friendEmail, String friendProfileURL, int friendGhost, double friendlong, double friendLat) {
-        this.userKakapCode = userKakaoCode;
+    public Friend(long userKakapCode, long friendKakaoCode, int friendStatus, String friendName, String friendEmail, String friendProfileURL, int friendGhost, double friendlong, double friendLat) {
+        this.userKakapCode = userKakapCode;
         this.friendKakaoCode = friendKakaoCode;
         this.friendStatus = friendStatus;
         this.friendName = friendName;

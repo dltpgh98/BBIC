@@ -1,7 +1,9 @@
 package com.example.bbic.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -12,7 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.bbic.Data.Friend;
-import com.example.bbic.FP_friend_list;
+import com.example.bbic.FP.FP_friend_list;
 import com.example.bbic.R;
 
 import java.util.List;
@@ -59,9 +61,9 @@ public class FriendListAdapter extends BaseAdapter {
 
         View v = View.inflate(context, R.layout.fp_friend_list_list, null);
 
-        ImageView profile = (ImageView) v.findViewById(R.id.list_profile_iv);
-        TextView friendName = (TextView) v.findViewById(R.id.list_name);
-        ImageView friendstatus = (ImageView) v.findViewById(R.id.list_pro_stat_iv);
+        ImageView profile = (ImageView) v.findViewById(R.id.ask_profile_iv);
+        TextView friendName = (TextView) v.findViewById(R.id.ask_name);
+        ImageView friendstatus = (ImageView) v.findViewById(R.id.ask_pro_stat_iv);
 
         int status = friends.get(i).getFriendGhost();
         Glide.with(context).load(friends.get(i).getFriendProfileURL()).circleCrop().into(profile); // 친구프로필
@@ -81,5 +83,4 @@ public class FriendListAdapter extends BaseAdapter {
         v.setTag(friends.get(i).getUserKakapCode());
         return v;
     }
-
 }

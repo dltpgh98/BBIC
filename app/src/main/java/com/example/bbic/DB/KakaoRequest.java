@@ -1,8 +1,10 @@
 package com.example.bbic.DB;
 
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+
 import com.android.volley.toolbox.StringRequest;
 
 import org.jsoup.Connection;
@@ -40,4 +42,3 @@ public class KakaoRequest extends StringRequest{
         return map;
     }
 }
-

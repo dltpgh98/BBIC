@@ -47,10 +47,13 @@ public class Bookmark_Place_abc extends Fragment {
 
 
         String getLocation = null;
+        long getuserCode = 0;
 
         if(getArguments() != null){
             getLocation = getArguments().getString("locationposlist");
+            getuserCode = getArguments().getLong("userCode");
             System.out.println("locationposlist 친구 목록 확인 : " + getLocation);
+            System.out.println("받은 유저코드 :" + getuserCode);
         }
 
         try{
@@ -74,7 +77,9 @@ public class Bookmark_Place_abc extends Fragment {
                 locationLat = object.getDouble("L_lat");
 
                 Location location = new Location(locationName,userCode,locationAddress,locationLong,locationLat);
-                locationList.add(location);
+                if(getuserCode == userCode){
+                    locationList.add(location);
+                }
                 count++;
             }
 
@@ -83,14 +88,14 @@ public class Bookmark_Place_abc extends Fragment {
         }
 
 
-
-        TextView textView = (TextView)rootView.findViewById(R.id.place_abc_tv);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+//
+//        TextView textView = (TextView)rootView.findViewById(R.id.place_abc_tv);
+//        textView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
         return rootView;
     }

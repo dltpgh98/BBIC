@@ -101,98 +101,17 @@
                 android:visibility="gone"/>
 
             <!-- 길찾기 부분 시작 -->
-            <LinearLayout
-                android:id="@+id/view_find_way_lay"
-                android:layout_width="match_parent"
-                android:layout_height="440dp"
-                android:orientation="vertical"
-                android:visibility="gone"
-                >
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="110sp"
-                    android:background="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="1.0">
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/start_pos_tilay"
-                        android:layout_width="280dp"
-                        android:layout_height="wrap_content"
-                        android:background="@color/transparent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent">
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/start_pos_et"
-                            android:layout_width="280sp"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:hint="출발지"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="280dp"
-                        android:layout_height="wrap_content"
-                        android:background="@color/transparent"
-                        app:layout_constraintTop_toBottomOf="@id/start_pos_tilay"
-                        app:layout_constraintStart_toStartOf="parent">
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/end_pos_et"
-                            android:layout_width="280sp"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:hint="도착지" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <ImageButton
-                        android:id="@+id/view_find_way_ibtn"
-                        android:layout_width="80dp"
-                        android:layout_height="match_parent"
-                        app:layout_constraintStart_toEndOf= "@id/start_pos_tilay"
-                        app:layout_constraintEnd_toEndOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/view_transport_table"
-                    android:layout_width="match_parent"
-                    android:layout_height="40sp"
-                    android:visibility="visible">
-                    <com.google.android.material.tabs.TabItem
-                        android:id="@+id/view_tran_subBus_tbi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="버스+지하철"/>
-                    <com.google.android.material.tabs.TabItem
-                        android:id="@+id/view_tran_bus_tbi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="버스"/>
-                    <com.google.android.material.tabs.TabItem
-                        android:id="@+id/view_tran_sub_tbi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="지하철"/>
-                </com.google.android.material.tabs.TabLayout>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/view_RecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="300sp"
-                    android:background="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="1.0"
-                    android:visibility="visible"/>
-
-
-                </LinearLayout>
+            <include layout ="@layout/view_find_way"
+                android:visibility="gone"/>
                 <!-- 길찾기 부분 끝 -->
 
+            <include layout ="@layout/place_info_window"
+                android:visibility="gone"/>
+            <!--장소 정보창-->
+
+            <include layout ="@layout/subway_info_window"
+                android:visibility="gone"/>
+            <!--지하철 정보창-->
             </LinearLayout>
 
         </com.sothree.slidinguppanel.SlidingUpPanelLayout>
@@ -208,6 +127,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:elevation="50sp"
             android:background="@drawable/layout_radious"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"> <!--검색창 밑 사이드바-->
@@ -253,6 +173,37 @@
             android:src="@drawable/ic_baseline_directions_24"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout" />  <!--검색 버튼-->
+
+        <ImageButton
+            android:id="@+id/main_findWay_overlay_clear_ibtn"
+            android:layout_width="45sp"
+            android:layout_height="45sp"
+            app:tint="@color/confirm_text_color"
+            android:background="@drawable/circle2"
+            android:contentDescription="@string/StringValue"
+            android:elevation="50sp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_baseline_close"
+            android:layout_marginTop="65dp"
+            android:layout_marginEnd="10dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout" />  <!--검색 버튼-->
+        <ImageButton
+            android:id="@+id/main_findWay_friend_ibtn"
+            android:layout_width="45sp"
+            android:layout_height="45sp"
+            app:tint="@color/confirm_text_color"
+            android:background="@drawable/circle2"
+            android:contentDescription="@string/StringValue"
+            android:elevation="50sp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/image_profile"
+            android:layout_marginTop="65dp"
+            android:layout_marginEnd="10dp"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/linearLayout" />  <!--검색 버튼-->
 

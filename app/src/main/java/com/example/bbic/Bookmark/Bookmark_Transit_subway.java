@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,17 +14,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bbic.Adapter.PlaceData;
+import com.example.bbic.Adapter.SubwayListAdapter;
 import com.example.bbic.Adapter.Transit_SubwayAdapter;
+import com.example.bbic.Data.Subway;
 import com.example.bbic.R;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class Bookmark_Transit_subway extends Fragment {
 
-    private ArrayList<PlaceData> arrayList;
-    private Transit_SubwayAdapter subwayAdapter;
-    private RecyclerView recyclerView;
-    private LinearLayoutManager linearLayoutManager;
+    private ListView listView;
+    private SubwayListAdapter adapter;
+    private List<Subway> subwayList;
 
     @Nullable
     @Override
@@ -31,45 +37,42 @@ public class Bookmark_Transit_subway extends Fragment {
         //return super.onCreateView(inflater, container, savedInstanceState);
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.bookmark_transit_subway, container, false);
 
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.transit_subway_rv);
-        linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
+        String getsubwaylist = null;
+        long userKakaoCode = 0;
 
-        subwayAdapter =new Transit_SubwayAdapter(arrayList);
-        arrayList = new ArrayList<>();
-        for (int i =1;i<=10;i++){
-            if(i%2==0)
-                arrayList.add(new PlaceData(R.drawable.ic_baseline_star_24,
-                        i+"번 역",(i-1)+"번 방면",(i+1)+"번 방면",
-                        (i-1)+"번 역",(i+i+3)+"분"+i+"초",(i*i)-i+"전역",
-                        (i-1)+"번 역",(i+i+1)+"분"+i+"초",(i*i)-(i-2)+"전역",
-                        (i+i+3)+"번 역",(i+i+4)+"분"+(i+1)+"초",(i*i)-(i-3)+"전역" ,
-                        (i+i)+"번 역",(i+i+3)+"분"+i+"초",(i*i)-i+"전역",
-                        (i+i-1)+"번 역",(i+i+1)+"분"+i+"초",(i*i)-(i-2)+"전역",
-                        (i+i+3)+"번 역",(i+i+4)+"분"+(i+1)+"초",(i*i)-(i-3)+"전역"));
+        if (getArguments() != null) {
+            getsubwaylist = getArguments().getString("subwaylist");
+            userKakaoCode = getArguments().getLong("userCode");
         }
-        subwayAdapter.setArrayList(arrayList);
 
-        recyclerView.setAdapter(subwayAdapter);
+        listView = (ListView) rootView.findViewById(R.id.transit_subway_rv);//
+        subwayList = new ArrayList<Subway>();
+        adapter = new SubwayListAdapter(getContext(), subwayList);
+        listView.setAdapter(adapter);
 
-        TextView textView = (TextView) rootView.findViewById(R.id.textView2);
+        try {
+            JSONObject jsonObject = new JSONObject(getsubwaylist);
+            System.out.println(getsubwaylist);
+            JSONArray jsonArray = jsonObject.getJSONArray("response");
+            int count = 0;
 
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            int stationCode;
+            long userCode;
 
-                PlaceData placeData = new PlaceData(R.drawable.ic_baseline_star_24,
-                        "1번 역","0번 방면","3번 방면",
-                        "00분00초","00분00초","00분00초",
-                        "00분00초","00분00초","00분00초",
-                        "00분00초","00분00초","00분00초" ,
-                        "00분00초","00분00초","00분00초",
-                        "00분00초","00분00초","00분00초",
-                        "00분00초","00분00초","00분00초");
-                arrayList.add(placeData);
-                subwayAdapter.notifyDataSetChanged();
+            while (count < jsonArray.length()) {
+                JSONObject object = jsonArray.getJSONObject(count);
+                stationCode = object.getInt("S_code");
+                userCode = object.getLong("K_code");
+
+                Subway subway = new Subway(stationCode, userCode);
+                if (userKakaoCode == userCode) {
+                    subwayList.add(subway);
+                }
+                count++;
             }
-        });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return rootView;
     }

@@ -15,8 +15,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.bbic.Bookmark.Bookmark;
+import com.example.bbic.FP.FP;
 
 public class Setting_Activity extends AppCompatActivity {
+
 
     //버튼 클릭 리스너 클래스
     class BtnOnClickListener implements View.OnClickListener{
@@ -30,23 +32,41 @@ public class Setting_Activity extends AppCompatActivity {
                 case R.id.drawer_menu_1:
                     Log.d("클릭", "onClick: ");
                     Intent intent1 = new Intent(getApplicationContext(), Maps_Activity.class);
-                    intent1.putExtra("닉네임", name);
-                    intent1.putExtra("프로필", address);
-                    intent1.putExtra("미세먼지", fineDust);
-                    intent1.putExtra("초미세먼지", ultraFineDust);
-                    intent1.putExtra("온도", tem);
-                    intent1.putExtra("날씨", weather);
-                    intent1.putExtra("도", area);
-                    intent1.putExtra("시", city);
-                    intent1.putExtra("코로나",covidNum);
+//                    intent1.putExtra("코드",k_code);
+//                    intent1.putExtra("닉네임", name);
+//                    intent1.putExtra("프로필", address);
+//                    intent1.putExtra("미세먼지", fineDust);
+//                    intent1.putExtra("초미세먼지", ultraFineDust);
+//                    intent1.putExtra("온도", tem);
+//                    intent1.putExtra("날씨", weather);
+//                    intent1.putExtra("도", area);
+//                    intent1.putExtra("시", city);
+//                    intent1.putExtra("코로나",covidNum);
+//                    intent1.putExtra("friendlist",friendlist);
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent1);
                     finish();
                     break;
                 case R.id.drawer_menu_2:
+                    Intent intent2 = new Intent(getApplicationContext(), Subway.class);
+                    intent2.putExtra("코드",k_code);
+                    intent2.putExtra("닉네임", name);
+                    intent2.putExtra("프로필", address);
+                    intent2.putExtra("미세먼지", fineDust);
+                    intent2.putExtra("초미세먼지", ultraFineDust);
+                    intent2.putExtra("온도", tem);
+                    intent2.putExtra("날씨", weather);
+                    intent2.putExtra("도", area);
+                    intent2.putExtra("시", city);
+                    intent2.putExtra("코로나",covidNum);
+                    intent2.putExtra("friendlist",friendlist);
+                    startActivity(intent2);
+                    finish();
                     break;
                 case R.id.drawer_menu_3:
                     System.out.println("click");
                     Intent intent3 = new Intent(getApplicationContext(), Bookmark.class);
+                    intent3.putExtra("코드",k_code);
                     intent3.putExtra("닉네임", name);
                     intent3.putExtra("프로필", address);
                     intent3.putExtra("미세먼지", fineDust);
@@ -56,13 +76,20 @@ public class Setting_Activity extends AppCompatActivity {
                     intent3.putExtra("도", area);
                     intent3.putExtra("시", city);
                     intent3.putExtra("코로나",covidNum);
+                    intent3.putExtra("friendlist",friendlist);
                     startActivity(intent3);
                     finish();
                     break;
                 case R.id.drawer_menu_4:
+                    Intent intent4 = new Intent(getApplicationContext(), Maps_Activity.class);
+                    intent4.putExtra("openFindWay",1);
+                    intent4.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent4);
+                    finish();
                     break;
                 case R.id.drawer_menu_5:
                     Intent intent5 = new Intent(getApplicationContext(), FP.class);
+                    intent5.putExtra("코드",k_code);
                     intent5.putExtra("닉네임", name);
                     intent5.putExtra("프로필", address);
                     intent5.putExtra("미세먼지", fineDust);
@@ -72,6 +99,7 @@ public class Setting_Activity extends AppCompatActivity {
                     intent5.putExtra("도", area);
                     intent5.putExtra("시", city);
                     intent5.putExtra("코로나",covidNum);
+                    intent5.putExtra("friendlist",friendlist);
                     startActivity(intent5);
                     finish();
                     break;
@@ -97,7 +125,8 @@ public class Setting_Activity extends AppCompatActivity {
 
     private final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=경기도부천시날씨"; //웹크롤링 할 주소(1)
     private final String covidURL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=코로나19"; //웹크롤링 할 주소(2)
-    private String weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city;
+    private String weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city,friendlist;
+    private long k_code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +168,7 @@ public class Setting_Activity extends AppCompatActivity {
         drawerMenu[5].setOnClickListener(onClickListener);
 
         Intent intent = getIntent();
+        k_code = intent.getLongExtra("코드",0);
         name = intent.getStringExtra("닉네임");
         address = intent.getStringExtra("프로필");
         area = intent.getStringExtra("도");
@@ -148,6 +178,7 @@ public class Setting_Activity extends AppCompatActivity {
         fineDust = intent.getStringExtra("미세먼지");
         ultraFineDust = intent.getStringExtra("초미세먼지");
         covidNum = intent.getStringExtra("코로나");
+        friendlist = intent.getStringExtra("friendlist");
         drawer_input();
 
         nickName.setText(name); // 카카오톡 프로필 닉네임
