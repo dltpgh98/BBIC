@@ -85,7 +85,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/pro_ask_delete_iv"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -95,7 +95,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/pro_ask_accept_iv"/>
-        <ImageView
+        <ImageButton
             android:id="@+id/pro_ask_accept_iv"
             android:layout_width="30dp"
             android:layout_height="30dp"

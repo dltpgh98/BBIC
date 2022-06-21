@@ -1,11 +1,16 @@
 package com.example.bbic;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -16,14 +21,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bumptech.glide.Glide;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
+import com.example.bbic.Adapter.ViewPager_Item_Adapter;
+import com.example.bbic.Bookmark.Bookmark;
+import com.example.bbic.FP.FP;
+//import com.google.android.gms.oss.licenses.OssLicensesMenuActivity;
 
 public class Setting_Activity extends AppCompatActivity {
+
 
     //버튼 클릭 리스너 클래스
     class BtnOnClickListener implements View.OnClickListener{
@@ -37,23 +41,41 @@ public class Setting_Activity extends AppCompatActivity {
                 case R.id.drawer_menu_1:
                     Log.d("클릭", "onClick: ");
                     Intent intent1 = new Intent(getApplicationContext(), Maps_Activity.class);
-                    intent1.putExtra("닉네임", name);
-                    intent1.putExtra("프로필", address);
-                    intent1.putExtra("미세먼지", fineDust);
-                    intent1.putExtra("초미세먼지", ultraFineDust);
-                    intent1.putExtra("온도", tem);
-                    intent1.putExtra("날씨", weather);
-                    intent1.putExtra("도", area);
-                    intent1.putExtra("시", city);
-                    intent1.putExtra("코로나",covidNum);
+//                    intent1.putExtra("코드",k_code);
+//                    intent1.putExtra("닉네임", name);
+//                    intent1.putExtra("프로필", address);
+//                    intent1.putExtra("미세먼지", fineDust);
+//                    intent1.putExtra("초미세먼지", ultraFineDust);
+//                    intent1.putExtra("온도", tem);
+//                    intent1.putExtra("날씨", weather);
+//                    intent1.putExtra("도", area);
+//                    intent1.putExtra("시", city);
+//                    intent1.putExtra("코로나",covidNum);
+//                    intent1.putExtra("friendlist",friendlist);
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent1);
                     finish();
                     break;
                 case R.id.drawer_menu_2:
+                    Intent intent2 = new Intent(getApplicationContext(), Subway.class);
+                    intent2.putExtra("코드",k_code);
+                    intent2.putExtra("닉네임", name);
+                    intent2.putExtra("프로필", address);
+                    intent2.putExtra("미세먼지", fineDust);
+                    intent2.putExtra("초미세먼지", ultraFineDust);
+                    intent2.putExtra("온도", tem);
+                    intent2.putExtra("날씨", weather);
+                    intent2.putExtra("도", area);
+                    intent2.putExtra("시", city);
+                    intent2.putExtra("코로나",covidNum);
+                    intent2.putExtra("friendlist",friendlist);
+                    startActivity(intent2);
+                    finish();
                     break;
                 case R.id.drawer_menu_3:
                     System.out.println("click");
                     Intent intent3 = new Intent(getApplicationContext(), Bookmark.class);
+                    intent3.putExtra("코드",k_code);
                     intent3.putExtra("닉네임", name);
                     intent3.putExtra("프로필", address);
                     intent3.putExtra("미세먼지", fineDust);
@@ -63,13 +85,20 @@ public class Setting_Activity extends AppCompatActivity {
                     intent3.putExtra("도", area);
                     intent3.putExtra("시", city);
                     intent3.putExtra("코로나",covidNum);
+                    intent3.putExtra("friendlist",friendlist);
                     startActivity(intent3);
                     finish();
                     break;
                 case R.id.drawer_menu_4:
+                    Intent intent4 = new Intent(getApplicationContext(), Maps_Activity.class);
+                    intent4.putExtra("openFindWay",1);
+                    intent4.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent4);
+                    finish();
                     break;
                 case R.id.drawer_menu_5:
                     Intent intent5 = new Intent(getApplicationContext(), FP.class);
+                    intent5.putExtra("코드",k_code);
                     intent5.putExtra("닉네임", name);
                     intent5.putExtra("프로필", address);
                     intent5.putExtra("미세먼지", fineDust);
@@ -79,13 +108,26 @@ public class Setting_Activity extends AppCompatActivity {
                     intent5.putExtra("도", area);
                     intent5.putExtra("시", city);
                     intent5.putExtra("코로나",covidNum);
+                    intent5.putExtra("friendlist",friendlist);
                     startActivity(intent5);
                     finish();
                     break;
                 case R.id.drawer_menu_6:
                     drawerLayout.closeDrawer(drawerView);
                     break;
-
+                case R.id.setting_oss_btn:
+                    //startActivity(new Intent(view.getContext(), OssLicensesMenuActivity.class));
+                    break;
+                case R.id.home_btn:
+                    Intent intent = new Intent(getApplicationContext(), Maps_Activity.class);
+//
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent);
+                    finish();
+                    break;
+                case R.id.setting_personal_btn:
+                    startDialog();
+                    break;
             }
         }
     }
@@ -93,18 +135,21 @@ public class Setting_Activity extends AppCompatActivity {
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
     private View drawerView;
-    private ImageButton menuIbtn, searchIbtn;
+    private ImageButton menuIbtn, searchIbtn, homeBtn, ossBtn, personalBtn;
     private TextView
             temText, fineText, ultraText, covidText, nickName, areaText;
     private ImageView weatherImage, profile;
 
     private Button[] drawerMenu = new Button[6];
 
-
-
     private final String temURL = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=경기도부천시날씨"; //웹크롤링 할 주소(1)
     private final String covidURL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=코로나19"; //웹크롤링 할 주소(2)
-    private String weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city;
+    private String weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city,friendlist;
+    private long k_code;
+
+    private ImageButton diaBackBtn;
+    private Dialog dialog;
+    private TextView diaText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +171,10 @@ public class Setting_Activity extends AppCompatActivity {
         nickName = (TextView)findViewById(R.id.drawer_profile_name); // 카카오톡 닉네임
         areaText = (TextView) findViewById(R.id.drawer_area_text);
 
+        homeBtn = (ImageButton) findViewById(R.id.home_btn);
+        ossBtn = (ImageButton) findViewById(R.id.setting_oss_btn);
+        personalBtn = (ImageButton) findViewById(R.id.setting_personal_btn);
+
         drawerMenu[0] = (Button) findViewById(R.id.drawer_menu_1);
         drawerMenu[1] = (Button) findViewById(R.id.drawer_menu_2);
         drawerMenu[2] = (Button) findViewById(R.id.drawer_menu_3);
@@ -145,7 +194,12 @@ public class Setting_Activity extends AppCompatActivity {
         drawerMenu[4].setOnClickListener(onClickListener);
         drawerMenu[5].setOnClickListener(onClickListener);
 
+        homeBtn.setOnClickListener(onClickListener);
+        ossBtn.setOnClickListener(onClickListener);
+        personalBtn.setOnClickListener(onClickListener);
+
         Intent intent = getIntent();
+        k_code = intent.getLongExtra("코드",0);
         name = intent.getStringExtra("닉네임");
         address = intent.getStringExtra("프로필");
         area = intent.getStringExtra("도");
@@ -155,6 +209,7 @@ public class Setting_Activity extends AppCompatActivity {
         fineDust = intent.getStringExtra("미세먼지");
         ultraFineDust = intent.getStringExtra("초미세먼지");
         covidNum = intent.getStringExtra("코로나");
+        friendlist = intent.getStringExtra("friendlist");
         drawer_input();
 
         nickName.setText(name); // 카카오톡 프로필 닉네임
@@ -243,4 +298,27 @@ public class Setting_Activity extends AppCompatActivity {
 
         }
     };
+
+    private void startDialog(){
+
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.personal_processing);
+        WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+        dialog.getWindow().setAttributes((WindowManager.LayoutParams)layoutParams);
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.setCancelable(true);
+        diaBackBtn = dialog.findViewById(R.id.personal_back_btn);
+        diaBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        diaText = dialog.findViewById(R.id.personal_text);
+        diaText.setMovementMethod(new ScrollingMovementMethod());
+
+        dialog.show();
+    }
 }

@@ -146,7 +146,7 @@
                 android:paddingTop="30dp"
                 android:paddingBottom="30dp">
 
-                <TextView
+                <EditText
                     android:id="@+id/promise_pen_place_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -209,9 +209,9 @@
                     android:fontFamily="@font/fontstyle"
                     android:gravity="top"
                     android:hint="내용"
-                    android:maxLines="4"
-                    android:maxLength="50"
                     android:inputType="textMultiLine"
+                    android:maxLength="50"
+                    android:maxLines="4"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
                     android:textColor="#c4c4c4"

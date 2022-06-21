@@ -15,11 +15,11 @@ public class LogInRequest extends StringRequest{
     final static private String URL = "http://3.85.238.108/login.php";
     private Map<String, String> map;
 
-    public LogInRequest(long k_code, String k_name, String k_email, String k_profile, Response.Listener<String> listener) {
+    public LogInRequest(int k_code, String k_name, String k_email, String k_profile, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
-        map.put("k_code",k_code +"");
+        map.put("k_code",k_code + "");
         map.put("k_name", k_name);
         map.put("k_email",k_email);
         map.put("k_profile", k_profile);

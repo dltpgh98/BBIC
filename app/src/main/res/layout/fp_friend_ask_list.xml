@@ -49,21 +49,23 @@
             app:layout_constraintBottom_toBottomOf="@id/ask_profile_iv"
             app:layout_constraintStart_toEndOf="@id/ask_profile_iv"/>
 
-        <ImageView
-            android:id="@+id/ask_delete_iv"
+
+
+        <ImageButton
+            android:id="@+id/ask_delete_ibtn"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/red_radious"
-            app:srcCompat="@color/green"
+            android:src="@drawable/ic_baseline_close"
             android:layout_marginEnd="15dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/ask_accept_iv"/>
-        <ImageView
+        <ImageButton
             android:id="@+id/ask_accept_iv"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            app:srcCompat="@color/green"
+            android:src="@drawable/ic_baseline_check"
             android:background="@drawable/blue_radious"
             android:layout_marginEnd="15dp"
             app:layout_constraintTop_toTopOf="parent"

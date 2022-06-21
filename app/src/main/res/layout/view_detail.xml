@@ -3,16 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="250sp"
+    android:layout_height="230sp"
     android:orientation="horizontal"
-    android:id="@+id/view_detail">
+    android:id="@+id/view_detail"
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/view_detail_thumbnail"
         android:layout_width="100sp"
         android:layout_height="100sp"
         android:src="@drawable/circle"
-        android:layout_marginVertical="20sp"
+        android:layout_marginVertical="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,8 +33,9 @@
         android:id="@+id/view_detail_name"
         android:layout_width="100sp"
         android:layout_height="30sp"
-        android:layout_marginVertical="125sp"
-        android:text="김동훈"
+        android:layout_marginVertical="120sp"
+        android:text="@string/user_name"
+        android:textColor="@color/black"
         android:textAlignment="center"
         android:fontFamily="@font/fontstyle"
         android:textSize="20sp"
@@ -45,9 +47,9 @@
 
     <ImageButton
         android:id="@+id/view_detail_add_ibtn"
-        android:layout_width="80sp"
-        android:layout_height="80sp"
-        android:layout_marginVertical="160sp"
+        android:layout_width="70sp"
+        android:layout_height="70sp"
+        android:layout_marginVertical="155sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="10sp"
@@ -58,9 +60,9 @@
 
     <ImageButton
         android:id="@+id/view_detail_list_ibtn"
-        android:layout_width="80sp"
-        android:layout_height="80sp"
-        android:layout_marginVertical="160sp"
+        android:layout_width="70sp"
+        android:layout_height="70sp"
+        android:layout_marginVertical="155sp"
         app:layout_constraintStart_toStartOf="@id/view_detail_add_ibtn"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="@id/view_detail_location_ibtn"
@@ -71,9 +73,9 @@
 
     <ImageButton
         android:id="@+id/view_detail_location_ibtn"
-        android:layout_width="80sp"
-        android:layout_height="80sp"
-        android:layout_marginVertical="160sp"
+        android:layout_width="70sp"
+        android:layout_height="70sp"
+        android:layout_marginVertical="155sp"
         app:layout_constraintStart_toStartOf="@id/view_detail_list_ibtn"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="@id/view_detail_way_ibtn"
@@ -84,9 +86,9 @@
 
     <ImageButton
         android:id="@+id/view_detail_way_ibtn"
-        android:layout_width="80sp"
-        android:layout_height="80sp"
-        android:layout_marginVertical="160sp"
+        android:layout_width="70sp"
+        android:layout_height="70sp"
+        android:layout_marginVertical="155sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/find_to_way"
