@@ -333,7 +333,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             public void run() {
                                 vFindIbtn.callOnClick();
                             }
-                        }, 1000);
+                        }, 400);
 
 
                     } catch (JSONException e) {
