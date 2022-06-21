@@ -41,7 +41,7 @@ public class Login_Activity extends AppCompatActivity {
     private ImageView profileImage;
     private static final String TAG = "Login_Activity";
     private String str,promiselist, userlist;
-    private int ghost = 0;
+    private int ghost = 0;//기본 값
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
