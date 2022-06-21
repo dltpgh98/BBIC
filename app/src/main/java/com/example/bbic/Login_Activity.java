@@ -100,7 +100,6 @@ public class Login_Activity extends AppCompatActivity {
 
     }
 
-
     private  void updateKakaoLoginUi() {
         UserApiClient.getInstance().me(new Function2<User, Throwable, Unit>() {
             @Override
