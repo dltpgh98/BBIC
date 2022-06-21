@@ -301,6 +301,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     break;
                 case R.id.view_find_way_ibtn:
 //                    stopService();
+
                     System.out.println("검색 버튼");
                     pathOverlay.setMap(null);
                     String sPosEt = sPosEdit.getText().toString();
@@ -314,6 +315,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         System.out.println("찾을수 없는 장소입니다.");
                     }
                     keyboardmanager.hideSoftInputFromWindow(sPosEdit.getWindowToken(), 0);
+
                     break;
 //                    startService();
                 case R.id.view_header_ghost_btn:
@@ -348,27 +350,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     findWayOverlayClearIBtn.setVisibility(View.GONE);
                     break;
                 case R.id.main_findWay_friend_ibtn:  //친구 길찾기 버튼 Test
-                    findWayIbtn.callOnClick();
-                    try {
 
-                        String friendName=friendListObject.getJSONArray("response").getJSONObject(0).getString("K.K_name");
-                        friendLat = friendListObject.getJSONArray("response").getJSONObject(0).getDouble("K.K_lat");
-                        friendLong = friendListObject.getJSONArray("response").getJSONObject(0).getDouble("K.K_long");
-
-                        sPosEdit.setText("내 위치");
-                        ePosEdit.setText(friendName);
-                        Handler handler =new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                vFindIbtn.callOnClick();
-                            }
-                        },1000);
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
 
                     break;
             }
@@ -400,7 +382,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private TextView headerName, headerCode;
     private ImageView headerGhostBtn, headerSettingBtn;
 
-
     //    private JSONArray[] path;
     private JSONObject result, meResult;
     private String fw_pos_path, mapObject;
@@ -430,6 +411,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     private String allDust, weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, friendlist,promiselist,subwaylist,locationlist,buslist,userlist;
     private long k_code;
+
     // 마커 정보 저장시킬 변수들 선언
     private Vector<LatLng> markersPosition;
     private Vector<Marker> activeMarkers;
@@ -448,10 +430,17 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private static String StationName;
     private static int StationId;
     private static int stationClass;
+    private List<Double> friendLatList = new ArrayList<>();
+    private List<Double> friendLongList = new ArrayList<>();
+    private List<String> friendNameList = new ArrayList<>();
+    private List<String> friendProfileList = new ArrayList<>();
+    private List<Long> friendCodeList = new ArrayList<>();
+    private List<Integer> friendStatusList = new ArrayList<>();
+    private List<Integer> friendGhostList = new ArrayList<>();
+
 
     public static ODsayService odsayService;
     private InputMethodManager keyboardmanager;
-
 
     //수정할수도 있음 ==============================================
     // 현재 카메라가 보고있는 위치
@@ -999,11 +988,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         userlist = intent.getStringExtra("userlist"); //유저 목록
         friendlist = intent.getStringExtra("friendlist"); //친구 목록
         promiselist = intent.getStringExtra("promiselist"); //친구 목록
-        List<String> friendNameList = new ArrayList<>();
-        List<String> friendProfileList = new ArrayList<>();
-        List<Long> friendCodeList = new ArrayList<>();
-        List<Integer> friendStatusList = new ArrayList<>();
-        List<Integer> friendGhostList = new ArrayList<>();
 
         try {
             JSONObject jsonObject = new JSONObject(userlist);
@@ -1033,6 +1017,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             String friendName;
             String friendProfile;
             int friendGhost;
+            double fLat,fLong;
 
             while (count < jsonArray.length()) {
                 JSONObject object = jsonArray.getJSONObject(count);
@@ -1042,6 +1027,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 friendName = object.getString("K.K_name");
                 friendProfile = object.getString("K.K_profile");
                 friendGhost = object.getInt("K.K_ghost");
+                fLat = object.getDouble("K.K_lat");
+                fLong = object.getDouble("K.K_long");
 
                 if(userCode == k_code) {
                     friendCodeList.add(friendCode);
@@ -1049,6 +1036,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     friendStatusList.add(friendStatus);
                     friendProfileList.add(friendProfile);
                     friendGhostList.add(friendGhost);
+                    friendLatList.add(fLat);
+                    friendLongList.add(fLong);
                 }
 
                 count++;
@@ -1683,6 +1672,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
+        if (intent.getIntExtra("fFlag",0) == 1)
+        {
+            String fName = intent.getStringExtra("fName");
+            long fCode = intent.getLongExtra("fCode",0);
+            wayToFriend(fName,fCode);
+        }
+
         if (intent.getStringExtra("jObject") != null) {
             fw_pos_path = intent.getStringExtra("jObject");
             try {
@@ -2117,6 +2113,35 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     }
     protected String uniToKsc(String uni) throws UnsupportedEncodingException {
         return new String (uni.getBytes("8859_1"),"KSC5601");
+    }
+
+    public void wayToFriend(String fName, long fCode)
+    {
+        findWayIbtn.callOnClick();
+        int size = friendCodeList.size();
+
+        for(int i = 0; i < size; i++)
+        {
+            if(fCode == friendCodeList.get(i))
+            {
+                friendLat = friendLatList.get(i);
+                friendLong = friendLongList.get(i);
+            }
+        }
+
+
+        sPosEdit.setText("내 위치");
+        ePosEdit.setText(fName);
+
+        Handler handler =new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                vFindIbtn.callOnClick();
+            }
+        },500);
+
+
     }
 
 
