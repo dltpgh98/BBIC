@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bbic.Adapter.PlaceData;
-import com.example.bbic.Adapter.Promise_AskAdapter;
+import com.example.bbic.Adapter.PromissAskAdapter;
 import com.example.bbic.R;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class FP_promise_ask extends Fragment {
 
     private ArrayList<PlaceData> arrayList;
-    private Promise_AskAdapter askAdapter;
+    private PromissAskAdapter askAdapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
 

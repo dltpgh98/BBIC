@@ -1,6 +1,7 @@
 package com.example.bbic.FP;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.example.bbic.Bookmark.Bookmark;
@@ -21,6 +23,11 @@ import com.example.bbic.Setting_Activity;
 import com.example.bbic.Subway;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class FP extends AppCompatActivity {
@@ -39,7 +46,7 @@ public class FP extends AppCompatActivity {
 
     private Button[] drawerMenu = new Button[6];
 
-    private String weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, friendlist;
+    private String weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, friendlist, promiselist, newfriendlist, newpromiselist;
     private long userCode;
     //버튼 클릭 리스너 클래스
     class BtnOnClickListener implements View.OnClickListener{
@@ -78,7 +85,7 @@ public class FP extends AppCompatActivity {
                     intent2.putExtra("도", area);
                     intent2.putExtra("시", city);
                     intent2.putExtra("코로나",covidNum);
-                    intent2.putExtra("friendlist",friendlist);
+                    //intent2.putExtra("friendlist",friendlist);
                     startActivity(intent2);
                     finish();
                     break;
@@ -94,7 +101,7 @@ public class FP extends AppCompatActivity {
                     intent3.putExtra("도", area);
                     intent3.putExtra("시", city);
                     intent3.putExtra("코로나",covidNum);
-                    intent3.putExtra("friendlist",friendlist);
+                    //intent3.putExtra("friendlist",friendlist);
                     startActivity(intent3);
                     finish();
                     break;
@@ -120,7 +127,7 @@ public class FP extends AppCompatActivity {
                     intent6.putExtra("도", area);
                     intent6.putExtra("시", city);
                     intent6.putExtra("코로나",covidNum);
-                    intent6.putExtra("friendlist",friendlist);
+                    //intent6.putExtra("friendlist",friendlist);
                     startActivity(intent6);
                     finish();
                     break;
@@ -136,7 +143,7 @@ public class FP extends AppCompatActivity {
                     home.putExtra("도", area);
                     home.putExtra("시", city);
                     home.putExtra("코로나",covidNum);
-                    home.putExtra("friendlist",friendlist);
+                    //home.putExtra("friendlist",friendlist);
                     home.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(home);
                     finish();
@@ -165,21 +172,23 @@ public class FP extends AppCompatActivity {
                 switch(tab.getPosition())
                 {
                     case 0:
+                        new BackgroundTask_Friend().execute();
                         bundle = new Bundle();
                         bundle.putString("friendlist",friendlist);
                         bundle.putLong("userCode", userCode);
                         System.out.println("fp에서 유저코드 확인" + userCode);
-                        System.out.println("친구 목록확인 " + friendlist);
+                        //System.out.println("친구 목록확인 " + friendlist);
                         fp_friend.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_friend).commit();
                         break;
                     case 1:
+                        new BackgroundTask_Promise().execute();
                         bundle = new Bundle();
-                        bundle.putString("friendlist",friendlist);
+                        bundle.putString("promiselist",promiselist);
                         bundle.putLong("userCode", userCode);
                         System.out.println("fp에서 유저코드 확인" + userCode);
-                        System.out.println("친구 목록확인 " + friendlist);
-                        fp_friend.setArguments(bundle);
+                        //System.out.println("친구 목록확인 " + friendlist);
+                        fp_promise.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_promise).commit();
                         break;
                 }
@@ -246,19 +255,23 @@ public class FP extends AppCompatActivity {
         ultraFineDust = intent.getStringExtra("초미세먼지");
         covidNum = intent.getStringExtra("코로나");
         friendlist = intent.getStringExtra("friendlist");
+        promiselist = intent.getStringExtra("promiselist");
         drawer_input();
 
         nickName.setText(name); // 카카오톡 프로필 닉네임
         Glide.with(this).load(address).circleCrop().into(profile); // 카카오톡 프로필 이미지
 
-
+        new BackgroundTask_Friend().execute();
+        new BackgroundTask_Promise().execute();
 
         bundle = new Bundle();
         bundle.putString("friendlist",friendlist);
         bundle.putLong("userCode", userCode);
-        System.out.println("fp에서 유저코드 확인" + userCode);
-        System.out.println(" == " + friendlist);
+        bundle.putString("promiselist", promiselist);
+        //System.out.println("fp에서 유저코드 확인" + userCode);
+        System.out.println("FP에서 친구 리스트 확인 :" + friendlist);
         fp_friend.setArguments(bundle);
+        fp_promise.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().add(R.id.fp_tab_container, fp_friend).commit();//여긴 잘됨
     }
 
@@ -355,6 +368,134 @@ public class FP extends AppCompatActivity {
         itemList.add("Page 5");
 
         return itemList;
+    }
+
+    class BackgroundTask_Friend extends AsyncTask<Void, Void, String> {
+        String target;
+
+        @Override
+        protected void onPreExecute() {
+            target = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/friendlist.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+                URL url = new URL(target);
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String temp;
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((temp = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(temp + "\n");
+                }
+
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            System.out.println("파싱 부분 : " + result);
+            friendlist = result;
+        }
+
+        @Override
+        protected void onCancelled(String s) {
+            super.onCancelled(s);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+    }
+
+    class BackgroundTask_Promise extends AsyncTask<Void, Void, String> {
+        String target;
+
+        @Override
+        protected void onPreExecute() {
+            target = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/promisslist.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+                URL url = new URL(target);
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String temp;
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((temp = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(temp + "\n");
+                }
+
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            System.out.println("파싱 부분 : " + result);
+            promiselist = result;
+
+        }
+
+        @Override
+        protected void onCancelled(String s) {
+            super.onCancelled(s);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+
     }
 
 }

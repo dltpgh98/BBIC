@@ -1,6 +1,7 @@
 package com.example.bbic.FP;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +32,11 @@ import com.kakao.sdk.talk.model.FriendsContext;
 
 import org.w3c.dom.Document;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +47,7 @@ public class FP_friend extends Fragment {
     FloatingActionButton fab;
     Bundle bundlelist;
     Bundle bundleask;
+    long userCode = 0;
 
     @Nullable
     @Override
@@ -54,8 +61,8 @@ public class FP_friend extends Fragment {
         fp_friend_ask = new FP_friend_ask(); // 요청 버튼//벌써 여기서 문제
         fab = rootView.findViewById(R.id.fb_fab_btn);
 
-        String friendlist = "";
-        long userCode = 0;
+        String friendlist = null;
+
 
         if(getArguments() != null){
             friendlist = getArguments().getString("friendlist");
@@ -64,14 +71,13 @@ public class FP_friend extends Fragment {
             System.out.println("프렌드에서 유저의 카카오코드 확인" + userCode);
         }//여기까지도 잘됨
 
+
         bundlelist = new Bundle();
-        bundlelist.putString("friendlist", friendlist);
         bundlelist.putLong("userCode", userCode);
-        FragmentTransaction transactionlist =getActivity().getSupportFragmentManager().beginTransaction();
+        bundlelist.putString("friendlist", friendlist);
         fp_friend_list.setArguments(bundlelist);
         fp_friend_ask.setArguments(bundlelist);
-        transactionlist.replace(R.id.fp_container, fp_friend_list);
-        transactionlist.commit();//
+        getChildFragmentManager().beginTransaction().replace(R.id.fp_container, fp_friend_list).commit();
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -139,8 +145,6 @@ public class FP_friend extends Fragment {
             }
         });
 
-
-        getChildFragmentManager().beginTransaction().replace(R.id.fp_container, fp_friend_list).commit();
 
         Button btn = rootView.findViewById(R.id.fp_leftTab_btn);
         btn.setOnClickListener(new View.OnClickListener() {

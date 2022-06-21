@@ -18,6 +18,9 @@ public class FP_promise extends Fragment {
     FP_promise_list fp_promise_list;
     FP_promise_ask fp_promise_ask;
     FloatingActionButton fab;
+    long userCode = 0;
+    String promiselist = null;
+    Bundle bundlelist;
 
 
     @Nullable
@@ -30,6 +33,14 @@ public class FP_promise extends Fragment {
         fp_promise_ask = new FP_promise_ask();
         fab = rootView.findViewById(R.id.fab_btn);
 
+
+        if(getArguments() != null){
+            userCode = getArguments().getLong("userCode");
+            promiselist = getArguments().getString("promiselist");
+            System.out.println("유저코드" + userCode);
+            System.out.println("약속 리스트" + promiselist);
+        }
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -38,7 +49,11 @@ public class FP_promise extends Fragment {
             }
         });
 
-
+        bundlelist = new Bundle();
+        bundlelist.putLong("userCode", userCode);
+        bundlelist.putString("promiselist", promiselist);
+        fp_promise_list.setArguments(bundlelist);
+        fp_promise_ask.setArguments(bundlelist);
         getChildFragmentManager().beginTransaction().replace(R.id.promise_container, fp_promise_list).commit();
 
         Button btn = rootView.findViewById(R.id.p_leftTab_btn);

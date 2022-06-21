@@ -36,7 +36,6 @@ public class FP_friend_list extends Fragment {
     private FriendListAdapter adapter;
     private List<Friend> friendList;
     private List<Friend> userFriendlist;
-    private List<Friend> userFriendlistStatus;
     Bundle bundleask; // 프래그먼트 간의 데이터 전달 시 필요
 
     @Nullable
@@ -63,6 +62,7 @@ public class FP_friend_list extends Fragment {
 
         try {
             JSONObject jsonObject = new JSONObject(getFriend);
+            System.out.println("받은 친구 리스트" + getFriend);
             System.out.println(getFriend);
             JSONArray jsonArray = jsonObject.getJSONArray("response");
             int count = 0;

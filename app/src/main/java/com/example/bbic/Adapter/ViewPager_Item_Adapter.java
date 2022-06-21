@@ -4,9 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
@@ -19,18 +16,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.bbic.Bookmark.Bookmark;
-import com.example.bbic.FP.FP;
-import com.example.bbic.GpsTracker;
-import com.example.bbic.Maps_Activity;
 import com.example.bbic.R;
-import com.example.bbic.Setting_Activity;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.List;
 
@@ -107,27 +97,20 @@ public class ViewPager_Item_Adapter extends RecyclerView.Adapter<ViewPager_Item_
     @Override
     public void onBindViewHolder(@NonNull PagerHolder holder, int position) {
         BtnOnClickListener onClickListener = new BtnOnClickListener();
-        int i;
-        for(i = 0; i < friend_name.size(); i++)
+
+        for(int i = 0; i < friend_name.size(); i++)
         {
             Log.d("test", "onBindViewHolder: "+friend_name.get(i)+"("+i+")");
             Log.d("test", "onBindViewHolder: "+friend_profile.get(i));
             holder.nameHolder[i].setText(friend_name.get(i));
-            //holder.nameHolder[i].setCompoundDrawableTintList(Color.);
-            Glide.with(context).load(friend_profile.get(i)).fitCenter().circleCrop().into(holder.profileHolder[i]);
+            Glide.with(context).load(friend_profile.get(i)).circleCrop().into(holder.profileHolder[i]);
             holder.profileHolder[i].setOnClickListener(onClickListener);
-        }
-        for(;i<8;i++){
-            Glide.with(context).load("https://cdn.discordapp.com/attachments/885795271454384128/984121267068223568/5a22b25fd0d5271f.png").fitCenter().circleCrop().into(holder.profileHolder[i]);
         }
     }
 
     @Override
     public int getItemCount() {
         int page = friend_name.size()/pageItemsCount;
-        if(page==0){
-            page=1;
-        }
         Log.d("itemSize ", "Size : " + page);
         return page;
     }
