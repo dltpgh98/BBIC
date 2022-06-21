@@ -270,6 +270,7 @@ public class FP extends AppCompatActivity {
         bundle.putString("promiselist", promiselist);
         //System.out.println("fp에서 유저코드 확인" + userCode);
         System.out.println("FP에서 친구 리스트 확인 :" + friendlist);
+        System.out.println("FP에서 약속 리스트 확인 :" + promiselist);
         fp_friend.setArguments(bundle);
         fp_promise.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().add(R.id.fp_tab_container, fp_friend).commit();//여긴 잘됨

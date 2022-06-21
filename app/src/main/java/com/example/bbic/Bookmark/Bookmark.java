@@ -49,7 +49,7 @@ public class Bookmark extends AppCompatActivity {
     private ImageView weatherImage, profile;
     private Button[] drawerMenu = new Button[6];
 
-    private String weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, str,friendlist;
+    private String weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, friendlist, locationlist, buslist, subwaylist;
     private long k_code;
     Bundle bundle;
 
@@ -162,7 +162,7 @@ public class Bookmark extends AppCompatActivity {
 
         getHashKey();
 
-        bookmark_transit = new Bookmark_Transit();
+
 
         tabRoot = findViewById(R.id.bookmark_tab_root);
         tabRoot.removeAllTabs();
@@ -175,9 +175,20 @@ public class Bookmark extends AppCompatActivity {
                 switch(tab.getPosition())
                 {
                     case 0:
+                        //new BackgroundTask_location().execute();
+                        bundle = new Bundle();
+                        bundle.putString("locationposlist",locationlist);
+                        bundle.putLong("userCode",k_code);
+                        bookmark_place.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction().replace(R.id.bookmark_tab_container, bookmark_place).commit();
                         break;
                     case 1:
+                        //new BackgroundTask_Subway().execute();
+                        bundle = new Bundle();
+                        bundle.putString("buslist", buslist);
+                        bundle.putString("subwaylist", subwaylist);
+                        bundle.putLong("userCode", k_code);
+                        bookmark_transit.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction().replace(R.id.bookmark_tab_container, bookmark_transit).commit();
                         break;
                 }
@@ -244,13 +255,34 @@ public class Bookmark extends AppCompatActivity {
         ultraFineDust = intent.getStringExtra("초미세먼지");
         covidNum = intent.getStringExtra("코로나");
         friendlist = intent.getStringExtra("friendlist");
+        locationlist = intent.getStringExtra("locationlist");
+        subwaylist = intent.getStringExtra("subwaylist");
+        buslist = intent.getStringExtra("buslist");
+
+        System.out.println("locationlist : " +locationlist);
+        System.out.println("subwaylist : " + subwaylist);
+        System.out.println("buslist" + buslist);
         drawer_input();
 
         nickName.setText(name); // 카카오톡 프로필 닉네임
         Glide.with(this).load(address).circleCrop().into(profile); // 카카오톡 프로필 이미지
 
 
-        new BackgroundTask().execute();//파싱 실행
+        //new BackgroundTask_location().execute();//파싱 실행
+        //new BackgroundTask_Subway().execute();
+
+        bundle = new Bundle();
+        bundle.putString("locationposlist",locationlist);
+        bundle.putString("subwaylist",subwaylist);
+        bundle.putString("buslist", buslist);
+        System.out.println("bookmark_buslist" + buslist);
+        System.out.println("장소 목록확인 " + locationlist);
+        bundle.putLong("userCode",k_code);
+        bookmark_place = new Bookmark_Place();
+        bookmark_transit = new Bookmark_Transit();
+        bookmark_place.setArguments(bundle);
+        bookmark_transit.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().add(R.id.bookmark_tab_container, bookmark_place).commit();
     }
 
     private void drawer_input() {
@@ -369,7 +401,7 @@ public class Bookmark extends AppCompatActivity {
         }
     }
 
-    class BackgroundTask extends AsyncTask<Void, Void, String> {
+    class BackgroundTask_location extends AsyncTask<Void, Void, String> {
 
         String target;
 
@@ -416,12 +448,9 @@ public class Bookmark extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            bundle = new Bundle();
-            bundle.putString("locationposlist",result);
-            System.out.println("장소 목록확인 " + result);
-            bookmark_place = new Bookmark_Place();
-            bookmark_place.setArguments(bundle);
-            getSupportFragmentManager().beginTransaction().add(R.id.bookmark_tab_container, bookmark_place).commit();
+
+            System.out.println("북마크에서 장소리스트 확인" + result);
+            locationlist = result;
         }
 
         @Override
@@ -437,7 +466,7 @@ public class Bookmark extends AppCompatActivity {
 
     }
 
-    class BackgroundTask1 extends AsyncTask<Void, Void, String> {
+    class BackgroundTask_Subway extends AsyncTask<Void, Void, String> {
 
         String target;
 
@@ -484,7 +513,9 @@ public class Bookmark extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            str = result;
+
+            subwaylist  = result;
+            System.out.println("북마크에서 지하철 리스트 확인" + result);
         }
 
         @Override

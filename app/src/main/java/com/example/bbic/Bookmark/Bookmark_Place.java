@@ -29,15 +29,20 @@ public class Bookmark_Place extends Fragment {
         bookmark_place_abc = new Bookmark_Place_abc();
 
         String locationposlist = "";
+        long userCode = 0;
 
         if(getArguments() != null){
             locationposlist = getArguments().getString("locationposlist");
+            userCode = getArguments().getLong("userCode");
             System.out.println("받은 locationposlist 확인 : " + locationposlist);
+            System.out.println("받은 유저 코드" + userCode);
         }
         bundle = new Bundle();
         bundle.putString("locationposlist", locationposlist);
+        bundle.putLong("userCode", userCode);
         FragmentTransaction transaction =getActivity().getSupportFragmentManager().beginTransaction();
         bookmark_place_abc.setArguments(bundle);
+        bookmark_place_new.setArguments(bundle);
         transaction.replace(R.id.bookmark_container, bookmark_place_abc);
         transaction.commit();
 
