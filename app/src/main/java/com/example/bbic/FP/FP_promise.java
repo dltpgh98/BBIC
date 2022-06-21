@@ -20,6 +20,7 @@ public class FP_promise extends Fragment {
     FloatingActionButton fab;
     long userCode = 0;
     String promiselist = null;
+    String friendlist = null;
     Bundle bundlelist;
 
 
@@ -37,14 +38,18 @@ public class FP_promise extends Fragment {
         if(getArguments() != null){
             userCode = getArguments().getLong("userCode");
             promiselist = getArguments().getString("promiselist");
+            friendlist = getArguments().getString("friendlist");
             System.out.println("유저코드" + userCode);
             System.out.println("약속 리스트" + promiselist);
+            System.out.println("약속에서 친구 목록 확인" + friendlist);
         }
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), Promise_write.class);
+                intent.putExtra("friendlist", friendlist);
+                intent.putExtra("userCode", userCode);
                 startActivity(intent);
             }
         });

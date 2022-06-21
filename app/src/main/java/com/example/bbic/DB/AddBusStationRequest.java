@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class AddBusStationRequest extends StringRequest{
 
-    final static private String URL = "http://3.85.238.108/busstation.php";
+    final static private String URL = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/addbusstation.php";
     private Map<String, String> map;
 
     public AddBusStationRequest(int b_stationcode, String b_stationname, String b_direction, Response.Listener<String> listener) {

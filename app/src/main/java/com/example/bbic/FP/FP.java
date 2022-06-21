@@ -175,6 +175,7 @@ public class FP extends AppCompatActivity {
                         new BackgroundTask_Friend().execute();
                         bundle = new Bundle();
                         bundle.putString("friendlist",friendlist);
+                        bundle.putString("promiselist",promiselist);
                         bundle.putLong("userCode", userCode);
                         System.out.println("fp에서 유저코드 확인" + userCode);
                         //System.out.println("친구 목록확인 " + friendlist);
@@ -185,6 +186,7 @@ public class FP extends AppCompatActivity {
                         new BackgroundTask_Promise().execute();
                         bundle = new Bundle();
                         bundle.putString("promiselist",promiselist);
+                        bundle.putString("friendlist",friendlist);
                         bundle.putLong("userCode", userCode);
                         System.out.println("fp에서 유저코드 확인" + userCode);
                         //System.out.println("친구 목록확인 " + friendlist);
