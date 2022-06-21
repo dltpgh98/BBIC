@@ -385,7 +385,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     private SlidingUpPanelLayout upPanelLayout;
     private Bundle bundleFw;
-    private int position;
+    private int position, userGhost;
     private FragmentTransaction ft;
     private MultipartPathOverlay pathOver;
     private PathOverlay pathOverlay;
@@ -398,7 +398,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private Intent serviceIntent;
     private NaverMap naverMap;
 
-    private String allDust, weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, friendlist,promiselist,subwaylist,locationlist,buslist;
+    private String allDust, weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, friendlist,promiselist,subwaylist,locationlist,buslist,userlist;
     private long k_code;
     // 마커 정보 저장시킬 변수들 선언
     private Vector<LatLng> markersPosition;
@@ -965,7 +965,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         nickName.setText(name); // 카카오톡 프로필 닉네임
         Glide.with(this).load(address).circleCrop().into(profile); // 카카오톡 프로필 이미지
 
-
+        userlist = intent.getStringExtra("userlist"); //유저 목록
         friendlist = intent.getStringExtra("friendlist"); //친구 목록
         promiselist = intent.getStringExtra("promiselist"); //친구 목록
         List<String> friendNameList = new ArrayList<>();
@@ -973,6 +973,23 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         List<Long> friendCodeList = new ArrayList<>();
         List<Integer> friendStatusList = new ArrayList<>();
         List<Integer> friendGhostList = new ArrayList<>();
+
+        try {
+            JSONObject jsonObject = new JSONObject(userlist);
+            System.out.println(userlist);
+            JSONArray jsonArray = jsonObject.getJSONArray("response");
+            int count = 0;
+
+            while (count < jsonArray.length()) {
+                JSONObject object = jsonArray.getJSONObject(count);
+                userGhost = object.getInt("K_ghost");
+                System.out.println("맵스에서 고스트 확인" + userGhost);
+
+                count++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         try {
             JSONObject jsonObject = new JSONObject(friendlist);
