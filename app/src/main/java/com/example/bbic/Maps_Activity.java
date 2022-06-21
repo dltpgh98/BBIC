@@ -321,19 +321,19 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     findWayIbtn.callOnClick();
                     try {
 
-                        String friendName=friendListObject.getJSONArray("response").getJSONObject(0).getString("K.K_name");
+                        String friendName = friendListObject.getJSONArray("response").getJSONObject(0).getString("K.K_name");
                         friendLat = friendListObject.getJSONArray("response").getJSONObject(0).getDouble("K.K_lat");
                         friendLong = friendListObject.getJSONArray("response").getJSONObject(0).getDouble("K.K_long");
 
                         sPosEdit.setText("내 위치");
                         ePosEdit.setText(friendName);
-                        Handler handler =new Handler();
+                        Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 vFindIbtn.callOnClick();
                             }
-                        },1000);
+                        }, 1000);
 
 
                     } catch (JSONException e) {
@@ -367,7 +367,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private boolean drawerEnabled = false;
 
     private ImageView headerProfile;
-    private TextView headerName, headerCode;
+    private TextView headerName, headerCode, subway_info_title, subway_info_direction,subway_info_left_station,subway_info_this_station,subway_info_right_station;
     private ImageView headerGhostBtn, headerSettingBtn;
 
 
@@ -398,7 +398,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private Intent serviceIntent;
     private NaverMap naverMap;
 
-    private String allDust, weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, friendlist,promiselist,subwaylist,locationlist,buslist;
+    private String allDust, weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, friendlist, promiselist, subwaylist, locationlist, buslist;
     private long k_code;
     // 마커 정보 저장시킬 변수들 선언
     private Vector<LatLng> markersPosition;
@@ -409,7 +409,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private MapFriendMarkerTread mapTread;
     private JSONObject friendListObject;
 
-    private double friendLat,friendLong;
+    private double friendLat, friendLong;
 
     private StationList[] StationLists;
     private static String y = "", x = "";
@@ -525,8 +525,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 @Override
                 public void run() {
                     odsayService.requestPointSearch(x, y, "5", "1:2", odsay.pointSearch);
-                    if((odsay.getCount()>=1)!=true){
-                        Log.d("========if=========x: ",x+"  y: " +y);
+                    if ((odsay.getCount() >= 1) != true) {
+                        Log.d("========if=========x: ", x + "  y: " + y);
                     }
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -552,7 +552,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
                                     } else if (stationClass == 2) {
                                         odsayService.requestSubwayStationInfo(String.valueOf(StationId), odsay.subwayStationInfo);
-
+                                        setSubway_info_window();
                                     }
 
                                 }
@@ -566,9 +566,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
                             startService();
                         }
-                    },450);
+                    }, 450);
                 }
-            },200);
+            }, 200);
 
 //            odsayService.requestPointSearch(x, y, "5", "1:2", odsay.pointSearch);
 //            new Handler().postDelayed(new Runnable() {
@@ -665,7 +665,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             public void run() {
                 try {
                     markersPosition.clear();
-                    System.out.println("===========청소 확인===================="+markersPosition.toString());
+                    System.out.println("===========청소 확인====================" + markersPosition.toString());
                     mapTread.run();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -703,7 +703,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             public void onCameraChange(int reason, boolean animated) {
                 freeActiveMarkers();
                 // 정의된 마커위치들중 가시거리 내에있는것들만 마커 생성
-                int count=0;
+                int count = 0;
                 LatLng currentPosition = getCurrentPosition(naverMap);
                 String userName;
 //               for(int i = 0; i <= friendMarker.size();i++){
@@ -764,9 +764,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
-
-
 
 
     @Override
@@ -880,10 +877,16 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         sPosEdit = (EditText) findViewById(R.id.start_pos_et);
         ePosEdit = (EditText) findViewById(R.id.end_pos_et);
 
-        place_info_window =(ConstraintLayout) findViewById(R.id.place_info_window);
-        subway_info_window =(ConstraintLayout) findViewById(R.id.subway_info_window);
-        bus_info_window =(ConstraintLayout) findViewById(R.id.bus_info_window);
+        place_info_window = (ConstraintLayout) findViewById(R.id.place_info_window);
 
+        subway_info_window = (ConstraintLayout) findViewById(R.id.subway_info_window);//지하철 정보창
+        subway_info_title = (TextView) findViewById(R.id.subway_info_title_tv);
+        subway_info_direction = (TextView) findViewById(R.id.subway_info_address_tv);
+        subway_info_right_station = (TextView) findViewById(R.id.subway_info_right_station_tv);
+        subway_info_this_station = (TextView) findViewById(R.id.subway_info_right_station_tv);
+        subway_info_left_station = (TextView) findViewById(R.id.subway_info_left_station_tv);
+
+        bus_info_window = (ConstraintLayout) findViewById(R.id.bus_info_window);
 
         findWayOverlayClearIBtn = (ImageButton) findViewById(R.id.main_findWay_overlay_clear_ibtn);
 
@@ -995,7 +998,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 friendProfile = object.getString("K.K_profile");
                 friendGhost = object.getInt("K.K_ghost");
 
-                if(userCode == k_code) {
+                if (userCode == k_code) {
                     friendCodeList.add(friendCode);
                     friendNameList.add(friendName);
                     friendStatusList.add(friendStatus);
@@ -1100,8 +1103,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         });
 
 
-
-
 //===================================================================================================
 //
 //
@@ -1159,14 +1160,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         long tempTime = System.currentTimeMillis();
         long intervalTime = tempTime - backPressedTime;
 
-        if(upPanelLayout.getPanelState()==SlidingUpPanelLayout.PanelState.EXPANDED||upPanelLayout.getPanelState()==SlidingUpPanelLayout.PanelState.ANCHORED){
+        if (upPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED || upPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.ANCHORED) {
             upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-        }else if(drawerEnabled){
+        } else if (drawerEnabled) {
             drawerLayout.closeDrawer(drawerView);
-        }else if(0<=System.currentTimeMillis()&& 2000>= System.currentTimeMillis()){
+        } else if (0 <= System.currentTimeMillis() && 2000 >= System.currentTimeMillis()) {
             finish();
-        }    else
-        {
+        } else {
             backPressedTime = tempTime;
             Toast.makeText(getApplicationContext(), "한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
         }
@@ -1456,7 +1456,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         String eLatitude = "";
         String eLongitude = "";
 
-        if(sEtPosName.equals("내 위치")){
+        if (sEtPosName.equals("내 위치")) {
 
             sLatitude = String.valueOf(gpsTracker.getLatitude());
             sLongitude = String.valueOf(gpsTracker.getLongitude());
@@ -1464,11 +1464,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             eLongitude = String.valueOf(friendLong);
 
 
-
             sLatLngPos = new LatLng(Double.valueOf(sLatitude), Double.valueOf(sLongitude));
             eLatLngPos = new LatLng(Double.valueOf(eLatitude), Double.valueOf(eLongitude));
-        }
-        else{
+        } else {
 
             String reNameStartEditTxt = sEtPosName.replace(" ", "_");
             String reNameEndEditTxt = eEtPosName.replace(" ", "_");
@@ -1487,7 +1485,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
             eLatitude = eSplitStr[10].substring(eSplitStr[10].indexOf("=") + 1);
             eLongitude = eSplitStr[12].substring(eSplitStr[12].indexOf("=") + 1);
-
 
 
             sLatLngPos = new LatLng(Double.valueOf(sLatitude), Double.valueOf(sLongitude));
@@ -1511,7 +1508,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     public void run() {
 //                path = mapFindWay.getPath_s();
                         result = mapFindWay.getResult();
-                        System.out.println(result +"=========================================");
+                        System.out.println(result + "=========================================");
 //                System.out.println("-----------------------result"+result);
 //                FragmentTransaction tf = getSupportFragmentManager().beginTransaction();
 //                        tf.detach(fw_frag).attach(fw_frag).commit();
@@ -1531,7 +1528,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
                             bundleFw.putString("odsay", result.toString());
                             bundleFw.putString("StartName", String.valueOf(sPosEdit.getText()));
-                            bundleFw.putString("EndName",  String.valueOf(ePosEdit.getText()));
+                            bundleFw.putString("EndName", String.valueOf(ePosEdit.getText()));
                             fw_frag.setArguments(bundleFw);
                             frag_set(fw_frag);
                             meResult = result;
@@ -1542,8 +1539,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     }
                 }, 500);
             }
-        },50);
-
+        }, 50);
 
 
 //        path = mapFindWay.getPath_s();
@@ -1695,7 +1691,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             }, 450);
 
                         }
-                    },200);
+                    }, 200);
 
                 } catch (Exception e) {
 //                    e.printStackTrace();
@@ -1752,12 +1748,12 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         break;
                     case 1: //
                         System.out.println("1좌표 추가====================");
-                        if(friendLiArray.getJSONObject(count).getString("K.K_name").equals(name)){
+                        if (friendLiArray.getJSONObject(count).getString("K.K_name").equals(name)) {
 //                            System.out.println("+======+++===+++===+++==++==++=");
                             break;
                         }
                         markersPosition.add(friendPosArray.get(count));
-                        friendMarker.add(new FriendMarker(friendPosArray.get(count),friendLiArray.getJSONObject(count).getString("K.K_name"),friendLiArray.getJSONObject(count).getString("K.K_profile")));
+                        friendMarker.add(new FriendMarker(friendPosArray.get(count), friendLiArray.getJSONObject(count).getString("K.K_name"), friendLiArray.getJSONObject(count).getString("K.K_profile")));
 //                        markersPosition.get(count);
 //                        friendMarkerNameList.add(friendLiArray.getJSONObject(count).getString("K.K_name"));
 //                        System.out.println("=====================================================좌표===================="+markersPosition.get(count));
@@ -1776,6 +1772,40 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             }
 
         }
+
+    }
+
+    public void setSubway_info_window() {
+
+//        viewPager.setVisibility(View.GONE);
+//
+//        view_Header.setVisibility(View.GONE);
+//
+//        indicator.setVisibility(View.GONE);
+//
+//        find_way_page.setVisibility(View.GONE);
+//        bus_info_window.setVisibility(View.GONE);
+//        place_info_window.setVisibility(View.GONE);
+//
+//        subway_info_window.setVisibility(View.VISIBLE);
+//
+//
+//        Handler handler = new Handler();
+//        handler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                subway_info_title.setText(StationName);
+//                String direction = odsay.subwayLists.getPrevOBJ_stationNme()+"-"+StationName+"-"+odsay.subwayLists.getNextOBJ_stationName();
+//                subway_info_direction.setText(direction);
+//                handler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                    }
+//                },450);
+//                upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+//            }
+//        });
 
     }
 
@@ -1876,10 +1906,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         @Override
         protected String doInBackground(Void... voids) {
 
-            try{
+            try {
                 URL url = new URL(target);
 
-                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
                 InputStream inputStream = httpURLConnection.getInputStream();
 
@@ -1889,7 +1919,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
                 StringBuilder stringBuilder = new StringBuilder();
 
-                while((temp = bufferedReader.readLine()) != null){
+                while ((temp = bufferedReader.readLine()) != null) {
                     stringBuilder.append(temp + "\n");
                 }
 
@@ -1898,7 +1928,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 httpURLConnection.disconnect();
                 return stringBuilder.toString().trim();
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
@@ -1941,10 +1971,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         @Override
         protected String doInBackground(Void... voids) {
 
-            try{
+            try {
                 URL url = new URL(target);
 
-                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
                 InputStream inputStream = httpURLConnection.getInputStream();
 
@@ -1954,7 +1984,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
                 StringBuilder stringBuilder = new StringBuilder();
 
-                while((temp = bufferedReader.readLine()) != null){
+                while ((temp = bufferedReader.readLine()) != null) {
                     stringBuilder.append(temp + "\n");
                 }
 
@@ -1963,7 +1993,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 httpURLConnection.disconnect();
                 return stringBuilder.toString().trim();
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
@@ -1977,7 +2007,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         @Override
         protected void onPostExecute(String result) {
 
-            subwaylist  = result;
+            subwaylist = result;
             System.out.println("북마크에서 지하철 리스트 확인" + result);
         }
 
@@ -1993,6 +2023,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
 
     }
+
     class BackgroundTask_Bus extends AsyncTask<Void, Void, String> {
 
         String target;
@@ -2005,10 +2036,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         @Override
         protected String doInBackground(Void... voids) {
 
-            try{
+            try {
                 URL url = new URL(target);
 
-                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
                 InputStream inputStream = httpURLConnection.getInputStream();
 
@@ -2018,7 +2049,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
                 StringBuilder stringBuilder = new StringBuilder();
 
-                while((temp = bufferedReader.readLine()) != null){
+                while ((temp = bufferedReader.readLine()) != null) {
                     stringBuilder.append(temp + "\n");
                 }
 
@@ -2027,7 +2058,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 httpURLConnection.disconnect();
                 return stringBuilder.toString().trim();
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
@@ -2041,7 +2072,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         @Override
         protected void onPostExecute(String result) {
 
-            buslist  = result;
+            buslist = result;
             System.out.println("북마크에서 버스리스트 확인" + result);
         }
 
@@ -2057,8 +2088,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
 
     }
+
     protected String uniToKsc(String uni) throws UnsupportedEncodingException {
-        return new String (uni.getBytes("8859_1"),"KSC5601");
+        return new String(uni.getBytes("8859_1"), "KSC5601");
     }
 
 
