@@ -45,6 +45,15 @@
                 android:src="@drawable/ic_baseline_menu"
                 app:layout_constraintTop_toBottomOf="parent"/>
 
+            <ImageButton
+                android:id="@+id/home_btn"
+                android:layout_margin="10sp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/transparent"
+                android:src="@drawable/ic_baseline_home_24"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -97,7 +106,7 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageButton
-                android:id="@+id/setting_button_4"
+                android:id="@+id/setting_personal_btn"
                 android:layout_width="30dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_baseline_keyboard_arrow_right"
@@ -127,7 +136,7 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageButton
-                android:id="@+id/setting_button_5"
+                android:id="@+id/setting_oss_btn"
                 android:layout_width="30dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_baseline_keyboard_arrow_right"

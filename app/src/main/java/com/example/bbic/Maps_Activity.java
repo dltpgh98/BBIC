@@ -83,6 +83,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -382,7 +383,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     private ViewPager2 viewPager;
     private WormDotsIndicator indicator;
-    private ConstraintLayout view_Header, find_way_page;
+    private ConstraintLayout view_Header, find_way_page, place_info_window, subway_info_window, bus_info_window;
     private boolean viewSwitch;
     private Intent serviceIntent;
     private NaverMap naverMap;
@@ -538,8 +539,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
                                     if (stationClass == 1) {
                                         odsayService.requestBusStationInfo(String.valueOf(StationLists[i].getStationID()), odsay.busStationInfo);
+
                                     } else if (stationClass == 2) {
                                         odsayService.requestSubwayStationInfo(String.valueOf(StationId), odsay.subwayStationInfo);
+
                                     }
 
                                 }
@@ -867,6 +870,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         sPosEdit = (EditText) findViewById(R.id.start_pos_et);
         ePosEdit = (EditText) findViewById(R.id.end_pos_et);
 
+        place_info_window =(ConstraintLayout) findViewById(R.id.place_info_window);
+        subway_info_window =(ConstraintLayout) findViewById(R.id.subway_info_window);
+        bus_info_window =(ConstraintLayout) findViewById(R.id.bus_info_window);
+
+
         findWayOverlayClearIBtn = (ImageButton) findViewById(R.id.main_findWay_overlay_clear_ibtn);
 
 
@@ -945,7 +953,47 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
 
         friendlist = intent.getStringExtra("friendlist"); //친구 목록
+        List<String> friendNameList = new ArrayList<>();
+        List<String> friendProfileList = new ArrayList<>();
+        List<Long> friendCodeList = new ArrayList<>();
+        List<Integer> friendStatusList = new ArrayList<>();
+        List<Integer> friendGhostList = new ArrayList<>();
 
+        try {
+            JSONObject jsonObject = new JSONObject(friendlist);
+            JSONArray jsonArray = jsonObject.getJSONArray("response");
+            int count = 0;
+
+            long userCode;
+            long friendCode;
+            int friendStatus;
+            String friendName;
+            String friendProfile;
+            int friendGhost;
+
+            while (count < jsonArray.length()) {
+                JSONObject object = jsonArray.getJSONObject(count);
+                userCode = object.getLong("F.K_code1");
+                friendCode = object.getLong("F.K_code2");
+                friendStatus = object.getInt("F.F_status");
+                friendName = object.getString("K.K_name");
+                friendProfile = object.getString("K.K_profile");
+                friendGhost = object.getInt("K.K_ghost");
+
+                if(userCode == k_code) {
+                    friendCodeList.add(friendCode);
+                    friendNameList.add(friendName);
+                    friendStatusList.add(friendStatus);
+                    friendProfileList.add(friendProfile);
+                    friendGhostList.add(friendGhost);
+                }
+
+                count++;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (!checkLocationServiceStatus()) {
             showDialogForLocationServiceSetting();
@@ -957,51 +1005,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //      headerCode.setText();
         Glide.with(this).load(address).circleCrop().into(headerProfile);
 
-        List<String> t1 = new ArrayList<>();
-        List<String> t2 = new ArrayList<>();
-        List<Long> t3 = new ArrayList<>();
-        List<Integer> t4 = new ArrayList<>();
-
-        t1.add("김동훈");
-        t1.add("이세호");
-        t1.add("도성대");
-        t1.add("김동훈");
-        t1.add("이세호");
-        t1.add("도성대");
-        t1.add("김동훈");
-        t1.add("이세호");
-
-        t2.add(address);
-        t2.add(address);
-        t2.add(address);
-        t2.add(address);
-        t2.add(address);
-        t2.add(address);
-        t2.add(address);
-        t2.add(address);
-
-        t3.add(1L);
-        t3.add(2L);
-        t3.add(3L);
-        t3.add(1L);
-        t3.add(2L);
-        t3.add(3L);
-        t3.add(1L);
-        t3.add(2L);
-
-        t4.add(1);
-        t4.add(0);
-        t4.add(2);
-        t4.add(1);
-        t4.add(0);
-        t4.add(2);
-        t4.add(1);
-        t4.add(0);
-
 
         //뷰페이저 설정
         viewPager = findViewById(R.id.view_pager);
-        ViewPager_Item_Adapter itemAdapter = new ViewPager_Item_Adapter(this, t1, t2, t3, t4);
+        ViewPager_Item_Adapter itemAdapter = new ViewPager_Item_Adapter(this, friendNameList, friendProfileList, friendCodeList, friendStatusList);
         viewPager.setAdapter(itemAdapter);
 
         viewPager.setOnClickListener(onClickListener);
@@ -1150,10 +1157,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
     }
 
-    public void receiveMessage(Intent intent) {
-
-    }
-
 
     private void drawerInit(String myAddress) {
         add = myAddress.split(" ");
@@ -1262,7 +1265,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 weatherImage.setImageResource(R.drawable.rain);
                 break;
             default:
-                weatherImage.setImageResource(R.drawable.ic_baseline_block);
+//                weatherImage.setImageResource(R.drawable.ic_baseline_block);
                 Log.d("날씨 명", weather);
         }
     }
@@ -1439,19 +1442,18 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         String eLongitude = "";
 
         if(sEtPosName.equals("내 위치")){
-            Log.d("테스트 if===========","");
+
             sLatitude = String.valueOf(gpsTracker.getLatitude());
             sLongitude = String.valueOf(gpsTracker.getLongitude());
             eLatitude = String.valueOf(friendLat);
             eLongitude = String.valueOf(friendLong);
 
-            Log.d("========================","sLatitude :"+sLatitude+"  sLong :"+sLongitude+"  eLat :"+eLatitude+"  eLong :"+eLongitude);
+
 
             sLatLngPos = new LatLng(Double.valueOf(sLatitude), Double.valueOf(sLongitude));
             eLatLngPos = new LatLng(Double.valueOf(eLatitude), Double.valueOf(eLongitude));
         }
         else{
-            Log.d("테스트else===========","");
 
             String reNameStartEditTxt = sEtPosName.replace(" ", "_");
             String reNameEndEditTxt = eEtPosName.replace(" ", "_");
@@ -1483,7 +1485,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         String finalSLatitude = sLatitude;
         String finalELongitude = eLongitude;
         String finalELatitude = eLatitude;
-        Log.d("========================","sLatitude :"+sLatitude+"  sLong :"+sLongitude+"  eLat :"+eLatitude+"  eLong :"+eLongitude);
+
 
         handler.postDelayed(new Runnable() {
             @Override
@@ -1845,6 +1847,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     protected void onResumeFragments() {
         super.onResumeFragments();
         Log.d("=====================================onResumeFragments()", "");
+    }
+
+    protected String uniToKsc(String uni) throws UnsupportedEncodingException {
+        return new String (uni.getBytes("8859_1"),"KSC5601");
     }
 
 }
