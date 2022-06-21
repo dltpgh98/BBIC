@@ -140,12 +140,12 @@ public class PromissAskAdapter extends BaseAdapter {
                     @Override
                     public void onResponse(String response) {
                         try{
-                          JSONObject jsonObject = new JSONObject(response);
-                          boolean success = jsonObject.getBoolean("success");
-                          promises.remove(i);
-                          notifyDataSetChanged();
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            promises.remove(i);
+                            notifyDataSetChanged();
                         }catch (Exception e){
-                                 e.printStackTrace();
+                            e.printStackTrace();
                         }
                     }
                 };
@@ -154,10 +154,9 @@ public class PromissAskAdapter extends BaseAdapter {
                 queue.add(acceptPromiseRequest);
             }
         });
-        
+
 
         return v;
     }
 
 }
-

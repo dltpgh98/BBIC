@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <ListView
         android:id="@+id/promise_list_rv"
         android:layout_width="match_parent"

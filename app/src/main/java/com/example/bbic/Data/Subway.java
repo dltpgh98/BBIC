@@ -1,8 +1,8 @@
 package com.example.bbic.Data;
 
 public class Subway {
-   int stationCode;
-   long userCode;
+    int stationCode;
+    long userCode;
 
     public int getStationCode() {
         return stationCode;

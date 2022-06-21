@@ -32,6 +32,7 @@ public class FriendAskAdapter extends BaseAdapter {
     private List<Friend> userFriendsStatus;
     private Fragment parentActivity;
 
+
     public FriendAskAdapter(Context context, List<Friend> friends, List<Friend> userFriends, FP_friend_ask parentActivity) {
         this.context = context;
         this.friends = friends;
