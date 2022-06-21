@@ -1,12 +1,8 @@
-package com.example.bbic.Bookmark;
+package com.example.bbic.FP;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,9 +13,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
-import com.example.bbic.FP.FP;
+import com.example.bbic.Bookmark.Bookmark;
 import com.example.bbic.Maps_Activity;
 import com.example.bbic.R;
 import com.example.bbic.Setting_Activity;
@@ -31,14 +28,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
-public class Bookmark extends AppCompatActivity {
+public class FP extends AppCompatActivity {
     TabLayout tabRoot;
-    Bookmark_Place bookmark_place;
-    Bookmark_Transit bookmark_transit;
+    FP_friend fp_friend;
+    FP_promise fp_promise;
+    Bundle bundle;
 
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
@@ -47,12 +43,11 @@ public class Bookmark extends AppCompatActivity {
     private TextView
             temText, fineText, ultraText, covidText, nickName, areaText;
     private ImageView weatherImage, profile;
+
     private Button[] drawerMenu = new Button[6];
 
-    private String weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, friendlist, locationlist, buslist, subwaylist;
-    private long k_code;
-    Bundle bundle;
-
+    private String weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, friendlist, promiselist, newfriendlist, newpromiselist;
+    private long userCode;
     //버튼 클릭 리스너 클래스
     class BtnOnClickListener implements View.OnClickListener{
         @Override
@@ -62,8 +57,7 @@ public class Bookmark extends AppCompatActivity {
                 case R.id.menu_ibtn:
                     drawerLayout.openDrawer(drawerView);
                     break;
-                case R.id.drawer_menu_1:
-                    Log.d("클릭", "onClick: ");
+                case R.id.drawer_menu_1://지도
                     Intent intent1 = new Intent(getApplicationContext(), Maps_Activity.class);
 //                    intent1.putExtra("닉네임", name);
 //                    intent1.putExtra("프로필", address);
@@ -74,13 +68,14 @@ public class Bookmark extends AppCompatActivity {
 //                    intent1.putExtra("도", area);
 //                    intent1.putExtra("시", city);
 //                    intent1.putExtra("코로나",covidNum);
-//
+
                     intent1.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent1);
+                    finish();
                     break;
                 case R.id.drawer_menu_2:
                     Intent intent2 = new Intent(getApplicationContext(), Subway.class);
-                    intent2.putExtra("코드",k_code);
+                    intent2.putExtra("코드",userCode);
                     intent2.putExtra("닉네임", name);
                     intent2.putExtra("프로필", address);
                     intent2.putExtra("미세먼지", fineDust);
@@ -90,12 +85,25 @@ public class Bookmark extends AppCompatActivity {
                     intent2.putExtra("도", area);
                     intent2.putExtra("시", city);
                     intent2.putExtra("코로나",covidNum);
-                    intent2.putExtra("friendlist",friendlist);
+                    //intent2.putExtra("friendlist",friendlist);
                     startActivity(intent2);
                     finish();
                     break;
                 case R.id.drawer_menu_3:
-                    drawerLayout.closeDrawer(drawerView);
+                    Intent intent3 = new Intent(getApplicationContext(), Bookmark.class);
+                    intent3.putExtra("코드",userCode);
+                    intent3.putExtra("닉네임", name);
+                    intent3.putExtra("프로필", address);
+                    intent3.putExtra("미세먼지", fineDust);
+                    intent3.putExtra("초미세먼지", ultraFineDust);
+                    intent3.putExtra("온도", tem);
+                    intent3.putExtra("날씨", weather);
+                    intent3.putExtra("도", area);
+                    intent3.putExtra("시", city);
+                    intent3.putExtra("코로나",covidNum);
+                    //intent3.putExtra("friendlist",friendlist);
+                    startActivity(intent3);
+                    finish();
                     break;
                 case R.id.drawer_menu_4:
                     Intent intent4 = new Intent(getApplicationContext(), Maps_Activity.class);
@@ -105,24 +113,11 @@ public class Bookmark extends AppCompatActivity {
                     finish();
                     break;
                 case R.id.drawer_menu_5:
-                    Intent intent5 = new Intent(getApplicationContext(), FP.class);
-                    intent5.putExtra("코드",k_code);
-                    intent5.putExtra("닉네임", name);
-                    intent5.putExtra("프로필", address);
-                    intent5.putExtra("미세먼지", fineDust);
-                    intent5.putExtra("초미세먼지", ultraFineDust);
-                    intent5.putExtra("온도", tem);
-                    intent5.putExtra("날씨", weather);
-                    intent5.putExtra("도", area);
-                    intent5.putExtra("시", city);
-                    intent5.putExtra("코로나",covidNum);
-                    intent5.putExtra("friendlist",friendlist);
-                    startActivity(intent5);
-                    finish();
+                    drawerLayout.closeDrawer(drawerView);
                     break;
                 case R.id.drawer_menu_6:
                     Intent intent6 = new Intent(getApplicationContext(), Setting_Activity.class);
-                    intent6.putExtra("코드", k_code);
+                    intent6.putExtra("코드",userCode);
                     intent6.putExtra("닉네임", name);
                     intent6.putExtra("프로필", address);
                     intent6.putExtra("미세먼지", fineDust);
@@ -132,21 +127,23 @@ public class Bookmark extends AppCompatActivity {
                     intent6.putExtra("도", area);
                     intent6.putExtra("시", city);
                     intent6.putExtra("코로나",covidNum);
-                    intent6.putExtra("friendlist",friendlist);
+                    //intent6.putExtra("friendlist",friendlist);
                     startActivity(intent6);
                     finish();
                     break;
                 case R.id.home_btn:
                     Intent home = new Intent(getApplicationContext(), Maps_Activity.class);
-//                    home.putExtra("닉네임", name);
-//                    home.putExtra("프로필", address);
-//                    home.putExtra("미세먼지", fineDust);
-//                    home.putExtra("초미세먼지", ultraFineDust);
-//                    home.putExtra("온도", tem);
-//                    home.putExtra("날씨", weather);
-//                    home.putExtra("도", area);
-//                    home.putExtra("시", city);
-//                    home.putExtra("코로나",covidNum);
+                    home.putExtra("코드",userCode);
+                    home.putExtra("닉네임", name);
+                    home.putExtra("프로필", address);
+                    home.putExtra("미세먼지", fineDust);
+                    home.putExtra("초미세먼지", ultraFineDust);
+                    home.putExtra("온도", tem);
+                    home.putExtra("날씨", weather);
+                    home.putExtra("도", area);
+                    home.putExtra("시", city);
+                    home.putExtra("코로나",covidNum);
+                    //home.putExtra("friendlist",friendlist);
                     home.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(home);
                     finish();
@@ -158,16 +155,16 @@ public class Bookmark extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bookmark);
+        setContentView(R.layout.fp);
 
-        getHashKey();
+        fp_promise = new FP_promise();
+        fp_friend = new FP_friend();
 
-        bookmark_transit = new Bookmark_Transit();
-
-        tabRoot = findViewById(R.id.bookmark_tab_root);
+        tabRoot = findViewById(R.id.fp_tab_root);
         tabRoot.removeAllTabs();
-        tabRoot.addTab(tabRoot.newTab().setText("장소"));
-        tabRoot.addTab(tabRoot.newTab().setText("대중교통"));
+        tabRoot.addTab(tabRoot.newTab().setText("친구"));
+        tabRoot.addTab(tabRoot.newTab().setText("약속"));
+
 
         tabRoot.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -175,20 +172,24 @@ public class Bookmark extends AppCompatActivity {
                 switch(tab.getPosition())
                 {
                     case 0:
-                        //new BackgroundTask_location().execute();
+                        new BackgroundTask_Friend().execute();
                         bundle = new Bundle();
-                        bundle.putString("locationposlist",locationlist);
-                        bundle.putLong("userCode",k_code);
-                        bookmark_place.setArguments(bundle);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.bookmark_tab_container, bookmark_place).commit();
+                        bundle.putString("friendlist",friendlist);
+                        bundle.putLong("userCode", userCode);
+                        System.out.println("fp에서 유저코드 확인" + userCode);
+                        //System.out.println("친구 목록확인 " + friendlist);
+                        fp_friend.setArguments(bundle);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_friend).commit();
                         break;
                     case 1:
-                        //new BackgroundTask_Subway().execute();
+                        new BackgroundTask_Promise().execute();
                         bundle = new Bundle();
-                        bundle.putString("subwaylist", subwaylist);
-                        bundle.putLong("userCode", k_code);
-                        bookmark_transit.setArguments(bundle);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.bookmark_tab_container, bookmark_transit).commit();
+                        bundle.putString("promiselist",promiselist);
+                        bundle.putLong("userCode", userCode);
+                        System.out.println("fp에서 유저코드 확인" + userCode);
+                        //System.out.println("친구 목록확인 " + friendlist);
+                        fp_promise.setArguments(bundle);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_promise).commit();
                         break;
                 }
             }
@@ -243,7 +244,7 @@ public class Bookmark extends AppCompatActivity {
         drawerMenu[5].setOnClickListener(onClickListener);
 
         Intent intent = getIntent();
-        k_code = intent.getLongExtra("코드",0);
+        userCode = intent.getLongExtra("코드",0);
         name = intent.getStringExtra("닉네임");
         address = intent.getStringExtra("프로필");
         area = intent.getStringExtra("도");
@@ -254,32 +255,24 @@ public class Bookmark extends AppCompatActivity {
         ultraFineDust = intent.getStringExtra("초미세먼지");
         covidNum = intent.getStringExtra("코로나");
         friendlist = intent.getStringExtra("friendlist");
-        locationlist = intent.getStringExtra("locationlist");
-        subwaylist = intent.getStringExtra("subwaylist");
-        buslist = intent.getStringExtra("buslist");
-
-        System.out.println("locationlist : " +locationlist);
-        System.out.println("subwaylist : " + subwaylist);
-        System.out.println("buslist" + buslist);
+        promiselist = intent.getStringExtra("promiselist");
         drawer_input();
 
         nickName.setText(name); // 카카오톡 프로필 닉네임
         Glide.with(this).load(address).circleCrop().into(profile); // 카카오톡 프로필 이미지
 
-
-        new BackgroundTask_location().execute();//파싱 실행
-        new BackgroundTask_Subway().execute();
+        new BackgroundTask_Friend().execute();
+        new BackgroundTask_Promise().execute();
 
         bundle = new Bundle();
-        bundle.putString("locationposlist",locationlist);
-        bundle.putString("subwaylist",subwaylist);
-        bundle.putString("buslist", buslist);
-        System.out.println("장소 목록확인 " + locationlist);
-        bundle.putLong("userCode",k_code);
-        bookmark_place = new Bookmark_Place();
-        bookmark_place.setArguments(bundle);
-        bookmark_transit.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().add(R.id.bookmark_tab_container, bookmark_place).commit();
+        bundle.putString("friendlist",friendlist);
+        bundle.putLong("userCode", userCode);
+        bundle.putString("promiselist", promiselist);
+        //System.out.println("fp에서 유저코드 확인" + userCode);
+        System.out.println("FP에서 친구 리스트 확인 :" + friendlist);
+        fp_friend.setArguments(bundle);
+        fp_promise.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().add(R.id.fp_tab_container, fp_friend).commit();//여긴 잘됨
     }
 
     private void drawer_input() {
@@ -377,43 +370,21 @@ public class Bookmark extends AppCompatActivity {
         return itemList;
     }
 
-    private void getHashKey(){
-        PackageInfo packageInfo = null;
-        try {
-            packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        if (packageInfo == null)
-            Log.e("KeyHash", "KeyHash:null");
+    class BackgroundTask_Friend extends AsyncTask<Void, Void, String> {
+        String target;
 
-        for (Signature signature : packageInfo.signatures) {
+        @Override
+        protected void onPreExecute() {
+            target = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/friendlist.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
             try {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            } catch (NoSuchAlgorithmException e) {
-                Log.e("KeyHash", "Unable to get MessageDigest. signature=" + signature, e);
-            }
-        }
-    }
-
-    class BackgroundTask_location extends AsyncTask<Void, Void, String> {
-
-        String target;
-
-        @Override
-        protected void onPreExecute() {
-            target = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/locationposlist.php";
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-
-            try{
                 URL url = new URL(target);
 
-                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
                 InputStream inputStream = httpURLConnection.getInputStream();
 
@@ -423,7 +394,7 @@ public class Bookmark extends AppCompatActivity {
 
                 StringBuilder stringBuilder = new StringBuilder();
 
-                while((temp = bufferedReader.readLine()) != null){
+                while ((temp = bufferedReader.readLine()) != null) {
                     stringBuilder.append(temp + "\n");
                 }
 
@@ -432,7 +403,7 @@ public class Bookmark extends AppCompatActivity {
                 httpURLConnection.disconnect();
                 return stringBuilder.toString().trim();
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
@@ -446,8 +417,72 @@ public class Bookmark extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            System.out.println("북마크에서 장소리스트 확인" + result);
-            locationlist = result;
+            System.out.println("파싱 부분 : " + result);
+            friendlist = result;
+        }
+
+        @Override
+        protected void onCancelled(String s) {
+            super.onCancelled(s);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+    }
+
+    class BackgroundTask_Promise extends AsyncTask<Void, Void, String> {
+        String target;
+
+        @Override
+        protected void onPreExecute() {
+            target = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/promisslist.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+                URL url = new URL(target);
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String temp;
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((temp = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(temp + "\n");
+                }
+
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            System.out.println("파싱 부분 : " + result);
+            promiselist = result;
+
         }
 
         @Override
@@ -463,68 +498,4 @@ public class Bookmark extends AppCompatActivity {
 
     }
 
-    class BackgroundTask_Subway extends AsyncTask<Void, Void, String> {
-
-        String target;
-
-        @Override
-        protected void onPreExecute() {
-            target = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/subwaylist.php";
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-
-            try{
-                URL url = new URL(target);
-
-                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
-
-                InputStream inputStream = httpURLConnection.getInputStream();
-
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String temp;
-
-                StringBuilder stringBuilder = new StringBuilder();
-
-                while((temp = bufferedReader.readLine()) != null){
-                    stringBuilder.append(temp + "\n");
-                }
-
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return stringBuilder.toString().trim();
-
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-
-            subwaylist  = result;
-            System.out.println("북마크에서 지하철 리스트 확인" + result);
-        }
-
-        @Override
-        protected void onCancelled(String s) {
-            super.onCancelled(s);
-        }
-
-        @Override
-        protected void onCancelled() {
-            super.onCancelled();
-        }
-
-
-    }
 }

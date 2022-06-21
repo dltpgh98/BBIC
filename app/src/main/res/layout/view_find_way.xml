@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="440dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/view_find_way_lay">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/view_edit_layout"
+            android:layout_width="match_parent"
+            android:layout_height="110sp"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
+            <ImageButton
+                android:id="@+id/posEdit_change_ibtn"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/edit_change"
+                android:background="@color/transparent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/start_pos_tilay"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/posEdit_change_ibtn">
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/start_pos_et"
+                    android:layout_width="240sp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/transparent"
+                    android:text=""
+                    android:hint="출발지" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                app:layout_constraintTop_toBottomOf="@id/start_pos_tilay"
+                app:layout_constraintStart_toEndOf="@id/posEdit_change_ibtn">
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/end_pos_et"
+                    android:layout_width="240sp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/transparent"
+                    android:text=""
+                    android:hint="도착지" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/view_find_way_ibtn"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_search"
+                android:background="@drawable/beige_radious"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintStart_toEndOf= "@id/start_pos_tilay"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/view_transport_table"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            app:layout_constraintTop_toBottomOf="@id/view_edit_layout"
+            android:visibility="visible">
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/view_tran_subBus_tbi"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="버스+지하철"/>
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/view_tran_bus_tbi"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="버스"/>
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/view_tran_sub_tbi"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="지하철"/>
+        </com.google.android.material.tabs.TabLayout>
+        <!--                <androidx.recyclerview.widget.RecyclerView-->
+        <!--                    android:id="@+id/view_RecyclerView"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="300sp"-->
+        <!--                    android:background="@color/white"-->
+        <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                    app:layout_constraintHorizontal_bias="1.0"-->
+        <!--                    app:layout_constraintStart_toStartOf="parent"-->
+        <!--                    app:layout_constraintTop_toTopOf="parent"-->
+        <!--                    app:layout_constraintVertical_bias="1.0"-->
+        <!--                    android:visibility="visible"/>-->
+    <fragment
+        android:id="@+id/view_fw_container"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:name="com.example.bbic.FindWay.Find_Way_Frag"
+        app:layout_constraintTop_toBottomOf="@id/view_transport_table"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

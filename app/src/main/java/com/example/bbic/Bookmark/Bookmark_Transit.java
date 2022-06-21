@@ -27,15 +27,18 @@ public class Bookmark_Transit extends Fragment {
         bookmark_transit_subway = new Bookmark_Transit_subway();
 
         String getsubwaylist = null;
+        String getbuslist = null;
         long userCode = 0;
 
         if(getArguments() != null){
             getsubwaylist = getArguments().getString("subwaylist");
+            getbuslist = getArguments().getString("buslist");
             userCode  =getArguments().getLong("userCode");
         }
 
         bundle = new Bundle();
         bundle.putString("subwaylist", getsubwaylist);
+        bundle.putString("buslist", getbuslist);
         bundle.putLong("userCode", userCode);
         bookmark_transit_bus.setArguments(bundle);
         bookmark_transit_subway.setArguments(bundle);

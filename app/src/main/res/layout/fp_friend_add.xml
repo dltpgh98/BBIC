@@ -8,9 +8,10 @@
 
 
     <ListView
-        android:id="@+id/transit_bus_rv"
+        android:id="@+id/friend_add_lv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
+
 
 
 </LinearLayout>
