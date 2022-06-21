@@ -162,7 +162,7 @@ public class Bookmark extends AppCompatActivity {
 
         getHashKey();
 
-        bookmark_transit = new Bookmark_Transit();
+
 
         tabRoot = findViewById(R.id.bookmark_tab_root);
         tabRoot.removeAllTabs();
@@ -185,6 +185,7 @@ public class Bookmark extends AppCompatActivity {
                     case 1:
                         //new BackgroundTask_Subway().execute();
                         bundle = new Bundle();
+                        bundle.putString("buslist", buslist);
                         bundle.putString("subwaylist", subwaylist);
                         bundle.putLong("userCode", k_code);
                         bookmark_transit.setArguments(bundle);
@@ -267,16 +268,18 @@ public class Bookmark extends AppCompatActivity {
         Glide.with(this).load(address).circleCrop().into(profile); // 카카오톡 프로필 이미지
 
 
-        new BackgroundTask_location().execute();//파싱 실행
-        new BackgroundTask_Subway().execute();
+        //new BackgroundTask_location().execute();//파싱 실행
+        //new BackgroundTask_Subway().execute();
 
         bundle = new Bundle();
         bundle.putString("locationposlist",locationlist);
         bundle.putString("subwaylist",subwaylist);
         bundle.putString("buslist", buslist);
+        System.out.println("bookmark_buslist" + buslist);
         System.out.println("장소 목록확인 " + locationlist);
         bundle.putLong("userCode",k_code);
         bookmark_place = new Bookmark_Place();
+        bookmark_transit = new Bookmark_Transit();
         bookmark_place.setArguments(bundle);
         bookmark_transit.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().add(R.id.bookmark_tab_container, bookmark_place).commit();

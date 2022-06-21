@@ -34,6 +34,7 @@ public class Bookmark_Transit extends Fragment {
             getsubwaylist = getArguments().getString("subwaylist");
             getbuslist = getArguments().getString("buslist");
             userCode  =getArguments().getLong("userCode");
+            System.out.println("bookmark_transit_buslist" + getbuslist);
         }
 
         bundle = new Bundle();
