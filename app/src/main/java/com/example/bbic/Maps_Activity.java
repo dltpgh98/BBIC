@@ -51,6 +51,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.bbic.Adapter.ViewPager_Item_Adapter;
 import com.example.bbic.Bookmark.Bookmark;
+import com.example.bbic.DB.UpdateGhostRequest;
 import com.example.bbic.DB.UpdatePosRequest;
 import com.example.bbic.Data.FriendMarker;
 import com.example.bbic.FP.FP;
@@ -135,6 +136,30 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         @SuppressLint("NonConstantResourceId")
         @Override
         public void onClick(View view) {
+
+            Response.Listener<String> responseListenerPos = new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+
+                    try {
+                        System.out.println("업데이트" + response);
+                        //JSONObject jsonObject = new JSONObject( response );
+                        //boolean success = jsonObject.getBoolean( "success" );
+                        boolean success = Boolean.parseBoolean(response);
+                        System.out.println(success);
+                        //업데이트 성공시
+                        if (success) {
+                            System.out.println("업데이트 성공");
+                            //업데이트 실패시
+                        } else {
+                            System.out.println("업데이트 실패");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+
             switch (view.getId()) {
                 //case를 통해 id에 따른 클릭이벤트 실행
                 case R.id.menu_ibtn:
@@ -293,17 +318,22 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                    startService();
                 case R.id.view_header_ghost_btn:
 
-                    switch (sw) {
+                    switch (userGhost) {
                         case 0:
-                            sw = 1;
+                            userGhost = 1;
                             headerGhostBtn.setImageResource(R.drawable.ghost2);
                             break;
 
                         case 1:
-                            sw = 0;
+                            userGhost = 0;
                             headerGhostBtn.setImageResource(R.drawable.ghost1);
                             break;
                     }
+
+                    UpdateGhostRequest updateGhostRequest = new UpdateGhostRequest(k_code, userGhost, responseListenerPos);
+                    RequestQueue queuePos = Volley.newRequestQueue(Maps_Activity.this);
+                    queuePos.add(updateGhostRequest);
+
                     break;
                 case R.id.posEdit_change_ibtn:
                     String startEdit = sPosEdit.getText().toString();
@@ -832,10 +862,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-
-                UpdatePosRequest updatePosRequest = new UpdatePosRequest(k_code, gpsTracker.getLongitude(), gpsTracker.getLatitude(), responseListenerPos);
-                RequestQueue queuePos = Volley.newRequestQueue(Maps_Activity.this);
-                queuePos.add(updatePosRequest);
+                if(userGhost==0){
+                    UpdatePosRequest updatePosRequest = new UpdatePosRequest(k_code, gpsTracker.getLongitude(), gpsTracker.getLatitude(), responseListenerPos);
+                    RequestQueue queuePos = Volley.newRequestQueue(Maps_Activity.this);
+                    queuePos.add(updatePosRequest);
+                }
             }
         };
 
@@ -1031,6 +1062,16 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             showDialogForLocationServiceSetting();
         } else {
             checkRunTimePermission();
+        }
+
+        switch (userGhost) {
+            case 0:
+                headerGhostBtn.setImageResource(R.drawable.ghost1);
+                break;
+
+            case 1:
+                headerGhostBtn.setImageResource(R.drawable.ghost2);
+                break;
         }
 
         headerName.setText(name);
