@@ -122,7 +122,6 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
         int mHour = c.get(Calendar.HOUR);
         int mMinute = c.get(Calendar.MINUTE);
 
-
         close = (TextView) findViewById(R.id.promise_write_close_tv);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
