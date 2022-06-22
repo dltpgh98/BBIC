@@ -334,11 +334,34 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                                 queue.add(invitePartyRequest);
                             }
                         }
+                        new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new BackgroundTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 }, 300);
 
-                new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                new BackgroundTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent1 = new Intent(getApplicationContext(), FP.class);
+                        intent1.putExtra("promiselist", newPromiselist);
+                        intent1.putExtra("friendlist", newFriendlist);
+                        intent1.putExtra("코드", userKakaoCode);
+                        intent1.putExtra("locationlist", locationlist);
+                        intent1.putExtra("buslist", buslist);
+                        intent1.putExtra("subwaylist", subwaylist);
+                        intent1.putExtra("도", area);
+                        intent1.putExtra("시", city);
+                        intent1.putExtra("날씨", weather);
+                        intent1.putExtra("코로나", covidNum);
+                        intent1.putExtra("미세먼지", fineDust);
+                        intent1.putExtra("초미세먼지", ultraFineDust);
+                        intent1.putExtra("닉네임", name);
+                        intent1.putExtra("프로필", address);
+                        intent1.putExtra("온도", tem);
+                        startActivity(intent1);
+                        finish();
+                    }
+                },2000);
 
                 /*for (int i = 0; i < friendCount; i++) {
                     if (menuitem.get(i).toString().equals(strArr[i].toString())) {

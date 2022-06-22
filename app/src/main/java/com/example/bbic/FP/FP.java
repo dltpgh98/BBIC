@@ -173,6 +173,7 @@ public class FP extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fp);
 
+
         fp_promise = new FP_promise();
         fp_friend = new FP_friend();
 
