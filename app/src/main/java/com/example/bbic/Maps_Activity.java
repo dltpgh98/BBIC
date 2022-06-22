@@ -579,7 +579,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                 infoWindow.open(naverMap);
 
                             } else {
-                                infoWindow.setPosition(coord);
+                                /*infoWindow.setPosition(coord);*/
                                 infoWindow.open(naverMap);
                             }
 

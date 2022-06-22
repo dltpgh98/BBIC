@@ -70,8 +70,12 @@
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout-ldltr/setting.xml" value="0.33" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/drawer.xml" value="0.1875" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/help.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/login.xml" value="0.25" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/personal_processing.xml" value="0.18802083333333333" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/spons.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/subway.xml" value="0.1875" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/terms_conditions.xml" value="0.18802083333333333" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/test.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/view_detail.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/view_division.xml" value="0.1875" />
