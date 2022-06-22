@@ -74,7 +74,7 @@ public class FriendListAdapter extends BaseAdapter {
             friendstatus.setBackgroundColor(Color.GREEN);
         }
         if (status == 1) {
-            friendstatus.setBackgroundColor(Color.parseColor("FF6A00"));
+            friendstatus.setBackgroundColor(Color.parseColor("#FF6A00"));
         }
         if (status == 2) {
             friendstatus.setBackgroundColor(Color.BLUE);

@@ -1,6 +1,7 @@
 package com.example.bbic.FP;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -50,6 +53,7 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
     List<String> menuitem = new ArrayList<String>();
     List<Long> menucodeitem = new ArrayList<Long>();
     TextView promiseFriend;
+    int alarmHour = 0, alarmMinute = 0;
 
 
     @Override
@@ -82,17 +86,29 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
             double friendLat;
             int friendGhost;
 
+            String friendStatuslist;
+
             while (count < jsonArray.length()) {
                 JSONObject object = jsonArray.getJSONObject(count);
                 userCode = object.getLong("F.K_code1");
                 friendCode = object.getLong("F.K_code2");
-                friendStatus = object.getInt("F.F_status");
+                friendStatuslist = object.getString("F.F_status");
                 friendName = object.getString("K.K_name");
                 friendEmail = object.getString("K.K_email");
                 friendProfile = object.getString("K.K_profile");
                 friendLong = object.getDouble("K.K_long");
                 friendLat = object.getDouble("K.K_lat");
                 friendGhost = object.getInt("K.K_ghost");
+
+
+                String[] array = friendStatuslist.split(",");
+
+                for (int i = 0; i < array.length; i++) {
+                    String find = "1";
+                    if(array[i].toString() == find){
+
+                    }
+                }
 
                 if (userCode == userKakaoCode) {
                     if (friendStatus == 1) {
@@ -128,9 +144,9 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
 
         EditText promiseTitle = (EditText) findViewById(R.id.promise_pen_title_tv);
         TextView promiseTime = (TextView) findViewById(R.id.promise_pen_time_tv);
+        TextView promiseTime2 = (TextView) findViewById(R.id.promise_pen_time_tv2);
         promiseFriend = (TextView) findViewById(R.id.promise_pen_member_tv);
         EditText promisePlace = (EditText) findViewById(R.id.promise_pen_place_tv);
-        EditText promiseText = (EditText) findViewById(R.id.promise_pen_txt_tv);
 
         imageIcon = findViewById(R.id.image_icon);
         friendBtn = findViewById(R.id.image_button);
@@ -154,6 +170,19 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                 //}
             }
         });
+
+//        promiseTime2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                TimePickerDialog timePickerDialog = new TimePickerDialog(Promise_write.this, new TimePickerDialog.OnTimeSetListener() {
+//                    @Override
+//                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+//
+//                    }
+//                }, alarmHour, alarmMinute, false);
+//                timePickerDialog.show();
+//            }
+//        });
 
         popupMenu = new PopupMenu(this, friendBtn);
         for (int i = 0; i < menuitem.size(); i++) {
@@ -200,7 +229,7 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                 AddPromissRequest addPromissRequest = new AddPromissRequest(partycode, userKakaoCode, title, time, place, responseListener_Promise);
                 RequestQueue queue = Volley.newRequestQueue(Promise_write.this);
                 System.out.println("순서1");
-                System.out.println(partycode+ "_" + userKakaoCode + "_" + title + "_" + time + "_" + place);
+                System.out.println(partycode + "_" + userKakaoCode + "_" + title + "_" + time + "_" + place);
                 queue.add(addPromissRequest);
 
                 Response.Listener<String> responseListener_Party = new Response.Listener<String>() {// ************회원가입********************
@@ -228,7 +257,7 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                 AddPartyRequest addPartyRequest = new AddPartyRequest(partycode, userKakaoCode, 1, responseListener_Party);
                 RequestQueue queue1 = Volley.newRequestQueue(Promise_write.this);
                 System.out.println("순서2");
-                System.out.println(partycode + userKakaoCode + "_" +1);
+                System.out.println(partycode + userKakaoCode + "_" + 1);
                 queue1.add(addPartyRequest);
 
                 String[] strArr = friend.split(", ");

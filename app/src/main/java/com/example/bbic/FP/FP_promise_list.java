@@ -81,7 +81,6 @@ public class FP_promise_list extends Fragment {
 
                 //System.out.println("파티코드" + partyCode);
 
-
                 Promise promise = new Promise(partyCode, partyName, promissTime, userCode, promiseAddress, partyStatus, friendCode, friendName, friendProfile);
                 if(userCode == userKakaoCode){
                     System.out.println("파티에서 유저코드와 유저카카오코드 확인" + userCode + " "+userKakaoCode);

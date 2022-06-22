@@ -56,8 +56,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="3dp"
             app:layout_constraintStart_toEndOf="@id/pro_list_sidebar_iv"
-            app:layout_constraintTop_toBottomOf="@id/pro_list_address_tv"
-            app:srcCompat="@drawable/image_profile" />
+            app:layout_constraintTop_toBottomOf="@id/pro_list_address_tv" />
         <ImageView
             android:id="@+id/pro_list_profile2_iv"
             android:layout_width="30dp"
@@ -65,8 +64,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toEndOf="@id/pro_list_profile1_iv"
-            app:layout_constraintTop_toBottomOf="@id/pro_list_address_tv"
-            app:srcCompat="@drawable/image_profile" />
+            app:layout_constraintTop_toBottomOf="@id/pro_list_address_tv" />
         <ImageView
             android:id="@+id/pro_list_profile3_iv"
             android:layout_width="30dp"
@@ -74,8 +72,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toEndOf="@id/pro_list_profile2_iv"
-            app:layout_constraintTop_toBottomOf="@id/pro_list_address_tv"
-            app:srcCompat="@drawable/image_profile" />
+            app:layout_constraintTop_toBottomOf="@id/pro_list_address_tv" />
 
         <TextView
             android:id="@+id/pro_list_settime_tv"

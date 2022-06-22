@@ -73,12 +73,14 @@ public class PromissListAdapter extends BaseAdapter {
         promiseDate.setText(promises.get(i).getPromissTime());
 
         String friendProfileArr = promises.get(i).getFriendProfile();//친구 이미지 배열
-        String[] friendProfile = new String[5];
 
+
+        String[] friendProfile = new String[5];
 
         String[] strArr = friendProfileArr.split(",");
         for (int j = 0; j <strArr.length ; j++){
             friendProfile[j] = strArr[j];
+
             if(j == 0){
                 if(friendProfile[j] == null){
                     profileImage2.setVisibility(view.GONE);
