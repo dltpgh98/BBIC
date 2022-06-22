@@ -362,6 +362,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 case R.id.subway_info_bookmarkStar_ib:
                     break;
                 case R.id.place_info_bookmarkStar_ib:
+                    Log.d("place","");
                     break;
             }
         }
@@ -1905,13 +1906,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         place_name = placeAddress.split(" ");
 
-        String str="";
-//        for(int i=2;i<place_name.length;i++){
-//            str+=place_name[i]+" ";
-//        }
-        str=place_name[1]+" "+place_name[2]+" "+place_name[3];
-//        str+=place_name[2]+" ";
-//        str+=place_name[3]+" ";
+        String str = place_name[1]+" "+place_name[2]+" "+place_name[3];
+
         place_info_title.setText(str);
         place_info_address.setText(placeAddress);
 
@@ -1948,6 +1944,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void run() {
                 bus_info_title.setText(StationName);
+//                bus_info_number.setText();
 
                 upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
 
