@@ -3,6 +3,8 @@ package com.example.bbic.FP;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -212,6 +214,7 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                 promiseTime2.setText(String.format("%02d-%02d", i, i1));
             }
         }, mHour, mMinute, false);
+        timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 
         promiseTime.setOnClickListener(new View.OnClickListener() {

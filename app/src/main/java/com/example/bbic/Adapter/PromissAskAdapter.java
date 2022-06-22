@@ -1,6 +1,7 @@
 package com.example.bbic.Adapter;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -22,6 +23,11 @@ import com.example.bbic.R;
 
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class PromissAskAdapter extends BaseAdapter {
@@ -169,5 +175,4 @@ public class PromissAskAdapter extends BaseAdapter {
 
         return v;
     }
-
 }
