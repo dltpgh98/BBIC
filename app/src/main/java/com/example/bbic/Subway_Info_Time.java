@@ -94,7 +94,7 @@ public class Subway_Info_Time extends Maps_Activity {
                         stationR_time = new String[2];
                         stationL_time = new String[2];
                         for (int i = 0; i < upTime.length(); i++) {
-                            if (upTime.getJSONObject(i).getString("Idx").equals(String.valueOf(14))||upTime.getJSONObject(i).getString("Idx").equals(String.valueOf(15))) {
+                            if (upTime.getJSONObject(i).getString("Idx").equals(String.valueOf(getHourTime))||upTime.getJSONObject(i).getString("Idx").equals(String.valueOf(getHourTime+1))) {
                                 String timeStr = upTime.getJSONObject(i).getString("list");
                                 String str=upTime.getJSONObject(i).getString("Idx");
 
@@ -103,13 +103,13 @@ public class Subway_Info_Time extends Maps_Activity {
 
                                     int times = Integer.valueOf(stationMinuet[j].replaceAll("[^0-9]", ""));
                                     String direction = stationMinuet[j].replaceAll("[0-9]", "");
-                                    if(str.equals("15")){
+                                    if(str.equals(Integer.valueOf(getHourTime+1))){
                                         times += 60;
                                     }
                                     Log.d("==times==",times+"==Idx=="+str);
 
-//                                    int minus = times - Integer.valueOf(getMinuetTime);
-                                    int minus = times - 56;
+                                    int minus = times - Integer.valueOf(getMinuetTime);
+//                                    int minus = times - 56;
 
                                     if (minus > 0) {
                                         System.out.println("==minus==" + minus);
@@ -131,7 +131,7 @@ public class Subway_Info_Time extends Maps_Activity {
                         }
                         count=0;
                         for (int i = 0; i < downTime.length(); i++) {
-                            if (downTime.getJSONObject(i).getString("Idx").equals(String.valueOf(14))||downTime.getJSONObject(i).getString("Idx").equals(String.valueOf(15))) {
+                            if (downTime.getJSONObject(i).getString("Idx").equals(String.valueOf(getHourTime))||downTime.getJSONObject(i).getString("Idx").equals(String.valueOf(getHourTime+1))) {
                                 String timeStr = downTime.getJSONObject(i).getString("list");
                                 String str=downTime.getJSONObject(i).getString("Idx");
 
@@ -139,11 +139,11 @@ public class Subway_Info_Time extends Maps_Activity {
                                 for (int j = 0; j < stationMinuet.length; j++) {
                                     int times = Integer.valueOf(stationMinuet[j].replaceAll("[^0-9]", ""));
                                     String direction = stationMinuet[j].replaceAll("[0-9]", "");
-                                    if(str.equals("15")){
+                                    if(str.equals(Integer.valueOf(getHourTime+1))){
                                         times += 60;
                                     }
-                                    //int minus = times - Integer.valueOf(getMinuetTime);
-                                    int minus = times - 56;
+                                    int minus = times - Integer.valueOf(getMinuetTime);
+//                                    int minus = times - 56;
                                     if (minus > 0) {
                                         System.out.println("==minus==" + minus);
                                         if (count < 2) {
