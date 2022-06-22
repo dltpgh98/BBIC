@@ -199,6 +199,8 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                 };
                 AddPromissRequest addPromissRequest = new AddPromissRequest(partycode, userKakaoCode, title, time, place, responseListener_Promise);
                 RequestQueue queue = Volley.newRequestQueue(Promise_write.this);
+                System.out.println("순서1");
+                System.out.println(partycode+ "_" + userKakaoCode + "_" + title + "_" + time + "_" + place);
                 queue.add(addPromissRequest);
 
                 Response.Listener<String> responseListener_Party = new Response.Listener<String>() {// ************회원가입********************
@@ -225,6 +227,8 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                 };
                 AddPartyRequest addPartyRequest = new AddPartyRequest(partycode, userKakaoCode, 1, responseListener_Party);
                 RequestQueue queue1 = Volley.newRequestQueue(Promise_write.this);
+                System.out.println("순서2");
+                System.out.println(partycode + userKakaoCode + "_" +1);
                 queue1.add(addPartyRequest);
 
                 String[] strArr = friend.split(", ");
@@ -235,6 +239,7 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
 
                         addPartyRequest = new AddPartyRequest(partycode, friendKakaoCode, 0, responseListener_Party);
                         RequestQueue queue2 = Volley.newRequestQueue(Promise_write.this);
+                        System.out.println("순서3");
                         queue2.add(addPartyRequest);
 
                     }

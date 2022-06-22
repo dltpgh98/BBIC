@@ -13,7 +13,7 @@ import java.util.Map;
 public class AddPromissRequest extends StringRequest {
 
     // 서버 URL 설정 ( PHP 파일 연동 )
-    final static private String URL = "http://3.85.238.108/addpromiss.php";
+    final static private String URL = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/promissadd.php";
     private Map<String, String> map;
 
     public AddPromissRequest(int promiseCodse, long K_code,String p_name, String p_time, String p_address, Response.Listener<String> listener) {
