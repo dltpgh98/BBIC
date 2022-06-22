@@ -1,6 +1,8 @@
 package com.example.bbic.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -122,7 +124,23 @@ public class PromissListAdapter extends BaseAdapter {
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        Log.d("친구삭제", "onMenuItemClick: ");
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setTitle("친구삭제").setMessage("정말 삭제하시겠습니까?");
+                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
                         return false;
                     }
                 });
