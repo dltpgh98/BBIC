@@ -200,6 +200,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     intent2.putExtra("시", city);
                     intent2.putExtra("코로나", covidNum);
                     intent2.putExtra("friendlist", friendlist);
+                    intent2.putExtra("promiselist", promiselist);
+                    intent2.putExtra("locationlist", locationlist);
+                    intent2.putExtra("subwaylist", subwaylist);
+                    intent2.putExtra("buslist", buslist);
                     startActivity(intent2);
                     break;
                 case R.id.drawer_menu_3:
@@ -218,6 +222,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     intent3.putExtra("locationlist", locationlist);
                     intent3.putExtra("subwaylist", subwaylist);
                     intent3.putExtra("buslist", buslist);
+                    intent3.putExtra("promiselist", promiselist);
                     drawerLayout.closeDrawer(drawerView);
                     startActivity(intent3);
 //                    finish();
@@ -247,7 +252,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     intent5.putExtra("코로나", covidNum);
                     intent5.putExtra("friendlist", friendlist);
                     intent5.putExtra("promiselist", promiselist);
-
+                    intent5.putExtra("buslist", buslist);
+                    intent5.putExtra("subwaylist", subwaylist);
+                    intent5.putExtra("locationlist", locationlist);
                     drawerLayout.closeDrawer(drawerView);
                     startActivity(intent5);
 //                    finish();
@@ -265,6 +272,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     intent6.putExtra("시", city);
                     intent6.putExtra("코로나", covidNum);
                     intent6.putExtra("friendlist", friendlist);
+                    intent6.putExtra("promiselist", promiselist);
+                    intent6.putExtra("locationlist", locationlist);
+                    intent6.putExtra("subwaylist", subwaylist);
+                    intent6.putExtra("buslist", buslist);
                     drawerLayout.closeDrawer(drawerView);
                     startActivity(intent6);
 //                    finish();
@@ -959,6 +970,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         new BackgroundTask_Subway().execute();
         new BackgroundTask_Bus().execute();
         new BackgroundTask_location().execute();
+        new BackgroundTask_Promise().execute();
+        new BackgroundTask_Friend().execute();
 
 
 //============================================================================================SlidingUpPanel
@@ -2118,6 +2131,132 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     protected String uniToKsc(String uni) throws UnsupportedEncodingException {
         return new String (uni.getBytes("8859_1"),"KSC5601");
     }
+    class BackgroundTask_Friend extends AsyncTask<Void, Void, String> {
 
+        String target;
+
+        @Override
+        protected void onPreExecute() {
+            target = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/friendlist.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try{
+                URL url = new URL(target);
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String temp;
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while((temp = bufferedReader.readLine()) != null){
+
+                    stringBuilder.append(temp + "\n");
+
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            System.out.println("========result======="+result);
+            friendlist = result;
+        }
+
+        @Override
+        protected void onCancelled(String s) {
+            super.onCancelled(s);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+
+    }
+
+    class BackgroundTask_Promise extends AsyncTask<Void, Void, String> {
+        String target;
+
+        @Override
+        protected void onPreExecute() {
+            target = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/promisslist.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+                URL url = new URL(target);
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String temp;
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((temp = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(temp + "\n");
+                }
+
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            System.out.println("파싱 부분 : " + result);
+            promiselist = result;
+
+        }
+
+        @Override
+        protected void onCancelled(String s) {
+            super.onCancelled(s);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+
+    }
 
 }

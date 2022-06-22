@@ -3,6 +3,7 @@ package com.example.bbic.FP;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -32,6 +33,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -47,24 +53,42 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
     ImageView imageIcon;
     ImageButton friendBtn;
     String friendlist = null;
+    String promiselist = null;
     long userKakaoCode = 0;
     int friendCount = 0;
     long friendKakaoCode = 0;
     List<String> menuitem = new ArrayList<String>();
     List<Long> menucodeitem = new ArrayList<Long>();
     TextView promiseFriend;
-
+    private String weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, locationlist, buslist, subwaylist;
+    private String newFriendlist, newPromiselist;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.promise_write);
 
+
+
         int ranpartyCode = random(min, max);
 
         Intent intent = getIntent();
         friendlist = intent.getStringExtra("friendlist");
+        //promiselist = intent.getStringExtra("promiselist");
         userKakaoCode = intent.getLongExtra("userCode", 0);
+        locationlist = intent.getStringExtra("locationlist");
+        buslist = intent.getStringExtra("buslist");
+        subwaylist = intent.getStringExtra("subwaylist");
+        area = intent.getStringExtra("도");
+        city = intent.getStringExtra("시");
+        weather = intent.getStringExtra("날씨");
+        fineDust = intent.getStringExtra("미세먼지");
+        covidNum = intent.getStringExtra("코로나");
+        ultraFineDust = intent.getStringExtra("초미세먼지");
+        tem = intent.getStringExtra("온도");
+        name = intent.getStringExtra("닉네임");
+        address = intent.getStringExtra("프로필");
+        System.out.println("약속 작성에서 온도 확인" + tem);
         System.out.println("약속 작성 화면에서 친구 리스트 확인" + friendlist);
 
         try {
@@ -122,13 +146,37 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
         int mHour = c.get(Calendar.HOUR);
         int mMinute = c.get(Calendar.MINUTE);
 
+        new BackgroundTask_Promise().execute();
+        new BackgroundTask_Friend().execute();
+
         close = (TextView) findViewById(R.id.promise_write_close_tv);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("취소버튼 클릭");
+                Intent intent1 = new Intent(getApplicationContext(), FP.class);
+                intent1.putExtra("promiselist", newPromiselist);
+                intent1.putExtra("friendlist", newFriendlist);
+                intent1.putExtra("코드", userKakaoCode);
+                intent1.putExtra("locationlist", locationlist);
+                intent1.putExtra("buslist", buslist);
+                intent1.putExtra("subwaylist", subwaylist);
+                intent1.putExtra("도", area);
+                intent1.putExtra("시", city);
+                intent1.putExtra("날씨", weather);
+                intent1.putExtra("코로나", covidNum);
+                intent1.putExtra("미세먼지", fineDust);
+                intent1.putExtra("초미세먼지", ultraFineDust);
+                intent1.putExtra("닉네임", name);
+                intent1.putExtra("프로필", address);
+                intent1.putExtra("온도", tem);
+                startActivity(intent1);
                 finish();
             }
         });
+
+
+
 
         int num = (int) (Math.random() * 999999) + 100000;
 
@@ -325,4 +373,135 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
 
         return false;
     }
+
+    class BackgroundTask_Promise extends AsyncTask<Void, Void, String> {
+        String target;
+
+        @Override
+        protected void onPreExecute() {
+            target = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/promisslist.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+                URL url = new URL(target);
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String temp;
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((temp = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(temp + "\n");
+                }
+
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            System.out.println("파싱 부분 : " + result);
+            //promiselist = null;
+            newPromiselist = result;
+
+        }
+
+        @Override
+        protected void onCancelled(String s) {
+            super.onCancelled(s);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+
+    }
+
+    class BackgroundTask_Friend extends AsyncTask<Void, Void, String> {
+
+        String target;
+
+        @Override
+        protected void onPreExecute() {
+            target = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/friendlist.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+                URL url = new URL(target);
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String temp;
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((temp = bufferedReader.readLine()) != null) {
+
+                    stringBuilder.append(temp + "\n");
+
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            System.out.println("========result=======" + result);
+            //friendlist = null;
+            newFriendlist = result;
+        }
+
+        @Override
+        protected void onCancelled(String s) {
+            super.onCancelled(s);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+
+    }
+
 }

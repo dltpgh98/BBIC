@@ -119,6 +119,7 @@ public class FP_promise_list extends Fragment {
                 }
                 count++;
                 partyStatus = 0;
+                index = 0;
             }
         } catch (Exception e) {
             e.printStackTrace();
