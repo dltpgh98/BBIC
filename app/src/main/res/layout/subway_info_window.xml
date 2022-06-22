@@ -19,7 +19,8 @@
                 android:id="@+id/subway_info_symbol_iv"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:background="@color/green"
+                android:background="@color/transparent"
+                android:src="@drawable/ic_baseline_directions_subway_24"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
             <TextView
