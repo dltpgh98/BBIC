@@ -188,7 +188,7 @@ public class FP extends AppCompatActivity {
                 switch(tab.getPosition())
                 {
                     case 0:
-                        new BackgroundTask_Friend().execute();
+                        new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         bundle = new Bundle();
                         bundle.putString("friendlist",friendlist);
                         bundle.putString("promiselist",promiselist);
@@ -211,7 +211,7 @@ public class FP extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_friend).commit();
                         break;
                     case 1:
-                        new BackgroundTask_Promise().execute();
+                        new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         bundle = new Bundle();
                         bundle.putString("promiselist",promiselist);
                         bundle.putString("friendlist",friendlist);
@@ -306,9 +306,6 @@ public class FP extends AppCompatActivity {
 
         nickName.setText(name); // 카카오톡 프로필 닉네임
         Glide.with(this).load(address).circleCrop().into(profile); // 카카오톡 프로필 이미지
-
-        new BackgroundTask_Friend().execute();
-        new BackgroundTask_Promise().execute();
 
         bundle = new Bundle();
         bundle.putString("friendlist",friendlist);

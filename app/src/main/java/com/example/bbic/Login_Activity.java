@@ -53,9 +53,9 @@ public class Login_Activity extends AppCompatActivity {
         nickname = (TextView) findViewById(R.id.nickname);
         profileImage = (ImageView) findViewById(R.id.profile);
 
-        new BackgroundTask().execute();//파싱
-        new BackgroundTask_Promise().execute();
-        new BackgroundTask_User().execute();
+        new BackgroundTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new BackgroundTask_User().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         // 카카오가 설치되어 있는지 확인 하는 메서드또한 카카오에서 제공 콜백 객체를 이용함
         Function2<OAuthToken, Throwable, Unit> callback = new Function2<OAuthToken, Throwable, Unit>() {

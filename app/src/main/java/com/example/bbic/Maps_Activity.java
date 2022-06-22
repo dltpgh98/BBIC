@@ -967,11 +967,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         viewSwitch = false;
 
-        new BackgroundTask_Subway().execute();
-        new BackgroundTask_Bus().execute();
-        new BackgroundTask_location().execute();
-        new BackgroundTask_Promise().execute();
-        new BackgroundTask_Friend().execute();
+        new BackgroundTask_Subway().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new BackgroundTask_Bus().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new BackgroundTask_location().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
 //============================================================================================SlidingUpPanel
