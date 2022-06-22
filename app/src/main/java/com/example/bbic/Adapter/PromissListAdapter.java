@@ -7,6 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -15,6 +16,7 @@ import com.example.bbic.FP.FP_promise_list;
 import com.example.bbic.FP.FP_promise_list;
 import com.example.bbic.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PromissListAdapter extends BaseAdapter {
@@ -23,13 +25,17 @@ public class PromissListAdapter extends BaseAdapter {
     private List<Promise> promises;
     private List<Promise> userPromises;
     private Fragment parentActivity;
+    private long userCode;
+    List<String> menuitem = new ArrayList<String>();
+    PopupMenu popupMenu;
+    ImageView deleteBtn;
 
-
-    public PromissListAdapter(Context context, List<Promise> promises, List<Promise> userPromises, FP_promise_list parentActivity) {
+    public PromissListAdapter(Context context, List<Promise> promises, List<Promise> userPromises, long userCode, FP_promise_list parentActivity) {
         this.context = context;
         this.promises = promises;
         this.userPromises = userPromises;
         //this.userFriendsStatus = userFriendsStatus;
+        this.userCode = userCode;
         this.parentActivity = parentActivity;
     }
 
@@ -62,6 +68,7 @@ public class PromissListAdapter extends BaseAdapter {
         ImageView profileImage1 = (ImageView) v.findViewById(R.id.pro_list_profile1_iv);
         ImageView profileImage2 = (ImageView) v.findViewById(R.id.pro_list_profile2_iv);
         ImageView profileImage3 = (ImageView) v.findViewById(R.id.pro_list_profile3_iv);
+        deleteBtn = (ImageView) v.findViewById(R.id.pro_ask_setting_iv);
 
         TextView promiseTitle = (TextView) v.findViewById(R.id.pro_list_title_tv);//약속 제목
         TextView promiseAddress = (TextView) v.findViewById(R.id.pro_list_address_tv);//약속 주소
@@ -78,29 +85,37 @@ public class PromissListAdapter extends BaseAdapter {
         String[] friendProfile = new String[5];
 
         String[] strArr = friendProfileArr.split(",");
-        for (int j = 0; j <strArr.length ; j++){
+        for (int j = 0; j < strArr.length; j++) {
             friendProfile[j] = strArr[j];
 
-            if(j == 0){
-                if(friendProfile[j] == null){
+            if (j == 0) {
+                if (friendProfile[j] == null) {
                     profileImage2.setVisibility(view.GONE);
                 }
                 Glide.with(context).load(friendProfile[j]).circleCrop().into(profileImage1);
             }
-            if(j == 1){
-                if(friendProfile[j] == null){
+            if (j == 1) {
+                if (friendProfile[j] == null) {
                     profileImage2.setVisibility(view.GONE);
                 }
                 Glide.with(context).load(friendProfile[j]).circleCrop().into(profileImage2);
             }
-            if(j == 2){
-                if(friendProfile[j] == null){
-                    System.out.println("역속의 세번째 친구 프로필 주소 : "+ friendProfile[j]);
+            if (j == 2) {
+                if (friendProfile[j] == null) {
+                    System.out.println("역속의 세번째 친구 프로필 주소 : " + friendProfile[j]);
                     profileImage2.setVisibility(view.INVISIBLE);
                 }
                 Glide.with(context).load(friendProfile[j]).circleCrop().into(profileImage3);
             }
         }
+
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         return v;
     }

@@ -28,11 +28,13 @@ public class FriendListAdapter extends BaseAdapter {
     private Fragment parentActivity;
 
 
+
     public FriendListAdapter(Context context, List<Friend> friends, List<Friend> userFriends, FP_friend_list parentActivity) {
         this.context = context;
         this.friends = friends;
         this.userFriends = userFriends;
         //this.userFriendsStatus = userFriendsStatus;
+
         this.parentActivity = parentActivity;
     }
 

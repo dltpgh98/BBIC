@@ -36,11 +36,6 @@ public class FP_promise_list extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //return super.onCreateView(inflater, container, savedInstanceState);
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fp_promise_list, container, false);
-        listView = (ListView) rootView.findViewById(R.id.promise_list_rv);
-        promises = new ArrayList<Promise>();
-        userPromises = new ArrayList<Promise>();
-        adapter = new PromissListAdapter(getContext(), promises, userPromises, this);
-        listView.setAdapter(adapter);
 
         if (getArguments() != null) {
             getPromiss = getArguments().getString("promiselist");
@@ -48,6 +43,14 @@ public class FP_promise_list extends Fragment {
             System.out.println("약속 : " + getPromiss);
             System.out.println("약속에서 유저코드" + userKakaoCode);
         }
+
+        listView = (ListView) rootView.findViewById(R.id.promise_list_rv);
+        promises = new ArrayList<Promise>();
+        userPromises = new ArrayList<Promise>();
+        adapter = new PromissListAdapter(getContext(), promises, userPromises, userKakaoCode,this);
+        listView.setAdapter(adapter);
+
+
 
         try {
             JSONObject jsonObject = new JSONObject(getPromiss);

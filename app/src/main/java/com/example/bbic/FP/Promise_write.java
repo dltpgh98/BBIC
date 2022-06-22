@@ -62,7 +62,6 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
 
         int ranpartyCode = random(min, max);
 
-
         Intent intent = getIntent();
         friendlist = intent.getStringExtra("friendlist");
         userKakaoCode = intent.getLongExtra("userCode", 0);
