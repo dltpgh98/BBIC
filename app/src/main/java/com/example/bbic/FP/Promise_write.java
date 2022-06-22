@@ -17,10 +17,17 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+import com.example.bbic.DB.AddPartyRequest;
+import com.example.bbic.DB.AddPromissRequest;
 import com.example.bbic.Data.Friend;
+import com.example.bbic.Login_Activity;
 import com.example.bbic.R;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -39,9 +46,10 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
     String friendlist = null;
     long userKakaoCode = 0;
     int friendCount = 0;
+    long friendKakaoCode = 0;
     List<String> menuitem = new ArrayList<String>();
+    List<Long> menucodeitem = new ArrayList<Long>();
     TextView promiseFriend;
-
 
 
     @Override
@@ -50,7 +58,6 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.promise_write);
 
         int ranpartyCode = random(min, max);
-
 
 
         Intent intent = getIntent();
@@ -90,6 +97,7 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                 if (userCode == userKakaoCode) {
                     if (friendStatus == 1) {
                         menuitem.add(friendName);
+                        menucodeitem.add(friendCode);
                     }
                 }
 //                friendList.add(friend); //원본용
@@ -148,7 +156,7 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
         });
 
         popupMenu = new PopupMenu(this, friendBtn);
-        for (int i = 0; i < menuitem.size(); i++){
+        for (int i = 0; i < menuitem.size(); i++) {
             popupMenu.getMenu().add(0, i, 0, menuitem.get(i).toString());
             System.out.println("친구팝업메뉴 수:" + menuitem.size());
         }
@@ -164,9 +172,77 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                 int partycode = ranpartyCode;
                 String title = promiseTitle.getText().toString();
                 String time = promiseTime.getText().toString();
+                String place = promisePlace.getText().toString();
+                String friend = promiseFriend.getText().toString();
 
+                Response.Listener<String> responseListener_Promise = new Response.Listener<String>() {// ************회원가입********************
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            System.out.println("테이블 생성" + response);
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            //회원가입 성공시
+
+                            if (success) {
+                                System.out.println("회원가입 성공");
+                                //회원가입 실패시
+
+                            } else {
+                                System.out.println("회원가입 실패");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                AddPromissRequest addPromissRequest = new AddPromissRequest(partycode, userKakaoCode, title, time, place, responseListener_Promise);
+                RequestQueue queue = Volley.newRequestQueue(Promise_write.this);
+                queue.add(addPromissRequest);
+
+                Response.Listener<String> responseListener_Party = new Response.Listener<String>() {// ************회원가입********************
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            System.out.println("테이블 생성" + response);
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            //회원가입 성공시
+
+                            if (success) {
+                                System.out.println("회원가입 성공");
+                                //회원가입 실패시
+
+                            } else {
+                                System.out.println("회원가입 실패");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                AddPartyRequest addPartyRequest = new AddPartyRequest(partycode, userKakaoCode, 1, responseListener_Party);
+                RequestQueue queue1 = Volley.newRequestQueue(Promise_write.this);
+                queue1.add(addPartyRequest);
+
+                String[] strArr = friend.split(", ");
+
+                for (int i = 0; i < friendCount; i++) {
+                    if (menuitem.get(i).toString().equals(strArr[i].toString())) {
+                        friendKakaoCode = menucodeitem.get(i);
+
+                        addPartyRequest = new AddPartyRequest(partycode, friendKakaoCode, 0, responseListener_Party);
+                        RequestQueue queue2 = Volley.newRequestQueue(Promise_write.this);
+                        queue2.add(addPartyRequest);
+
+                    }
+                }
+                Intent intent1 = new Intent();
 
             }
+
         });
 
     }
@@ -204,20 +280,17 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
 
         boolean matchString = beforeText.contains(selectFriendName);
 
-        if(beforeText.equals("약속 친구")){
+        if (beforeText.equals("약속 친구")) {
             beforeText = "";
         }
 
         Log.d("matchString", Boolean.toString(matchString));
 
-        if(!matchString)
-        {
-            beforeText += selectFriendName+", ";
+        if (!matchString) {
+            beforeText += selectFriendName + ", ";
+        } else {
+            beforeText = beforeText.replace(selectFriendName + ", ", "");
         }
-        else{
-            beforeText = beforeText.replace(selectFriendName+", ","");
-        }
-
 
 
         promiseFriend.setText(beforeText);
