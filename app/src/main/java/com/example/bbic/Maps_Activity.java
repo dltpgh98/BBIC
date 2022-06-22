@@ -1672,11 +1672,19 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
+        String fName;
+        long fCode;
+
         if (intent.getIntExtra("fFlag",0) == 1)
         {
-            String fName = intent.getStringExtra("fName");
-            long fCode = intent.getLongExtra("fCode",0);
+            fName = intent.getStringExtra("fName");
+            fCode = intent.getLongExtra("fCode",0);
             wayToFriend(fName,fCode);
+        }
+        else if(intent.getIntExtra("fFlag",0) == 2)
+        {
+            fCode = intent.getLongExtra("fCode",0);
+            locationToFriend(fCode);
         }
 
         if (intent.getStringExtra("jObject") != null) {
@@ -2113,6 +2121,26 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     }
     protected String uniToKsc(String uni) throws UnsupportedEncodingException {
         return new String (uni.getBytes("8859_1"),"KSC5601");
+    }
+
+    public void locationToFriend(long fCode)
+    {
+        double fLat = 0, fLong = 0;
+
+        for(int i = 0; i < friendCodeList.size(); i++)
+        {
+            if(friendCodeList.get(i).equals(fCode))
+            {
+                fLat = friendLatList.get(i);
+                fLong = friendLongList.get(i);
+
+            }
+        }
+        LatLng initialPosition = new LatLng(fLat, fLong);
+
+        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(initialPosition);
+        naverMap.moveCamera(cameraUpdate);
+        upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
     }
 
     public void wayToFriend(String fName, long fCode)
