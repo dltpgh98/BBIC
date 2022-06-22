@@ -1,6 +1,8 @@
 package com.example.bbic.Adapter;
 
 import android.content.Context;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -113,7 +115,18 @@ public class PromissListAdapter extends BaseAdapter {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("약속삭제버튼", "onClick: ");
 
+                popupMenu = new PopupMenu(context, deleteBtn);
+                popupMenu.getMenu().add(0, 0, 0, "삭제");
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Log.d("친구삭제", "onMenuItemClick: ");
+                        return false;
+                    }
+                });
+                popupMenu.show();
             }
         });
 
