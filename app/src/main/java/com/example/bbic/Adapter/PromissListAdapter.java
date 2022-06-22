@@ -37,8 +37,7 @@ public class PromissListAdapter extends BaseAdapter {
     private Fragment parentActivity;
     private long userCode;
     List<String> menuitem = new ArrayList<String>();
-    PopupMenu popupMenu;
-    ImageView deleteBtn;
+
 
     public PromissListAdapter(Context context, List<Promise> promises, List<Promise> userPromises, long userCode, FP_promise_list parentActivity) {
         this.context = context;
@@ -78,7 +77,7 @@ public class PromissListAdapter extends BaseAdapter {
         ImageView profileImage1 = (ImageView) v.findViewById(R.id.pro_list_profile1_iv);
         ImageView profileImage2 = (ImageView) v.findViewById(R.id.pro_list_profile2_iv);
         ImageView profileImage3 = (ImageView) v.findViewById(R.id.pro_list_profile3_iv);
-        deleteBtn = (ImageView) v.findViewById(R.id.pro_ask_setting_iv);
+        ImageView deleteBtn = (ImageView) v.findViewById(R.id.pro_ask_setting_iv);
 
         TextView promiseTitle = (TextView) v.findViewById(R.id.pro_list_title_tv);//약속 제목
         TextView promiseAddress = (TextView) v.findViewById(R.id.pro_list_address_tv);//약속 주소
@@ -127,7 +126,7 @@ public class PromissListAdapter extends BaseAdapter {
             public void onClick(View view) {
                 Log.d("약속삭제버튼", "onClick: ");
 
-                popupMenu = new PopupMenu(context, deleteBtn);
+                PopupMenu popupMenu = new PopupMenu(context, deleteBtn);
                 popupMenu.getMenu().add(0, 0, 0, "삭제");
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
