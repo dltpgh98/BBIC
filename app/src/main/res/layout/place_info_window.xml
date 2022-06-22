@@ -10,17 +10,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/place_info_container"
         android:layout_width="match_parent"
-        android:layout_height="291dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent">
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/place_info_title_container"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:paddingStart="15dp"
             android:paddingTop="15dp"
             android:paddingEnd="15dp"
             android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toTopOf="@id/place_info_boundary_v">
+            app:layout_constraintTop_toTopOf="parent">
+<!--            app:layout_constraintBottom_toTopOf="@id/place_info_boundary_v">-->
 
             <!-- 장소의 지도 심볼? (학교면 학교 마크) -->
             <ImageView
@@ -102,7 +104,8 @@
             android:layout_marginEnd="40dp"
             android:layout_marginStart="40dp"
             android:layout_marginBottom="5dp"
-            app:layout_constraintBottom_toTopOf="@id/place_info_btn_container"/>
+            app:layout_constraintTop_toBottomOf="@id/place_info_title_container"/>
+<!--            app:layout_constraintBottom_toTopOf="@id/place_info_btn_container"/>-->
         <!--           -             -->
 
         <!-- 출발 도착 버튼 상자 -->
@@ -110,7 +113,8 @@
             android:id="@+id/place_info_btn_container"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            app:layout_constraintBottom_toTopOf="@id/place_info_image_iv">
+            app:layout_constraintTop_toBottomOf="@id/place_info_boundary_v">
+<!--            app:layout_constraintBottom_toTopOf="@id/place_info_image_iv">-->
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -133,13 +137,13 @@
         <!--           -             -->
 
         <!-- 지역 사진 -->
-        <ImageView
-            android:id="@+id/place_info_image_iv"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@color/green"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+<!--        <ImageView-->
+<!--            android:id="@+id/place_info_image_iv"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="150dp"-->
+<!--            android:background="@color/green"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            />-->
         <!--           -             -->
     </androidx.constraintlayout.widget.ConstraintLayout>
 

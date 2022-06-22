@@ -16,7 +16,6 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
@@ -27,7 +26,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +49,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.bbic.Adapter.ViewPager_Item_Adapter;
 import com.example.bbic.Bookmark.Bookmark;
+import com.example.bbic.DB.AddBusStationRequest;
 import com.example.bbic.DB.UpdatePosRequest;
 import com.example.bbic.Data.FriendMarker;
 import com.example.bbic.FP.FP;
@@ -69,7 +68,6 @@ import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.MultipartPathOverlay;
-import com.naver.maps.map.overlay.OverlayImage;
 import com.naver.maps.map.overlay.PathOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.odsay.odsayandroidsdk.ODsayService;
@@ -263,6 +261,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     view_Header.setVisibility(View.GONE);
 
                     indicator.setVisibility(View.GONE);
+
+                    place_info_window.setVisibility(View.GONE);
+                    subway_info_window.setVisibility(View.GONE);
+                    bus_info_window.setVisibility(View.GONE);
+
                     find_way_page.setVisibility(View.VISIBLE);
 
                     upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
@@ -341,6 +344,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     }
 
                     break;
+                case R.id.bus_info_bookmarkStar_ib:
+//                    AddBusStationRequest busStationRequest = new AddBusStationRequest(StationId,StationName,)
+                    break;
+                case R.id.subway_info_bookmarkStar_ib:
+                    break;
+                case R.id.place_info_bookmarkStar_ib:
+                    break;
             }
         }
     }
@@ -356,7 +366,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
     private View drawerView;
-    private ImageButton menuIbtn, searchIbtn, findWayIbtn, vFindIbtn, vEditChangeFindIbtn, findWayOverlayClearIBtn;
+    private ImageButton menuIbtn, searchIbtn, findWayIbtn, vFindIbtn, vEditChangeFindIbtn, findWayOverlayClearIBtn,subway_info_bookmarkStar,bus_info_bookmarkStar,place_info_bookmarkStar;
     private TextView
             temText, fineText, ultraText, covidText, nickName, areaText;
     private ImageView weatherImage, profile;
@@ -376,6 +386,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private String fw_pos_path, mapObject;
     private Find_Way_Frag fw_frag;
     private Map_Find_way mapFindWay;
+    private Subway_Info_Time subway_time;
+
 
     private double[] latiPos, longPos;
     private double sLatiPos, sLongPos, eLatiPos, eLongPos;
@@ -549,7 +561,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
                                     if (stationClass == 1) {
                                         odsayService.requestBusStationInfo(String.valueOf(StationLists[i].getStationID()), odsay.busStationInfo);
-
+                                        setBus_info_window();
                                     } else if (stationClass == 2) {
                                         odsayService.requestSubwayStationInfo(String.valueOf(StationId), odsay.subwayStationInfo);
                                         setSubway_info_window();
@@ -560,10 +572,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                 infoWindow.open(naverMap);
 
                             } else {
+                                setPlace_info_window();
                                 infoWindow.setPosition(coord);
                                 infoWindow.open(naverMap);
                             }
-
                             startService();
                         }
                     }, 450);
@@ -773,10 +785,14 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
         gpsTracker = new GpsTracker(Maps_Activity.this);
+//
+//        subway_time = new Subway_Info_Time();
 
         fw_frag = new Find_Way_Frag();
         mapFindWay = new Map_Find_way();
         pathOverlay = new PathOverlay();
+
+        subway_time = new Subway_Info_Time();
 
         mapTread = new MapFriendMarkerTread();
 
@@ -883,10 +899,16 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         subway_info_title = (TextView) findViewById(R.id.subway_info_title_tv);
         subway_info_direction = (TextView) findViewById(R.id.subway_info_address_tv);
         subway_info_right_station = (TextView) findViewById(R.id.subway_info_right_station_tv);
-        subway_info_this_station = (TextView) findViewById(R.id.subway_info_right_station_tv);
+        subway_info_this_station = (TextView) findViewById(R.id.subway_info_this_station_tv);
         subway_info_left_station = (TextView) findViewById(R.id.subway_info_left_station_tv);
 
+
+
         bus_info_window = (ConstraintLayout) findViewById(R.id.bus_info_window);
+
+        subway_info_bookmarkStar = (ImageButton) findViewById(R.id.subway_info_bookmarkStar_ib);
+        bus_info_bookmarkStar = (ImageButton) findViewById(R.id.bus_info_bookmarkStar_ib);
+        place_info_bookmarkStar = (ImageButton) findViewById(R.id.place_info_bookmarkStar_ib);
 
         findWayOverlayClearIBtn = (ImageButton) findViewById(R.id.main_findWay_overlay_clear_ibtn);
 
@@ -931,6 +953,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         new BackgroundTask_Subway().execute();
         new BackgroundTask_Bus().execute();
         new BackgroundTask_location().execute();
+
+
+        bus_info_bookmarkStar.setOnClickListener(onClickListener);
+        subway_info_bookmarkStar.setOnClickListener(onClickListener);
+        place_info_bookmarkStar.setOnClickListener(onClickListener);
 
 
 //============================================================================================SlidingUpPanel
@@ -1774,38 +1801,100 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
 
     }
+    public void setPlace_info_window(){
+        viewPager.setVisibility(View.GONE);
+
+        view_Header.setVisibility(View.GONE);
+
+        indicator.setVisibility(View.GONE);
+
+        find_way_page.setVisibility(View.GONE);
+        subway_info_window.setVisibility(View.GONE);
+
+        bus_info_window.setVisibility(View.GONE);
+
+        place_info_window.setVisibility(View.VISIBLE);
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+
+            }
+        },200);
+
+    }
+
+    public void setBus_info_window(){
+        viewPager.setVisibility(View.GONE);
+
+        view_Header.setVisibility(View.GONE);
+
+        indicator.setVisibility(View.GONE);
+
+        find_way_page.setVisibility(View.GONE);
+        subway_info_window.setVisibility(View.GONE);
+
+        place_info_window.setVisibility(View.GONE);
+
+        bus_info_window.setVisibility(View.VISIBLE);
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+
+            }
+        },200);
+
+    }
 
     public void setSubway_info_window() {
 
-//        viewPager.setVisibility(View.GONE);
-//
-//        view_Header.setVisibility(View.GONE);
-//
-//        indicator.setVisibility(View.GONE);
-//
-//        find_way_page.setVisibility(View.GONE);
-//        bus_info_window.setVisibility(View.GONE);
-//        place_info_window.setVisibility(View.GONE);
-//
-//        subway_info_window.setVisibility(View.VISIBLE);
-//
-//
-//        Handler handler = new Handler();
-//        handler.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                subway_info_title.setText(StationName);
-//                String direction = odsay.subwayLists.getPrevOBJ_stationNme()+"-"+StationName+"-"+odsay.subwayLists.getNextOBJ_stationName();
-//                subway_info_direction.setText(direction);
+        viewPager.setVisibility(View.GONE);
+
+        view_Header.setVisibility(View.GONE);
+
+        indicator.setVisibility(View.GONE);
+
+        find_way_page.setVisibility(View.GONE);
+        bus_info_window.setVisibility(View.GONE);
+        place_info_window.setVisibility(View.GONE);
+
+        subway_info_window.setVisibility(View.VISIBLE);
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+
+                subway_info_title.setText(StationName);
+                String direction = odsay.subwayLists.getPrevOBJ_stationNme()+"-"+StationName+"-"+odsay.subwayLists.getNextOBJ_stationName();
+
+                subway_info_direction.setText(direction);
+                subway_info_left_station.setText(odsay.subwayLists.getPrevOBJ_stationNme());
+                subway_info_this_station.setText(StationName);
+                subway_info_right_station.setText(odsay.subwayLists.getNextOBJ_stationName());
+
+//                odsay.getStationList()[0].getStationID();
+
+                odsayService.requestSubwayTimeTable(String.valueOf(StationId),"1","1","1", subway_time.subway_timeList);
+
+                upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+
 //                handler.postDelayed(new Runnable() {
 //                    @Override
 //                    public void run() {
 //
 //                    }
-//                },450);
-//                upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-//            }
-//        });
+//                },500);
+            }
+        },250);
 
     }
 

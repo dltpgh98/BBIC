@@ -297,6 +297,14 @@ public class Odsay extends Maps_Activity {
         this.StationList = stationList;
     }
 
+    public SubwayList getSubwayLists() {
+        return subwayLists;
+    }
+
+    public void setSubwayLists(SubwayList subwayLists) {
+        this.subwayLists = subwayLists;
+    }
+
     public int getCount() {
         return this.count;
     }

@@ -311,4 +311,5 @@ public class Map_Find_way extends Maps_Activity {
         }
 
     };
+
 }
