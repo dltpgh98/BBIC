@@ -53,7 +53,6 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
     List<String> menuitem = new ArrayList<String>();
     List<Long> menucodeitem = new ArrayList<Long>();
     TextView promiseFriend;
-    int alarmHour = 0, alarmMinute = 0;
 
 
     @Override
@@ -99,7 +98,7 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                 friendLong = object.getDouble("K.K_long");
                 friendLat = object.getDouble("K.K_lat");
                 friendGhost = object.getInt("K.K_ghost");
-                
+
 
                 if (userCode == userKakaoCode) {
                     if (friendStatus == 1) {
@@ -120,6 +119,9 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
         int mYear = c.get(Calendar.YEAR);
         int mMonth = c.get(Calendar.MONTH);
         int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+        int mHour = c.get(Calendar.HOUR);
+        int mMinute = c.get(Calendar.MINUTE);
 
 
         close = (TextView) findViewById(R.id.promise_write_close_tv);
@@ -151,6 +153,13 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
             }
         }, mYear, mMonth, mDay);
 
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                promiseTime2.setText(String.format("%02d-%02d", i, i1));
+            }
+        }, mHour, mMinute, false);
+
 
         promiseTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,19 +169,15 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                 //}
             }
         });
+        promiseTime2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //if (promiseTime.isClickable()) {
+                timePickerDialog.show();
+                //}
+            }
+        });
 
-//        promiseTime2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                TimePickerDialog timePickerDialog = new TimePickerDialog(Promise_write.this, new TimePickerDialog.OnTimeSetListener() {
-//                    @Override
-//                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
-//
-//                    }
-//                }, alarmHour, alarmMinute, false);
-//                timePickerDialog.show();
-//            }
-//        });
 
         popupMenu = new PopupMenu(this, friendBtn);
         for (int i = 0; i < menuitem.size(); i++) {
@@ -190,10 +195,11 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
             public void onClick(View view) {
                 int partycode = ranpartyCode;
                 String title = promiseTitle.getText().toString();
-                String time = promiseTime.getText().toString();
+                String time1 = promiseTime.getText().toString();
+                String time2 = promiseTime2.getText().toString();
                 String place = promisePlace.getText().toString();
                 String friend = promiseFriend.getText().toString();
-
+                String time = time1 + "-" + time2;
                 Response.Listener<String> responseListener_Promise = new Response.Listener<String>() {// ************회원가입********************
                     @Override
                     public void onResponse(String response) {

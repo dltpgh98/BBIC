@@ -40,11 +40,6 @@ public class FP_promise_ask extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //return super.onCreateView(inflater, container, savedInstanceState);
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fp_promise_ask, container, false);
-        listView = (ListView) rootView.findViewById(R.id.promise_ask_lv);
-        promises = new ArrayList<Promise>();
-        userPromises = new ArrayList<Promise>();
-        adapter = new PromissAskAdapter(getContext(), promises, userPromises, this);
-        listView.setAdapter(adapter);
 
         if (getArguments() != null) {
             getPromiss = getArguments().getString("promiselist");
@@ -52,6 +47,14 @@ public class FP_promise_ask extends Fragment {
             System.out.println("약속 : " + getPromiss);
             System.out.println("약속에서 유저코드" + userKakaoCode);
         }
+
+        listView = (ListView) rootView.findViewById(R.id.promise_ask_lv);
+        promises = new ArrayList<Promise>();
+        userPromises = new ArrayList<Promise>();
+        adapter = new PromissAskAdapter(getContext(), promises, userPromises, userKakaoCode,this);
+        listView.setAdapter(adapter);
+
+
 
         try {
             JSONObject jsonObject = new JSONObject(getPromiss);
@@ -111,14 +114,16 @@ public class FP_promise_ask extends Fragment {
                     partyStatus = Integer.parseInt(array[index].toString());
                 }
 
-                Promise promise = new Promise(partyCode, partyName, promissTime, userCode, promiseAddress, partyStatus, friendCode, friendName, friendProfile);
-                if(userCode == userKakaoCode){
+
+                if(friendCode.contains(Long.toString(userKakaoCode))){
                     //System.out.println("파티에서 유저코드와 유저카카오코드 확인" + userCode + " "+userKakaoCode);
                     if(partyStatus == 0){
+                        Promise promise = new Promise(partyCode, partyName, promissTime, userCode, promiseAddress, partyStatus, friendCode, friendName, friendProfile);
                         promises.add(promise);
                     }
                 }
                 count++;
+                partyStatus = 1;
             }
         } catch (Exception e) {
             e.printStackTrace();

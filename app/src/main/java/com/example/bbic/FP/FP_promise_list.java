@@ -90,8 +90,6 @@ public class FP_promise_list extends Fragment {
 
                 String[] arrayCode = friendCode.split(",");
 
-
-
                 for (int i = 0; i < arrayCode.length; i++) {
                     System.out.println(arrayCode.length + "   "+arrayCode[i].toString());
 
@@ -105,16 +103,19 @@ public class FP_promise_list extends Fragment {
                 String[] array = partyStatuslist.split(",");
                 if (array[index].toString().equals("1")) {
                     partyStatus = Integer.parseInt(array[index].toString());
+                    System.out.println("파티상태 확인 :" + partyStatus);
                 }
-
+                System.out.println("파티상태 확인 :" + partyStatus);
                 Promise promise = new Promise(partyCode, partyName, promissTime, userCode, promiseAddress, partyStatus, friendCode, friendName, friendProfile);
-                if(userCode == userKakaoCode){
+
+                if(friendCode.contains(userCodeString)){
                     //System.out.println("파티에서 유저코드와 유저카카오코드 확인" + userCode + " "+userKakaoCode);
                     if(partyStatus == 1){
                         promises.add(promise);
                     }
                 }
                 count++;
+                partyStatus = 0;
             }
         } catch (Exception e) {
             e.printStackTrace();

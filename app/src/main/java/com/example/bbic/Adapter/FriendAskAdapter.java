@@ -94,12 +94,13 @@ public class FriendAskAdapter extends BaseAdapter {
                                 friends.remove(i);
                                 notifyDataSetChanged();
                             }
-
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 };
+                friends.remove(i);
+                notifyDataSetChanged();
                 deleteAskFriendRequest  deleteAskFriendRequest = new deleteAskFriendRequest(friends.get(i).getUserKakapCode(), friends.get(i).getFriendKakaoCode(), responseListener);
                 RequestQueue queue = Volley.newRequestQueue(view.getContext());
                 queue.add(deleteAskFriendRequest);
@@ -125,7 +126,9 @@ public class FriendAskAdapter extends BaseAdapter {
                         }
                     }
                 };
-
+                friends.remove(i);
+                notifyDataSetChanged();
+                System.out.println("수락 버튼"+friends.get(i).getUserKakapCode() + "" + friends.get(i).getFriendKakaoCode());
                 AcceptFriendRequest acceptFriendRequest = new AcceptFriendRequest(friends.get(i).getUserKakapCode(), friends.get(i).getFriendKakaoCode(), responseListener);
                 RequestQueue queue = Volley.newRequestQueue(view.getContext());
                 queue.add(acceptFriendRequest);

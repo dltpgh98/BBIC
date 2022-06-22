@@ -30,13 +30,15 @@ public class PromissAskAdapter extends BaseAdapter {
     private List<Promise> promises;
     private List<Promise> userPromises;
     private Fragment parentActivity;
+    private long userCode;
 
 
-    public PromissAskAdapter(Context context, List<Promise> promises, List<Promise> userPromises, FP_promise_ask parentActivity) {
+    public PromissAskAdapter(Context context, List<Promise> promises, List<Promise> userPromises, long userCode,FP_promise_ask parentActivity) {
         this.context = context;
         this.promises = promises;
         this.userPromises = userPromises;
         //this.userFriendsStatus = userFriendsStatus;
+        this.userCode = userCode;
         this.parentActivity = parentActivity;
     }
 
@@ -70,8 +72,8 @@ public class PromissAskAdapter extends BaseAdapter {
         ImageView profileImage2 = (ImageView) v.findViewById(R.id.pro_list_profile2_iv);
         ImageView profileImage3 = (ImageView) v.findViewById(R.id.pro_list_profile3_iv);
 
-        ImageButton promiseAcceptBtn = (ImageButton)v.findViewById(R.id.pro_ask_accept_iv); //약속 수학 버튼
-        ImageButton promiseDeleteBtn = (ImageButton)v.findViewById(R.id.pro_ask_delete_iv); //약속 거절 버튼(삭제)
+        ImageButton promiseAcceptBtn = (ImageButton) v.findViewById(R.id.pro_ask_accept_iv); //약속 수학 버튼
+        ImageButton promiseDeleteBtn = (ImageButton) v.findViewById(R.id.pro_ask_delete_iv); //약속 거절 버튼(삭제)
 
         TextView promiseTitle = (TextView) v.findViewById(R.id.pro_list_title_tv);//약속 제목
         TextView promiseAddress = (TextView) v.findViewById(R.id.pro_list_address_tv);//약속 주소
@@ -81,29 +83,32 @@ public class PromissAskAdapter extends BaseAdapter {
         promiseAddress.setText(promises.get(i).getPromiseAddress());
         promiseDate.setText(promises.get(i).getPromissTime());
 
+
+        int partycode = promises.get(i).getPartyCode();
+
         String friendProfileArr = promises.get(i).getFriendProfile();//친구 이미지 배열
 
         String[] friendProfile = new String[5];
 
         String[] strArr = friendProfileArr.split(",");
-        for (int j = 0; j <strArr.length ; j++){
+        for (int j = 0; j < strArr.length; j++) {
             friendProfile[j] = strArr[j];
 
-            if(j == 0){
-                if(friendProfile[j] == null){
+            if (j == 0) {
+                if (friendProfile[j] == null) {
                     profileImage2.setVisibility(view.GONE);
                 }
                 Glide.with(context).load(friendProfile[j]).circleCrop().into(profileImage1);
             }
-            if(j == 1){
-                if(friendProfile[j] == null){
+            if (j == 1) {
+                if (friendProfile[j] == null) {
                     profileImage2.setVisibility(view.GONE);
                 }
                 Glide.with(context).load(friendProfile[j]).circleCrop().into(profileImage2);
             }
-            if(j == 2){
-                if(friendProfile[j] == null){
-                    System.out.println("역속의 세번째 친구 프로필 주소 : "+ friendProfile[j]);
+            if (j == 2) {
+                if (friendProfile[j] == null) {
+                    System.out.println("역속의 세번째 친구 프로필 주소 : " + friendProfile[j]);
                     profileImage2.setVisibility(view.INVISIBLE);
                 }
                 Glide.with(context).load(friendProfile[j]).circleCrop().into(profileImage3);
@@ -119,7 +124,7 @@ public class PromissAskAdapter extends BaseAdapter {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
-                            if(success){
+                            if (success) {
                                 promises.remove(i);
                                 notifyDataSetChanged();
                             }
@@ -129,12 +134,13 @@ public class PromissAskAdapter extends BaseAdapter {
                         }
                     }
                 };
-                deletePromissRequest deletePromissRequest = new deletePromissRequest(promises.get(i).getPartyCode(), promises.get(i).getUserCode(), responseListener);
+                promises.remove(i);
+                notifyDataSetChanged();
+                deletePromissRequest deletePromissRequest = new deletePromissRequest(partycode, userCode, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(view.getContext());
                 queue.add(deletePromissRequest);
             }
         });
-
 
         promiseAcceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,17 +148,19 @@ public class PromissAskAdapter extends BaseAdapter {
                 Response.Listener<String> responseListener1 = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try{
+                        try {
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
                             promises.remove(i);
                             notifyDataSetChanged();
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 };
-                AcceptPromiseRequest acceptPromiseRequest = new AcceptPromiseRequest(promises.get(i).getPartyCode(), promises.get(i).getUserCode(), responseListener1);
+                promises.remove(i);
+                notifyDataSetChanged();
+                AcceptPromiseRequest acceptPromiseRequest = new AcceptPromiseRequest(partycode, userCode, responseListener1);
                 RequestQueue queue = Volley.newRequestQueue(view.getContext());
                 queue.add(acceptPromiseRequest);
             }
