@@ -377,7 +377,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private boolean drawerEnabled = false;
 
     private ImageView headerProfile;
-    private TextView headerName, headerCode, subway_info_title, subway_info_direction,subway_info_left_station,subway_info_this_station,subway_info_right_station;
+    private TextView headerName, headerCode,
+            subway_info_title, subway_info_direction,subway_info_left_station,subway_info_this_station,subway_info_right_station,
+            bus_info_title,bus_info_direction,bus_info_number,
+            place_info_title,place_info_address;
     private ImageView headerGhostBtn, headerSettingBtn;
 
 
