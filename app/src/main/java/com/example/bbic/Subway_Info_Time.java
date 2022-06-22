@@ -103,12 +103,8 @@ public class Subway_Info_Time extends Maps_Activity {
 
                                     int times = Integer.valueOf(stationMinuet[j].replaceAll("[^0-9]", ""));
                                     String direction = stationMinuet[j].replaceAll("[0-9]", "");
-                                    int check=0;
-                                    if(stationMinuet.length/3<=j&&times<10){
-                                        check=1;
-                                    }
-                                    if(check==1){
-                                        times+=60;
+                                    if(str.equals("15")){
+                                        times += 60;
                                     }
                                     Log.d("==times==",times+"==Idx=="+str);
 
@@ -135,14 +131,19 @@ public class Subway_Info_Time extends Maps_Activity {
                         }
                         count=0;
                         for (int i = 0; i < downTime.length(); i++) {
-                            if (downTime.getJSONObject(i).getString("Idx").equals(String.valueOf(14))) {
+                            if (downTime.getJSONObject(i).getString("Idx").equals(String.valueOf(14))||downTime.getJSONObject(i).getString("Idx").equals(String.valueOf(15))) {
                                 String timeStr = downTime.getJSONObject(i).getString("list");
+                                String str=downTime.getJSONObject(i).getString("Idx");
 
                                 stationMinuet = timeStr.split(" ");
                                 for (int j = 0; j < stationMinuet.length; j++) {
                                     int times = Integer.valueOf(stationMinuet[j].replaceAll("[^0-9]", ""));
                                     String direction = stationMinuet[j].replaceAll("[0-9]", "");
-                                    int minus = times - Integer.valueOf(getMinuetTime);
+                                    if(str.equals("15")){
+                                        times += 60;
+                                    }
+                                    //int minus = times - Integer.valueOf(getMinuetTime);
+                                    int minus = times - 56;
                                     if (minus > 0) {
                                         System.out.println("==minus==" + minus);
                                         if (count < 2) {
