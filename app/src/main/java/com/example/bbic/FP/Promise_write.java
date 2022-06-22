@@ -92,7 +92,6 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                 JSONObject object = jsonArray.getJSONObject(count);
                 userCode = object.getLong("F.K_code1");
                 friendCode = object.getLong("F.K_code2");
-                friendStatuslist = object.getString("F.F_status");
                 friendName = object.getString("K.K_name");
                 friendEmail = object.getString("K.K_email");
                 friendProfile = object.getString("K.K_profile");
@@ -100,24 +99,6 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                 friendLat = object.getDouble("K.K_lat");
                 friendGhost = object.getInt("K.K_ghost");
 
-
-                String[] array = friendStatuslist.split(",");
-
-                for (int i = 0; i < array.length; i++) {
-                    String find = "1";
-                    if(array[i].toString() == find){
-
-                    }
-                }
-
-                if (userCode == userKakaoCode) {
-                    if (friendStatus == 1) {
-                        menuitem.add(friendName);
-                        menucodeitem.add(friendCode);
-                    }
-                }
-//                friendList.add(friend); //원본용
-//                userFriendlist.add(friend);//코드 검색용
                 count++;
             }
 
