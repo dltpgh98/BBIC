@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -69,8 +70,6 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.promise_write);
-
-
 
         int ranpartyCode = random(min, max);
 
@@ -147,20 +146,44 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
 
         int mHour = c.get(Calendar.HOUR);
         int mMinute = c.get(Calendar.MINUTE);
-
-
-//        BackgroundTask_Friend backgroundTask_friend =  new BackgroundTask_Friend();
-//        backgroundTask_friend.execute();
-
+        
         close = (TextView) findViewById(R.id.promise_write_close_tv);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 System.out.println("취소버튼 클릭");
-                new BackgroundTask_Promise().execute();
-                //finish();
+                new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new BackgroundTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent1 = new Intent(getApplicationContext(), FP.class);
+                        intent1.putExtra("promiselist", newPromiselist);
+                        intent1.putExtra("friendlist", newFriendlist);
+                        intent1.putExtra("코드", userKakaoCode);
+                        intent1.putExtra("locationlist", locationlist);
+                        intent1.putExtra("buslist", buslist);
+                        intent1.putExtra("subwaylist", subwaylist);
+                        intent1.putExtra("도", area);
+                        intent1.putExtra("시", city);
+                        intent1.putExtra("날씨", weather);
+                        intent1.putExtra("코로나", covidNum);
+                        intent1.putExtra("미세먼지", fineDust);
+                        intent1.putExtra("초미세먼지", ultraFineDust);
+                        intent1.putExtra("닉네임", name);
+                        intent1.putExtra("프로필", address);
+                        intent1.putExtra("온도", tem);
+                        startActivity(intent1);
+                        finish();
+                    }
+                },1000);
             }
         });
+
+
+
 
         int num = (int) (Math.random() * 999999) + 100000;
 
@@ -214,12 +237,51 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
             popupMenu.getMenu().add(0, i, 0, menuitem.get(i).toString());
             System.out.println("친구팝업메뉴 수:" + menuitem.size());
         }
-//        popupMenu.getMenu().add(0, 0, 0, "리스트 첫번째");
-//        popupMenu.getMenu().add(0, 1, 0, "리스트 두번째");
-//        popupMenu.getMenu().add(0, 2, 0, "리스트 세번째");
-        popupMenu.setOnMenuItemClickListener(this);
 
+        popupMenu.setOnMenuItemClickListener(this);
         friendCount = menuitem.size();
+
+        Response.Listener<String> responseListener_Promise = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    System.out.println("테이블 생성" + response);
+                    JSONObject jsonObject = new JSONObject(response);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.Listener<String> responseListener_User = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    System.out.println("테이블 생성" + response);
+                    JSONObject jsonObject = new JSONObject(response);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.Listener<String> responseListener_Friend = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    System.out.println("테이블 생성" + response);
+                    JSONObject jsonObject = new JSONObject(response);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,71 +291,83 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                 String time1 = promiseTime.getText().toString();
                 String time2 = promiseTime2.getText().toString();
                 String place = promisePlace.getText().toString();
-                String friend = promiseFriend.getText().toString();
+                String friend;
                 String time = time1 + "-" + time2;
-                Response.Listener<String> responseListener_Promise = new Response.Listener<String>() {// ************회원가입********************
-                    @Override
-                    public void onResponse(String response) {
 
-                        try {
-                            System.out.println("테이블 생성" + response);
-                            JSONObject jsonObject = new JSONObject(response);
-                            boolean success = jsonObject.getBoolean("success");
-                            //회원가입 성공시
+                if (promiseFriend.getText().toString().length() < 2) {
+                    friend = "";
+                } else {
+                    friend = promiseFriend.getText().toString().substring(0, promiseFriend.length() - 2);
+                }
 
-                            if (success) {
-                                System.out.println("회원가입 성공");
-                                //회원가입 실패시
-
-                            } else {
-                                System.out.println("회원가입 실패");
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
                 AddPromissRequest addPromissRequest = new AddPromissRequest(partycode, userKakaoCode, title, time, place, responseListener_Promise);
                 RequestQueue queue = Volley.newRequestQueue(Promise_write.this);
-                System.out.println("순서1");
-                System.out.println(partycode + "_" + userKakaoCode + "_" + title + "_" + time + "_" + place);
                 queue.add(addPromissRequest);
 
-                Response.Listener<String> responseListener_Party = new Response.Listener<String>() {// ************회원가입********************
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
                     @Override
-                    public void onResponse(String response) {
-
-                        try {
-                            System.out.println("테이블 생성" + response);
-                            JSONObject jsonObject = new JSONObject(response);
-                            boolean success = jsonObject.getBoolean("success");
-                            //회원가입 성공시
-
-                            if (success) {
-                                System.out.println("회원가입 성공");
-                                //회원가입 실패시
-
-                            } else {
-                                System.out.println("회원가입 실패");
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    public void run() {
+                        AddPartyRequest addPartyRequest = new AddPartyRequest(partycode, userKakaoCode, 1, responseListener_User);
+                        queue.add(addPartyRequest);
                     }
-                };
-                AddPartyRequest addPartyRequest = new AddPartyRequest(partycode, userKakaoCode, 1, responseListener_Party);
-                RequestQueue queue1 = Volley.newRequestQueue(Promise_write.this);
-                System.out.println("순서2");
-                System.out.println(partycode + userKakaoCode + "_" + 1);
-                queue1.add(addPartyRequest);
+                }, 100);
 
-                String[] strArr = friend.split(", ");
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        String[] strArr = friend.split(", ");
+                        long friendCode = 0;
 
-                for (int i = 0; i < friendCount; i++) {
+                        System.out.println(strArr.length);
+                        System.out.println(friendCount);
+
+                        if (strArr.length > 0) {
+                            for (int i = 0; i < strArr.length; i++) {
+                                for (int j = 0; j < friendCount; j++) {
+                                    if (strArr[i].equals(menuitem.get(j))) {
+                                        friendCode = menucodeitem.get(j);
+                                        Log.d("friendCode", Long.toString(friendCode));
+                                    }
+                                }
+                                AddPartyRequest invitePartyRequest = new AddPartyRequest(partycode, friendCode, 0, responseListener_Friend);
+                                queue.add(invitePartyRequest);
+                            }
+                        }
+                        new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new BackgroundTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }
+                }, 300);
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent1 = new Intent(getApplicationContext(), FP.class);
+                        intent1.putExtra("promiselist", newPromiselist);
+                        intent1.putExtra("friendlist", newFriendlist);
+                        intent1.putExtra("코드", userKakaoCode);
+                        intent1.putExtra("locationlist", locationlist);
+                        intent1.putExtra("buslist", buslist);
+                        intent1.putExtra("subwaylist", subwaylist);
+                        intent1.putExtra("도", area);
+                        intent1.putExtra("시", city);
+                        intent1.putExtra("날씨", weather);
+                        intent1.putExtra("코로나", covidNum);
+                        intent1.putExtra("미세먼지", fineDust);
+                        intent1.putExtra("초미세먼지", ultraFineDust);
+                        intent1.putExtra("닉네임", name);
+                        intent1.putExtra("프로필", address);
+                        intent1.putExtra("온도", tem);
+                        startActivity(intent1);
+                        finish();
+                    }
+                },2000);
+
+                /*for (int i = 0; i < friendCount; i++) {
                     if (menuitem.get(i).toString().equals(strArr[i].toString())) {
                         friendKakaoCode = menucodeitem.get(i);
 
-                        addPartyRequest = new AddPartyRequest(partycode, friendKakaoCode, 0, responseListener_Party);
+                        addPartyRequest = new AddPartyRequest(partycode, friendKakaoCode, 0, responseListener_Promise);
                         RequestQueue queue2 = Volley.newRequestQueue(Promise_write.this);
                         System.out.println("순서3");
                         queue2.add(addPartyRequest);
@@ -301,7 +375,7 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                     }
                 }
                 Intent intent1 = new Intent();
-
+*/
             }
 
         });
@@ -359,6 +433,69 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
         return false;
     }
 
+    class BackgroundTask extends AsyncTask<Void, Void, String> {
+
+        String target;
+
+        @Override
+        protected void onPreExecute() {
+            target = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/friendlist.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+                URL url = new URL(target);
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String temp;
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((temp = bufferedReader.readLine()) != null) {
+
+                    stringBuilder.append(temp + "\n");
+
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            System.out.println("========result=======" + result);
+            newFriendlist = result;
+        }
+
+        @Override
+        protected void onCancelled(String s) {
+            super.onCancelled(s);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+
+    }
+
     class BackgroundTask_Promise extends AsyncTask<Void, Void, String> {
         String target;
 
@@ -407,80 +544,8 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
         protected void onPostExecute(String result) {
 
             System.out.println("파싱 부분 : " + result);
-            //promiselist = null;
-            //newPromiselist = result;
+            newPromiselist = result;
 
-            Intent intent1 = new Intent(getApplicationContext(), Maps_Activity.class);
-            intent1.putExtra("promiselist", result);
-            intent1.putExtra("friendlist", friendlist);
-            intent1.putExtra("코드", userKakaoCode);
-            intent1.putExtra("locationlist", locationlist);
-            intent1.putExtra("buslist", buslist);
-            intent1.putExtra("subwaylist", subwaylist);
-            intent1.putExtra("도", area);
-            intent1.putExtra("시", city);
-            intent1.putExtra("날씨", weather);
-            intent1.putExtra("코로나", covidNum);
-            intent1.putExtra("미세먼지", fineDust);
-            intent1.putExtra("초미세먼지", ultraFineDust);
-            intent1.putExtra("닉네임", name);
-            intent1.putExtra("프로필", address);
-            intent1.putExtra("온도", tem);
-            Promise_write.this.startActivity(intent1);
-            finish();
-        }
-
-    }
-
-    class BackgroundTask_Friend extends AsyncTask<Void, Void, String> {
-
-        String target;
-
-        @Override
-        protected void onPreExecute() {
-            target = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/friendlist.php";
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-
-            try {
-                URL url = new URL(target);
-
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                String temp;
-
-                StringBuilder stringBuilder = new StringBuilder();
-
-                while ((temp = bufferedReader.readLine()) != null) {
-
-                    stringBuilder.append(temp + "\n");
-
-                }
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return stringBuilder.toString().trim();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            System.out.println("========result=======" + result);
-            //friendlist = null;
-            newFriendlist = result;
         }
 
         @Override
