@@ -26,7 +26,9 @@ import com.android.volley.toolbox.Volley;
 import com.example.bbic.DB.AddPartyRequest;
 import com.example.bbic.DB.AddPromissRequest;
 import com.example.bbic.Data.Friend;
+import com.example.bbic.Data.Promise;
 import com.example.bbic.Login_Activity;
+import com.example.bbic.Maps_Activity;
 import com.example.bbic.R;
 
 import org.json.JSONArray;
@@ -74,7 +76,7 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
 
         Intent intent = getIntent();
         friendlist = intent.getStringExtra("friendlist");
-        //promiselist = intent.getStringExtra("promiselist");
+        promiselist = intent.getStringExtra("promiselist");
         userKakaoCode = intent.getLongExtra("userCode", 0);
         locationlist = intent.getStringExtra("locationlist");
         buslist = intent.getStringExtra("buslist");
@@ -146,37 +148,19 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
         int mHour = c.get(Calendar.HOUR);
         int mMinute = c.get(Calendar.MINUTE);
 
-        new BackgroundTask_Promise().execute();
-        new BackgroundTask_Friend().execute();
+
+//        BackgroundTask_Friend backgroundTask_friend =  new BackgroundTask_Friend();
+//        backgroundTask_friend.execute();
 
         close = (TextView) findViewById(R.id.promise_write_close_tv);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 System.out.println("취소버튼 클릭");
-                Intent intent1 = new Intent(getApplicationContext(), FP.class);
-                intent1.putExtra("promiselist", newPromiselist);
-                intent1.putExtra("friendlist", newFriendlist);
-                intent1.putExtra("코드", userKakaoCode);
-                intent1.putExtra("locationlist", locationlist);
-                intent1.putExtra("buslist", buslist);
-                intent1.putExtra("subwaylist", subwaylist);
-                intent1.putExtra("도", area);
-                intent1.putExtra("시", city);
-                intent1.putExtra("날씨", weather);
-                intent1.putExtra("코로나", covidNum);
-                intent1.putExtra("미세먼지", fineDust);
-                intent1.putExtra("초미세먼지", ultraFineDust);
-                intent1.putExtra("닉네임", name);
-                intent1.putExtra("프로필", address);
-                intent1.putExtra("온도", tem);
-                startActivity(intent1);
-                finish();
+                new BackgroundTask_Promise().execute();
+                //finish();
             }
         });
-
-
-
 
         int num = (int) (Math.random() * 999999) + 100000;
 
@@ -234,6 +218,7 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
 //        popupMenu.getMenu().add(0, 1, 0, "리스트 두번째");
 //        popupMenu.getMenu().add(0, 2, 0, "리스트 세번째");
         popupMenu.setOnMenuItemClickListener(this);
+
         friendCount = menuitem.size();
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
@@ -423,20 +408,27 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
 
             System.out.println("파싱 부분 : " + result);
             //promiselist = null;
-            newPromiselist = result;
+            //newPromiselist = result;
 
+            Intent intent1 = new Intent(getApplicationContext(), Maps_Activity.class);
+            intent1.putExtra("promiselist", result);
+            intent1.putExtra("friendlist", friendlist);
+            intent1.putExtra("코드", userKakaoCode);
+            intent1.putExtra("locationlist", locationlist);
+            intent1.putExtra("buslist", buslist);
+            intent1.putExtra("subwaylist", subwaylist);
+            intent1.putExtra("도", area);
+            intent1.putExtra("시", city);
+            intent1.putExtra("날씨", weather);
+            intent1.putExtra("코로나", covidNum);
+            intent1.putExtra("미세먼지", fineDust);
+            intent1.putExtra("초미세먼지", ultraFineDust);
+            intent1.putExtra("닉네임", name);
+            intent1.putExtra("프로필", address);
+            intent1.putExtra("온도", tem);
+            Promise_write.this.startActivity(intent1);
+            finish();
         }
-
-        @Override
-        protected void onCancelled(String s) {
-            super.onCancelled(s);
-        }
-
-        @Override
-        protected void onCancelled() {
-            super.onCancelled();
-        }
-
 
     }
 
