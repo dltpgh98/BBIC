@@ -3,6 +3,7 @@ package com.example.bbic.FP;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -183,19 +184,44 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case 0: //리스트 첫번째 클릭시 호출
-//                if(!menuitem.get(0)){
+//        switch (item.getItemId()) {
+//            case 0: //리스트 첫번째 클릭시 호출
+////                if(!menuitem.get(0)){
+////
+////                }
+//                promiseFriend.setText(menuitem.get(0).toString());
+//                break;
+//            case 1: //리스트 두번째 클릭시 호출
+//                break;
+//            case 2: //리스트 세번째 클릭시 호출
+//                break;
 //
-//                }
-                promiseFriend.setText(menuitem.get(0).toString());
-                break;
-            case 1: //리스트 두번째 클릭시 호출
-                break;
-            case 2: //리스트 세번째 클릭시 호출
-                break;
+//        }
 
+        int selectItem = item.getItemId();
+        String selectFriendName = menuitem.get(selectItem).toString();
+        String beforeText = promiseFriend.getText().toString();
+
+        boolean matchString = beforeText.contains(selectFriendName);
+
+        if(beforeText.equals("약속 친구")){
+            beforeText = "";
         }
+
+        Log.d("matchString", Boolean.toString(matchString));
+
+        if(!matchString)
+        {
+            beforeText += selectFriendName+", ";
+        }
+        else{
+            beforeText = beforeText.replace(selectFriendName+", ","");
+        }
+
+
+
+        promiseFriend.setText(beforeText);
+
         return false;
     }
 }
