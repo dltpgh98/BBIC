@@ -14,11 +14,17 @@ import android.widget.TextView;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.bbic.DB.deletePromissRequest;
 import com.example.bbic.Data.Promise;
 import com.example.bbic.FP.FP_promise_list;
 import com.example.bbic.FP.FP_promise_list;
 import com.example.bbic.R;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +89,8 @@ public class PromissListAdapter extends BaseAdapter {
         promiseAddress.setText(promises.get(i).getPromiseAddress());
         promiseDate.setText(promises.get(i).getPromissTime());
 
+        int partycode = promises.get(i).getPartyCode();
+
         String friendProfileArr = promises.get(i).getFriendProfile();//친구 이미지 배열
 
 
@@ -129,7 +137,27 @@ public class PromissListAdapter extends BaseAdapter {
                         builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        try {
+                                            JSONObject jsonObject = new JSONObject(response);
+                                            boolean success = jsonObject.getBoolean("success");
+                                            if (success) {
+                                                promises.remove(i);
+                                                notifyDataSetChanged();
+                                            }
 
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                };
+                                promises.remove(i);
+                                notifyDataSetChanged();
+                                deletePromissRequest deletePromissRequest = new deletePromissRequest(partycode, userCode, responseListener);
+                                RequestQueue queue = Volley.newRequestQueue(view.getContext());
+                                queue.add(deletePromissRequest);
                             }
                         });
                         builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
