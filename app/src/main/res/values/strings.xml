@@ -17,4 +17,5 @@
     <string name="gpsCheck">위치 권환 확인</string>
     <string name="gpsMessage">본 어플리케이션은\n위치 권한정보를 사용하는 \n어플리케이션입니다.\n\n아래 버튼을 클릭하여\n위치 권환을 \'항상허용\'으로\n적용해주시길 부탁드리겠습니다.</string>
     <string name="personal_processing_header">개인정보 처리방침</string>
+    <string name="terms_conditions_header">이용약관</string>
 </resources>

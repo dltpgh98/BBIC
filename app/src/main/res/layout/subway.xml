@@ -46,9 +46,11 @@
 
             <ImageButton
                 android:id="@+id/home_btn"
+                android:layout_margin="10sp"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@color/transparent"
+
                 android:src="@drawable/ic_baseline_home_24"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>

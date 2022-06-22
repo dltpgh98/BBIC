@@ -17,6 +17,7 @@ public class Odsay extends Maps_Activity {
     BusList[] busLists;
     int stationType;
     int count = 0;
+    String arsID;
 
     public Odsay() {
     }
@@ -24,8 +25,8 @@ public class Odsay extends Maps_Activity {
     public OnResultCallbackListener subwayStationInfo = new OnResultCallbackListener() {//지하철 정보
         @Override
         public void onSuccess(ODsayData odsayData, API api) {
-            try{
-                if(api == API.SUBWAY_STATION_INFO){
+            try {
+                if (api == API.SUBWAY_STATION_INFO) {
                     //해당 역 정보
                     String stationName = odsayData.getJson().getJSONObject("result").getString("stationName");
                     String stationID = odsayData.getJson().getJSONObject("result").getString("stationID");
@@ -72,15 +73,15 @@ public class Odsay extends Maps_Activity {
                     double next_y;
 
 
-                    subwayLists = new SubwayList(stationName, stationID, type,laneName, laneCity, cityCode);
+                    subwayLists = new SubwayList(stationName, stationID, type, laneName, laneCity, cityCode);
                     subwayLists.setDefaultInfo_tel(tel);
 
 
                     // 역 마다 신주소 여부
-                    try{
+                    try {
                         new_adress = odsayData.getJson().getJSONObject("result").getJSONObject("defaultInfo").getString("new_address");
                         subwayLists.setDefaultInfo_new_address(new_adress);
-                    }catch (JSONException e){
+                    } catch (JSONException e) {
                         new_adress = "";
                         subwayLists.setDefaultInfo_new_address(new_adress);
                         e.printStackTrace();
@@ -88,10 +89,10 @@ public class Odsay extends Maps_Activity {
 
 
                     //환승역 여부
-                    try{
+                    try {
                         exOBJ = odsayData.getJson().getJSONObject("result").getJSONObject("exOBJ").getString("station");
                         exOBJArray = new JSONArray(exOBJ);//환승역 배열
-                        for (int i = 0; i < exOBJArray.length(); i++){
+                        for (int i = 0; i < exOBJArray.length(); i++) {
                             sunJsonObject = exOBJArray.getJSONObject(i);
                             ex_stationName = sunJsonObject.getString("stationName");
                             ex_stationID = sunJsonObject.getInt("stationID");
@@ -104,7 +105,7 @@ public class Odsay extends Maps_Activity {
 
                             System.out.println("sunJsonObject" + sunJsonObject + "\n" + "ex_stationName" + ex_stationName + "\n" + "ex_stationID" + ex_stationID + "\n" + "ex_type" + ex_type + "\n");
                         }
-                    }catch (JSONException e){
+                    } catch (JSONException e) {
                         exOBJ = "";
                         e.printStackTrace();
                         System.out.println("환승역 없음");
@@ -112,10 +113,10 @@ public class Odsay extends Maps_Activity {
 
 
                     //이전역 여부
-                    try{
+                    try {
                         prevOBJ = odsayData.getJson().getJSONObject("result").getJSONObject("prevOBJ").getString("station");
                         prevOBJArray = new JSONArray(prevOBJ);//이전역 배열
-                        for (int i = 0; i < prevOBJArray.length(); i++){
+                        for (int i = 0; i < prevOBJArray.length(); i++) {
                             prevOBJObject = prevOBJArray.getJSONObject(i);
                             prev_stationName = prevOBJObject.getString("stationName");
                             prev_stationID = prevOBJObject.getInt("stationID");
@@ -132,21 +133,20 @@ public class Odsay extends Maps_Activity {
                             subwayLists.setPrevOBJ_laneCity(prev_laneCity);
 
 
-                            System.out.println("prev_stationName" + prev_stationName + "\n" + "prev_stationID"+ prev_stationID + "\n");
+                            System.out.println("prev_stationName" + prev_stationName + "\n" + "prev_stationID" + prev_stationID + "\n");
                         }
-                    }catch (JSONException e){
-                        prevOBJ ="";
+                    } catch (JSONException e) {
+                        prevOBJ = "";
                         System.out.println("이전역 없음");
                         e.printStackTrace();
                     }
 
 
-
                     //다음역 여부
-                    try{
+                    try {
                         nextOBJ = odsayData.getJson().getJSONObject("result").getJSONObject("nextOBJ").getString("station");
                         nextOBJArray = new JSONArray(nextOBJ);//다음역 배열
-                        for (int i = 0; i <nextOBJArray.length() ; i++){
+                        for (int i = 0; i < nextOBJArray.length(); i++) {
                             nextOBJObject = nextOBJArray.getJSONObject(i);
                             next_stationName = nextOBJObject.getString("stationName");
                             next_stationID = nextOBJObject.getInt("stationID");
@@ -165,7 +165,7 @@ public class Odsay extends Maps_Activity {
 
                             System.out.println("next_stationName" + next_stationName + "\n" + "next_stationID" + next_stationID + "\n");
                         }
-                    }catch (JSONException e){
+                    } catch (JSONException e) {
                         nextOBJ = "";
                         System.out.println("다음역 없음");
                         e.printStackTrace();
@@ -174,7 +174,7 @@ public class Odsay extends Maps_Activity {
                     //출구 정보
                     String gate = odsayData.getJson().getJSONObject("result").getJSONObject("exitInfo").getString("gate");// 츨구 정보
                     JSONArray gateArray = new JSONArray(gate);
-                    for (int i = 0; i < gateArray.length(); i++){
+                    for (int i = 0; i < gateArray.length(); i++) {
                         JSONObject subJsonObject = gateArray.getJSONObject(i);
                         String gateNo = subJsonObject.getString("gateNo");
                         String gateLink = subJsonObject.getString("gateLink");
@@ -187,7 +187,7 @@ public class Odsay extends Maps_Activity {
 
 
                 }
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
@@ -209,7 +209,9 @@ public class Odsay extends Maps_Activity {
 //
                     String lane = odsayData.getJson().getJSONObject("result").getString("lane");
                     JSONArray laneArray = new JSONArray(lane);
-                    for (int i = 0; i < laneArray.length(); i++){
+                    busLists = new BusList[laneArray.length()];
+                    arsID= odsayData.getJson().getJSONObject("result").getString("arsID");
+                    for (int i = 0; i < laneArray.length(); i++) {
                         JSONObject subJsonObject = laneArray.getJSONObject(i);
                         String busNo = subJsonObject.getString("busNo");
                         int type = subJsonObject.getInt("type");
@@ -223,25 +225,27 @@ public class Odsay extends Maps_Activity {
                         String busCityName = subJsonObject.getString("busCityName");
                         String busLocalBlID = subJsonObject.getString("busLocalBlID");
 
-                        busLists = new BusList[laneArray.length()];
-                        busLists[i] = new BusList(busNo,type, busID, busStartPoint, busEndPoint,busFirstTime, busLastTime, busInterval, busCityCode, busCityName, busLocalBlID);
+
+                        busLists[i] = new BusList(busNo, type, busID, busStartPoint, busEndPoint, busFirstTime, busLastTime, busInterval, busCityCode, busCityName, busLocalBlID);
 
 
-
-                        System.out.println("busNo" + busNo + "\n" + "busID" + busID + "\n"+"busStartPoint" + busStartPoint + "\n" + "busEndPoint" + busEndPoint);
+                        System.out.println("사이즈 지정" + busLists);
+                        System.out.println(busLists[i] + "\n" + i + "\n" + busNo + busNo + "\n" + "busID" + busID + "\n" + "busStartPoint" + busStartPoint + "\n" + "busEndPoint" + busEndPoint);
 
                     }
 
 
                 }
-            }catch (JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
+
         // 호출 실패 시 실행
         @Override
         public void onError(int i, String s, API api) {
-            if (api == API.POINT_SEARCH) {}
+            if (api == API.POINT_SEARCH) {
+            }
         }
     };
 
@@ -255,10 +259,11 @@ public class Odsay extends Maps_Activity {
                 //해당의 위치의 좌표 검색으로 버스 정류장인지 지하철 역인지 판단
                 if (api == API.POINT_SEARCH) {
 
-                    System.out.println("pointSearch : "+odsayData.getJson()+"   api: "+ api);
+                    System.out.println("pointSearch : " + odsayData.getJson() + "   api: " + api);
                     String station = odsayData.getJson().getJSONObject("result").getString("station");
                     JSONArray stationAraay = new JSONArray(station);
-                    for (int i = 0; i < stationAraay.length(); i++){
+                    StationList = new StationList[stationAraay.length()];
+                    for (int i = 0; i < stationAraay.length(); i++) {
                         JSONObject subJsonObject = stationAraay.getJSONObject(i);
                         //int nonstopStation = subJsonObject.getInt("subJsonObject");
                         int stationClass = subJsonObject.getInt("stationClass");
@@ -269,22 +274,24 @@ public class Odsay extends Maps_Activity {
                         String x = subJsonObject.getString("x");
                         String y = subJsonObject.getString("y");
                         count++;
-                        StationList = new StationList[stationAraay.length()];
-                        StationList[i] = new StationList(stationClass,stationName,stationID,x,y);
-                        System.out.println("stationClass : " +stationClass + "\n" + "stationName : " + stationName +"\n" + "count" + count);
+
+                        StationList[i] = new StationList(stationClass, stationName, stationID, x, y);
+                        System.out.println("stationClass : " + stationClass + "\n" + "stationName : " + stationName + "\n" + "count" + count);
                     }
 
                 }
-            }catch (JSONException e) {
+            } catch (JSONException e) {
                 //e.printStackTrace();
                 System.out.println("콜백 리스너 에러");
             }
 
         }
+
         // 호출 실패 시 실행
         @Override
         public void onError(int i, String s, API api) {
-            if (api == API.POINT_SEARCH) {}
+            if (api == API.POINT_SEARCH) {
+            }
         }
     };
 
@@ -295,6 +302,22 @@ public class Odsay extends Maps_Activity {
 
     public void setStationList(StationList[] stationList) {
         this.StationList = stationList;
+    }
+
+    public BusList[] getBusLists() {
+        return busLists;
+    }
+
+    public void setBusLists(BusList[] busLists) {
+        this.busLists = busLists;
+    }
+
+    public String getArsID() {
+        return arsID;
+    }
+
+    public void setArsID(String arsID) {
+        this.arsID = arsID;
     }
 
     public int getCount() {
