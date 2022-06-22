@@ -86,37 +86,38 @@ public class FP_friend extends Fragment {
             public void onClick(View view) {
 
                 Intent intent = new Intent(getActivity(), NewKakaoFriend.class);
+                intent.putExtra("코드", userCode);
                 startActivity(intent);
 
 
-                test test = new test();
-                test.test1();
+//                test test = new test();
+//                test.test1();
 
 
 //                test.getArray();
 //
 //                System.out.println("가져온 카카오톡 친구목록" + Arrays.toString(test.getArray()));
 
-                new Thread() {
-                    @Override
-                    public void run() {
-                        Document doc;
-                        try {
-                            Thread.sleep(2000);
-                            test.getArray();
-                            System.out.println("가져온 카카오톡 친구목록" + Arrays.toString(test.getArray()));
-                            System.out.println("가져온 카카오톡 친구목록" + test.getArray()[0].getFriend_id());
-                            System.out.println("가져온 카카오톡친구 배열 크기" + test.getArray().length);
-
-
-
-
-                        } catch (Exception exception) {
-                            exception.printStackTrace();
-                        }
-
-                    }
-                }.start();
+//                new Thread() {
+//                    @Override
+//                    public void run() {
+//                        Document doc;
+//                        try {
+//                            Thread.sleep(2000);
+//                            test.getArray();
+//                            System.out.println("가져온 카카오톡 친구목록" + Arrays.toString(test.getArray()));
+//                            System.out.println("가져온 카카오톡 친구목록" + test.getArray()[0].getFriend_id());
+//                            System.out.println("가져온 카카오톡친구 배열 크기" + test.getArray().length);
+//
+//
+//
+//
+//                        } catch (Exception exception) {
+//                            exception.printStackTrace();
+//                        }
+//
+//                    }
+//                }.start();
 
 
 //                RequestQueue queue = Volley.newRequestQueue(rootView.getContext());
