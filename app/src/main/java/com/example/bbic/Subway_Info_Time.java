@@ -16,6 +16,7 @@ public class Subway_Info_Time extends Maps_Activity {
 
     private JSONObject result;
     private int count;
+    private int ifCount;
     private String[] stationMinuet;
 
     private String[] stationR_name;
@@ -31,6 +32,38 @@ public class Subway_Info_Time extends Maps_Activity {
         this.result = result;
     }
 
+    public String[] getStationR_name() {
+        return stationR_name;
+    }
+
+    public void setStationR_name(String[] stationR_name) {
+        this.stationR_name = stationR_name;
+    }
+
+    public String[] getStationR_time() {
+        return stationR_time;
+    }
+
+    public void setStationR_time(String[] stationR_time) {
+        this.stationR_time = stationR_time;
+    }
+
+    public String[] getStationL_name() {
+        return stationL_name;
+    }
+
+    public void setStationL_name(String[] stationL_name) {
+        this.stationL_name = stationL_name;
+    }
+
+    public String[] getStationL_time() {
+        return stationL_time;
+    }
+
+    public void setStationL_time(String[] stationL_time) {
+        this.stationL_time = stationL_time;
+    }
+
     public Subway_Info_Time() {
     }
 
@@ -44,45 +77,92 @@ public class Subway_Info_Time extends Maps_Activity {
                     SimpleDateFormat hour = new SimpleDateFormat("HH");
                     SimpleDateFormat minuet = new SimpleDateFormat("mm");
 
-                    String getHourTime = hour.format(date);
+
+                    int getHourTime = Integer.valueOf(hour.format(date));
                     String getMinuetTime = minuet.format(date);
-                    Log.d("====time=====",getHourTime);
-                    Log.d("====timeMinut=====",getMinuetTime);
+                    Log.d("====time=====", ""+getHourTime);
+                    Log.d("====timeMinut=====", getMinuetTime);
 
                     result = odsayData.getJson().getJSONObject("result");
-                    JSONArray time = result.getJSONObject("OrdList").getJSONObject("up").getJSONArray("time");
-                    Log.d("=====ssss====", "" + time);
-                    String time_gep="";
-                    stationR_name=new String[2];
-                    stationL_name=new String[2];
-                    stationR_time=new String[2];
-                    stationL_time=new String[2];
-                    for (int i = 0; i < time.length(); i++) {
-                        if(time.getJSONObject(i).getString("Idx").equals(getHourTime)){
-                            String timeStr = time.getJSONObject(i).getString("list");
-                            Log.d("timeStr",""+timeStr);
-                            stationMinuet = timeStr.split(" ");
-                            for(int j = 0; j< stationMinuet.length;j++){
-                                int times = Integer.valueOf(stationMinuet[j].replaceAll("[^0-9]",""));
-                                String direction = stationMinuet[j].replaceAll("[0-9]","");
-                                int minus =times-Integer.valueOf(getMinuetTime);
-                                if(minus>0){
-                                    System.out.println("==minus=="+minus);
-                                    if(count<2){
-                                        stationR_name[count]=direction;
-                                        if(minus<2){
-                                            stationR_time[count]="곧 도착";
-                                        }else{
-                                        stationR_time[count]=String.valueOf(minus);
-                                        }
-                                        Log.d("========statR============",""+stationR_name[count]);
+                    try {
+                        JSONArray upTime = result.getJSONObject("OrdList").getJSONObject("up").getJSONArray("time");
+                        JSONArray downTime = result.getJSONObject("OrdList").getJSONObject("down").getJSONArray("time");
+
+                        String time_gep = "";
+                        stationR_name = new String[2];
+                        stationL_name = new String[2];
+                        stationR_time = new String[2];
+                        stationL_time = new String[2];
+                        for (int i = 0; i < upTime.length(); i++) {
+                            if (upTime.getJSONObject(i).getString("Idx").equals(String.valueOf(14))||upTime.getJSONObject(i).getString("Idx").equals(String.valueOf(15))) {
+                                String timeStr = upTime.getJSONObject(i).getString("list");
+                                String str=upTime.getJSONObject(i).getString("Idx");
+
+                                stationMinuet = timeStr.split(" ");
+                                for (int j = 0; j < stationMinuet.length; j++) {
+
+                                    int times = Integer.valueOf(stationMinuet[j].replaceAll("[^0-9]", ""));
+                                    String direction = stationMinuet[j].replaceAll("[0-9]", "");
+                                    int check=0;
+                                    if(stationMinuet.length/3<=j&&times<10){
+                                        check=1;
                                     }
-                                   count++;
+                                    if(check==1){
+                                        times+=60;
+                                    }
+                                    Log.d("==times==",times+"==Idx=="+str);
 
+//                                    int minus = times - Integer.valueOf(getMinuetTime);
+                                    int minus = times - 56;
+
+                                    if (minus > 0) {
+                                        System.out.println("==minus==" + minus);
+                                        if (count < 2) {
+                                            stationR_name[count] = direction;
+                                            if (minus < 2) {
+                                                stationR_time[count] = "곧 도착";
+                                            } else {
+                                                stationR_time[count] = String.valueOf(minus) + "분전";
+                                            }
+                                            Log.d("========statR============", "" + stationR_name[count]);
+                                        }
+                                        count++;
+
+                                    }
                                 }
-                            }
 
+                            }
                         }
+                        count=0;
+                        for (int i = 0; i < downTime.length(); i++) {
+                            if (downTime.getJSONObject(i).getString("Idx").equals(String.valueOf(14))) {
+                                String timeStr = downTime.getJSONObject(i).getString("list");
+
+                                stationMinuet = timeStr.split(" ");
+                                for (int j = 0; j < stationMinuet.length; j++) {
+                                    int times = Integer.valueOf(stationMinuet[j].replaceAll("[^0-9]", ""));
+                                    String direction = stationMinuet[j].replaceAll("[0-9]", "");
+                                    int minus = times - Integer.valueOf(getMinuetTime);
+                                    if (minus > 0) {
+                                        System.out.println("==minus==" + minus);
+                                        if (count < 2) {
+                                            stationL_name[count] = direction;
+                                            if (minus < 2) {
+                                                stationL_time[count] = "곧 도착";
+                                            } else {
+                                                stationL_time[count] = String.valueOf(minus) + "분전";
+                                            }
+                                            Log.d("========statR============", "" + stationL_name[count]);
+
+                                            count++;
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    } catch (Exception e) {
+
                     }
                 }
             } catch (Exception e) {

@@ -402,6 +402,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private ImageView headerProfile;
     private TextView headerName, headerCode,
             subway_info_title, subway_info_direction, subway_info_left_station, subway_info_this_station, subway_info_right_station,
+            subway_info_left_arriveSoon_name,subway_info_left_arriveNext_name,subway_info_left_arriveSoon_time,subway_info_left_arriveNext_time,
+            subway_info_right_arriveSoon_name,subway_info_right_arriveNext_name,subway_info_right_arriveSoon_time,subway_info_right_arriveNext_time,
             bus_info_title, bus_info_direction, bus_info_number,
             place_info_title, place_info_address;
     private ImageView headerGhostBtn, headerSettingBtn;
@@ -615,7 +617,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                 infoWindow.open(naverMap);
                             }
 
-                            startService();
                         }
                     }, 450);
                 }
@@ -940,6 +941,15 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         subway_info_this_station = (TextView) findViewById(R.id.subway_info_this_station_tv);
         subway_info_left_station = (TextView) findViewById(R.id.subway_info_left_station_tv);
 
+        subway_info_left_arriveNext_name = (TextView) findViewById(R.id.subway_info_left_arriveNext_station_tv);
+        subway_info_left_arriveNext_time = (TextView) findViewById(R.id.subway_info_left_arriveNext_time_tv);
+        subway_info_left_arriveSoon_name = (TextView) findViewById(R.id.subway_info_left_arriveSoon_station_tv);
+        subway_info_left_arriveSoon_time = (TextView) findViewById(R.id.subway_info_left_arriveSoon_time_tv);
+
+        subway_info_right_arriveNext_name = (TextView) findViewById(R.id.subway_info_right_arriveNext_station_tv);
+        subway_info_right_arriveNext_time = (TextView) findViewById(R.id.subway_info_right_arriveNext_time_tv);
+        subway_info_right_arriveSoon_name = (TextView) findViewById(R.id.subway_info_right_arriveSoon_station_tv);
+        subway_info_right_arriveSoon_time = (TextView) findViewById(R.id.subway_info_right_arriveSoon_time_tv);
 
         bus_info_window = (ConstraintLayout) findViewById(R.id.bus_info_window); //버스 정보창
 
@@ -1918,8 +1928,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         place_info_window.setVisibility(View.VISIBLE);
 
         place_name = placeAddress.split(" ");
+        String str="";
+        try{
+          str = place_name[1] + " " + place_name[2] + " " + place_name[3];
+        }catch (Exception e){
+            str = place_name[1] + " " + place_name[2];
+        }
 
-        String str = place_name[1] + " " + place_name[2] + " " + place_name[3];
 
         place_info_title.setText(str);
         place_info_address.setText(placeAddress);
@@ -1930,7 +1945,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             public void run() {
 
                 upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-
+                startService();
             }
         }, 200);
 
@@ -1976,6 +1991,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         ardID = odsay.getArsID();
                         upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
 
+                        startService();
                     }
                 });
 
@@ -1997,7 +2013,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         place_info_window.setVisibility(View.GONE);
 
         subway_info_window.setVisibility(View.VISIBLE);
-
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -2015,16 +2030,27 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                odsay.getStationList()[0].getStationID();
 
 
-                upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-                stopService();
+
+                odsayService.requestSubwayTimeTable(String.valueOf(StationId), "12", "1", "1", subway_time.subway_timeList);
+
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         try {
                             Log.d("=========requst====tryStart====", "");
 
-                            odsayService.requestSubwayTimeTable(String.valueOf(StationId), "1", "1", "1", subway_time.subway_timeList);
+                            subway_info_left_arriveSoon_name.setText("종점"+subway_time.getStationR_name()[0]);
+                            subway_info_left_arriveSoon_time.setText(subway_time.getStationR_time()[0]);
+                            subway_info_left_arriveNext_name.setText("종점"+subway_time.getStationR_name()[1]);
+                            subway_info_left_arriveNext_time.setText(subway_time.getStationR_time()[1]);
 
+                            subway_info_right_arriveSoon_name.setText("종점"+subway_time.getStationL_name()[0]);
+                            subway_info_right_arriveSoon_time.setText(subway_time.getStationL_time()[0]);
+                            subway_info_right_arriveNext_name.setText("종점"+subway_time.getStationL_name()[1]);
+                            subway_info_right_arriveNext_time.setText(subway_time.getStationL_time()[1]);
+
+
+                            upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
                             startService();
                         } catch (Exception e) {
 
