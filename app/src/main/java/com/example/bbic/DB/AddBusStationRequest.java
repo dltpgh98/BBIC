@@ -16,9 +16,9 @@ public class AddBusStationRequest extends StringRequest{
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
-        map.put("b_stationcode",b_stationcode +"");
-        map.put("b_stationname", b_stationname);
-        map.put("b_direction", b_direction);
+        map.put("B_stationcode",b_stationcode +"");
+        map.put("B_stationname", b_stationname);
+        map.put("B_direction", b_direction);
     }
 
     @Override

@@ -9,7 +9,6 @@ class test {
     var result : Int = 0;
     var array = Array<KakaoFriend?>(result){null}
 
-
     public fun test1() {
         TalkApiClient.instance.friends { friends, error ->
             if (error != null) {

@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.bbic.NewKakaoFriend;
 import com.example.bbic.R;
 
 import com.example.bbic.test;
@@ -84,7 +85,8 @@ public class FP_friend extends Fragment {
             @Override
             public void onClick(View view) {
 
-
+                Intent intent = new Intent(getActivity(), NewKakaoFriend.class);
+                startActivity(intent);
 
 
                 test test = new test();
