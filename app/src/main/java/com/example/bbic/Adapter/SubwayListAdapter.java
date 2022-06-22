@@ -43,7 +43,8 @@ public class SubwayListAdapter extends BaseAdapter {
 
 
         TextView subwayName = (TextView) v.findViewById(R.id.subway_this_station_name_tv);
-        subwayName.setText(String.valueOf(subwayList.get(i).getStationCode()));
+        subwayName.setText(subwayList.get(i).getStationName());
+
 
         return v;
     }

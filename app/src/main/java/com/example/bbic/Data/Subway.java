@@ -3,6 +3,7 @@ package com.example.bbic.Data;
 public class Subway {
     int stationCode;
     long userCode;
+    String stationName;
 
     public int getStationCode() {
         return stationCode;
@@ -20,8 +21,17 @@ public class Subway {
         this.userCode = userCode;
     }
 
-    public Subway(int stationCode, long userCode) {
+    public String getStationName() {
+        return stationName;
+    }
+
+    public void setStationName(String stationName) {
+        this.stationName = stationName;
+    }
+
+    public Subway(int stationCode, long userCode, String stationName) {
         this.stationCode = stationCode;
         this.userCode = userCode;
+        this.stationName = stationName;
     }
 }

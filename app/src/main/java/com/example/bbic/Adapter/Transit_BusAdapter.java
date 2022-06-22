@@ -102,7 +102,7 @@ public class Transit_BusAdapter extends RecyclerView.Adapter<Transit_BusAdapter.
         public BusCustomViewHolder(@NonNull View itemView){
             super(itemView);
             this.bookmark_iv = (ImageButton) itemView.findViewById(R.id.bus_bookmark_ibtn);
-            this.bus_info_iv = (ImageButton) itemView.findViewById(R.id.bus_station_info_ibtn);
+//            this.bus_info_iv = (ImageButton) itemView.findViewById(R.id.bus_station_info_ibtn);
             this.station_name = (TextView) itemView.findViewById(R.id.bus_station_name_tv);
             this.to_station_name = (TextView) itemView.findViewById(R.id.bus_to_station_name_tv);
             this.bus_fastTime1 = (TextView) itemView.findViewById(R.id.bus1_fastTime_tv);

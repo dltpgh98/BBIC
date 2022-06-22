@@ -58,13 +58,15 @@ public class Bookmark_Transit_subway extends Fragment {
 
             int stationCode;
             long userCode;
+            String stationName;
 
             while (count < jsonArray.length()) {
                 JSONObject object = jsonArray.getJSONObject(count);
                 stationCode = object.getInt("S_code");
                 userCode = object.getLong("K_code");
+                stationName = object.getString("S_stationname");
 
-                Subway subway = new Subway(stationCode, userCode);
+                Subway subway = new Subway(stationCode, userCode,stationName);
                 if (userKakaoCode == userCode) {
                     subwayList.add(subway);
                 }

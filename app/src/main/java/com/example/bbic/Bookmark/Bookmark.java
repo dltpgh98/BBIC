@@ -49,7 +49,7 @@ public class Bookmark extends AppCompatActivity {
     private ImageView weatherImage, profile;
     private Button[] drawerMenu = new Button[6];
 
-    private String weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, friendlist, locationlist, buslist, subwaylist;
+    private String weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, friendlist, locationlist, buslist, subwaylist, promiselist;
     private long k_code;
     Bundle bundle;
 
@@ -91,6 +91,10 @@ public class Bookmark extends AppCompatActivity {
                     intent2.putExtra("시", city);
                     intent2.putExtra("코로나",covidNum);
                     intent2.putExtra("friendlist",friendlist);
+                    intent2.putExtra("promiselist", promiselist);
+                    intent2.putExtra("locationlist", locationlist);
+                    intent2.putExtra("subwaylist", subwaylist);
+                    intent2.putExtra("buslist", buslist);
                     startActivity(intent2);
                     finish();
                     break;
@@ -117,6 +121,10 @@ public class Bookmark extends AppCompatActivity {
                     intent5.putExtra("시", city);
                     intent5.putExtra("코로나",covidNum);
                     intent5.putExtra("friendlist",friendlist);
+                    intent5.putExtra("promiselist", promiselist);
+                    intent5.putExtra("buslist", buslist);
+                    intent5.putExtra("subwaylist", subwaylist);
+                    intent5.putExtra("locationlist", locationlist);
                     startActivity(intent5);
                     finish();
                     break;
@@ -133,6 +141,10 @@ public class Bookmark extends AppCompatActivity {
                     intent6.putExtra("시", city);
                     intent6.putExtra("코로나",covidNum);
                     intent6.putExtra("friendlist",friendlist);
+                    intent6.putExtra("promiselist", promiselist);
+                    intent6.putExtra("locationlist", locationlist);
+                    intent6.putExtra("subwaylist", subwaylist);
+                    intent6.putExtra("buslist", buslist);
                     startActivity(intent6);
                     finish();
                     break;
@@ -258,6 +270,7 @@ public class Bookmark extends AppCompatActivity {
         locationlist = intent.getStringExtra("locationlist");
         subwaylist = intent.getStringExtra("subwaylist");
         buslist = intent.getStringExtra("buslist");
+        promiselist = intent.getStringExtra("promiselist");
 
         System.out.println("locationlist : " +locationlist);
         System.out.println("subwaylist : " + subwaylist);
