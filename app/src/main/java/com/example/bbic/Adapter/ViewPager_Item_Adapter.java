@@ -41,34 +41,63 @@ public class ViewPager_Item_Adapter extends RecyclerView.Adapter<ViewPager_Item_
         @Override
         public void onClick(View view) {
             int count;
+            int index=0;
+            Intent intent = new Intent(view.getContext(), Maps_Activity.class);
             switch (view.getId()) {
                 //case를 통해 id에 따른 클릭이벤트 실행
+                case R.id.view_detail_way_ibtn:
+
+                    intent.putExtra("fFlag",1);
+                    intent.putExtra("fName",friend_name.get(index));
+                    intent.putExtra("fCode",friend_code.get(index));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    dialog.dismiss();
+                    view.getContext().startActivity(intent);
+                    break;
+
+                case R.id.view_detail_location_ibtn:
+                    intent.putExtra("fFlag",2);
+                    intent.putExtra("fName",friend_name.get(index));
+                    intent.putExtra("fCode",friend_code.get(index));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    dialog.dismiss();
+                    view.getContext().startActivity(intent);
+                    break;
+
                 case R.id.view_detail_back_ibtn:
                     dialog.dismiss();
                     break;
 
                 case R.id.view_item_ibtn1:
+                    index = 0;
                     startDialog(0);
                     break;
                 case R.id.view_item_ibtn2:
+                    index = 1;
                     startDialog(1);
                     break;
                 case R.id.view_item_ibtn3:
+                    index = 2;
                     startDialog(2);
                     break;
                 case R.id.view_item_ibtn4:
+                    index = 3;
                     startDialog(3);
                     break;
                 case R.id.view_item_ibtn5:
+                    index = 4;
                     startDialog(4);
                     break;
                 case R.id.view_item_ibtn6:
+                    index = 5;
                     startDialog(5);
                     break;
                 case R.id.view_item_ibtn7:
+                    index = 6;
                     startDialog(6);
                     break;
                 case R.id.view_item_ibtn8:
+                    index = 7;
                     startDialog(7);
                     break;
             }
