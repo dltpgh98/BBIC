@@ -92,12 +92,21 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                 JSONObject object = jsonArray.getJSONObject(count);
                 userCode = object.getLong("F.K_code1");
                 friendCode = object.getLong("F.K_code2");
+                friendStatus = object.getInt("F.F_status");
                 friendName = object.getString("K.K_name");
                 friendEmail = object.getString("K.K_email");
                 friendProfile = object.getString("K.K_profile");
                 friendLong = object.getDouble("K.K_long");
                 friendLat = object.getDouble("K.K_lat");
                 friendGhost = object.getInt("K.K_ghost");
+                
+
+                if (userCode == userKakaoCode) {
+                    if (friendStatus == 1) {
+                        menuitem.add(friendName);
+                        menucodeitem.add(friendCode);
+                    }
+                }
 
                 count++;
             }

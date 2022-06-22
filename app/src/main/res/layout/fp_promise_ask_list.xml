@@ -55,8 +55,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="3dp"
             app:layout_constraintStart_toEndOf="@id/pro_list_sidebar_iv"
-            app:layout_constraintTop_toBottomOf="@id/pro_list_address_tv"
-            app:srcCompat="@drawable/image_profile" />
+            app:layout_constraintTop_toBottomOf="@id/pro_list_address_tv" />
         <ImageView
             android:id="@+id/pro_list_profile2_iv"
             android:layout_width="30dp"
@@ -64,8 +63,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toEndOf="@id/pro_list_profile1_iv"
-            app:layout_constraintTop_toBottomOf="@id/pro_list_address_tv"
-            app:srcCompat="@drawable/image_profile" />
+            app:layout_constraintTop_toBottomOf="@id/pro_list_address_tv" />
         <ImageView
             android:id="@+id/pro_list_profile3_iv"
             android:layout_width="30dp"
@@ -73,8 +71,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toEndOf="@id/pro_list_profile2_iv"
-            app:layout_constraintTop_toBottomOf="@id/pro_list_address_tv"
-            app:srcCompat="@drawable/image_profile" />
+            app:layout_constraintTop_toBottomOf="@id/pro_list_address_tv" />
 
         <TextView
             android:id="@+id/pro_list_settime_tv"
@@ -90,8 +87,8 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/red_radious"
-            app:srcCompat="@color/green"
             android:layout_marginEnd="15dp"
+            android:src="@drawable/ic_baseline_close"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/pro_ask_accept_iv"/>
@@ -100,7 +97,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/blue_radious"
-            app:srcCompat="@color/green"
+            android:src="@drawable/ic_baseline_check"
             android:layout_marginEnd="15dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

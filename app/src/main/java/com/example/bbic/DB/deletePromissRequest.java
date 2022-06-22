@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class deletePromissRequest extends StringRequest{
 
-    final static private String URL = "http://3.85.238.108/deletepromiss.php";
+    final static private String URL = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/partydelete.php";
     private Map<String, String> map;
 
     public deletePromissRequest(int p_code, long k_code, Response.Listener<String> listener) {

@@ -8,7 +8,7 @@
 
 
     <ListView
-        android:id="@+id/friend_ask_lv"
+        android:id="@+id/promise_ask_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
