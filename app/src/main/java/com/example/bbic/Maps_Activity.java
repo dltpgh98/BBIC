@@ -889,7 +889,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 System.out.println("맵" + gpsTracker.getLongitude());
                 System.out.println("맵" + gpsTracker.getLatitude());
             }
-        }, 5000);
+        }, 30000);
 
 
         //이세호

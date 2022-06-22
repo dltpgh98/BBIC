@@ -209,6 +209,7 @@ public class Login_Activity extends AppCompatActivity {
                 }
             }
         };
+        System.out.println("중복문 실행");
         ValidateRequest validateRequest = new ValidateRequest(k_code, responseListener);
         RequestQueue queue = Volley.newRequestQueue(Login_Activity.this);
         queue.add(validateRequest);

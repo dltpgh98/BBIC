@@ -27,7 +27,9 @@ import com.android.volley.toolbox.Volley;
 import com.example.bbic.DB.AddPartyRequest;
 import com.example.bbic.DB.AddPromissRequest;
 import com.example.bbic.Data.Friend;
+import com.example.bbic.Data.Promise;
 import com.example.bbic.Login_Activity;
+import com.example.bbic.Maps_Activity;
 import com.example.bbic.R;
 
 import org.json.JSONArray;
@@ -73,7 +75,7 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
 
         Intent intent = getIntent();
         friendlist = intent.getStringExtra("friendlist");
-        //promiselist = intent.getStringExtra("promiselist");
+        promiselist = intent.getStringExtra("promiselist");
         userKakaoCode = intent.getLongExtra("userCode", 0);
         locationlist = intent.getStringExtra("locationlist");
         buslist = intent.getStringExtra("buslist");
@@ -144,7 +146,7 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
 
         int mHour = c.get(Calendar.HOUR);
         int mMinute = c.get(Calendar.MINUTE);
-
+        
         close = (TextView) findViewById(R.id.promise_write_close_tv);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,6 +181,8 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                 },1000);
             }
         });
+
+
 
 
         int num = (int) (Math.random() * 999999) + 100000;
@@ -531,5 +535,7 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
             super.onCancelled();
         }
 
+
     }
+
 }
