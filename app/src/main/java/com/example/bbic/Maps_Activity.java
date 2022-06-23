@@ -349,12 +349,12 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     switch (userGhost) {
                         case 0:
                             userGhost = 1;
-                            headerGhostBtn.setImageResource(R.drawable.ghost2);
+                            headerGhostBtn.setImageResource(R.drawable.ghost1);
                             break;
 
                         case 1:
                             userGhost = 0;
-                            headerGhostBtn.setImageResource(R.drawable.ghost1);
+                            headerGhostBtn.setImageResource(R.drawable.ghost2);
                             break;
                     }
 
@@ -562,6 +562,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private static String StationName;
     private static int StationId;
     private static int stationClass;
+
     private List<Double> friendLatList = new ArrayList<>();
     private List<Double> friendLongList = new ArrayList<>();
     private List<String> friendNameList = new ArrayList<>();
@@ -569,6 +570,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private List<Long> friendCodeList = new ArrayList<>();
     private List<Integer> friendStatusList = new ArrayList<>();
     private List<Integer> friendGhostList = new ArrayList<>();
+
 
 
     public static ODsayService odsayService;
@@ -588,8 +590,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     public final static double REFERANCE_LNG_X3 = 3 / 88.74;
     public final static double REFERANCE_LAT_X5 = 5 / 109.958489129649955;
     public final static double REFERANCE_LNG_X5 = 5 / 88.74;
-    public final static double REFERANCE_LAT_X15 = 15 / 109.958489129649955;
-    public final static double REFERANCE_LNG_X15 = 15 / 88.74;
+    public final static double REFERANCE_LAT_X15 = 18 / 109.958489129649955;
+    public final static double REFERANCE_LNG_X15 = 18 / 88.74;
 
     public boolean withinSightMarker(LatLng currentPosition, LatLng markerPosition) {
         boolean withinSightMarkerLat = Math.abs(currentPosition.latitude - markerPosition.latitude) <= REFERANCE_LAT_X15;
@@ -1230,15 +1232,14 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
 
         switch (userGhost) {
-            case 0:
+            case 1:
                 headerGhostBtn.setImageResource(R.drawable.ghost1);
                 break;
 
-            case 1:
+            case 0:
                 headerGhostBtn.setImageResource(R.drawable.ghost2);
                 break;
         }
-
         headerName.setText(name);
 //      headerCode.setText();
         Glide.with(this).load(address).circleCrop().into(headerProfile);

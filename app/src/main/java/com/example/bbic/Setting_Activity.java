@@ -127,18 +127,18 @@ public class Setting_Activity extends AppCompatActivity {
                 case R.id.setting_personal_btn:
                     startPersonalDialog();
                     break;
-//
-//                case R.id.setting_terms_button:
-//                    startTermsDialog();
-//                    break;
-//
-//                case R.id.setting_spons_btn:
-//                    startSponsDialog();
-//                    break;
-//
-//                case R.id.setting_help_btn:
-//                    startHelpDialog();
-//                    break;
+
+                case R.id.setting_terms_button:
+                    startTermsDialog();
+                    break;
+
+                case R.id.setting_spons_btn:
+                    startSponsDialog();
+                    break;
+
+                case R.id.setting_help_btn:
+                    startHelpDialog();
+                    break;
             }
         }
     }
@@ -184,9 +184,9 @@ public class Setting_Activity extends AppCompatActivity {
 
         homeBtn = (ImageButton) findViewById(R.id.home_btn);
         personalBtn = (ImageButton) findViewById(R.id.setting_personal_btn);
-//        helpBtn =  (ImageButton) findViewById(R.id.setting_help_btn);
-//        termsBtn = (ImageButton) findViewById(R.id.setting_terms_button);
-//        sponsBtn = (ImageButton) findViewById(R.id.setting_spons_btn);
+        helpBtn =  (ImageButton) findViewById(R.id.setting_help_btn);
+        termsBtn = (ImageButton) findViewById(R.id.setting_terms_button);
+        sponsBtn = (ImageButton) findViewById(R.id.setting_spons_btn);
 
         drawerMenu[0] = (Button) findViewById(R.id.drawer_menu_1);
         drawerMenu[1] = (Button) findViewById(R.id.drawer_menu_2);
