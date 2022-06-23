@@ -1833,6 +1833,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             marker.setPosition(point);
             // 마커 추가
             marker.setMap(naverMap);
+            editText.setText("");
 
             CameraUpdate cameraUpdate = CameraUpdate.scrollTo(point);
             naverMap.moveCamera(cameraUpdate);

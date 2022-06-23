@@ -76,7 +76,7 @@ public class Subway_Info_Time extends Maps_Activity {
                     Date date = new Date(now);
                     SimpleDateFormat hour = new SimpleDateFormat("HH");
                     SimpleDateFormat minuet = new SimpleDateFormat("mm");
-
+                    count = 0;
 
                     int getHourTime = Integer.valueOf(hour.format(date));
                     String getMinuetTime = minuet.format(date);
@@ -103,7 +103,7 @@ public class Subway_Info_Time extends Maps_Activity {
 
                                     int times = Integer.valueOf(stationMinuet[j].replaceAll("[^0-9]", ""));
                                     String direction = stationMinuet[j].replaceAll("[0-9]", "");
-                                    if(str.equals(Integer.valueOf(getHourTime+1))){
+                                    if(str.equals(Integer.toString(getHourTime+1))){
                                         times += 60;
                                     }
                                     Log.d("==times==",times+"==Idx=="+str);
@@ -139,7 +139,7 @@ public class Subway_Info_Time extends Maps_Activity {
                                 for (int j = 0; j < stationMinuet.length; j++) {
                                     int times = Integer.valueOf(stationMinuet[j].replaceAll("[^0-9]", ""));
                                     String direction = stationMinuet[j].replaceAll("[0-9]", "");
-                                    if(str.equals(Integer.valueOf(getHourTime+1))){
+                                    if(str.equals(Integer.toString(getHourTime+1))){
                                         times += 60;
                                     }
                                     int minus = times - Integer.valueOf(getMinuetTime);
