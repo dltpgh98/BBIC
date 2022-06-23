@@ -124,6 +124,7 @@
             app:layout_constraintTop_toBottomOf="@id/place_info_boundary_v">
 <!--            app:layout_constraintBottom_toTopOf="@id/place_info_image_iv">-->
             <ImageButton
+                android:id="@+id/place_info_startFind_ibtn"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/place_of_start_btn"
@@ -133,6 +134,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 />
             <ImageButton
+                android:id="@+id/place_info_endFind_ibtn"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/place_of_end_btn"

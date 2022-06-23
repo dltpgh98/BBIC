@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.bbic.NewKakaoFriend;
 import com.example.bbic.R;
 
 import com.example.bbic.test;
@@ -83,6 +84,11 @@ public class FP_friend extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Intent intent = new Intent(getActivity(), NewKakaoFriend.class);
+                startActivity(intent);
+
+
                 test test = new test();
                 test.test1();
 
@@ -100,6 +106,10 @@ public class FP_friend extends Fragment {
                             test.getArray();
                             System.out.println("가져온 카카오톡 친구목록" + Arrays.toString(test.getArray()));
                             System.out.println("가져온 카카오톡 친구목록" + test.getArray()[0].getFriend_id());
+                            System.out.println("가져온 카카오톡친구 배열 크기" + test.getArray().length);
+
+
+
 
                         } catch (Exception exception) {
                             exception.printStackTrace();

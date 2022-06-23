@@ -117,30 +117,30 @@ public class Transit_SubwayAdapter extends RecyclerView.Adapter<Transit_SubwayAd
             this.subway_left_direction = (TextView) itemView.findViewById(R.id.subway_left_station_direction_tv);
             this.subway_right_direction = (TextView) itemView.findViewById(R.id.subway_right_station_direction_tv);
 
-            this.subway_left_name1 = (TextView) itemView.findViewById(R.id.subway_left_station1_name_tv);
-            this.subway_left_time1 = (TextView) itemView.findViewById(R.id.subway_left_station1_time_tv);
-            this.subway_left_whole1 = (TextView) itemView.findViewById(R.id.subway_left_station1_whole_tv);
-
-            this.subway_left_name2 = (TextView) itemView.findViewById(R.id.subway_left_station2_name_tv);
-            this.subway_left_time2 = (TextView) itemView.findViewById(R.id.subway_left_station2_time_tv);
-            this.subway_left_whole2 = (TextView) itemView.findViewById(R.id.subway_left_station2_whole_tv);
-
-            this.subway_left_name3 = (TextView) itemView.findViewById(R.id.subway_left_station3_name_tv);
-            this.subway_left_time3 = (TextView) itemView.findViewById(R.id.subway_left_station3_time_tv);
-            this.subway_left_whole3 = (TextView) itemView.findViewById(R.id.subway_left_station3_whole_tv);
-
-
-            this.subway_right_name1 = (TextView) itemView.findViewById(R.id.subway_right_station1_name_tv);
-            this.subway_right_time1 = (TextView) itemView.findViewById(R.id.subway_right_station1_time_tv);
-            this.subway_right_whole1 = (TextView) itemView.findViewById(R.id.subway_right_station1_whole_tv);
-
-            this.subway_right_name2 = (TextView) itemView.findViewById(R.id.subway_right_station2_name_tv);
-            this.subway_right_time2 = (TextView) itemView.findViewById(R.id.subway_right_station2_time_tv);
-            this.subway_right_whole2 = (TextView) itemView.findViewById(R.id.subway_right_station2_whole_tv);
-
-            this.subway_right_name3 = (TextView) itemView.findViewById(R.id.subway_right_station3_name_tv);
-            this.subway_right_time3 = (TextView) itemView.findViewById(R.id.subway_right_station3_time_tv);
-            this.subway_right_whole3 = (TextView) itemView.findViewById(R.id.subway_right_station3_whole_tv);
+//            this.subway_left_name1 = (TextView) itemView.findViewById(R.id.subway_left_station1_name_tv);
+//            this.subway_left_time1 = (TextView) itemView.findViewById(R.id.subway_left_station1_time_tv);
+//            this.subway_left_whole1 = (TextView) itemView.findViewById(R.id.subway_left_station1_whole_tv);
+//
+//            this.subway_left_name2 = (TextView) itemView.findViewById(R.id.subway_left_station2_name_tv);
+//            this.subway_left_time2 = (TextView) itemView.findViewById(R.id.subway_left_station2_time_tv);
+//            this.subway_left_whole2 = (TextView) itemView.findViewById(R.id.subway_left_station2_whole_tv);
+//
+//            this.subway_left_name3 = (TextView) itemView.findViewById(R.id.subway_left_station3_name_tv);
+//            this.subway_left_time3 = (TextView) itemView.findViewById(R.id.subway_left_station3_time_tv);
+//            this.subway_left_whole3 = (TextView) itemView.findViewById(R.id.subway_left_station3_whole_tv);
+//
+//
+//            this.subway_right_name1 = (TextView) itemView.findViewById(R.id.subway_right_station1_name_tv);
+//            this.subway_right_time1 = (TextView) itemView.findViewById(R.id.subway_right_station1_time_tv);
+//            this.subway_right_whole1 = (TextView) itemView.findViewById(R.id.subway_right_station1_whole_tv);
+//
+//            this.subway_right_name2 = (TextView) itemView.findViewById(R.id.subway_right_station2_name_tv);
+//            this.subway_right_time2 = (TextView) itemView.findViewById(R.id.subway_right_station2_time_tv);
+//            this.subway_right_whole2 = (TextView) itemView.findViewById(R.id.subway_right_station2_whole_tv);
+//
+//            this.subway_right_name3 = (TextView) itemView.findViewById(R.id.subway_right_station3_name_tv);
+//            this.subway_right_time3 = (TextView) itemView.findViewById(R.id.subway_right_station3_time_tv);
+//            this.subway_right_whole3 = (TextView) itemView.findViewById(R.id.subway_right_station3_whole_tv);
         }
     }
 }
