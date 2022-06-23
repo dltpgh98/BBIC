@@ -42,6 +42,7 @@
         <activity android:name=".FP.FP"/>
         <activity android:name=".FP.Promise_write"/>
         <activity android:name=".Setting_Activity"/>
+        <activity android:name=".NewKakaoFriend"/>
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"

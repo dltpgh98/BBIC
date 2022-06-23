@@ -41,12 +41,11 @@ public class ViewPager_Item_Adapter extends RecyclerView.Adapter<ViewPager_Item_
         @Override
         public void onClick(View view) {
             int count;
-            int index=0;
+
             Intent intent = new Intent(view.getContext(), Maps_Activity.class);
             switch (view.getId()) {
                 //case를 통해 id에 따른 클릭이벤트 실행
                 case R.id.view_detail_way_ibtn:
-
                     intent.putExtra("fFlag",1);
                     intent.putExtra("fName",friend_name.get(index));
                     intent.putExtra("fCode",friend_code.get(index));
@@ -111,7 +110,7 @@ public class ViewPager_Item_Adapter extends RecyclerView.Adapter<ViewPager_Item_
     private AlertDialog.Builder builder;
     private Dialog dialog;
     private boolean event;
-
+    int index;
     private ImageView detail_thumbnail;
     private ImageButton detail_back_ibtn, detail_add_ibtn, detail_list_ibtn, detail_location_ibtn, detail_way_ibtn, detail_addFriend_ibtn, detail_cancelFriend_ibtn;
     private TextView detail_name;

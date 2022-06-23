@@ -37,7 +37,8 @@
                 android:layout_weight="1"
                 android:background="#00000000"
                 android:textSize="11dp"
-                android:text="친구요청" />
+                android:text="친구요청"
+                android:visibility="gone"/>
 
 
         </LinearLayout>
