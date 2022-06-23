@@ -703,15 +703,15 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                     }
 
                                 }
-                                infoWindow.setPosition(coord);
-                                infoWindow.open(naverMap);
+                                //infoWindow.setPosition(coord);
+                                //infoWindow.open(naverMap);
 
                             } else {
                                 String myAddress = getCurrentAddress(coord.latitude, coord.longitude);
                                 setPlace_info_window(myAddress);
 
 //                                infoWindow.setPosition(coord);
-                                infoWindow.open(naverMap);
+                                //infoWindow.open(naverMap);
                             }
 
                         }
