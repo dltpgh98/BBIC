@@ -37,9 +37,9 @@ public class NewKakaoFriend extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         Intent intent = getIntent();
-
+        long userCode = intent.getLongExtra("코드", 0);
         try{
-            long userCode = intent.getLongExtra("코드", 0);
+
 
             test test = new test();
             test.test1();
@@ -55,9 +55,7 @@ public class NewKakaoFriend extends AppCompatActivity {
                     try {
                         Thread.sleep(2000);
                         test.getArray();
-                        System.out.println("가져온 카카오톡 친구목록" + Arrays.toString(test.getArray()));
-                        System.out.println("가져온 카카오톡 친구목록" + test.getArray()[0].getFriend_id());
-                        System.out.println("가져온 카카오톡친구 배열 크기" + test.getArray().length);
+
                         int count = 0;
 
                         while (count < test.getArray().length) {
@@ -70,7 +68,7 @@ public class NewKakaoFriend extends AppCompatActivity {
                             int friendGhost = 0;
                             double friendLong = 0;
                             double friendLat = 0;
-                            System.out.println();
+                            System.out.println(friendProfile + " " + friendName);
 
                             Friend friend = new Friend(userCode, friendCode, friendStatus, friendName, friendEmail, friendProfile, friendGhost, friendLong, friendLat);
                             friendList.add(friend);

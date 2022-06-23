@@ -58,7 +58,7 @@ public class NewFriendAskAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        View v = View.inflate(context, R.layout.fp_friend_ask_list, null);
+        View v = View.inflate(context, R.layout.kakao_friend_add_item, null);
 
         ImageView profile = (ImageView) v.findViewById(R.id.ask_profile_iv);
         TextView friendName = (TextView) v.findViewById(R.id.ask_name);
