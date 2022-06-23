@@ -153,7 +153,7 @@
                     android:layout_gravity="start"
                     android:layout_height="match_parent"
                     android:scaleType="fitCenter"
-                    android:layout_weight="1"
+                    android:layout_weight="7"
                     android:background="@color/transparent"
                     android:src="@drawable/ic_control_point" />
 
@@ -176,28 +176,6 @@
                     android:fontFamily="@font/fontstyle"
                     android:hint="약속 장소"
                     android:background="@null"
-                    android:textColor="#c4c4c4"
-                    android:textSize="18sp"
-                    android:textStyle="normal" />
-
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#eeeeee"
-                android:gravity="center"
-                android:paddingTop="60dp"
-                android:paddingBottom="60dp">
-
-                <TextView
-                    android:id="@+id/promise_pen_map_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/fontstyle"
-                    android:text="지도"
-                    android:textAlignment="center"
                     android:textColor="#c4c4c4"
                     android:textSize="18sp"
                     android:textStyle="normal" />

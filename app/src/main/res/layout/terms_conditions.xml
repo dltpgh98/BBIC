@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/terms_conditions_header"
+        android:text="이용약관"
         android:fontFamily="@font/fontstyle"
         android:layout_marginTop="10sp"
         android:textAlignment="center"
