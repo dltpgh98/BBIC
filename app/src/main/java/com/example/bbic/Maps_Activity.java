@@ -138,7 +138,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     //버튼 클릭 리스너 클래스
     class BtnOnClickListener implements View.OnClickListener {
         private int sw = 0;
-
+        Handler handl = new Handler();
         @SuppressLint("NonConstantResourceId")
         @Override
         public void onClick(View view) {
@@ -383,7 +383,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     AddBusStationRequest busStationRequest = new AddBusStationRequest(StationId, StationName, ardID, info_window);
                     RequestQueue busStationQueue = Volley.newRequestQueue(Maps_Activity.this);
                     busStationQueue.add(busStationRequest);
-                    Handler handl = new Handler();
+
                     handl.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -392,6 +392,16 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             busQueue.add(busRequest);
                         }
                     },200);
+                    handl.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            new BackgroundTask_Subway().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_Bus().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_location().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }
+                    },500);
 
                     break;
 
@@ -401,6 +411,16 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     AddSubwayRequest subwayRequest = new AddSubwayRequest(StationId, k_code, StationName,info_window);
                     RequestQueue subwayQueue = Volley.newRequestQueue(Maps_Activity.this);
                     subwayQueue.add(subwayRequest);
+                    handl.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            new BackgroundTask_Subway().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_Bus().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_location().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }
+                    },500);
                     break;
 
                 case R.id.place_info_bookmarkStar_ib:
@@ -408,7 +428,16 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     AddLocationRequest locationRequest = new AddLocationRequest(bustitle,k_code,getCurrentAddress(mapsPointPos.latitude, mapsPointPos.longitude),Double.valueOf(mapsPointPos.latitude),Double.valueOf(mapsPointPos.longitude),info_window);
                     RequestQueue placeQueue = Volley.newRequestQueue(Maps_Activity.this);
                     placeQueue.add(locationRequest);
-
+                    handl.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            new BackgroundTask_Subway().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_Bus().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_location().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }
+                    },500);
                     break;
 
 
