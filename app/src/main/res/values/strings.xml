@@ -2,7 +2,7 @@
     <string name="app_name">BBIC</string>
     <string name="StringValue">이미지가 열리지 않습니다.</string>
     <string name="setting_header_text">설정</string>
-    <string name="kakao_header_text">카카오톡 친구 추가하기</string>
+    <string name="kakao_header_text">카카오톡 친구 추가</string>
     <string name="subway_header_text">지하철 노선도</string>
     <string name="user_name">유저명</string>
     <string name="kakao_APP_Key">2f3198abf019768640ab25011210a35b</string>
