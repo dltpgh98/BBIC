@@ -163,6 +163,7 @@
                 android:text="도움말"
                 android:textAlignment="viewStart"
                 android:textSize="20sp"
+                android:visibility="gone"
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageButton
@@ -173,6 +174,7 @@
                 android:background="@color/transparent"
                 android:layout_marginEnd="10sp"
                 android:contentDescription="TODO"
+                android:visibility="gone"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
