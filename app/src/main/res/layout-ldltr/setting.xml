@@ -76,7 +76,7 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageButton
-                android:id="@+id/setting_button_3"
+                android:id="@+id/setting_terms_button"
                 android:layout_width="30dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_baseline_keyboard_arrow_right"
@@ -117,35 +117,7 @@
                 app:layout_constraintRight_toRightOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/setting_menu_5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/setting_menu_4">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50sp"
-                android:background="@drawable/header_stroke"
-                android:fontFamily="@font/fontstyle"
-                android:paddingStart="20sp"
-                android:paddingTop="12sp"
-                android:text="오픈소스 라이센스"
-                android:textAlignment="viewStart"
-                android:textSize="20sp"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <ImageButton
-                android:id="@+id/setting_oss_btn"
-                android:layout_width="30dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_baseline_keyboard_arrow_right"
-                android:background="@color/transparent"
-                android:layout_marginEnd="10sp"
-                android:contentDescription="TODO"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintRight_toRightOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/setting_margin_2"
@@ -159,7 +131,7 @@
             android:textColor="#AAAAAA"
             android:textAlignment="viewStart"
             android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@id/setting_menu_5"/>
+            app:layout_constraintTop_toBottomOf="@id/setting_menu_4"/>
 
         <TextView
             android:id="@+id/setting_sub_2"
@@ -194,7 +166,7 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageButton
-                android:id="@+id/setting_button_6"
+                android:id="@+id/setting_help_btn"
                 android:layout_width="30dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_baseline_keyboard_arrow_right"
@@ -224,7 +196,7 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageButton
-                android:id="@+id/setting_button_7"
+                android:id="@+id/setting_spons_btn"
                 android:layout_width="30dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_baseline_keyboard_arrow_right"

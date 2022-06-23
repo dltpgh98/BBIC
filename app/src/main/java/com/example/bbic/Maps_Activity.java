@@ -349,12 +349,12 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     switch (userGhost) {
                         case 0:
                             userGhost = 1;
-                            headerGhostBtn.setImageResource(R.drawable.ghost2);
+                            headerGhostBtn.setImageResource(R.drawable.ghost1);
                             break;
 
                         case 1:
                             userGhost = 0;
-                            headerGhostBtn.setImageResource(R.drawable.ghost1);
+                            headerGhostBtn.setImageResource(R.drawable.ghost2);
                             break;
                     }
 
@@ -1230,11 +1230,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
 
         switch (userGhost) {
-            case 0:
+            case 1:
                 headerGhostBtn.setImageResource(R.drawable.ghost1);
                 break;
 
-            case 1:
+            case 0:
                 headerGhostBtn.setImageResource(R.drawable.ghost2);
                 break;
         }
