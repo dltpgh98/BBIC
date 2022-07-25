@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bookmark_Place_abc extends Fragment {
-
+//
     private ListView listView;
     private LocationListAdapter adapter;
     private List<Location> locationList;
