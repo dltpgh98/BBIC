@@ -16,7 +16,7 @@ public class AddBusRequest extends StringRequest{
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
-        map.put("B_buskey",k_code +"");
+        map.put("B_buskey",b_buskey +"");
         map.put("B_stationcode",b_stationcode + "");
         map.put("K_code",k_code + "");
         map.put("B_num", b_num);

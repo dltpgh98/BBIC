@@ -7,9 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.bbic.Data.Subway;
-import com.example.bbic.Odsay;
 import com.example.bbic.R;
-import com.odsay.odsayandroidsdk.ODsayService;
 
 import java.util.List;
 
@@ -45,7 +43,8 @@ public class SubwayListAdapter extends BaseAdapter {
 
 
         TextView subwayName = (TextView) v.findViewById(R.id.subway_this_station_name_tv);
-        subwayName.setText(String.valueOf(subwayList.get(i).getStationCode()));
+        subwayName.setText(subwayList.get(i).getStationName());
+
 
         return v;
     }

@@ -142,7 +142,7 @@ public class Subway extends AppCompatActivity {
                     break;
                 case R.id.home_btn:
                     Intent home = new Intent(getApplicationContext(), Maps_Activity.class);
-                    home.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    home.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(home);
                     finish();
                     break;

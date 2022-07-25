@@ -35,7 +35,7 @@ class test {
                         val Image = friend_Image
                         val uuid = friend_uuid
 
-                            val kakaFriend = KakaoFriend(id, Nikname, Image, uuid)
+                        val kakaFriend = KakaoFriend(id, Nikname, Image, uuid)
 
                         array[x] = kakaFriend
                     }

@@ -19,7 +19,8 @@
                 android:id="@+id/subway_info_symbol_iv"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:background="@color/green"
+                android:background="@color/transparent"
+                android:src="@drawable/ic_baseline_directions_subway_24"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
             <TextView
@@ -180,6 +181,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
             <TextView
+                android:id="@+id/subway_info_left_arriveSoon_time_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="도착까지 남은 시간"
@@ -204,6 +206,7 @@
                 app:layout_constraintTop_toBottomOf="@id/subway_info_left_arriveSoon_station_tv"
                 app:layout_constraintBottom_toBottomOf="parent"/>
             <TextView
+                android:id="@+id/subway_info_left_arriveNext_time_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="도착까지 남은 시간"
@@ -239,6 +242,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
             <TextView
+                android:id="@+id/subway_info_right_arriveSoon_time_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="도착까지 남은 시간"
@@ -263,6 +267,7 @@
                 app:layout_constraintTop_toBottomOf="@id/subway_info_right_arriveSoon_station_tv"
                 app:layout_constraintBottom_toBottomOf="parent"/>
             <TextView
+                android:id="@+id/subway_info_right_arriveNext_time_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="도착까지 남은 시간"
