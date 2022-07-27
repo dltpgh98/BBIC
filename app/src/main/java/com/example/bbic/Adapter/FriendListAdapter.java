@@ -1,11 +1,9 @@
 package com.example.bbic.Adapter;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,6 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.bbic.DB.deleteAskFriendRequest;
-import com.example.bbic.DB.deletePromissRequest;
 import com.example.bbic.Data.Friend;
 import com.example.bbic.FP.FP_friend_list;
 import com.example.bbic.R;
@@ -83,7 +80,7 @@ public class FriendListAdapter extends BaseAdapter {
         Glide.with(context).load(friends.get(i).getFriendProfileURL()).circleCrop().into(profile); // 친구프로필
         friendName.setText(friends.get(i).getFriendName()); // 친구이름
 
-        long myCode = friends.get(i).getUserKakapCode();
+        long myCode = friends.get(i).getUserKakaoCode();
         long friendCode = friends.get(i).getFriendKakaoCode();
 
 
@@ -148,7 +145,7 @@ public class FriendListAdapter extends BaseAdapter {
             }
         });
 
-        v.setTag(friends.get(i).getUserKakapCode());
+        v.setTag(friends.get(i).getUserKakaoCode());
         return v;
     }
 }

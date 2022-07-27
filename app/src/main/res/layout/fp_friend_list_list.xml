@@ -32,11 +32,10 @@
             android:id="@+id/ask_pro_stat_iv"
             android:layout_width="8dp"
             android:layout_height="8dp"
-            android:tint="@color/green"
             android:src="@drawable/circle"
             app:layout_constraintBottom_toBottomOf="@id/ask_profile_iv"
             app:layout_constraintEnd_toEndOf="@id/ask_profile_iv"
-            />
+            app:tint="@color/green" />
 
         <TextView
             android:id="@+id/ask_name"

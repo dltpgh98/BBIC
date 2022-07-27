@@ -46,7 +46,7 @@
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="1s9u4lx3wq" />
+            android:value="1s9u4lx3wq"/>
 
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
