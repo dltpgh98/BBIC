@@ -486,6 +486,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private Geocoder geocoder;
 
+    private final static double MAP_MIN_ZOOM = 5;
+
+
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
     private View drawerView;
@@ -590,8 +593,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     public final static double REFERANCE_LNG_X3 = 3 / 88.74;
     public final static double REFERANCE_LAT_X5 = 5 / 109.958489129649955;
     public final static double REFERANCE_LNG_X5 = 5 / 88.74;
-    public final static double REFERANCE_LAT_X15 = 18 / 109.958489129649955;
-    public final static double REFERANCE_LNG_X15 = 18 / 88.74;
+    public final static double REFERANCE_LAT_X15 = 15 / 109.958489129649955;
+    public final static double REFERANCE_LNG_X15 = 15 / 88.74;
+
+
 
     public boolean withinSightMarker(LatLng currentPosition, LatLng markerPosition) {
         boolean withinSightMarkerLat = Math.abs(currentPosition.latitude - markerPosition.latitude) <= REFERANCE_LAT_X15;
@@ -625,6 +630,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         naverMap.setLocationSource(locationSource);
         naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
         LatLng initialPosition = new LatLng(37.506855, 127.066242);
+
+        //NaverMap Specify minimum zoom size // NaverMap 최소줌 크기 지정
+        naverMap.setMinZoom(MAP_MIN_ZOOM);
 
         UiSettings uiSettings = naverMap.getUiSettings();
         uiSettings.setLocationButtonEnabled(true);
@@ -854,27 +862,21 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                ));
 //            }
 //        }
-        // 카메라 이동 되면 호출 되는 이벤트
-        naverMap.addOnCameraChangeListener(new NaverMap.OnCameraChangeListener() {
+
+        naverMap.addOnCameraIdleListener(new NaverMap.OnCameraIdleListener() {
             @Override
-            public void onCameraChange(int reason, boolean animated) {
+            public void onCameraIdle() {
+                System.out.println("카메라 줌레벨 "+ naverMap.getMaxZoom());
+                System.out.println("카메라 줌레벨 "+ naverMap.getMinZoom());
+                System.out.println("카메라 줌레벨 "+ naverMap.getCameraPosition().zoom);
+
+
+
                 freeActiveMarkers();
                 // 정의된 마커위치들중 가시거리 내에있는것들만 마커 생성
                 int count = 0;
                 LatLng currentPosition = getCurrentPosition(naverMap);
                 String userName;
-//               for(int i = 0; i <= friendMarker.size();i++){
-//                   LatLng markerPos = friendMarker.get(i).getMarkerPos();
-//                   if(!withinSightMarker(currentPosition,markerPos)){
-//                       continue;
-//                   }
-//                   Marker marker = new Marker();
-//                   marker.setIconTintColor(Color.RED);
-//                   marker.setPosition(friendMarker.get(i).getMarkerPos());
-//                   marker.setCaptionText(friendMarker.get(i).getMarkerUserName());
-//                   marker.setMap(naverMap);
-//                   activeMarkers.add(marker);
-//               }
                 for (LatLng markerPosition : markersPosition) {
                     if (!withinSightMarker(currentPosition, markerPosition)) {
                         continue;
@@ -896,9 +898,53 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 }
             }
         });
+
+        // 카메라 이동 되면 호출 되는 이벤트
+//        naverMap.addOnCameraChangeListener(new NaverMap.OnCameraChangeListener() {
+//            @Override
+//            public void onCameraChange(int reason, boolean animated) {
+//                freeActiveMarkers();
+//                // 정의된 마커위치들중 가시거리 내에있는것들만 마커 생성
+//                int count = 0;
+//                LatLng currentPosition = getCurrentPosition(naverMap);
+//                String userName;
+//                for (LatLng markerPosition : markersPosition) {
+//                    if (!withinSightMarker(currentPosition, markerPosition)) {
+//                        continue;
+//                    }
+//                    Marker marker = new Marker();
+//                    marker.setHideCollidedMarkers(true);
+//
+////                    System.out.println("==============="+markerPosition.toString()+"======이름====== :"+friendMarkerNameList.get(count));
+////                    marker.setIcon(OverlayImage.fromResource(R.drawable.image_profile));
+//                    marker.setIconTintColor(Color.RED);
+//                    marker.setPosition(friendMarker.get(count).getMarkerPos());
+//                    marker.setCaptionText(friendMarker.get(count).getMarkerUserName());
+//
+////                    marker.setHideCollidedCaptions(true);
+//                    marker.setMap(naverMap);
+//                    activeMarkers.add(marker);
+//                    count++;
+////                    System.out.println("=======사이클 종료========");
+//                }
+//                //               for(int i = 0; i <= friendMarker.size();i++){
+////                   LatLng markerPos = friendMarker.get(i).getMarkerPos();
+////                   if(!withinSightMarker(currentPosition,markerPos)){
+////                       continue;
+////                   }
+////                   Marker marker = new Marker();
+////                   marker.setIconTintColor(Color.RED);
+////                   marker.setPosition(friendMarker.get(i).getMarkerPos());
+////                   marker.setCaptionText(friendMarker.get(i).getMarkerUserName());
+////                   marker.setMap(naverMap);
+////                   activeMarkers.add(marker);
+////               }
+//            }
+//        });
+
     }
 
-//
+
 //    class TestThread extends Thread {
 //        @Override
 //        public void run() {
@@ -947,6 +993,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         String myAddress = getCurrentAddress(latitude, longitude);
         String[] add = myAddress.split(" ");
         drawerInit(myAddress);
+
 
         //도성대
         FragmentManager fm = getSupportFragmentManager();
@@ -1745,41 +1792,56 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void run() {
                 odsayService.requestSearchPubTransPath(finalSLongitude, finalSLatitude, finalELongitude, finalELatitude, "0", "0", "0", mapFindWay.Find_way);
+
+
                 handler.postDelayed(new Runnable() {                                        //handler 객체 딜레이 (0.45초)끝나면 종료
                     @Override
                     public void run() {
 //                path = mapFindWay.getPath_s();
-                        result = mapFindWay.getResult();
-                        System.out.println(result + "=========================================");
+
+//                        System.out.println(result + "=========================================");
 //                System.out.println("-----------------------result"+result);
 //                FragmentTransaction tf = getSupportFragmentManager().beginTransaction();
 //                        tf.detach(fw_frag).attach(fw_frag).commit();
 //                System.out.println("======================Test========================="+path[0]);
 
+                        result = mapFindWay.getOdsayResult();
+
+                        LatLngBounds latLngBounds = new LatLngBounds(sLatLngPos, eLatLngPos);
+
+                        CameraUpdate cameraUpdate = CameraUpdate.fitBounds(latLngBounds, 100, 130, 100, 1100);
+
+                        naverMap.moveCamera(cameraUpdate);
+
                         if (result != null) {
-                            LatLngBounds latLngBounds = new LatLngBounds(sLatLngPos, eLatLngPos);
+//                            LatLngBounds latLngBounds = new LatLngBounds(sLatLngPos, eLatLngPos);
 //                    Marker marker = new Marker();
 //                    marker.setPosition(eLatLngPos);
 //                    marker.setMap(naverMap);
-
-
-                            CameraUpdate cameraUpdate = CameraUpdate.fitBounds(latLngBounds, 100, 130, 100, 1100);
+//                            CameraUpdate cameraUpdate = CameraUpdate.fitBounds(latLngBounds, 100, 130, 100, 1100);
 //                    cameraUpdate.animate(CameraAnimation.Easing);
 
-                            naverMap.moveCamera(cameraUpdate);
+//                            naverMap.moveCamera(cameraUpdate);
 
-                            bundleFw.putString("odsay", result.toString());
-                            bundleFw.putString("StartName", String.valueOf(sPosEdit.getText()));
-                            bundleFw.putString("EndName", String.valueOf(ePosEdit.getText()));
-                            fw_frag.setArguments(bundleFw);
-                            frag_set(fw_frag);
-                            meResult = result;
+                            bundleSet();
 
+                            startService();
+                        }
+                        else if(result ==null){
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    result = mapFindWay.getOdsayResult();
+                                    bundleSet();
+
+                                    startService();
+                                }
+                            },50);
 
                         }
-                        startService();
+
                     }
-                }, 500);
+                }, 150);
             }
         }, 100);
 
@@ -1797,6 +1859,14 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //        pos[0]=Double.parseDouble(sLatitude);
 //        pos[1]=Double.parseDouble(sLongitude);
 //        return pos;
+    }
+    private void bundleSet(){
+        bundleFw.putString("odsay", result.toString());
+        bundleFw.putString("StartName", String.valueOf(sPosEdit.getText()));
+        bundleFw.putString("EndName", String.valueOf(ePosEdit.getText()));
+        fw_frag.setArguments(bundleFw);
+        frag_set(fw_frag);
+        meResult = result;
     }
 
 
@@ -1879,9 +1949,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
 
         if (intent.getStringExtra("jObject") != null) {
+            stopService();
             fw_pos_path = intent.getStringExtra("jObject");
             try {
-                stopService();
+
                 JSONObject pos = new JSONObject(fw_pos_path);
 
                 ArrayList<LatLng> total_finde_pos_array = new ArrayList<>();
@@ -2230,6 +2301,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         super.onResumeFragments();
         Log.d("=====================================onResumeFragments()", "");
     }
+
+
+
 
     class BackgroundTask_location extends AsyncTask<Void, Void, String> {
 
@@ -2621,4 +2695,12 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
     };
 
+
+    public JSONObject getResult() {
+        return result;
+    }
+
+    public void setResult(JSONObject result) {
+        this.result = result;
+    }
 }

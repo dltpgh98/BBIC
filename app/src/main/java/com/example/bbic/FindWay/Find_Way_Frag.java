@@ -403,7 +403,7 @@ public class Find_Way_Frag extends Fragment {
 //            Find_way_Data way_data = new Find_way_Data();
 
         Intent intent = new Intent(rootView.getContext(), Maps_Activity.class);
-        intent.putExtra("jPos","Test");
+//        intent.putExtra("jPos","Test");
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         rootView.getContext().startActivity(intent);
         return rootView;
