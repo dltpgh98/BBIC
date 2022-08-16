@@ -4,6 +4,7 @@ import static com.naver.maps.map.NaverMap.LAYER_GROUP_TRANSIT;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,6 +30,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +64,8 @@ import com.example.bbic.Data.FriendMarker;
 import com.example.bbic.FP.FP;
 import com.example.bbic.FindWay.Find_Way_Frag;
 import com.example.bbic.FindWay.Map_Find_way;
+
+import com.example.bbic.LoadingDialog.LoadingDialog;
 import com.google.android.material.tabs.TabLayout;
 import com.naver.maps.geometry.Coord;
 import com.naver.maps.geometry.LatLng;
@@ -327,7 +331,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     break;
                 case R.id.view_find_way_ibtn:
 //                    stopService();
-
+                    loadingDialog.ShowDialog("경로 검색중");
                     System.out.println("검색 버튼");
                     pathOverlay.setMap(null);
                     String sPosEt = sPosEdit.getText().toString();
@@ -338,7 +342,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     try {
                         nameToPos(sPosEt, ePosEt);
                     } catch (Exception e) {
-                        System.out.println("찾을수 없는 장소입니다.");
+                        loadingDialog.HideDialog();
+                        Toast.makeText(getApplicationContext(),"찾을수 없는 장소입니다.", Toast.LENGTH_SHORT).show();
                     }
                     keyboardmanager.hideSoftInputFromWindow(sPosEdit.getWindowToken(), 0);
 
@@ -503,6 +508,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private FusedLocationSource locationSource;
     private boolean drawerEnabled = false;
     private LatLng mapsPointPos;
+
+    private LoadingDialog loadingDialog;
 
     private ImageView headerProfile;
     private TextView headerName, headerCode,
@@ -680,6 +687,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             y = "";
             y = String.valueOf(coord.latitude);
             x = String.valueOf(coord.longitude);
+
+            loadingDialog.ShowDialog("정보 수신중"); //LoadingDialog Show (지도상 정류장,역 클릭시 표시)
 
             mapsPointPos = coord;
 
@@ -986,6 +995,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         mapTread = new MapFriendMarkerTread();
 
         friendMarker = new ArrayList<>();
+
+        loadingDialog = new LoadingDialog(this);
 
         double latitude = gpsTracker.getLatitude();
         double longitude = gpsTracker.getLongitude();
@@ -1791,6 +1802,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+
+
                 odsayService.requestSearchPubTransPath(finalSLongitude, finalSLatitude, finalELongitude, finalELatitude, "0", "0", "0", mapFindWay.Find_way);
 
 
@@ -1825,6 +1838,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
                             bundleSet();
 
+                            loadingDialog.HideDialog();
                             startService();
                         }
                         else if(result ==null){
@@ -1832,8 +1846,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                 @Override
                                 public void run() {
                                     result = mapFindWay.getOdsayResult();
+
+
                                     bundleSet();
 
+                                    loadingDialog.HideDialog();
                                     startService();
                                 }
                             },50);
@@ -1950,6 +1967,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         if (intent.getStringExtra("jObject") != null) {
             stopService();
+            loadingDialog.ShowDialog("경로 출력중");
             fw_pos_path = intent.getStringExtra("jObject");
             try {
 
@@ -1999,7 +2017,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     }
 
 
-    class MapFriendMarkerTread {
+    class MapFriendMarkerTread { //친구 목록에서 친구 상태및 고스트 확인및 분류
         public MapFriendMarkerTread() {
 
         }
@@ -2028,7 +2046,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                System.out.println("=====================================================상태===================="+friendLiArray.getJSONObject(count).getString("F.F_status"));
 //                System.out.println("=====================================================횟수===================="+count);
 //                System.out.println("=====================================================고스트 상황===================="+friendLiArray.getJSONObject(count).getInt("K.K_ghost"));
-                switch (friendLiArray.getJSONObject(count).getInt("F.F_status")) {
+                switch (friendLiArray.getJSONObject(count).getInt("F.F_status")) { // 친구 상태 확인
                     case 0:
 //                        System.out.println("좌표 추가====================");
 ////                        markersPosition.add(count,friendPosArray.get(count));
@@ -2036,18 +2054,28 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         break;
                     case 1: //
 //                        System.out.println("1좌표 추가====================");
-                        if (friendLiArray.getJSONObject(count).getString("K.K_name").equals(name)) {
+                        switch(friendLiArray.getJSONObject(count).getInt("K.K_ghost")){ //유령 판별
+                          case 0 :
+
+                          case 1 :
+                              if (friendLiArray.getJSONObject(count).getString("K.K_name").equals(name)) {
 //                            System.out.println("+======+++===+++===+++==++==++=");
-                            break;
-                        }
-                        markersPosition.add(friendPosArray.get(count));
-                        friendMarker.add(new FriendMarker(friendPosArray.get(count), friendLiArray.getJSONObject(count).getString("K.K_name"), friendLiArray.getJSONObject(count).getString("K.K_profile")));
+                                  break;
+                              }
+                              markersPosition.add(friendPosArray.get(count));
+                              friendMarker.add(new FriendMarker(friendPosArray.get(count), friendLiArray.getJSONObject(count).getString("K.K_name"), friendLiArray.getJSONObject(count).getString("K.K_profile")));
 //                        markersPosition.get(count);
 //                        friendMarkerNameList.add(friendLiArray.getJSONObject(count).getString("K.K_name"));
 //                        System.out.println("=====================================================좌표===================="+markersPosition.get(count));
 //                        System.out.println("=====================================================이름코드===================="+friendLiArray.getJSONObject(count).getString("F.K_code2"));
 //                        System.out.println("=====================================================이름===================="+friendLiArray.getJSONObject(count).getString("K.K_name"));
 //                        System.out.println("  ");
+                            break;
+
+                          default:
+                            break;
+                        }
+
                         break;
                     case 2:
 //                        System.out.println("2좌표 추가====================");
@@ -2146,6 +2174,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         ardID = odsay.getArsID();
                         upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
 
+                        loadingDialog.HideDialog();
                         startService();
                     }
                 });
@@ -2205,6 +2234,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
 
                             upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+
+                            loadingDialog.HideDialog(); //loadingDialog 종료 (지도상 정류장 클릭시)
                             startService();
                         } catch (Exception e) {
 
@@ -2251,7 +2282,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             pathOverlay.setMap(naverMap);
 
             findWayOverlayClearIBtn.setVisibility(View.VISIBLE);
-
+            loadingDialog.HideDialog();
         }
     }
 
