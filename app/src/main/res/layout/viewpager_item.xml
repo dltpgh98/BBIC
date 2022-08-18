@@ -64,79 +64,99 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.4" />
+                android:layout_weight="0.5" />
 
             <TextView
                 android:id="@+id/view_item_name1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="1.8"
                 android:ellipsize="marquee"
                 android:fontFamily="@font/fontstyle"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textAlignment="viewEnd"
-                app:drawableEndCompat="@drawable/ic_baseline_circle_24"
-                app:drawableTint="@color/transparent" />
+                android:textAlignment="center" />
+            <ImageView
+                android:id="@+id/view_item_state1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:padding="1sp"
+                android:src="@drawable/view_friend_state_clear"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="0.8" />
 
             <TextView
                 android:id="@+id/view_item_name2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="1.8"
                 android:ellipsize="marquee"
                 android:fontFamily="@font/fontstyle"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textAlignment="viewEnd"
-                app:drawableEndCompat="@drawable/ic_baseline_circle_24"
-                app:drawableTint="@color/transparent" />
+                android:textAlignment="center" />
+            <ImageView
+                android:id="@+id/view_item_state2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:padding="1sp"
+                android:src="@drawable/view_friend_state_clear"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="0.8" />
 
             <TextView
                 android:id="@+id/view_item_name3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="1.8"
                 android:ellipsize="marquee"
                 android:fontFamily="@font/fontstyle"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textAlignment="viewEnd"
-                app:drawableEndCompat="@drawable/ic_baseline_circle_24"
-                app:drawableTint="@color/transparent" />
+                android:textAlignment="center" />
+            <ImageView
+                android:id="@+id/view_item_state3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:padding="1sp"
+                android:src="@drawable/view_friend_state_clear"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="0.8" />
 
             <TextView
                 android:id="@+id/view_item_name4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="1.8"
                 android:ellipsize="marquee"
                 android:fontFamily="@font/fontstyle"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textAlignment="viewEnd"
-                app:drawableEndCompat="@drawable/ic_baseline_circle_24"
-                app:drawableTint="@color/transparent" />
+                android:textAlignment="center" />
+            <ImageView
+                android:id="@+id/view_item_state4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:padding="1sp"
+                android:src="@drawable/view_friend_state_clear"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.6" />
+                android:layout_weight="0.3" />
         </TableRow>
 
         <TableRow>
@@ -187,79 +207,99 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.4" />
+                android:layout_weight="0.5" />
 
             <TextView
                 android:id="@+id/view_item_name5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="1.8"
                 android:ellipsize="marquee"
                 android:fontFamily="@font/fontstyle"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textAlignment="viewEnd"
-                app:drawableEndCompat="@drawable/ic_baseline_circle_24"
-                app:drawableTint="@color/transparent" />
+                android:textAlignment="center" />
+            <ImageView
+                android:id="@+id/view_item_state5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:padding="1sp"
+                android:src="@drawable/view_friend_state_clear"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="0.8" />
 
             <TextView
                 android:id="@+id/view_item_name6"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="1.8"
                 android:ellipsize="marquee"
                 android:fontFamily="@font/fontstyle"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textAlignment="viewEnd"
-                app:drawableEndCompat="@drawable/ic_baseline_circle_24"
-                app:drawableTint="@color/transparent" />
+                android:textAlignment="center" />
+            <ImageView
+                android:id="@+id/view_item_state6"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:padding="1sp"
+                android:src="@drawable/view_friend_state_clear"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="0.8" />
 
             <TextView
                 android:id="@+id/view_item_name7"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="1.8"
                 android:ellipsize="marquee"
                 android:fontFamily="@font/fontstyle"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textAlignment="viewEnd"
-                app:drawableEndCompat="@drawable/ic_baseline_circle_24"
-                app:drawableTint="@color/transparent" />
+                android:textAlignment="center" />
+            <ImageView
+                android:id="@+id/view_item_state7"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:padding="1sp"
+                android:src="@drawable/view_friend_state_clear"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="0.8" />
 
             <TextView
                 android:id="@+id/view_item_name8"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="1.8"
                 android:ellipsize="marquee"
                 android:fontFamily="@font/fontstyle"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textAlignment="viewEnd"
-                app:drawableEndCompat="@drawable/ic_baseline_circle_24"
-                app:drawableTint="@color/transparent" />
+                android:textAlignment="center" />
+            <ImageView
+                android:id="@+id/view_item_state8"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:padding="1sp"
+                android:src="@drawable/view_friend_state_clear"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.6" />
+                android:layout_weight="0.3" />
         </TableRow>
     </TableLayout>
 

@@ -60,6 +60,7 @@ import com.example.bbic.DB.UpdateGhostRequest;
 import com.example.bbic.DB.UpdatePosRequest;
 import com.example.bbic.Data.FriendMarker;
 import com.example.bbic.FP.FP;
+import com.example.bbic.FP.FP_promise;
 import com.example.bbic.FindWay.Find_Way_Frag;
 import com.example.bbic.FindWay.Map_Find_way;
 import com.google.android.material.tabs.TabLayout;
@@ -1865,16 +1866,56 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         setIntent(intent);
         String fName;
         long fCode;
+        int flag = intent.getIntExtra("fFlag", 0);
 
-        if (intent.getIntExtra("fFlag", 0) == 1) {
+        if (flag== 1) {
             fName = intent.getStringExtra("fName");
             fCode = intent.getLongExtra("fCode", 0);
             Log.d("=====1flag====",""+fName);
             wayToFriend(fName, fCode);
-        } else if (intent.getIntExtra("fFlag", 0) == 2) {
+        } else if (flag == 2) {
             fCode = intent.getLongExtra("fCode", 0);
             Log.d("=====2flag====",""+fCode);
             locationToFriend(fCode);
+        } else if(flag == 3){
+            Intent intent5 = new Intent(getApplicationContext(), FP.class);
+            intent5.putExtra("코드", k_code);
+            intent5.putExtra("닉네임", name);
+            intent5.putExtra("프로필", address);
+            intent5.putExtra("미세먼지", fineDust);
+            intent5.putExtra("초미세먼지", ultraFineDust);
+            intent5.putExtra("온도", tem);
+            intent5.putExtra("날씨", weather);
+            intent5.putExtra("도", area);
+            intent5.putExtra("시", city);
+            intent5.putExtra("코로나", covidNum);
+            intent5.putExtra("friendlist", friendlist);
+            intent5.putExtra("promiselist", promiselist);
+            intent5.putExtra("buslist", buslist);
+            intent5.putExtra("subwaylist", subwaylist);
+            intent5.putExtra("locationlist", locationlist);
+            drawerLayout.closeDrawer(drawerView);
+            startActivity(intent5);
+        } else if(flag == 4){
+            Bundle bundle = new Bundle();
+            FP_promise fp_promise = new FP_promise();
+            bundle.putString("promiselist",promiselist);
+            bundle.putString("friendlist",friendlist);
+            bundle.putLong("userCode", k_code);
+            bundle.putString("도", area);
+            bundle.putString("시", city);
+            bundle.putString("날씨", weather);
+            bundle.putString("온도", tem);
+            bundle.putString("미세먼지", fineDust);
+            bundle.putString("초미세먼지", ultraFineDust);
+            bundle.putString("코로나", covidNum);
+            bundle.putString("locationlist", locationlist);
+            bundle.putString("buslist", buslist);
+            bundle.putString("subwaylist", subwaylist);
+            bundle.putString("닉네임", name);
+            bundle.putString("프로필", address);
+            fp_promise.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_promise).commit();
         }
 
         if (intent.getStringExtra("jObject") != null) {
