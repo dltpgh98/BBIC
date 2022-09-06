@@ -688,7 +688,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             y = String.valueOf(coord.latitude);
             x = String.valueOf(coord.longitude);
 
-            loadingDialog.ShowDialog("정보 수신중"); //LoadingDialog Show (지도상 정류장,역 클릭시 표시)
+            loadingDialog.ShowDialog("로딩중"); //LoadingDialog Show (지도상 정류장,역 클릭시 표시)
 
             mapsPointPos = coord;
 
@@ -734,6 +734,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             } else {
                                 String myAddress = getCurrentAddress(coord.latitude, coord.longitude);
                                 setPlace_info_window(myAddress);
+                                loadingDialog.HideDialog();
 
 //                                infoWindow.setPosition(coord);
 //                                infoWindow.open(naverMap);
