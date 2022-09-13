@@ -4,12 +4,10 @@ import static com.naver.maps.map.NaverMap.LAYER_GROUP_TRANSIT;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
@@ -18,7 +16,6 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
@@ -29,8 +26,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,9 +60,8 @@ import com.example.bbic.FP.FP;
 import com.example.bbic.FindWay.Find_Way_Frag;
 import com.example.bbic.FindWay.Map_Find_way;
 
-import com.example.bbic.LoadingDialog.LoadingDialog;
+import com.example.bbic.Dialog.LoadingDialog;
 import com.google.android.material.tabs.TabLayout;
-import com.naver.maps.geometry.Coord;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.geometry.LatLngBounds;
 import com.naver.maps.map.CameraPosition;
@@ -80,7 +74,6 @@ import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.MultipartPathOverlay;
-import com.naver.maps.map.overlay.OverlayImage;
 import com.naver.maps.map.overlay.PathOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.odsay.odsayandroidsdk.ODsayService;
@@ -2015,6 +2008,35 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //            upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
 //        }
 
+    }
+    class UpdateMarkerTread{
+        public UpdateMarkerTread(){}
+        public void run() throws JSONException{
+            freeActiveMarkers();
+                // 정의된 마커위치들중 가시거리 내에있는것들만 마커 생성
+                int count = 0;
+                LatLng currentPosition = getCurrentPosition(naverMap);
+                String userName;
+                for (LatLng markerPosition : markersPosition) {
+                    if (!withinSightMarker(currentPosition, markerPosition)) {
+                        continue;
+                    }
+                    Marker marker = new Marker();
+                    marker.setHideCollidedMarkers(true);
+
+//                    System.out.println("==============="+markerPosition.toString()+"======이름====== :"+friendMarkerNameList.get(count));
+//                    marker.setIcon(OverlayImage.fromResource(R.drawable.image_profile));
+                    marker.setIconTintColor(Color.RED);
+                    marker.setPosition(friendMarker.get(count).getMarkerPos());
+                    marker.setCaptionText(friendMarker.get(count).getMarkerUserName());
+
+//                    marker.setHideCollidedCaptions(true);
+                    marker.setMap(naverMap);
+                    activeMarkers.add(marker);
+                    count++;
+//                    System.out.println("=======사이클 종료========");
+                }
+        }
     }
 
 

@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.example.bbic.DB.AcceptPromiseRequest;
 import com.example.bbic.DB.deletePromissRequest;
 import com.example.bbic.Data.Promise;
+import com.example.bbic.Dialog.ProLocationDialog;
 import com.example.bbic.FP.FP_promise_ask;
 import com.example.bbic.R;
 
@@ -124,6 +125,7 @@ public class PromissAskAdapter extends BaseAdapter {
         promiseDeleteBtn.setOnClickListener(new View.OnClickListener() {// 삭제 이벤트
             @Override
             public void onClick(View view) {
+
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -151,28 +153,34 @@ public class PromissAskAdapter extends BaseAdapter {
         promiseAcceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Response.Listener<String> responseListener1 = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            boolean success = jsonObject.getBoolean("success");
-                            promises.remove(i);
-                            notifyDataSetChanged();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
+                ProLocationDialog pLoca = new ProLocationDialog(context);
+                pLoca.ShowDialog(partycode,userCode);
                 promises.remove(i);
                 notifyDataSetChanged();
-                AcceptPromiseRequest acceptPromiseRequest = new AcceptPromiseRequest(partycode, userCode, responseListener1);
-                RequestQueue queue = Volley.newRequestQueue(view.getContext());
-                queue.add(acceptPromiseRequest);
+
+//                Response.Listener<String> responseListener1 = new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            boolean success = jsonObject.getBoolean("success");
+//                            promises.remove(i);
+//                            notifyDataSetChanged();
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                };
+//                promises.remove(i);
+//                notifyDataSetChanged();
+//                AcceptPromiseRequest acceptPromiseRequest = new AcceptPromiseRequest(partycode, userCode, responseListener1);
+//                RequestQueue queue = Volley.newRequestQueue(view.getContext());
+//                queue.add(acceptPromiseRequest);
             }
         });
 
 
         return v;
     }
+
 }

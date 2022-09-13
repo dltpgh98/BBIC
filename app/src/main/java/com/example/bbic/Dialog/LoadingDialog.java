@@ -1,10 +1,9 @@
-package com.example.bbic.LoadingDialog;
+package com.example.bbic.Dialog;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.example.bbic.R;
