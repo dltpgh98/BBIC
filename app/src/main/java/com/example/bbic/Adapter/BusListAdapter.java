@@ -69,7 +69,7 @@ public class BusListAdapter extends BaseAdapter {
             public void onClick(View view) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("친구삭제").setMessage("정말 삭제하시겠습니까?");
+                builder.setTitle("버스 삭제").setMessage("정말 삭제하시겠습니까?");
                 builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

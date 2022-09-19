@@ -2056,7 +2056,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             friendLiArray = friendListObject.getJSONArray("response");
             ArrayList<LatLng> friendPosArray = new ArrayList<>();
             for (int i = 0; i < friendLiArray.length(); i++) {
-//                System.out.println("======================================================좌표 추가====================");
+//                System.out.println("=====================================좌표 추가====================");
 
                 friendPosArray.add(new LatLng(friendLiArray.getJSONObject(i).getDouble("K.K_lat"), friendLiArray.getJSONObject(i).getDouble("K.K_long")));
 //                friendLiArray.getJSONObject(i).getDouble("K.K_long");
@@ -2065,10 +2065,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //            System.out.println("======================================================좌표===================="+friendPosArray.size());
             for (int count = 0; count < friendPosArray.size(); count++) {
 //                markersPosition.add(new LatLng(friendLiArray.getJSONObject(count).getDouble("K.K_lat"), friendLiArray.getJSONObject(count).getDouble("K.K_long")));
-//                System.out.println("=====================================================이름코드===================="+friendLiArray.getJSONObject(count).getString("F.K_code2"));
-//                System.out.println("=====================================================상태===================="+friendLiArray.getJSONObject(count).getString("F.F_status"));
-//                System.out.println("=====================================================횟수===================="+count);
-//                System.out.println("=====================================================고스트 상황===================="+friendLiArray.getJSONObject(count).getInt("K.K_ghost"));
+//                System.out.println("=====================================이름코드===================="+friendLiArray.getJSONObject(count).getString("F.K_code2"));
+//                System.out.println("=======================================상태===================="+friendLiArray.getJSONObject(count).getString("F.F_status"));
+//                System.out.println("=======================================횟수===================="+count);
+//                System.out.println("=====================================고스트 상황===================="+friendLiArray.getJSONObject(count).getInt("K.K_ghost"));
                 switch (friendLiArray.getJSONObject(count).getInt("F.F_status")) { // 친구 상태 확인
                     case 0:
 //                        System.out.println("좌표 추가====================");
@@ -2089,9 +2089,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                               friendMarker.add(new FriendMarker(friendPosArray.get(count), friendLiArray.getJSONObject(count).getString("K.K_name"), friendLiArray.getJSONObject(count).getString("K.K_profile")));
 //                        markersPosition.get(count);
 //                        friendMarkerNameList.add(friendLiArray.getJSONObject(count).getString("K.K_name"));
-//                        System.out.println("=====================================================좌표===================="+markersPosition.get(count));
-//                        System.out.println("=====================================================이름코드===================="+friendLiArray.getJSONObject(count).getString("F.K_code2"));
-//                        System.out.println("=====================================================이름===================="+friendLiArray.getJSONObject(count).getString("K.K_name"));
+//                        System.out.println("===========================좌표===================="+markersPosition.get(count));
+//                        System.out.println("=========================이름코드===================="+friendLiArray.getJSONObject(count).getString("F.K_code2"));
+//                        System.out.println("===========================이름===================="+friendLiArray.getJSONObject(count).getString("K.K_name"));
 //                        System.out.println("  ");
                             break;
 

@@ -46,6 +46,7 @@ public class SubwayListAdapter extends BaseAdapter {
         subwayName.setText(subwayList.get(i).getStationName());
 
 
+
         return v;
     }
 }
