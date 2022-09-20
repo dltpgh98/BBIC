@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.bbic.KakaoFriend;
 import com.example.bbic.NewKakaoFriend;
 import com.example.bbic.R;
 
@@ -62,7 +63,10 @@ public class FP_friend extends Fragment {
         fp_friend_ask = new FP_friend_ask(); // 요청 버튼//벌써 여기서 문제
         fab = rootView.findViewById(R.id.fb_fab_btn);
 
+
         String friendlist = null;
+
+
 
 
         if(getArguments() != null){
@@ -85,13 +89,12 @@ public class FP_friend extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getActivity(), NewKakaoFriend.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getActivity(), NewKakaoFriend.class);
+//                startActivity(intent);
 
 
                 test test = new test();
-                test.test1();
-
+                //KakaoFriend[] kakaoFriend = Arrays.copyOf(test.test1(), test.test1().length);
 
 //                test.getArray();
 //
@@ -102,12 +105,11 @@ public class FP_friend extends Fragment {
                     public void run() {
                         Document doc;
                         try {
-                            Thread.sleep(2000);
-                            test.getArray();
-                            System.out.println("가져온 카카오톡 친구목록" + Arrays.toString(test.getArray()));
-                            System.out.println("가져온 카카오톡 친구목록" + test.getArray()[0].getFriend_id());
-                            System.out.println("가져온 카카오톡친구 배열 크기" + test.getArray().length);
+                            Thread.sleep(4000);
 
+
+                            //System.out.println("카카오톡 친구 목록 확인하기" + test.test1().toString());
+                            //System.out.println("카카오톡 친구 목록 확인하기" + test.test1().length);
 
 
 

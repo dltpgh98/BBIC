@@ -12,7 +12,9 @@
         <entry key="..\:/BBIC/do/app/src/main/res/drawable/mark_test.xml" value="0.25" />
         <entry key="..\:/BBIC/do/app/src/main/res/drawable/place_info_sharing.xml" value="0.1965" />
         <entry key="..\:/BBIC/do/app/src/main/res/drawable/subway_station_background.xml" value="0.1965" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout-ldltr/kakao_friend_add_item.xml" value="0.13039760581445062" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout-ldltr/setting.xml" value="0.15946985891406584" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout-ldltr/test.xml" value="0.13039760581445062" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/activity_backup.xml" value="0.12" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/blank.xml" value="0.1" />
@@ -23,9 +25,9 @@
         <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark_place_new.xml" value="0.15476699444206926" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark_transit.xml" value="0.16927083333333334" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark_transit_bus.xml" value="0.16927083333333334" />
-        <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark_transit_bus_list.xml" value="0.1" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark_transit_bus_list.xml" value="0.33" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark_transit_subway.xml" value="0.15476699444206926" />
-        <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark_transit_subway_list.xml" value="0.5" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/bookmark_transit_subway_list.xml" value="0.48940269749518306" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/bus_info_window.xml" value="0.33" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/drawer.xml" value="0.209375" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/find_way_item.xml" value="0.33" />
@@ -34,24 +36,30 @@
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_add_kakaofriend_item.xml" value="0.15476699444206926" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend.xml" value="0.25" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_add.xml" value="0.1" />
-        <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_add_list.xml" value="0.1" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_add_list.xml" value="0.5" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_add_window.xml" value="0.30055579307396324" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_ask.xml" value="0.25" />
-        <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_ask_list.xml" value="0.25" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_ask_list.xml" value="0.75" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_list.xml" value="0.19153484395040615" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_list_list.xml" value="0.25" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_friend_request_window.xml" value="0.30055579307396324" />
-        <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_promise.xml" value="0.14151346729371525" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_promise.xml" value="0.33" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_promise_ask.xml" value="0.14151346729371525" />
-        <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_promise_ask_list.xml" value="0.15391192817443353" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_promise_ask_list.xml" value="0.33" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_promise_list.xml" value="0.19153484395040615" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_promise_list_list.xml" value="0.21804189824711415" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/help.xml" value="0.21547669944420692" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/ic_baseline_bus_alert_24.xml" value="0.23728088926891835" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/loading.xml" value="0.23728088926891835" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/loading_dialog.xml" value="0.30055579307396324" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/personal_processing.xml" value="0.1851218469431381" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/place_info_window.xml" value="0.33" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/promise_write.xml" value="0.13039760581445062" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/promiss_location_dialog.xml" value="0.29713552800342025" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/spons.xml" value="0.21547669944420692" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/subway.xml" value="0.15476699444206926" />
-        <entry key="..\:/BBIC/do/app/src/main/res/layout/subway_info_window.xml" value="0.6560247167868177" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/subway_info_window.xml" value="0.5" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/terms_conditions.xml" value="0.21547669944420692" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/view_detail.xml" value="0.25677083333333334" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/view_division.xml" value="0.15476699444206926" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/view_find_way.xml" value="0.33" />
@@ -59,7 +67,6 @@
         <entry key="..\:/BBIC/do/app/src/main/res/layout/viewpager_item.xml" value="0.23386062419837536" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/circle.xml" value="0.162" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/circle2.xml" value="0.162" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/ic_baseline_block.xml" value="0.129" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_directions_24.xml" value="0.162" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_directions_bus_24.xml" value="0.162" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_search.xml" value="0.162" />
@@ -69,21 +76,10 @@
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/red_radious.xml" value="0.162" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/sliding_corner.xml" value="0.162" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout-ldltr/setting.xml" value="0.33" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout-ldltr/test.xml" value="0.36614583333333334" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/drawer.xml" value="0.1875" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/fp_friend_add.xml" value="0.30462962962962964" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/fp_friend_add_list.xml" value="0.30462962962962964" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/fp_friend_list_list.xml" value="0.12604166666666666" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/fp_promise_ask_list.xml" value="0.30462962962962964" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/fp_promise_list_list.xml" value="0.5" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/help.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/login.xml" value="0.25" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/personal_processing.xml" value="0.18802083333333333" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/promise_write.xml" value="0.1875" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/spons.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/subway.xml" value="0.1875" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/terms_conditions.xml" value="0.18802083333333333" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/test.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/view_detail.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/view_division.xml" value="0.1875" />
@@ -128,13 +124,14 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/ic_search.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/drawable/sliding_corner.xml" value="0.247" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout-ldltr/drawer.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout-ldltr/kakao_friend_add_item.xml" value="0.20380434782608695" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout-ldltr/kakao_friend_add_item.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout-ldltr/setting.xml" value="0.2708860759493671" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout-ldltr/test.xml" value="0.17916666666666667" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/activity_main.xml" value="0.24380574826560952" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/blank.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/bookmark.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/bookmark_place.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/bookmark_place_abc.xml" value="0.22" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/bookmark_place_abc.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/bookmark_place_list.xml" value="0.16485507246376813" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/bookmark_place_new.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/bookmark_transit.xml" value="0.1" />
@@ -144,11 +141,15 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/bookmark_transit_subway_list.xml" value="0.11197916666666667" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/drawer.xml" value="0.16983695652173914" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp.xml" value="0.22" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_add_kakaofriend.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_add_kakaofriend_item.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_friend.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_friend_add.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_friend_add_list.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_friend_ask.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_friend_ask_list.xml" value="0.20380434782608695" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_friend_list.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_friend_list_list.xml" value="0.2056159420289855" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_friend_list_list.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_friend_request_window.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_promise.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_promise_ask.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC2/app/src/main/res/layout/fp_promise_list.xml" value="0.16666666666666666" />

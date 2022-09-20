@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
@@ -17,7 +16,6 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
@@ -28,7 +26,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,8 +59,9 @@ import com.example.bbic.Data.FriendMarker;
 import com.example.bbic.FP.FP;
 import com.example.bbic.FindWay.Find_Way_Frag;
 import com.example.bbic.FindWay.Map_Find_way;
+
+import com.example.bbic.Dialog.LoadingDialog;
 import com.google.android.material.tabs.TabLayout;
-import com.naver.maps.geometry.Coord;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.geometry.LatLngBounds;
 import com.naver.maps.map.CameraPosition;
@@ -76,7 +74,6 @@ import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.MultipartPathOverlay;
-import com.naver.maps.map.overlay.OverlayImage;
 import com.naver.maps.map.overlay.PathOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.odsay.odsayandroidsdk.ODsayService;
@@ -327,7 +324,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     break;
                 case R.id.view_find_way_ibtn:
 //                    stopService();
-
+                    loadingDialog.ShowDialog("경로 검색중");
                     System.out.println("검색 버튼");
                     pathOverlay.setMap(null);
                     String sPosEt = sPosEdit.getText().toString();
@@ -338,7 +335,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     try {
                         nameToPos(sPosEt, ePosEt);
                     } catch (Exception e) {
-                        System.out.println("찾을수 없는 장소입니다.");
+                        loadingDialog.HideDialog();
+                        Toast.makeText(getApplicationContext(),"찾을수 없는 장소입니다.", Toast.LENGTH_SHORT).show();
                     }
                     keyboardmanager.hideSoftInputFromWindow(sPosEdit.getWindowToken(), 0);
 
@@ -486,6 +484,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private Geocoder geocoder;
 
+    private final static double MAP_MIN_ZOOM = 5;
+
+
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
     private View drawerView;
@@ -500,6 +501,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private FusedLocationSource locationSource;
     private boolean drawerEnabled = false;
     private LatLng mapsPointPos;
+
+    private LoadingDialog loadingDialog;
 
     private ImageView headerProfile;
     private TextView headerName, headerCode,
@@ -590,8 +593,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     public final static double REFERANCE_LNG_X3 = 3 / 88.74;
     public final static double REFERANCE_LAT_X5 = 5 / 109.958489129649955;
     public final static double REFERANCE_LNG_X5 = 5 / 88.74;
-    public final static double REFERANCE_LAT_X15 = 18 / 109.958489129649955;
-    public final static double REFERANCE_LNG_X15 = 18 / 88.74;
+    public final static double REFERANCE_LAT_X15 = 15 / 109.958489129649955;
+    public final static double REFERANCE_LNG_X15 = 15 / 88.74;
+
+
 
     public boolean withinSightMarker(LatLng currentPosition, LatLng markerPosition) {
         boolean withinSightMarkerLat = Math.abs(currentPosition.latitude - markerPosition.latitude) <= REFERANCE_LAT_X15;
@@ -625,6 +630,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         naverMap.setLocationSource(locationSource);
         naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
         LatLng initialPosition = new LatLng(37.506855, 127.066242);
+
+        //NaverMap Specify minimum zoom size // NaverMap 최소줌 크기 지정
+        naverMap.setMinZoom(MAP_MIN_ZOOM);
 
         UiSettings uiSettings = naverMap.getUiSettings();
         uiSettings.setLocationButtonEnabled(true);
@@ -673,6 +681,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             y = String.valueOf(coord.latitude);
             x = String.valueOf(coord.longitude);
 
+            loadingDialog.ShowDialog("로딩중"); //LoadingDialog Show (지도상 정류장,역 클릭시 표시)
+
             mapsPointPos = coord;
 
             Handler handler = new Handler();
@@ -717,6 +727,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             } else {
                                 String myAddress = getCurrentAddress(coord.latitude, coord.longitude);
                                 setPlace_info_window(myAddress);
+                                loadingDialog.HideDialog();
 
 //                                infoWindow.setPosition(coord);
 //                                infoWindow.open(naverMap);
@@ -854,27 +865,21 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                ));
 //            }
 //        }
-        // 카메라 이동 되면 호출 되는 이벤트
-        naverMap.addOnCameraChangeListener(new NaverMap.OnCameraChangeListener() {
+
+        naverMap.addOnCameraIdleListener(new NaverMap.OnCameraIdleListener() {
             @Override
-            public void onCameraChange(int reason, boolean animated) {
+            public void onCameraIdle() {
+                System.out.println("카메라 줌레벨 "+ naverMap.getMaxZoom());
+                System.out.println("카메라 줌레벨 "+ naverMap.getMinZoom());
+                System.out.println("카메라 줌레벨 "+ naverMap.getCameraPosition().zoom);
+
+
+
                 freeActiveMarkers();
                 // 정의된 마커위치들중 가시거리 내에있는것들만 마커 생성
                 int count = 0;
                 LatLng currentPosition = getCurrentPosition(naverMap);
                 String userName;
-//               for(int i = 0; i <= friendMarker.size();i++){
-//                   LatLng markerPos = friendMarker.get(i).getMarkerPos();
-//                   if(!withinSightMarker(currentPosition,markerPos)){
-//                       continue;
-//                   }
-//                   Marker marker = new Marker();
-//                   marker.setIconTintColor(Color.RED);
-//                   marker.setPosition(friendMarker.get(i).getMarkerPos());
-//                   marker.setCaptionText(friendMarker.get(i).getMarkerUserName());
-//                   marker.setMap(naverMap);
-//                   activeMarkers.add(marker);
-//               }
                 for (LatLng markerPosition : markersPosition) {
                     if (!withinSightMarker(currentPosition, markerPosition)) {
                         continue;
@@ -896,9 +901,53 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 }
             }
         });
+
+        // 카메라 이동 되면 호출 되는 이벤트
+//        naverMap.addOnCameraChangeListener(new NaverMap.OnCameraChangeListener() {
+//            @Override
+//            public void onCameraChange(int reason, boolean animated) {
+//                freeActiveMarkers();
+//                // 정의된 마커위치들중 가시거리 내에있는것들만 마커 생성
+//                int count = 0;
+//                LatLng currentPosition = getCurrentPosition(naverMap);
+//                String userName;
+//                for (LatLng markerPosition : markersPosition) {
+//                    if (!withinSightMarker(currentPosition, markerPosition)) {
+//                        continue;
+//                    }
+//                    Marker marker = new Marker();
+//                    marker.setHideCollidedMarkers(true);
+//
+////                    System.out.println("==============="+markerPosition.toString()+"======이름====== :"+friendMarkerNameList.get(count));
+////                    marker.setIcon(OverlayImage.fromResource(R.drawable.image_profile));
+//                    marker.setIconTintColor(Color.RED);
+//                    marker.setPosition(friendMarker.get(count).getMarkerPos());
+//                    marker.setCaptionText(friendMarker.get(count).getMarkerUserName());
+//
+////                    marker.setHideCollidedCaptions(true);
+//                    marker.setMap(naverMap);
+//                    activeMarkers.add(marker);
+//                    count++;
+////                    System.out.println("=======사이클 종료========");
+//                }
+//                //               for(int i = 0; i <= friendMarker.size();i++){
+////                   LatLng markerPos = friendMarker.get(i).getMarkerPos();
+////                   if(!withinSightMarker(currentPosition,markerPos)){
+////                       continue;
+////                   }
+////                   Marker marker = new Marker();
+////                   marker.setIconTintColor(Color.RED);
+////                   marker.setPosition(friendMarker.get(i).getMarkerPos());
+////                   marker.setCaptionText(friendMarker.get(i).getMarkerUserName());
+////                   marker.setMap(naverMap);
+////                   activeMarkers.add(marker);
+////               }
+//            }
+//        });
+
     }
 
-//
+
 //    class TestThread extends Thread {
 //        @Override
 //        public void run() {
@@ -941,12 +990,15 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         friendMarker = new ArrayList<>();
 
+        loadingDialog = new LoadingDialog(this);
+
         double latitude = gpsTracker.getLatitude();
         double longitude = gpsTracker.getLongitude();
 
         String myAddress = getCurrentAddress(latitude, longitude);
         String[] add = myAddress.split(" ");
         drawerInit(myAddress);
+
 
         //도성대
         FragmentManager fm = getSupportFragmentManager();
@@ -1744,42 +1796,63 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+
+
                 odsayService.requestSearchPubTransPath(finalSLongitude, finalSLatitude, finalELongitude, finalELatitude, "0", "0", "0", mapFindWay.Find_way);
+
+
                 handler.postDelayed(new Runnable() {                                        //handler 객체 딜레이 (0.45초)끝나면 종료
                     @Override
                     public void run() {
 //                path = mapFindWay.getPath_s();
-                        result = mapFindWay.getResult();
-                        System.out.println(result + "=========================================");
+
+//                        System.out.println(result + "=========================================");
 //                System.out.println("-----------------------result"+result);
 //                FragmentTransaction tf = getSupportFragmentManager().beginTransaction();
 //                        tf.detach(fw_frag).attach(fw_frag).commit();
 //                System.out.println("======================Test========================="+path[0]);
 
+                        result = mapFindWay.getOdsayResult();
+
+                        LatLngBounds latLngBounds = new LatLngBounds(sLatLngPos, eLatLngPos);
+
+                        CameraUpdate cameraUpdate = CameraUpdate.fitBounds(latLngBounds, 100, 130, 100, 1100);
+
+                        naverMap.moveCamera(cameraUpdate);
+
                         if (result != null) {
-                            LatLngBounds latLngBounds = new LatLngBounds(sLatLngPos, eLatLngPos);
+//                            LatLngBounds latLngBounds = new LatLngBounds(sLatLngPos, eLatLngPos);
 //                    Marker marker = new Marker();
 //                    marker.setPosition(eLatLngPos);
 //                    marker.setMap(naverMap);
-
-
-                            CameraUpdate cameraUpdate = CameraUpdate.fitBounds(latLngBounds, 100, 130, 100, 1100);
+//                            CameraUpdate cameraUpdate = CameraUpdate.fitBounds(latLngBounds, 100, 130, 100, 1100);
 //                    cameraUpdate.animate(CameraAnimation.Easing);
 
-                            naverMap.moveCamera(cameraUpdate);
+//                            naverMap.moveCamera(cameraUpdate);
 
-                            bundleFw.putString("odsay", result.toString());
-                            bundleFw.putString("StartName", String.valueOf(sPosEdit.getText()));
-                            bundleFw.putString("EndName", String.valueOf(ePosEdit.getText()));
-                            fw_frag.setArguments(bundleFw);
-                            frag_set(fw_frag);
-                            meResult = result;
+                            bundleSet();
 
+                            loadingDialog.HideDialog();
+                            startService();
+                        }
+                        else if(result ==null){
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    result = mapFindWay.getOdsayResult();
+
+
+                                    bundleSet();
+
+                                    loadingDialog.HideDialog();
+                                    startService();
+                                }
+                            },50);
 
                         }
-                        startService();
+
                     }
-                }, 500);
+                }, 150);
             }
         }, 100);
 
@@ -1797,6 +1870,14 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //        pos[0]=Double.parseDouble(sLatitude);
 //        pos[1]=Double.parseDouble(sLongitude);
 //        return pos;
+    }
+    private void bundleSet(){
+        bundleFw.putString("odsay", result.toString());
+        bundleFw.putString("StartName", String.valueOf(sPosEdit.getText()));
+        bundleFw.putString("EndName", String.valueOf(ePosEdit.getText()));
+        fw_frag.setArguments(bundleFw);
+        frag_set(fw_frag);
+        meResult = result;
     }
 
 
@@ -1833,6 +1914,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             marker.setPosition(point);
             // 마커 추가
             marker.setMap(naverMap);
+            editText.setText("");
 
             CameraUpdate cameraUpdate = CameraUpdate.scrollTo(point);
             naverMap.moveCamera(cameraUpdate);
@@ -1878,9 +1960,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
 
         if (intent.getStringExtra("jObject") != null) {
+            stopService();
+            loadingDialog.ShowDialog("경로 출력중");
             fw_pos_path = intent.getStringExtra("jObject");
             try {
-                stopService();
+
                 JSONObject pos = new JSONObject(fw_pos_path);
 
                 ArrayList<LatLng> total_finde_pos_array = new ArrayList<>();
@@ -1925,9 +2009,38 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //        }
 
     }
+    class UpdateMarkerTread{
+        public UpdateMarkerTread(){}
+        public void run() throws JSONException{
+            freeActiveMarkers();
+                // 정의된 마커위치들중 가시거리 내에있는것들만 마커 생성
+                int count = 0;
+                LatLng currentPosition = getCurrentPosition(naverMap);
+                String userName;
+                for (LatLng markerPosition : markersPosition) {
+                    if (!withinSightMarker(currentPosition, markerPosition)) {
+                        continue;
+                    }
+                    Marker marker = new Marker();
+                    marker.setHideCollidedMarkers(true);
+
+//                    System.out.println("==============="+markerPosition.toString()+"======이름====== :"+friendMarkerNameList.get(count));
+//                    marker.setIcon(OverlayImage.fromResource(R.drawable.image_profile));
+                    marker.setIconTintColor(Color.RED);
+                    marker.setPosition(friendMarker.get(count).getMarkerPos());
+                    marker.setCaptionText(friendMarker.get(count).getMarkerUserName());
+
+//                    marker.setHideCollidedCaptions(true);
+                    marker.setMap(naverMap);
+                    activeMarkers.add(marker);
+                    count++;
+//                    System.out.println("=======사이클 종료========");
+                }
+        }
+    }
 
 
-    class MapFriendMarkerTread {
+    class MapFriendMarkerTread { //친구 목록에서 친구 상태및 고스트 확인및 분류
         public MapFriendMarkerTread() {
 
         }
@@ -1956,7 +2069,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                System.out.println("=====================================================상태===================="+friendLiArray.getJSONObject(count).getString("F.F_status"));
 //                System.out.println("=====================================================횟수===================="+count);
 //                System.out.println("=====================================================고스트 상황===================="+friendLiArray.getJSONObject(count).getInt("K.K_ghost"));
-                switch (friendLiArray.getJSONObject(count).getInt("F.F_status")) {
+                switch (friendLiArray.getJSONObject(count).getInt("F.F_status")) { // 친구 상태 확인
                     case 0:
 //                        System.out.println("좌표 추가====================");
 ////                        markersPosition.add(count,friendPosArray.get(count));
@@ -1964,18 +2077,28 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         break;
                     case 1: //
 //                        System.out.println("1좌표 추가====================");
-                        if (friendLiArray.getJSONObject(count).getString("K.K_name").equals(name)) {
+                        switch(friendLiArray.getJSONObject(count).getInt("K.K_ghost")){ //유령 판별
+                          case 0 :
+
+                          case 1 :
+                              if (friendLiArray.getJSONObject(count).getString("K.K_name").equals(name)) {
 //                            System.out.println("+======+++===+++===+++==++==++=");
-                            break;
-                        }
-                        markersPosition.add(friendPosArray.get(count));
-                        friendMarker.add(new FriendMarker(friendPosArray.get(count), friendLiArray.getJSONObject(count).getString("K.K_name"), friendLiArray.getJSONObject(count).getString("K.K_profile")));
+                                  break;
+                              }
+                              markersPosition.add(friendPosArray.get(count));
+                              friendMarker.add(new FriendMarker(friendPosArray.get(count), friendLiArray.getJSONObject(count).getString("K.K_name"), friendLiArray.getJSONObject(count).getString("K.K_profile")));
 //                        markersPosition.get(count);
 //                        friendMarkerNameList.add(friendLiArray.getJSONObject(count).getString("K.K_name"));
 //                        System.out.println("=====================================================좌표===================="+markersPosition.get(count));
 //                        System.out.println("=====================================================이름코드===================="+friendLiArray.getJSONObject(count).getString("F.K_code2"));
 //                        System.out.println("=====================================================이름===================="+friendLiArray.getJSONObject(count).getString("K.K_name"));
 //                        System.out.println("  ");
+                            break;
+
+                          default:
+                            break;
+                        }
+
                         break;
                     case 2:
 //                        System.out.println("2좌표 추가====================");
@@ -2074,6 +2197,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         ardID = odsay.getArsID();
                         upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
 
+                        loadingDialog.HideDialog();
                         startService();
                     }
                 });
@@ -2133,6 +2257,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
 
                             upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+
+                            loadingDialog.HideDialog(); //loadingDialog 종료 (지도상 정류장 클릭시)
                             startService();
                         } catch (Exception e) {
 
@@ -2179,7 +2305,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             pathOverlay.setMap(naverMap);
 
             findWayOverlayClearIBtn.setVisibility(View.VISIBLE);
-
+            loadingDialog.HideDialog();
         }
     }
 
@@ -2229,6 +2355,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         super.onResumeFragments();
         Log.d("=====================================onResumeFragments()", "");
     }
+
+
+
 
     class BackgroundTask_location extends AsyncTask<Void, Void, String> {
 
@@ -2620,4 +2749,12 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
     };
 
+
+    public JSONObject getResult() {
+        return result;
+    }
+
+    public void setResult(JSONObject result) {
+        this.result = result;
+    }
 }

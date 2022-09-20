@@ -44,7 +44,7 @@ public class Subway extends AppCompatActivity {
     private int id[] = new int[3];
     private int x[] = new int[3];
     private int y[] = new int[3];
-    private String allDust, weather, tem, fineDust, ultraFineDust, covidNum,name, address,area, city, str,friendlist, locationlist, promiselist, buslist, subwaylist;
+    private String allDust, weather, tem, fineDust, ultraFineDust, covidNum,name, address,area, city, str,friendlist;
     private long k_code;
 
     private Button[] drawerMenu = new Button[6];
@@ -86,10 +86,6 @@ public class Subway extends AppCompatActivity {
                     intent3.putExtra("시", city);
                     intent3.putExtra("코로나",covidNum);
                     intent3.putExtra("friendlist",friendlist);
-                    intent3.putExtra("locationlist", locationlist);
-                    intent3.putExtra("subwaylist", subwaylist);
-                    intent3.putExtra("buslist", buslist);
-                    intent3.putExtra("promiselist", promiselist);
                     startActivity(intent3);
                     finish();
                     break;
@@ -113,10 +109,6 @@ public class Subway extends AppCompatActivity {
                     intent5.putExtra("시", city);
                     intent5.putExtra("코로나", covidNum);
                     intent5.putExtra("friendlist", friendlist);
-                    intent5.putExtra("promiselist", promiselist);
-                    intent5.putExtra("buslist", buslist);
-                    intent5.putExtra("subwaylist", subwaylist);
-                    intent5.putExtra("locationlist", locationlist);
                     startActivity(intent5);
                     finish();
                     break;
@@ -133,10 +125,6 @@ public class Subway extends AppCompatActivity {
                     intent6.putExtra("시", city);
                     intent6.putExtra("코로나",covidNum);
                     intent6.putExtra("friendlist",friendlist);
-                    intent6.putExtra("promiselist", promiselist);
-                    intent6.putExtra("locationlist", locationlist);
-                    intent6.putExtra("subwaylist", subwaylist);
-                    intent6.putExtra("buslist", buslist);
                     startActivity(intent6);
                     finish();
                     break;
@@ -207,10 +195,6 @@ public class Subway extends AppCompatActivity {
         ultraFineDust = intent.getStringExtra("초미세먼지");
         covidNum = intent.getStringExtra("코로나");
         friendlist = intent.getStringExtra("friendlist");
-        promiselist = intent.getStringExtra("promiselist");
-        locationlist = intent.getStringExtra("locationlist");
-        buslist = intent.getStringExtra("buslist");
-        subwaylist  =intent.getStringExtra("subwaylist");
         drawer_input();
 
         nickName.setText(name); // 카카오톡 프로필 닉네임

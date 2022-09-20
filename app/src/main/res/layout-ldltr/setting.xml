@@ -32,7 +32,7 @@
                 android:background="@drawable/header_stroke"
                 app:layout_constraintTop_toTopOf="parent"/>
 
-            
+
             <ImageButton
                 android:id="@+id/menu_ibtn"
                 app:layout_constraintStart_toStartOf="parent"
