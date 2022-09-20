@@ -76,7 +76,7 @@ private List<Location> location;
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setTitle("친구삭제").setMessage("정말 삭제하시겠습니까?");
+                        builder.setTitle("장소삭제").setMessage("정말 삭제하시겠습니까?");
                         builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

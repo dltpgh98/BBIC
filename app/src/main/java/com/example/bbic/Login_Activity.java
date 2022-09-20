@@ -1,9 +1,13 @@
 package com.example.bbic;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +35,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
@@ -48,14 +54,16 @@ public class Login_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
+        getHashKey();
+
         login_btn = (Button) findViewById(R.id.login_btn);
         logout_btn = (Button) findViewById(R.id.logout);
         nickname = (TextView) findViewById(R.id.nickname);
         profileImage = (ImageView) findViewById(R.id.profile);
 
-        new BackgroundTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        /*new BackgroundTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new BackgroundTask_User().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new BackgroundTask_User().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);*/
 
         // 카카오가 설치되어 있는지 확인 하는 메서드또한 카카오에서 제공 콜백 객체를 이용함
         Function2<OAuthToken, Throwable, Unit> callback = new Function2<OAuthToken, Throwable, Unit>() {
@@ -100,6 +108,27 @@ public class Login_Activity extends AppCompatActivity {
         });
         updateKakaoLoginUi();
 
+    }
+
+    private void getHashKey(){
+        PackageInfo packageInfo = null;
+        try {
+            packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (packageInfo == null)
+            Log.e("KeyHash", "KeyHash:null");
+
+        for (Signature signature : packageInfo.signatures) {
+            try {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            } catch (NoSuchAlgorithmException e) {
+                Log.e("KeyHash", "Unable to get MessageDigest. signature=" + signature, e);
+            }
+        }
     }
 
     private  void updateKakaoLoginUi() {
@@ -245,7 +274,7 @@ public class Login_Activity extends AppCompatActivity {
         queue1.add(kakaoRequest);
     }
 
-    class BackgroundTask extends AsyncTask<Void, Void, String> {
+    /*class BackgroundTask extends AsyncTask<Void, Void, String> {
 
         String target;
 
@@ -434,7 +463,7 @@ public class Login_Activity extends AppCompatActivity {
         }
 
 
-    }
+    }*/
 
 
 }
