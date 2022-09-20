@@ -94,8 +94,10 @@ public class FP_friend extends Fragment {
 
 
                 test test = new test();
-                //KakaoFriend[] kakaoFriend = Arrays.copyOf(test.test1(), test.test1().length);
 
+
+                //KakaoFriend[] kakaoFriend = Arrays.copyOf(test.test1(), test.test1().length);
+                test.test1(true);
 //                test.getArray();
 //
 //                System.out.println("가져온 카카오톡 친구목록" + Arrays.toString(test.getArray()));
