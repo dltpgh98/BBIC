@@ -3,6 +3,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FP_friend extends Fragment {
@@ -94,6 +96,20 @@ public class FP_friend extends Fragment {
 
 
                 test test = new test();
+                test.test1();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        List<KakaoFriend> kakaoFriend = test.getFriendList();
+                        if(kakaoFriend.isEmpty()){
+                            Log.d("코틀린 리턴값","Empty");
+                        }else{
+                            Log.d("코틀린 리턴값","Size = " + kakaoFriend.size());
+                        }
+                    }
+                },200);
+
                 //KakaoFriend[] kakaoFriend = Arrays.copyOf(test.test1(), test.test1().length);
 
 //                test.getArray();
