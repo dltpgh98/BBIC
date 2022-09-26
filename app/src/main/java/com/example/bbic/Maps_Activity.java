@@ -2072,7 +2072,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             ArrayList<LatLng> promiseFrPosArray = new ArrayList<>();
             ArrayList<JSONObject> test = new ArrayList<>();
 //            test.add(prFrLiArray)
-
+            promiseFrMarker.clear();
             for (int i=0;i<prFrLiArray.length();i++){
                 Log.d("","============test======길이======"+prFrLiArray.length());
                 Log.d("","============test============"+prFrLiArray.getJSONObject(i).getString("K.K_code").indexOf(String.valueOf(k_code)));
@@ -2086,7 +2086,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     String prFrTitle = prFrLiArray.getJSONObject(i).getString("PP.P_name"); //약속 이름
                     String prFrPosName= prFrLiArray.getJSONObject(i).getString("PP.P_address"); //약속 장소이름(주소)
                     String prFrTime =prFrLiArray.getJSONObject(i).getString("PP.P_time"); //약속 시간
-                    ArrayList<LatLng> testpos = new ArrayList<>();
 
 
                     for (int proCount=0;proCount<myPromise.length;proCount++){
@@ -2100,16 +2099,12 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             promiseFrPosArray.add(new LatLng(Double.valueOf(myFrLat[proCount]),Double.valueOf(myFrLong[proCount])));
                             Log.d("","====Lat"+myFrLat[proCount]);
                             Log.d("","====Lng"+myFrLong[proCount]);
-                            testpos.add(new LatLng(Double.valueOf(myFrLat[proCount]),Double.valueOf(myFrLong[proCount])));
+
                             //위치,유저 이름, 유저 프로필, 약속 장소이름, 약속 이름, 약속시간
                             promiseFrMarker.add(new PromiseFriendMarker(new LatLng(Double.valueOf(myFrLat[proCount]),Double.valueOf(myFrLong[proCount])),
                                     prFrUserName[proCount],prFrProfile[proCount],prFrPosName,prFrTime,prFrTitle));
                         }
                     }
-                    for (int j=0;j<testpos.size();j++){
-                        Log.d("","========"+testpos.get(j));
-                    }
-
                 }
             }
 
