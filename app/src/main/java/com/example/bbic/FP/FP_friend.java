@@ -1,4 +1,5 @@
 package com.example.bbic.FP;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -39,8 +40,10 @@ import org.w3c.dom.Document;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -70,9 +73,7 @@ public class FP_friend extends Fragment {
         String friendlist = null;
 
 
-
-
-        if(getArguments() != null){
+        if (getArguments() != null) {
             friendlist = getArguments().getString("friendlist");
             userCode = getArguments().getLong("userCode");
             System.out.println("FP_friend에서 받은 friendllist 확인 : " + friendlist);
@@ -103,23 +104,27 @@ public class FP_friend extends Fragment {
                     @Override
                     public void run() {
                         List<KakaoFriend> kakaoFriend = test.getFriendList();
-                        if(kakaoFriend.isEmpty()){
-                            Log.d("코틀린 리턴값","Empty");
-                        }else{
-                            Log.d("코틀린 리턴값","Size = " + kakaoFriend.size());
+
+                        ArrayList<KakaoFriend> kakaoFriendArrayList = new ArrayList<KakaoFriend>();
+                        kakaoFriendArrayList = (ArrayList<KakaoFriend>) test.getFriendList();
+
+                        System.out.println("리스트 출력" + kakaoFriend.toString());
+                        int arrint = kakaoFriend.size();
+
+                        if (kakaoFriend.isEmpty()) {
+                            Log.d("코틀린 리턴값", "Empty");
+                        } else {
+                            Log.d("코틀린 리턴값", "Size = " + kakaoFriend.size());
                         }
 
 
                         Intent intent = new Intent(getContext(), NewKakaoFriend.class);
-                        intent.putExtra("key", (Parcelable) kakaoFriend);
+                        intent.putExtra("key", kakaoFriendArrayList);
                         startActivity(intent);
 
 
                     }
-                },200);
-
-
-
+                }, 200);
 
 
                 //KakaoFriend[] kakaoFriend = Arrays.copyOf(test.test1(), test.test1().length);
@@ -138,7 +143,6 @@ public class FP_friend extends Fragment {
 
                             //System.out.println("카카오톡 친구 목록 확인하기" + test.test1().toString());
                             //System.out.println("카카오톡 친구 목록 확인하기" + test.test1().length);
-
 
 
                         } catch (Exception exception) {
