@@ -56,6 +56,7 @@ import com.example.bbic.DB.AddSubwayRequest;
 import com.example.bbic.DB.UpdateGhostRequest;
 import com.example.bbic.DB.UpdatePosRequest;
 import com.example.bbic.Data.FriendMarker;
+import com.example.bbic.Data.PromiseFriendMarker;
 import com.example.bbic.FP.FP;
 import com.example.bbic.FindWay.Find_Way_Frag;
 import com.example.bbic.FindWay.Map_Find_way;
@@ -94,6 +95,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -301,6 +303,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                        viewSwitch = true;
 //                        viewDetail.setVisibility(View.GONE);
 //                    }
+
+
 
 
                     view_Header.setVisibility(View.GONE);
@@ -535,6 +539,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private PathOverlay pathOverlay;
 
 
+    private MapPromisFriendMarkerTread mr;
+
+
+
     private ViewPager2 viewPager;
     private WormDotsIndicator indicator;
     private ConstraintLayout view_Header, find_way_page, place_info_window, subway_info_window, bus_info_window;
@@ -542,17 +550,19 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private Intent serviceIntent;
     private NaverMap naverMap;
 
-    private String allDust, weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, friendlist, promiselist, subwaylist, locationlist, buslist, userlist, ardID, bustitle;
+    private String allDust, weather, tem, fineDust, ultraFineDust, covidNum, name, address, area, city, friendlist, promiseFrList, promiselist, subwaylist, locationlist, buslist, userlist, ardID, bustitle;
     private long k_code;
 
     // 마커 정보 저장시킬 변수들 선언
     private Vector<LatLng> markersPosition;
     private Vector<Marker> activeMarkers;
     private ArrayList<FriendMarker> friendMarker;
+    private ArrayList<PromiseFriendMarker> promiseFrMarker;
+
 
     //친구 마커 위치들
     private MapFriendMarkerTread mapTread;
-    private JSONObject friendListObject;
+    private JSONObject friendListObject,promiseFrListObject;
 
     private double friendLat, friendLong;
 
@@ -834,7 +844,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 try {
                     markersPosition.clear();
                     System.out.println("===========청소 확인====================" + markersPosition.toString());
-                    mapTread.run();
+//                    mapTread.run();
+                    mr.run();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -890,8 +902,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                    System.out.println("==============="+markerPosition.toString()+"======이름====== :"+friendMarkerNameList.get(count));
 //                    marker.setIcon(OverlayImage.fromResource(R.drawable.image_profile));
                     marker.setIconTintColor(Color.RED);
-                    marker.setPosition(friendMarker.get(count).getMarkerPos());
-                    marker.setCaptionText(friendMarker.get(count).getMarkerUserName());
+//                    marker.setPosition(friendMarker.get(count).getMarkerPos());
+//                    marker.setCaptionText(friendMarker.get(count).getMarkerUserName());
+                    marker.setPosition(promiseFrMarker.get(count).getMarkerProPos());
+                    marker.setCaptionText(promiseFrMarker.get(count).getMarkerProUserName());
 
 //                    marker.setHideCollidedCaptions(true);
                     marker.setMap(naverMap);
@@ -987,8 +1001,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         subway_time = new Subway_Info_Time();
 
         mapTread = new MapFriendMarkerTread();
-
+        mr = new MapPromisFriendMarkerTread();
         friendMarker = new ArrayList<>();
+        promiseFrMarker = new ArrayList<>();
 
         loadingDialog = new LoadingDialog(this);
 
@@ -1171,6 +1186,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         new BackgroundTask_location().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new BackgroundTask_PromiseFrList().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         bus_info_bookmarkStar.setOnClickListener(onClickListener);
         subway_info_bookmarkStar.setOnClickListener(onClickListener);
@@ -1178,7 +1194,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         place_info_start_point.setOnClickListener(onClickListener);
         place_info_end_point.setOnClickListener(onClickListener);
-
 
 //============================================================================================SlidingUpPanel
 //        upPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
@@ -2040,6 +2055,73 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     }
 
 
+    class MapPromisFriendMarkerTread { //친구 목록에서 친구 상태및 고스트 확인및 분류
+        public MapPromisFriendMarkerTread() {
+
+        }
+
+        public void run() throws JSONException {
+
+            try {
+                promiseFrListObject = new JSONObject(promiseFrList);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            JSONArray prFrLiArray;
+            prFrLiArray = promiseFrListObject.getJSONArray("response");
+            ArrayList<LatLng> promiseFrPosArray = new ArrayList<>();
+            ArrayList<JSONObject> test = new ArrayList<>();
+//            test.add(prFrLiArray)
+
+            for (int i=0;i<prFrLiArray.length();i++){
+                Log.d("","============test======길이======"+prFrLiArray.length());
+                Log.d("","============test============"+prFrLiArray.getJSONObject(i).getString("K.K_code").indexOf(String.valueOf(k_code)));
+                if(prFrLiArray.getJSONObject(i).getString("K.K_code").indexOf(String.valueOf(k_code))!=-1){
+                    String myPromise[] = prFrLiArray.getJSONObject(i).getString("K.K_code").split(","); //약속 유저 코드
+                    String myCheckPromise[] = prFrLiArray.getJSONObject(i).getString("P.P_location").split(","); //약속 위치 수락 확인
+                    String myFrLong[] = prFrLiArray.getJSONObject(i).getString("K.K_long").split(","); //유저 long
+                    String myFrLat[] = prFrLiArray.getJSONObject(i).getString("K.K_lat").split(","); //유저 lat
+                    String prFrProfile[] = prFrLiArray.getJSONObject(i).getString("K.K_profile").split(","); //유저 프로필
+                    String prFrUserName[] = prFrLiArray.getJSONObject(i).getString("K.K_name").split(","); //유저 이름
+                    String prFrTitle = prFrLiArray.getJSONObject(i).getString("PP.P_name"); //약속 이름
+                    String prFrPosName= prFrLiArray.getJSONObject(i).getString("PP.P_address"); //약속 장소이름(주소)
+                    String prFrTime =prFrLiArray.getJSONObject(i).getString("PP.P_time"); //약속 시간
+                    ArrayList<LatLng> testpos = new ArrayList<>();
+
+
+                    for (int proCount=0;proCount<myPromise.length;proCount++){
+                        Log.d("","========================="+myPromise.length);
+                        Log.d("","밖====Lat"+myFrLat[proCount]);
+                        Log.d("","밖====Lng"+myFrLong[proCount]);
+                        if(myPromise[proCount].equals(String.valueOf(k_code)) && myCheckPromise[proCount].equals("1")){
+                            promiseFrPosArray.add(new LatLng(Double.valueOf(myFrLat[proCount]),Double.valueOf(myFrLong[proCount])));
+                            Log.d("","====Lat"+myFrLat[proCount]);
+                            Log.d("","====Lng"+myFrLong[proCount]);
+                            testpos.add(new LatLng(Double.valueOf(myFrLat[proCount]),Double.valueOf(myFrLong[proCount])));
+                            //위치,유저 이름, 유저 프로필, 약속 장소이름, 약속 이름, 약속시간
+                            promiseFrMarker.add(new PromiseFriendMarker(new LatLng(Double.valueOf(myFrLat[proCount]),Double.valueOf(myFrLong[proCount])),
+                                    prFrUserName[proCount],prFrProfile[proCount],prFrPosName,prFrTime,prFrTitle));
+                        }
+                    }
+                    for (int j=0;j<testpos.size();j++){
+                        Log.d("","========"+testpos.get(j));
+                    }
+
+                }
+            }
+
+            for(int count = 0;count <promiseFrPosArray.size();count++){
+                markersPosition.add(promiseFrPosArray.get(count));
+//                Log.d("","============prFrLiArray : "+prFrLiArray.getJSONObject(count).getString("PP.K_code"));
+                Log.d("","============prFrLiArray : "+promiseFrPosArray.get(count).latitude);
+            }
+
+//            Log.d("","============prFrLiArray : "+prFrLiArray.getJSONObject(0).getString("PP.K_code"));
+//            Log.d("","============prFrLiArray : "+promiseFrPosArray.get(0));
+
+        }
+
+    }
     class MapFriendMarkerTread { //친구 목록에서 친구 상태및 고스트 확인및 분류
         public MapFriendMarkerTread() {
 
@@ -2086,7 +2168,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                   break;
                               }
                               markersPosition.add(friendPosArray.get(count));
-                              friendMarker.add(new FriendMarker(friendPosArray.get(count), friendLiArray.getJSONObject(count).getString("K.K_name"), friendLiArray.getJSONObject(count).getString("K.K_profile")));
+                              friendMarker.add(new FriendMarker(
+                                      friendPosArray.get(count), friendLiArray.getJSONObject(count).getString("K.K_name"),
+                                      friendLiArray.getJSONObject(count).getString("K.K_profile"))
+                              );
 //                        markersPosition.get(count);
 //                        friendMarkerNameList.add(friendLiArray.getJSONObject(count).getString("K.K_name"));
 //                        System.out.println("===========================좌표===================="+markersPosition.get(count));
@@ -2669,6 +2754,71 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
             System.out.println("파싱 부분 : " + result);
             promiselist = result;
+
+        }
+
+        @Override
+        protected void onCancelled(String s) {
+            super.onCancelled(s);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+
+    }
+
+  class BackgroundTask_PromiseFrList extends AsyncTask<Void, Void, String> {
+        String target;
+
+        @Override
+        protected void onPreExecute() {
+            target = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/promisefriendlist.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+                URL url = new URL(target);
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String temp;
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((temp = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(temp + "\n");
+                }
+
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            System.out.println("약속 친구 리스트 : " + result);
+            promiseFrList = result;
 
         }
 
