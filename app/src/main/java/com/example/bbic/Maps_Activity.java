@@ -2093,7 +2093,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         Log.d("","========================="+myPromise.length);
                         Log.d("","밖====Lat"+myFrLat[proCount]);
                         Log.d("","밖====Lng"+myFrLong[proCount]);
-                        if(myPromise[proCount].equals(String.valueOf(k_code)) && myCheckPromise[proCount].equals("1")){
+                        Log.d("","밖====Lng"+proCount);
+                        if(!myPromise[proCount].equals(String.valueOf(k_code)) && myCheckPromise[proCount].equals("1")){
                             promiseFrPosArray.add(new LatLng(Double.valueOf(myFrLat[proCount]),Double.valueOf(myFrLong[proCount])));
                             Log.d("","====Lat"+myFrLat[proCount]);
                             Log.d("","====Lng"+myFrLong[proCount]);
