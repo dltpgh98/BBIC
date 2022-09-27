@@ -2092,13 +2092,16 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         Log.d("","========================="+myPromise.length);
                         Log.d("","밖====Lat"+myFrLat[proCount]);
                         Log.d("","밖====Lng"+myFrLong[proCount]);
-                        Log.d("","밖====Lng"+myCheckPromise.length);
-                        if(myCheckPromise.length<=1){
+                        Log.d("","밖====myCheckPromise"+myCheckPromise.length);
+//                        Log.d("","====이름"+prFrUserName[proCount]);
+                        if(myCheckPromise.length<=1 ){
                             continue;
                         }else if(!myPromise[proCount].equals(String.valueOf(k_code)) && myCheckPromise[proCount].equals("1")){
                             promiseFrPosArray.add(new LatLng(Double.valueOf(myFrLat[proCount]),Double.valueOf(myFrLong[proCount])));
                             Log.d("","====Lat"+myFrLat[proCount]);
                             Log.d("","====Lng"+myFrLong[proCount]);
+                            Log.d("","====이름"+prFrUserName[proCount]);
+                            Log.d("","====이름"+prFrTitle);
 
                             //위치,유저 이름, 유저 프로필, 약속 장소이름, 약속 이름, 약속시간
                             promiseFrMarker.add(new PromiseFriendMarker(new LatLng(Double.valueOf(myFrLat[proCount]),Double.valueOf(myFrLong[proCount])),
