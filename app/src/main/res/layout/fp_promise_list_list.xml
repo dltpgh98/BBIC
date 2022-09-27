@@ -24,15 +24,19 @@
             android:layout_height="90dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@color/green" />
+            app:srcCompat="@drawable/left_curve"
+            app:tint="@color/pro_list"/>
 
         <TextView
             android:id="@+id/pro_list_title_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="3dp"
+            android:layout_marginEnd="40sp"
             android:text="약속 제목"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:fontFamily="@font/nanum_square_round_b"
             android:textSize="25dp"
             app:layout_constraintStart_toEndOf="@id/pro_list_sidebar_iv"
@@ -47,6 +51,14 @@
             android:layout_marginStart="8dp"
             app:layout_constraintStart_toEndOf="@+id/pro_list_sidebar_iv"
             app:layout_constraintTop_toBottomOf="@+id/pro_list_title_tv" />
+        <ImageView
+            android:id="@+id/pro_ask_setting_iv"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:srcCompat="@drawable/setting_menu_f"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <ImageView
             android:id="@+id/pro_list_profile1_iv"
@@ -56,8 +68,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="3dp"
             app:layout_constraintStart_toEndOf="@id/pro_list_sidebar_iv"
-            app:layout_constraintTop_toBottomOf="@id/pro_list_address_tv"
-            app:srcCompat="@drawable/image_profile" />
+            app:layout_constraintTop_toBottomOf="@id/pro_list_address_tv" />
         <ImageView
             android:id="@+id/pro_list_profile2_iv"
             android:layout_width="30dp"
@@ -65,8 +76,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toEndOf="@id/pro_list_profile1_iv"
-            app:layout_constraintTop_toBottomOf="@id/pro_list_address_tv"
-            app:srcCompat="@drawable/image_profile" />
+            app:layout_constraintTop_toBottomOf="@id/pro_list_address_tv" />
         <ImageView
             android:id="@+id/pro_list_profile3_iv"
             android:layout_width="30dp"
@@ -74,8 +84,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toEndOf="@id/pro_list_profile2_iv"
-            app:layout_constraintTop_toBottomOf="@id/pro_list_address_tv"
-            app:srcCompat="@drawable/image_profile" />
+            app:layout_constraintTop_toBottomOf="@id/pro_list_address_tv" />
 
         <TextView
             android:id="@+id/pro_list_settime_tv"

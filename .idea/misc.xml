@@ -84,6 +84,66 @@
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/view_header.xml" value="0.33" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/viewpager_item.xml" value="0.1" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/vvvvvvv.xml" value="0.33" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/drawable-v24/beige_radious.xml" value="0.131" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/drawable-v24/bg_dialog.xml" value="0.131" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/drawable-v24/bg_line_e.xml" value="0.131" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/drawable-v24/bg_line_fifth.xml" value="0.131" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/drawable-v24/bg_line_i1.xml" value="0.131" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/drawable-v24/ic_baseline_check.xml" value="0.131" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/drawable/ic_baseline_check.xml" value="0.131" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/drawable/ic_baseline_circle_24.xml" value="0.131" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/drawable/ic_baseline_close.xml" value="0.131" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/drawable/ic_baseline_directions_bus_24.xml" value="0.131" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/drawable/ic_baseline_directions_subway_24.xml" value="0.131" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/drawable/ic_baseline_keyboard_arrow_left_24.xml" value="0.131" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/drawable/ic_baseline_keyboard_arrow_right.xml" value="0.131" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.131" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/drawable/ic_baseline_star_24.xml" value="0.131" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/drawable/radious.xml" value="0.131" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/drawable/red_radious.xml" value="0.193" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout-ldltr/setting.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/activity_backup.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/activity_main.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/bookmark.xml" value="0.276049766718507" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/bookmark_place.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/bookmark_place_abc.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/bookmark_place_list.xml" value="0.5" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/bookmark_place_new.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/bookmark_transit.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/bookmark_transit_bus.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/bookmark_transit_bus_list.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/bookmark_transit_subway.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/bookmark_transit_subway_list.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/drawer.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/find_way_item.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/find_way_list.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/fp.xml" value="0.1352112676056338" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/fp_add_kakaofriend.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/fp_add_kakaofriend_item.xml" value="0.5" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/fp_friend.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/fp_friend_add.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/fp_friend_add_list.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/fp_friend_ask.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/fp_friend_ask_list.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/fp_friend_list.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/fp_friend_list_list.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/fp_friend_request_window.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/fp_promise.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/fp_promise_ask.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/fp_promise_ask_list.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/fp_promise_list_list.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/loading.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/login.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/personal_processing.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/place_info_window.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/promise_write.xml" value="0.33" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/subway.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/subway_info_window.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/view_detail.xml" value="0.3619791666666667" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/view_division.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/view_find_way.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/view_header.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/conpa/Documents/BBIC/app/src/main/res/layout/viewpager_item.xml" value="0.18489583333333334" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/activity_main.xml" value="0.23097826086956522" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/bookmark.xml" value="0.25" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/bookmark_place.xml" value="0.18489583333333334" />

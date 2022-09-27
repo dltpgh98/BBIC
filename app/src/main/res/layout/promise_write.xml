@@ -68,7 +68,10 @@
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#eeeeee"
+                android:backgroundTint="#eeeeee"
+                android:background="@drawable/radious"
+                android:layout_margin="10sp"
+                android:elevation="5sp"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp">
 
@@ -79,7 +82,7 @@
                     android:layout_marginStart="10dp"
                     android:background="@null"
                     android:fontFamily="@font/fontstyle"
-                    android:hint="약속이름"
+                    android:hint="약속 이름"
                     android:textColor="#c4c4c4"
                     android:textSize="18sp"
                     android:textStyle="normal" />
@@ -90,18 +93,21 @@
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#eeeeee"
-                android:paddingTop="30dp"
-                android:paddingBottom="30dp">
+                android:backgroundTint="#eeeeee"
+                android:background="@drawable/radious"
+                android:layout_margin="10sp"
+                android:elevation="5sp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
 
                 <TextView
                     android:id="@+id/promise_pen_time_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:background="@null"
                     android:fontFamily="@font/fontstyle"
-                    android:text="약속 시간"
+                    android:hint="약속 시간"
                     android:textColor="#c4c4c4"
                     android:textSize="18sp"
                     android:textStyle="normal" />
@@ -111,27 +117,30 @@
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#eeeeee"
-                android:paddingTop="30dp"
-                android:paddingBottom="30dp">
+                android:backgroundTint="#eeeeee"
+                android:background="@drawable/radious"
+                android:layout_margin="10sp"
+                android:elevation="5sp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
 
                 <TextView
                     android:id="@+id/promise_pen_member_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:background="@null"
                     android:fontFamily="@font/fontstyle"
-                    android:text="약속 친구"
+                    android:hint="약속 친구"
                     android:textColor="#c4c4c4"
                     android:textSize="18sp"
                     android:textStyle="normal" />
 
                 <ImageButton
                     android:id="@+id/image_button"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="right"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="end"
                     android:background="@color/transparent"
                     android:src="@drawable/ic_control_point" />
 
@@ -142,17 +151,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="#eeeeee"
-                android:paddingTop="30dp"
-                android:paddingBottom="30dp">
+                android:backgroundTint="#eeeeee"
+                android:background="@drawable/radious"
+                android:layout_margin="10sp"
+                android:elevation="5sp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
 
                 <TextView
                     android:id="@+id/promise_pen_place_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:background="@null"
                     android:fontFamily="@font/fontstyle"
-                    android:text="약속 장소"
+                    android:hint="약속 장소"
                     android:textColor="#c4c4c4"
                     android:textSize="18sp"
                     android:textStyle="normal" />
@@ -160,27 +173,7 @@
 
             </TableRow>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#eeeeee"
-                android:gravity="center"
-                android:paddingTop="60dp"
-                android:paddingBottom="60dp">
 
-                <TextView
-                    android:id="@+id/promise_pen_map_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/fontstyle"
-                    android:text="지도"
-                    android:textAlignment="center"
-                    android:textColor="#c4c4c4"
-                    android:textSize="18sp"
-                    android:textStyle="normal" />
-
-
-            </TableRow>
 
         </TableLayout>
 
@@ -195,8 +188,11 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#eeeeee"
+                android:backgroundTint="#eeeeee"
+                android:background="@drawable/radious"
+                android:layout_marginHorizontal="10sp"
+                android:layout_marginBottom="10sp"
+                android:elevation="5sp"
                 android:gravity="top">
 
                 <EditText
@@ -207,7 +203,8 @@
                     android:layout_marginBottom="5dp"
                     android:background="@null"
                     android:fontFamily="@font/fontstyle"
-                    android:gravity="top"
+                    android:gravity="center_vertical"
+                    android:padding="10sp"
                     android:hint="내용"
                     android:maxLines="4"
                     android:maxLength="50"

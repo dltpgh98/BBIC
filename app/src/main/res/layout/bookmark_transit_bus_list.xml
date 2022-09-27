@@ -17,7 +17,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-        //위 레이아웃에 drawable 로 테두리 동글게 설정하면됨
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
