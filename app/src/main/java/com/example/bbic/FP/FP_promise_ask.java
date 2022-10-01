@@ -108,6 +108,8 @@ public class FP_promise_ask extends Fragment {
                         System.out.println("친구들의 코드들" + arrayCode[i].toString() + " " + userCodeString);
                         index = i;
                         System.out.println("인덱스 번호" + i);
+                    }else if(!arrayCode[i].toString().equals(userCodeString)){
+                        index = 0;
                     }
                 }
 

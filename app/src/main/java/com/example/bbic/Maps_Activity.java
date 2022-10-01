@@ -854,7 +854,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         };
 
         Timer timer = new Timer();
-        timer.schedule(task, new Date(), 5000);
+        timer.schedule(task, new Date(), 15000);
         //========
 
 //        for (int x = 0; x < 100; ++x) {
@@ -901,16 +901,18 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
 //                    System.out.println("==============="+markerPosition.toString()+"======이름====== :"+friendMarkerNameList.get(count));
 //                    marker.setIcon(OverlayImage.fromResource(R.drawable.image_profile));
-                    marker.setIconTintColor(Color.RED);
+//                    marker.setIconTintColor(Color.RED);
 //                    marker.setPosition(friendMarker.get(count).getMarkerPos());
 //                    marker.setCaptionText(friendMarker.get(count).getMarkerUserName());
-                    marker.setPosition(promiseFrMarker.get(count).getMarkerProPos());
-                    marker.setCaptionText(promiseFrMarker.get(count).getMarkerProUserName());
+
+
+//                    marker.setPosition(promiseFrMarker.get(count).getMarkerProPos());
+//                    marker.setCaptionText(promiseFrMarker.get(count).getMarkerProUserName());
 
 //                    marker.setHideCollidedCaptions(true);
-                    marker.setMap(naverMap);
-                    activeMarkers.add(marker);
-                    count++;
+//                    marker.setMap(naverMap);
+//                    activeMarkers.add(marker);
+//                    count++;
 //                    System.out.println("=======사이클 종료========");
                 }
             }
@@ -2101,13 +2103,17 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             Log.d("","====Lat"+myFrLat[proCount]);
                             Log.d("","====Lng"+myFrLong[proCount]);
                             Log.d("","====이름"+prFrUserName[proCount]);
-                            Log.d("","====이름"+prFrTitle);
+                            Log.d("","====제목"+prFrTitle);
+//                            Log.d("","====좌표"+myFrLat+"   ,  "+myFrLong);
+                            
 
                             //위치,유저 이름, 유저 프로필, 약속 장소이름, 약속 이름, 약속시간
-                            promiseFrMarker.add(new PromiseFriendMarker(new LatLng(Double.valueOf(myFrLat[proCount]),Double.valueOf(myFrLong[proCount])),
-                                    prFrUserName[proCount],prFrProfile[proCount],prFrPosName,prFrTime,prFrTitle));
+//                            promiseFrMarker.add(new PromiseFriendMarker(new LatLng(Double.valueOf(myFrLat[proCount]),Double.valueOf(myFrLong[proCount])),myFrLong,myFrLat,
+//                                    prFrUserName[proCount],prFrProfile[proCount],prFrPosName,prFrTime,prFrTitle));
                         }
+
                     }
+                    promiseFrMarker.add(new PromiseFriendMarker(prFrPosName, prFrTitle, prFrTime, myFrLong, myFrLat, myCheckPromise, prFrUserName, prFrProfile, myPromise));
                 }
             }
 
@@ -2115,6 +2121,15 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 markersPosition.add(promiseFrPosArray.get(count));
 //                Log.d("","============prFrLiArray : "+prFrLiArray.getJSONObject(count).getString("PP.K_code"));
                 Log.d("","============prFrLiArray : "+promiseFrPosArray.get(count).latitude);
+            }
+            for(int count = 0;count <promiseFrMarker.size();count++){
+
+//                Log.d("","============prFrLiArray : "+prFrLiArray.getJSONObject(count).getString("PP.K_code"));
+//                Log.d("","============prFrLiArray : "+promiseFrMarker.get(count).getMarkerProPos());
+                for(int l=0;l<promiseFrMarker.get(count).getProFrLat().length;l++){
+                    Log.d("","============count : "+count+"   l count:"+l);
+                    Log.d("",promiseFrMarker.get(count).getProTitleName()+"============좌표 : "+promiseFrMarker.get(count).getProFrLat()[l] +" , "+ promiseFrMarker.get(count).getProFrLong()[l]);
+                }
             }
 
 //            Log.d("","============prFrLiArray : "+prFrLiArray.getJSONObject(0).getString("PP.K_code"));
