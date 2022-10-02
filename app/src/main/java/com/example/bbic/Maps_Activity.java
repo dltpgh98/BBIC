@@ -26,6 +26,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,11 +49,13 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.bbic.Adapter.MarkerListAdapter;
 import com.example.bbic.Adapter.ViewPager_Item_Adapter;
 import com.example.bbic.Bookmark.Bookmark;
 import com.example.bbic.DB.UpdatePosRequest;
 import com.example.bbic.Data.Friend;
 import com.example.bbic.FP.FP;
+import com.example.bbic.FP.FP_promise_list;
 import com.example.bbic.FindWay.Find_Way_Frag;
 import com.example.bbic.FindWay.Map_Find_way;
 import com.google.android.material.tabs.TabLayout;
@@ -325,6 +329,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 case R.id.main_findWay_overlay_clear_ibtn:
                     pathOverlay.setMap(null);
                     findWayOverlayClearIBtn.setVisibility(View.GONE);
+                    break;
+                case R.id.main_marker_ibtn:
+
+                    drawerFirst.setVisibility(View.GONE);
+                    drawerSecond.setVisibility(View.VISIBLE);
+                    drawerLayout.openDrawer(drawerView);
+                    break;
             }
         }
     }
@@ -339,8 +350,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
+    private RelativeLayout drawerFirst, drawerSecond;
     private View drawerView;
-    private ImageButton menuIbtn, searchIbtn, findWayIbtn, vFindIbtn, vEditChangeFindIbtn, findWayOverlayClearIBtn;
+    private ImageButton menuIbtn, searchIbtn, findWayIbtn, vFindIbtn, vEditChangeFindIbtn, findWayOverlayClearIBtn, markerIbtn;
     private TextView
             temText, fineText, ultraText, covidText, nickName, areaText;
     private ImageView weatherImage, profile;
@@ -353,7 +365,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private ImageView headerProfile;
     private TextView headerName, headerCode;
     private ImageView headerGhostBtn, headerSettingBtn;
-
+    private ListView markerList;
 
     //    private JSONArray[] path;
     private JSONObject result, meResult;
@@ -712,6 +724,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         //각 객체의 참조값을 넣어줌
         drawerLayout = (DrawerLayout) findViewById(R.id.main_activity);
+        drawerFirst = (RelativeLayout) findViewById(R.id.drawer_layout);
+        drawerSecond = (RelativeLayout) findViewById(R.id.drawer_layout2);
         drawerView = (View) findViewById(R.id.drawer_main);
         menuIbtn = (ImageButton) findViewById(R.id.menu_ibtn);
         temText = (TextView) findViewById(R.id.drawer_tem_text);
@@ -725,7 +739,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         areaText = (TextView) findViewById(R.id.drawer_area_text);
         editText = (EditText) findViewById(R.id.main_search_et);
         findWayIbtn = (ImageButton) findViewById(R.id.main_find_way_ibtn);
-
+        markerIbtn = (ImageButton) findViewById(R.id.main_marker_ibtn);
+        markerList = (ListView) findViewById(R.id.drawer_list);
 
         upPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.slide);
         view_Header = (ConstraintLayout) findViewById(R.id.view_header);
@@ -764,9 +779,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         drawerMenu[3].setOnClickListener(onClickListener);
         drawerMenu[4].setOnClickListener(onClickListener);
         drawerMenu[5].setOnClickListener(onClickListener);
+        markerIbtn.setOnClickListener(onClickListener);
 
         headerGhostBtn.setOnClickListener(onClickListener);
         headerSettingBtn.setOnClickListener(onClickListener);
+
+        //final MarkerListAdapter markerListAdapter = new MarkerListAdapter(this,"PlaceData");
+        //markerList.setAdapter(markerListAdapter);
 
         keyboardmanager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
@@ -797,7 +816,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         findWayIbtn.setOnClickListener(onClickListener);
         vFindIbtn.setOnClickListener(onClickListener);
         vEditChangeFindIbtn.setOnClickListener(onClickListener);
-
         findWayOverlayClearIBtn.setOnClickListener(onClickListener);
 
         Intent intent = getIntent();
@@ -1174,6 +1192,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         @Override
         public void onDrawerClosed(@NonNull View drawerView) {
+            drawerFirst.setVisibility(View.VISIBLE);
+            drawerSecond.setVisibility(View.GONE);
         }
 
         @Override
