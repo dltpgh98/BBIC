@@ -3,6 +3,29 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/drawable/ic_baseline_keyboard_arrow_left_24.xml" value="0.2865" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/drawable/ic_baseline_keyboard_arrow_right.xml" value="0.2865" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/drawable/ic_baseline_menu.xml" value="0.2865" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/drawable/layout_radious.xml" value="0.2865" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/drawable/left_curve.xml" value="0.2865" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/drawable/loading_backgourd.xml" value="0.2865" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/drawable/radious.xml" value="0.2865" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/layout-ldltr/setting.xml" value="0.28229166666666666" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/layout-ldltr/test.xml" value="0.28229166666666666" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/layout/activity_main.xml" value="0.28229166666666666" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/layout/bookmark.xml" value="0.28229166666666666" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/layout/bookmark_place_list.xml" value="0.28229166666666666" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/layout/bookmark_transit_bus_list.xml" value="0.28229166666666666" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/layout/drawer.xml" value="0.28229166666666666" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/layout/drawer_list.xml" value="0.28229166666666666" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/layout/fp.xml" value="0.28229166666666666" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/layout/fp_friend_request_window.xml" value="0.28229166666666666" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/layout/fp_promise_ask_list.xml" value="0.28229166666666666" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/layout/fp_promise_list_list.xml" value="0.28229166666666666" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/layout/help.xml" value="0.28229166666666666" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/layout/promise_write.xml" value="0.28229166666666666" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/layout/promiss_location_dialog.xml" value="0.28229166666666666" />
+        <entry key="..\:/AndroidProject/BBIC-do/app/src/main/res/layout/subway.xml" value="0.28229166666666666" />
         <entry key="..\:/BBIC/do/app/src/main/res/drawable-v24/beige_radious.xml" value="0.1965" />
         <entry key="..\:/BBIC/do/app/src/main/res/drawable-xxxhdpi/ic_circle_online.xml" value="0.232" />
         <entry key="..\:/BBIC/do/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.1195" />

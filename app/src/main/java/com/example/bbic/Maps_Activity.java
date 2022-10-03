@@ -26,6 +26,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +49,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.bbic.Adapter.MarkerListAdapter;
 import com.example.bbic.Adapter.ViewPager_Item_Adapter;
 import com.example.bbic.Bookmark.Bookmark;
 import com.example.bbic.DB.AddBusRequest;
@@ -377,8 +380,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     pathOverlay.setMap(null);
                     findWayOverlayClearIBtn.setVisibility(View.GONE);
                     break;
-                case R.id.main_findWay_friend_ibtn:  //친구 길찾기 버튼 Test
-                    break;
 
 
                 case R.id.bus_info_bookmarkStar_ib:
@@ -476,6 +477,14 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         }
                     }, 400);
                     break;
+                case R.id.main_marker_ibtn:
+                    MarkerListAdapter markerListAdapter = new MarkerListAdapter(getApplicationContext(),promiseFrMarker);
+                    markerList.setAdapter(markerListAdapter);
+                    drawerFirst.setVisibility(View.GONE);
+
+                    drawerSecond.setVisibility(View.VISIBLE);
+                    drawerLayout.openDrawer(drawerView);
+                    break;
             }
         }
     }
@@ -493,8 +502,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
+    private RelativeLayout drawerFirst, drawerSecond;
     private View drawerView;
-    private ImageButton menuIbtn, searchIbtn, findWayIbtn, vFindIbtn, vEditChangeFindIbtn, findWayOverlayClearIBtn, subway_info_bookmarkStar, bus_info_bookmarkStar, place_info_bookmarkStar;
+    private ImageButton menuIbtn, searchIbtn, findWayIbtn, vFindIbtn, vEditChangeFindIbtn, findWayOverlayClearIBtn,
+            subway_info_bookmarkStar, bus_info_bookmarkStar, place_info_bookmarkStar, markerIbtn;
     private TextView
             temText, fineText, ultraText, covidText, nickName, areaText;
     private ImageView weatherImage, profile;
@@ -505,6 +516,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private FusedLocationSource locationSource;
     private boolean drawerEnabled = false;
     private LatLng mapsPointPos;
+
+    private ListView markerList;
 
     private LoadingDialog loadingDialog;
 
@@ -1082,6 +1095,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         //각 객체의 참조값을 넣어줌
         drawerLayout = (DrawerLayout) findViewById(R.id.main_activity);
+
+        drawerFirst = (RelativeLayout) findViewById(R.id.drawer_layout);
+        drawerSecond = (RelativeLayout) findViewById(R.id.drawer_layout2);
+
         drawerView = (View) findViewById(R.id.drawer_main);
         menuIbtn = (ImageButton) findViewById(R.id.menu_ibtn);
         temText = (TextView) findViewById(R.id.drawer_tem_text);
@@ -1095,6 +1112,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         areaText = (TextView) findViewById(R.id.drawer_area_text);
         editText = (EditText) findViewById(R.id.main_search_et);
         findWayIbtn = (ImageButton) findViewById(R.id.main_find_way_ibtn);  // 화면상 길찾기 버튼
+
+        markerIbtn = (ImageButton) findViewById(R.id.main_marker_ibtn);
+        markerList = (ListView) findViewById(R.id.drawer_list);
+
 
         upPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.slide);
         view_Header = (ConstraintLayout) findViewById(R.id.view_header);
@@ -1146,9 +1167,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         findWayOverlayClearIBtn = (ImageButton) findViewById(R.id.main_findWay_overlay_clear_ibtn);
 
 
-        ImageButton friendTest_btn = (ImageButton) findViewById(R.id.main_findWay_friend_ibtn);
-        friendTest_btn.setOnClickListener(onClickListener);
-
 
         drawerMenu[0] = (Button) findViewById(R.id.drawer_menu_1);
         drawerMenu[1] = (Button) findViewById(R.id.drawer_menu_2);
@@ -1176,6 +1194,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         drawerMenu[4].setOnClickListener(onClickListener);
         drawerMenu[5].setOnClickListener(onClickListener);
 
+        markerIbtn.setOnClickListener(onClickListener);
+
         headerGhostBtn.setOnClickListener(onClickListener);
         headerSettingBtn.setOnClickListener(onClickListener);
 
@@ -1190,7 +1210,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new BackgroundTask_PromiseFrList().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
-        bus_info_bookmarkStar.setOnClickListener(onClickListener);
+//        bus_info_bookmarkStar.setOnClickListener(onClickListener);
         subway_info_bookmarkStar.setOnClickListener(onClickListener);
         place_info_bookmarkStar.setOnClickListener(onClickListener);
 
@@ -2091,19 +2111,19 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
 
                     for (int proCount=0;proCount<myPromise.length;proCount++){
-                        Log.d("","========================="+myPromise.length);
-                        Log.d("","밖====Lat"+myFrLat[proCount]);
-                        Log.d("","밖====Lng"+myFrLong[proCount]);
-                        Log.d("","밖====myCheckPromise"+myCheckPromise.length);
+//                        Log.d("","========================="+myPromise.length);
+//                        Log.d("","밖====Lat"+myFrLat[proCount]);
+//                        Log.d("","밖====Lng"+myFrLong[proCount]);
+//                        Log.d("","밖====myCheckPromise"+myCheckPromise.length);
 //                        Log.d("","====이름"+prFrUserName[proCount]);
                         if(myCheckPromise.length<=1 ){
                             continue;
                         }else if(!myPromise[proCount].equals(String.valueOf(k_code)) && myCheckPromise[proCount].equals("1")){
                             promiseFrPosArray.add(new LatLng(Double.valueOf(myFrLat[proCount]),Double.valueOf(myFrLong[proCount])));
-                            Log.d("","====Lat"+myFrLat[proCount]);
-                            Log.d("","====Lng"+myFrLong[proCount]);
-                            Log.d("","====이름"+prFrUserName[proCount]);
-                            Log.d("","====제목"+prFrTitle);
+//                            Log.d("","====Lat"+myFrLat[proCount]);
+//                            Log.d("","====Lng"+myFrLong[proCount]);
+//                            Log.d("","====이름"+prFrUserName[proCount]);
+//                            Log.d("","====제목"+prFrTitle);
 //                            Log.d("","====좌표"+myFrLat+"   ,  "+myFrLong);
                             
 
@@ -2128,7 +2148,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                Log.d("","============prFrLiArray : "+promiseFrMarker.get(count).getMarkerProPos());
                 for(int l=0;l<promiseFrMarker.get(count).getProFrLat().length;l++){
                     Log.d("","============count : "+count+"   l count:"+l);
-                    Log.d("",promiseFrMarker.get(count).getProTitleName()+"============좌표 : "+promiseFrMarker.get(count).getProFrLat()[l] +" , "+ promiseFrMarker.get(count).getProFrLong()[l]);
+//                    Log.d("",promiseFrMarker.get(count).getProTitleName()+"============좌표 : "+promiseFrMarker.get(count).getProFrLat()[l] +" , "+ promiseFrMarker.get(count).getProFrLong()[l]);
                 }
             }
 
