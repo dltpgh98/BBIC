@@ -1,6 +1,7 @@
 package com.example.bbic.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.bbic.Data.PromiseFriendMarker;
 import com.example.bbic.R;
 
@@ -63,7 +65,7 @@ public class MarkerListAdapter extends BaseAdapter {
 
         TextView listTitleTv, listAddTv, listTimeTv;
         ImageView listProfile1Iv, listProfile2Iv, listProfile3Iv;
-        ImageView listProfile[] = new ImageView[arrayList.get(position).getMarkerProUserProfile().length];
+//        ImageView listProfile[] = new ImageView[arrayList.get(position).getMarkerProUserProfile().length];
 
 
 
@@ -83,9 +85,26 @@ public class MarkerListAdapter extends BaseAdapter {
         listTimeTv.setText(arrayList.get(position).getProTime());
 
         for(int count =0;count<arrayList.get(position).getMarkerProUserProfile().length;count++){
-//            listProfile[count] = (ImageView) view.findViewById(R.id.pro_list_profile1_iv);
-//            listProfile[count] =
-                    System.out.println(arrayList.get(position).getMarkerProUserProfile());
+            switch (count) {
+                case 0:
+//                    listProfile1Iv.setImageResource(Integer.valueOf(arrayList.get(position).getMarkerProUserProfile()[count]));
+                    Glide.with(mContext).load(arrayList.get(position).getMarkerProUserProfile()[count]).circleCrop().into(listProfile1Iv); // 친구프로필
+
+                    break;
+                case 1:
+                    Glide.with(mContext).load(arrayList.get(position).getMarkerProUserProfile()[count]).circleCrop().into(listProfile2Iv); // 친구프로필
+
+//                    listProfile2Iv.setImageResource(Integer.valueOf(arrayList.get(position).getMarkerProUserProfile()[count]));
+                    break;
+                case 2:
+                    Glide.with(mContext).load(arrayList.get(position).getMarkerProUserProfile()[count]).circleCrop().into(listProfile3Iv); // 친구프로필
+
+//                    listProfile3Iv.setImageResource(Integer.valueOf(arrayList.get(position).getMarkerProUserProfile()[count]));
+                    break;
+                default:
+                    break;
+            }
+            System.out.println(arrayList.get(position).getMarkerProUserProfile());
         }
 //        listProfile1Iv.setImageResource(arrayList.get(position).getPromise_profile1());
 //        listProfile2Iv.setImageResource(arrayList.get(position).getPromise_profile2());
