@@ -190,6 +190,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         keyboardmanager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                     } catch (Exception e) {
                     }
+                    drawerFirst.setVisibility(View.VISIBLE);
+
+                    drawerSecond.setVisibility(View.GONE);
                     drawerLayout.openDrawer(drawerView);
                     break;
                 case R.id.drawer_menu_1:

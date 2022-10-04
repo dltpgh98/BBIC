@@ -195,7 +195,7 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
         promiseFriend = (TextView) findViewById(R.id.promise_pen_member_tv);
         EditText promisePlace = (EditText) findViewById(R.id.promise_pen_place_tv);
 
-        imageIcon = findViewById(R.id.image_icon);
+//        imageIcon = findViewById(R.id.image_icon);
         friendBtn = findViewById(R.id.image_button);
         friendBtn.setOnClickListener(this);
 

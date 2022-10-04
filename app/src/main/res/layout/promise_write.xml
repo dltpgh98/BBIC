@@ -68,7 +68,10 @@
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#eeeeee"
+                android:backgroundTint="#eeeeee"
+                android:background="@drawable/radious"
+                android:layout_margin="10sp"
+                android:elevation="5sp"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp">
 
@@ -79,8 +82,8 @@
                     android:layout_marginStart="10dp"
                     android:background="@null"
                     android:fontFamily="@font/fontstyle"
-                    android:hint="약속이름"
-                    android:textColor="#c4c4c4"
+                    android:hint="약속 이름"
+                    android:textColor="#555555"
                     android:textSize="18sp"
                     android:textStyle="normal" />
 
@@ -90,70 +93,70 @@
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#eeeeee"
-                android:paddingTop="30dp"
-                android:paddingBottom="30dp"
-                android:orientation="vertical">
+                android:backgroundTint="#eeeeee"
+                android:background="@drawable/radious"
+                android:layout_margin="10sp"
+                android:elevation="5sp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                <LinearLayout>
                     <TextView
                         android:id="@+id/promise_pen_time_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginStart="10dp"
+                        android:layout_weight="2"
+                        android:background="@null"
                         android:fontFamily="@font/fontstyle"
-                        android:text="약속 날짜"
-                        android:textColor="#c4c4c4"
+                        android:hint="약속 시간"
+                        android:textColor="#555555"
                         android:textSize="18sp"
                         android:textStyle="normal" />
-
                     <TextView
                         android:id="@+id/promise_pen_time_tv2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
+                        android:background="@null"
                         android:fontFamily="@font/fontstyle"
-                        android:text="약속 시간"
-                        android:textColor="#c4c4c4"
+                        android:hint="약속 시간"
+                        android:textColor="#555555"
                         android:textSize="18sp"
                         android:textStyle="normal"
                         />
                 </LinearLayout>
-
 
             </TableRow>
 
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#eeeeee"
-                android:stretchColumns="*"
-                >
+                android:backgroundTint="#eeeeee"
+                android:background="@drawable/radious"
+                android:layout_margin="10sp"
+                android:elevation="5sp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
 
                 <TextView
-                    android:paddingVertical="30sp"
                     android:id="@+id/promise_pen_member_tv"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:background="@null"
                     android:fontFamily="@font/fontstyle"
-                    android:text="약속 친구"
-                    android:textColor="#c4c4c4"
+                    android:hint="약속 친구"
+                    android:textColor="#555555"
                     android:textSize="18sp"
-                    android:layout_weight="9"
                     android:textStyle="normal" />
 
                 <ImageButton
                     android:id="@+id/image_button"
-                    android:layout_gravity="start"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitCenter"
-                    android:layout_weight="7"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="end"
                     android:background="@color/transparent"
                     android:src="@drawable/ic_control_point" />
 
@@ -164,24 +167,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="#eeeeee"
-                android:paddingTop="30dp"
-                android:paddingBottom="30dp">
+                android:backgroundTint="#eeeeee"
+                android:background="@drawable/radious"
+                android:layout_margin="10sp"
+                android:elevation="5sp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
 
                 <EditText
                     android:id="@+id/promise_pen_place_tv"
-                    android:layout_width="351dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:background="@null"
                     android:fontFamily="@font/fontstyle"
                     android:hint="약속 장소"
-                    android:background="@null"
-                    android:textColor="#c4c4c4"
+                    android:textColor="#555555"
                     android:textSize="18sp"
                     android:textStyle="normal" />
 
 
             </TableRow>
+
+
 
         </TableLayout>
 
@@ -196,37 +204,36 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#eeeeee"
+                android:backgroundTint="#eeeeee"
+                android:background="@drawable/radious"
+                android:layout_marginHorizontal="10sp"
+                android:layout_marginBottom="10sp"
+                android:elevation="5sp"
                 android:gravity="top">
 
-                <!--                <EditText-->
-                <!--                    android:id="@+id/promise_pen_txt_tv"-->
-                <!--                    android:layout_width="395dp"-->
-                <!--                    android:layout_height="90dp"-->
-                <!--                    android:layout_marginTop="5dp"-->
-                <!--                    android:layout_marginBottom="5dp"-->
-                <!--                    android:background="@null"-->
-                <!--                    android:fontFamily="@font/fontstyle"-->
-                <!--                    android:gravity="top"-->
-                <!--                    android:hint="내용"-->
-                <!--                    android:inputType="textMultiLine"-->
-                <!--                    android:maxLength="50"-->
-                <!--                    android:maxLines="4"-->
-                <!--                    android:scrollHorizontally="false"-->
-                <!--                    android:singleLine="false"-->
-                <!--                    android:textColor="#c4c4c4"-->
-                <!--                    android:textStyle="normal" />-->
+                <EditText
+                    android:id="@+id/promise_pen_txt_tv"
+                    android:layout_width="395dp"
+                    android:layout_height="90dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@null"
+                    android:fontFamily="@font/fontstyle"
+                    android:gravity="center_vertical"
+                    android:padding="10sp"
+                    android:hint="내용"
+                    android:maxLines="4"
+                    android:maxLength="50"
+                    android:inputType="textMultiLine"
+                    android:scrollHorizontally="false"
+                    android:singleLine="false"
+                    android:textColor="#555555"
+                    android:textStyle="normal" />
             </TableRow>
 
         </TableLayout>
 
 
     </LinearLayout>
-    <ImageView
-        android:id="@+id/image_icon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentRight="true"/>
 
 </FrameLayout>
