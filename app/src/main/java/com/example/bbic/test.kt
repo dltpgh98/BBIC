@@ -9,7 +9,6 @@ class test {
     var result : Int = 0;
     var array = Array<KakaoFriend?>(result){null}
 
-
     public fun test1() {
         TalkApiClient.instance.friends { friends, error ->
             if (error != null) {
@@ -36,7 +35,7 @@ class test {
                         val Image = friend_Image
                         val uuid = friend_uuid
 
-                            val kakaFriend = KakaoFriend(id, Nikname, Image, uuid)
+                        val kakaFriend = KakaoFriend(id, Nikname, Image, uuid)
 
                         array[x] = kakaFriend
                     }

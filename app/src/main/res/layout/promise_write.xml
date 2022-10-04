@@ -83,7 +83,7 @@
                     android:background="@null"
                     android:fontFamily="@font/fontstyle"
                     android:hint="약속 이름"
-                    android:textColor="#c4c4c4"
+                    android:textColor="#555555"
                     android:textSize="18sp"
                     android:textStyle="normal" />
 
@@ -100,17 +100,33 @@
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp">
 
-                <TextView
-                    android:id="@+id/promise_pen_time_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:background="@null"
-                    android:fontFamily="@font/fontstyle"
-                    android:hint="약속 시간"
-                    android:textColor="#c4c4c4"
-                    android:textSize="18sp"
-                    android:textStyle="normal" />
+                <LinearLayout>
+                    <TextView
+                        android:id="@+id/promise_pen_time_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="2"
+                        android:background="@null"
+                        android:fontFamily="@font/fontstyle"
+                        android:hint="약속 시간"
+                        android:textColor="#555555"
+                        android:textSize="18sp"
+                        android:textStyle="normal" />
+                    <TextView
+                        android:id="@+id/promise_pen_time_tv2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:fontFamily="@font/fontstyle"
+                        android:hint="약속 시간"
+                        android:textColor="#555555"
+                        android:textSize="18sp"
+                        android:textStyle="normal"
+                        />
+                </LinearLayout>
 
             </TableRow>
 
@@ -132,7 +148,7 @@
                     android:background="@null"
                     android:fontFamily="@font/fontstyle"
                     android:hint="약속 친구"
-                    android:textColor="#c4c4c4"
+                    android:textColor="#555555"
                     android:textSize="18sp"
                     android:textStyle="normal" />
 
@@ -158,7 +174,7 @@
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp">
 
-                <TextView
+                <EditText
                     android:id="@+id/promise_pen_place_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -166,7 +182,7 @@
                     android:background="@null"
                     android:fontFamily="@font/fontstyle"
                     android:hint="약속 장소"
-                    android:textColor="#c4c4c4"
+                    android:textColor="#555555"
                     android:textSize="18sp"
                     android:textStyle="normal" />
 
@@ -211,7 +227,7 @@
                     android:inputType="textMultiLine"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
-                    android:textColor="#c4c4c4"
+                    android:textColor="#555555"
                     android:textStyle="normal" />
             </TableRow>
 

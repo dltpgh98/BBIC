@@ -1,5 +1,6 @@
 package com.example.bbic;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -31,6 +32,7 @@ public class Setting_Activity extends AppCompatActivity {
 
     //버튼 클릭 리스너 클래스
     class BtnOnClickListener implements View.OnClickListener{
+        @SuppressLint("NonConstantResourceId")
         @Override
         public void onClick(View view){
             switch (view.getId()){
@@ -115,9 +117,6 @@ public class Setting_Activity extends AppCompatActivity {
                 case R.id.drawer_menu_6:
                     drawerLayout.closeDrawer(drawerView);
                     break;
-                case R.id.setting_oss_btn:
-                    //startActivity(new Intent(view.getContext(), OssLicensesMenuActivity.class));
-                    break;
                 case R.id.home_btn:
                     Intent intent = new Intent(getApplicationContext(), Maps_Activity.class);
 //
@@ -126,8 +125,20 @@ public class Setting_Activity extends AppCompatActivity {
                     finish();
                     break;
                 case R.id.setting_personal_btn:
-                    startDialog();
+                    startPersonalDialog();
                     break;
+
+//                case R.id.setting_terms_button:
+//                    startTermsDialog();
+//                    break;
+//
+//                case R.id.setting_spons_btn:
+//                    startSponsDialog();
+//                    break;
+//
+//                case R.id.setting_help_btn:
+//                    startHelpDialog();
+//                    break;
             }
         }
     }
@@ -135,7 +146,7 @@ public class Setting_Activity extends AppCompatActivity {
     //참조를 위한 각 객체 생성
     private DrawerLayout drawerLayout;
     private View drawerView;
-    private ImageButton menuIbtn, searchIbtn, homeBtn, ossBtn, personalBtn;
+    private ImageButton menuIbtn, homeBtn, personalBtn, helpBtn, sponsBtn, termsBtn;
     private TextView
             temText, fineText, ultraText, covidText, nickName, areaText;
     private ImageView weatherImage, profile;
@@ -172,8 +183,10 @@ public class Setting_Activity extends AppCompatActivity {
         areaText = (TextView) findViewById(R.id.drawer_area_text);
 
         homeBtn = (ImageButton) findViewById(R.id.home_btn);
-        ossBtn = (ImageButton) findViewById(R.id.setting_oss_btn);
         personalBtn = (ImageButton) findViewById(R.id.setting_personal_btn);
+        helpBtn =  (ImageButton) findViewById(R.id.setting_help_btn);
+        termsBtn = (ImageButton) findViewById(R.id.setting_terms_btn);
+        sponsBtn = (ImageButton) findViewById(R.id.setting_spons_btn);
 
         drawerMenu[0] = (Button) findViewById(R.id.drawer_menu_1);
         drawerMenu[1] = (Button) findViewById(R.id.drawer_menu_2);
@@ -195,8 +208,10 @@ public class Setting_Activity extends AppCompatActivity {
         drawerMenu[5].setOnClickListener(onClickListener);
 
         homeBtn.setOnClickListener(onClickListener);
-        ossBtn.setOnClickListener(onClickListener);
         personalBtn.setOnClickListener(onClickListener);
+        helpBtn.setOnClickListener(onClickListener);
+        termsBtn.setOnClickListener(onClickListener);
+        sponsBtn.setOnClickListener(onClickListener);
 
         Intent intent = getIntent();
         k_code = intent.getLongExtra("코드",0);
@@ -299,7 +314,7 @@ public class Setting_Activity extends AppCompatActivity {
         }
     };
 
-    private void startDialog(){
+    private void startPersonalDialog(){
 
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.personal_processing);
@@ -317,6 +332,74 @@ public class Setting_Activity extends AppCompatActivity {
             }
         });
         diaText = dialog.findViewById(R.id.personal_text);
+        diaText.setMovementMethod(new ScrollingMovementMethod());
+
+        dialog.show();
+    }
+
+    private void startTermsDialog(){
+
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.terms_conditions);
+        WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+        dialog.getWindow().setAttributes((WindowManager.LayoutParams)layoutParams);
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.setCancelable(true);
+        diaBackBtn = dialog.findViewById(R.id.terms_back_btn);
+        diaBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        diaText = dialog.findViewById(R.id.terms_text);
+        diaText.setMovementMethod(new ScrollingMovementMethod());
+
+        dialog.show();
+    }
+
+    private void startSponsDialog(){
+
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.spons);
+        WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height = 500;
+        dialog.getWindow().setAttributes((WindowManager.LayoutParams)layoutParams);
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.setCancelable(true);
+        diaBackBtn = dialog.findViewById(R.id.spons_back_btn);
+        diaBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void startHelpDialog(){
+
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.help);
+        WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+        dialog.getWindow().setAttributes((WindowManager.LayoutParams)layoutParams);
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.setCancelable(true);
+        diaBackBtn = dialog.findViewById(R.id.help_back_btn);
+        diaBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        diaText = dialog.findViewById(R.id.help_text);
         diaText.setMovementMethod(new ScrollingMovementMethod());
 
         dialog.show();

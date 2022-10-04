@@ -2,14 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="440dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:id="@+id/view_find_way_lay">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/view_edit_layout"
             android:layout_width="match_parent"
-            android:layout_height="110sp"
+            android:layout_height="130sp"
             android:background="@color/white"
             app:layout_constraintTop_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,29 +28,31 @@
                 />
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/start_pos_tilay"
-                android:layout_width="240dp"
+                android:layout_width="220dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="5sp"
                 android:background="@color/transparent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/posEdit_change_ibtn">
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/start_pos_et"
-                    android:layout_width="240sp"
+                    android:layout_width="220sp"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/transparent"
                     android:text=""
-                    android:hint="출발지"/>
+                    android:hint="출발지" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="240dp"
+                android:layout_width="220dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="5sp"
                 android:background="@color/transparent"
                 app:layout_constraintTop_toBottomOf="@id/start_pos_tilay"
                 app:layout_constraintStart_toEndOf="@id/posEdit_change_ibtn">
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/end_pos_et"
-                    android:layout_width="240sp"
+                    android:layout_width="220sp"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/transparent"
                     android:text=""
@@ -59,13 +61,25 @@
 
             <ImageButton
                 android:id="@+id/view_find_way_ibtn"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
+                android:layout_width="70dp"
+                android:layout_height="50sp"
+                android:layout_margin="10sp"
                 android:src="@drawable/ic_search"
                 android:background="@drawable/beige_radious"
-                android:layout_marginEnd="10dp"
-                app:layout_constraintStart_toEndOf= "@id/start_pos_tilay"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintLeft_toRightOf="@id/start_pos_tilay"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageButton
+                android:id="@+id/view_history_ibtn"
+                android:layout_width="70dp"
+                android:layout_height="50sp"
+                android:layout_margin="10sp"
+                android:src="@drawable/ic_search"
+                android:background="@drawable/beige_radious"
+                android:backgroundTint="@color/pastel_pink"
+                app:layout_constraintLeft_toRightOf="@id/start_pos_tilay"
+                app:layout_constraintTop_toBottomOf="@id/view_find_way_ibtn"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.tabs.TabLayout

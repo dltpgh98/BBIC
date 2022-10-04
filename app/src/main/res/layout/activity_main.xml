@@ -103,7 +103,7 @@
             <!-- 길찾기 부분 시작 -->
             <include layout ="@layout/view_find_way"
                 android:visibility="gone"/>
-                <!-- 길찾기 부분 끝 -->
+            <!-- 길찾기 부분 끝 -->
 
             <include layout ="@layout/place_info_window"
                 android:visibility="gone"/>
@@ -112,9 +112,14 @@
             <include layout ="@layout/subway_info_window"
                 android:visibility="gone"/>
             <!--지하철 정보창-->
-            </LinearLayout>
+            <include layout ="@layout/bus_info_window"
+                android:visibility="gone"/>
+            <!--버스 정보창-->
 
-        </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+        </LinearLayout>
+
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

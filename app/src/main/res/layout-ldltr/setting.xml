@@ -78,7 +78,7 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageButton
-                android:id="@+id/setting_button_3"
+                android:id="@+id/setting_terms_btn"
                 android:layout_width="30dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_baseline_keyboard_arrow_right"
@@ -135,7 +135,8 @@
                 android:text="오픈소스 라이센스"
                 android:textAlignment="viewStart"
                 android:textSize="20sp"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="115dp" />
 
             <ImageButton
                 android:id="@+id/setting_oss_btn"
@@ -196,7 +197,7 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageButton
-                android:id="@+id/setting_button_6"
+                android:id="@+id/setting_help_btn"
                 android:layout_width="30dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_baseline_keyboard_arrow_right"
@@ -226,7 +227,7 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageButton
-                android:id="@+id/setting_button_7"
+                android:id="@+id/setting_spons_btn"
                 android:layout_width="30dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_baseline_keyboard_arrow_right"
