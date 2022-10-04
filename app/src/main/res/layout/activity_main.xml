@@ -112,6 +112,11 @@
             <include layout ="@layout/subway_info_window"
                 android:visibility="gone"/>
             <!--지하철 정보창-->
+            <include layout ="@layout/bus_info_window"
+                android:visibility="gone"/>
+            <!--버스 정보창-->
+
+
         </LinearLayout>
 
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
