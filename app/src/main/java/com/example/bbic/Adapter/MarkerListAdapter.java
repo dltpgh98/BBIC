@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -109,6 +111,7 @@ public class MarkerListAdapter extends BaseAdapter {
 //        listProfile1Iv.setImageResource(arrayList.get(position).getPromise_profile1());
 //        listProfile2Iv.setImageResource(arrayList.get(position).getPromise_profile2());
 //        listProfile3Iv.setImageResource(arrayList.get(position).getPromise_profile3());
+
 
         return view;
     }

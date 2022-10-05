@@ -22,6 +22,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -311,8 +312,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                    }
 
 
-
-
                     view_Header.setVisibility(View.GONE);
 
                     indicator.setVisibility(View.GONE);
@@ -346,7 +345,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         nameToPos(sPosEt, ePosEt);
                     } catch (Exception e) {
                         loadingDialog.HideDialog();
-                        Toast.makeText(getApplicationContext(),"찾을수 없는 장소입니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "찾을수 없는 장소입니다.", Toast.LENGTH_SHORT).show();
                     }
                     keyboardmanager.hideSoftInputFromWindow(sPosEdit.getWindowToken(), 0);
 
@@ -481,7 +480,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     }, 400);
                     break;
                 case R.id.main_marker_ibtn:
-                    MarkerListAdapter markerListAdapter = new MarkerListAdapter(getApplicationContext(),promiseFrMarker);
+                    markerListAdapter = new MarkerListAdapter(getApplicationContext(), promiseFrMarker);
                     markerList.setAdapter(markerListAdapter);
                     drawerFirst.setVisibility(View.GONE);
 
@@ -556,7 +555,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
 
     private MapPromisFriendMarkerTread mr;
-
+    private MarkerListAdapter markerListAdapter;
 
 
     private ViewPager2 viewPager;
@@ -578,7 +577,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     //친구 마커 위치들
     private MapFriendMarkerTread mapTread;
-    private JSONObject friendListObject,promiseFrListObject;
+    private JSONObject friendListObject, promiseFrListObject;
 
     private double friendLat, friendLong;
 
@@ -601,7 +600,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private List<Integer> friendGhostList = new ArrayList<>();
 
 
-
     public static ODsayService odsayService;
     private InputMethodManager keyboardmanager;
 
@@ -621,7 +619,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     public final static double REFERANCE_LNG_X5 = 5 / 88.74;
     public final static double REFERANCE_LAT_X15 = 15 / 109.958489129649955;
     public final static double REFERANCE_LNG_X15 = 15 / 88.74;
-
 
 
     public boolean withinSightMarker(LatLng currentPosition, LatLng markerPosition) {
@@ -897,10 +894,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         naverMap.addOnCameraIdleListener(new NaverMap.OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
-                System.out.println("카메라 줌레벨 "+ naverMap.getMaxZoom());
-                System.out.println("카메라 줌레벨 "+ naverMap.getMinZoom());
-                System.out.println("카메라 줌레벨 "+ naverMap.getCameraPosition().zoom);
-
+                System.out.println("카메라 줌레벨 " + naverMap.getMaxZoom());
+                System.out.println("카메라 줌레벨 " + naverMap.getMinZoom());
+                System.out.println("카메라 줌레벨 " + naverMap.getCameraPosition().zoom);
 
 
                 freeActiveMarkers();
@@ -918,8 +914,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                    System.out.println("==============="+markerPosition.toString()+"======이름====== :"+friendMarkerNameList.get(count));
 //                    marker.setIcon(OverlayImage.fromResource(R.drawable.image_profile));
 //                    marker.setIconTintColor(Color.RED);
-//                    marker.setPosition(friendMarker.get(count).getMarkerPos());
-//                    marker.setCaptionText(friendMarker.get(count).getMarkerUserName());
+                    try{
+                        marker.setPosition(friendMarker.get(count).getMarkerPos());
+                        marker.setCaptionText(friendMarker.get(count).getMarkerUserName());
+
+                    }catch (Exception e){
+
+                    }
 
 
 //                    marker.setPosition(promiseFrMarker.get(count).getMarkerProPos());
@@ -1168,7 +1169,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         place_info_bookmarkStar = (ImageButton) findViewById(R.id.place_info_bookmarkStar_ib);
 
         findWayOverlayClearIBtn = (ImageButton) findViewById(R.id.main_findWay_overlay_clear_ibtn);
-
 
 
         drawerMenu[0] = (Button) findViewById(R.id.drawer_menu_1);
@@ -1420,6 +1420,14 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        });
+
+        markerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                System.out.println("내가 선택한 아이템 포지션 :" + i + "이건 id:" + l);
+                MapFriendMarker(i);
             }
         });
 
@@ -1874,8 +1882,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
                             loadingDialog.HideDialog();
                             startService();
-                        }
-                        else if(result ==null){
+                        } else if (result == null) {
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -1887,7 +1894,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                     loadingDialog.HideDialog();
                                     startService();
                                 }
-                            },50);
+                            }, 50);
 
                         }
 
@@ -1911,7 +1918,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //        pos[1]=Double.parseDouble(sLongitude);
 //        return pos;
     }
-    private void bundleSet(){
+
+    private void bundleSet() {
         bundleFw.putString("odsay", result.toString());
         bundleFw.putString("StartName", String.valueOf(sPosEdit.getText()));
         bundleFw.putString("EndName", String.valueOf(ePosEdit.getText()));
@@ -1991,11 +1999,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         if (intent.getIntExtra("fFlag", 0) == 1) {
             fName = intent.getStringExtra("fName");
             fCode = intent.getLongExtra("fCode", 0);
-            Log.d("=====1flag====",""+fName);
+            Log.d("=====1flag====", "" + fName);
             wayToFriend(fName, fCode);
         } else if (intent.getIntExtra("fFlag", 0) == 2) {
             fCode = intent.getLongExtra("fCode", 0);
-            Log.d("=====2flag====",""+fCode);
+            Log.d("=====2flag====", "" + fCode);
             locationToFriend(fCode);
         }
 
@@ -2049,33 +2057,36 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //        }
 
     }
-    class UpdateMarkerTread{
-        public UpdateMarkerTread(){}
-        public void run() throws JSONException{
+
+    class UpdateMarkerTread {
+        public UpdateMarkerTread() {
+        }
+
+        public void run() throws JSONException {
             freeActiveMarkers();
-                // 정의된 마커위치들중 가시거리 내에있는것들만 마커 생성
-                int count = 0;
-                LatLng currentPosition = getCurrentPosition(naverMap);
-                String userName;
-                for (LatLng markerPosition : markersPosition) {
-                    if (!withinSightMarker(currentPosition, markerPosition)) {
-                        continue;
-                    }
-                    Marker marker = new Marker();
-                    marker.setHideCollidedMarkers(true);
+            // 정의된 마커위치들중 가시거리 내에있는것들만 마커 생성
+            int count = 0;
+            LatLng currentPosition = getCurrentPosition(naverMap);
+            String userName;
+            for (LatLng markerPosition : markersPosition) {
+                if (!withinSightMarker(currentPosition, markerPosition)) {
+                    continue;
+                }
+                Marker marker = new Marker();
+                marker.setHideCollidedMarkers(true);
 
 //                    System.out.println("==============="+markerPosition.toString()+"======이름====== :"+friendMarkerNameList.get(count));
 //                    marker.setIcon(OverlayImage.fromResource(R.drawable.image_profile));
-                    marker.setIconTintColor(Color.RED);
-                    marker.setPosition(friendMarker.get(count).getMarkerPos());
-                    marker.setCaptionText(friendMarker.get(count).getMarkerUserName());
+                marker.setIconTintColor(Color.RED);
+                marker.setPosition(friendMarker.get(count).getMarkerPos());
+                marker.setCaptionText(friendMarker.get(count).getMarkerUserName());
 
 //                    marker.setHideCollidedCaptions(true);
-                    marker.setMap(naverMap);
-                    activeMarkers.add(marker);
-                    count++;
+                marker.setMap(naverMap);
+                activeMarkers.add(marker);
+                count++;
 //                    System.out.println("=======사이클 종료========");
-                }
+            }
         }
     }
 
@@ -2098,10 +2109,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             ArrayList<JSONObject> test = new ArrayList<>();
 //            test.add(prFrLiArray)
             promiseFrMarker.clear();
-            for (int i=0;i<prFrLiArray.length();i++){
-                Log.d("","============test======길이======"+prFrLiArray.length());
-                Log.d("","============test============"+prFrLiArray.getJSONObject(i).getString("K.K_code").indexOf(String.valueOf(k_code)));
-                if(prFrLiArray.getJSONObject(i).getString("K.K_code").indexOf(String.valueOf(k_code))!=-1){
+            for (int i = 0; i < prFrLiArray.length(); i++) {
+//                Log.d("", "============test======길이======" + prFrLiArray.length());
+//                Log.d("", "============test============" + prFrLiArray.getJSONObject(i).getString("K.K_code").indexOf(String.valueOf(k_code)));
+                if (prFrLiArray.getJSONObject(i).getString("K.K_code").indexOf(String.valueOf(k_code)) != -1) {
                     String myPromise[] = prFrLiArray.getJSONObject(i).getString("K.K_code").split(","); //약속 유저 코드
                     String myCheckPromise[] = prFrLiArray.getJSONObject(i).getString("P.P_location").split(","); //약속 위치 수락 확인
                     String myFrLong[] = prFrLiArray.getJSONObject(i).getString("K.K_long").split(","); //유저 long
@@ -2109,26 +2120,26 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     String prFrProfile[] = prFrLiArray.getJSONObject(i).getString("K.K_profile").split(","); //유저 프로필
                     String prFrUserName[] = prFrLiArray.getJSONObject(i).getString("K.K_name").split(","); //유저 이름
                     String prFrTitle = prFrLiArray.getJSONObject(i).getString("PP.P_name"); //약속 이름
-                    String prFrPosName= prFrLiArray.getJSONObject(i).getString("PP.P_address"); //약속 장소이름(주소)
-                    String prFrTime =prFrLiArray.getJSONObject(i).getString("PP.P_time"); //약속 시간
+                    String prFrPosName = prFrLiArray.getJSONObject(i).getString("PP.P_address"); //약속 장소이름(주소)
+                    String prFrTime = prFrLiArray.getJSONObject(i).getString("PP.P_time"); //약속 시간
 
 
-                    for (int proCount=0;proCount<myPromise.length;proCount++){
+                    for (int proCount = 0; proCount < myPromise.length; proCount++) {
 //                        Log.d("","========================="+myPromise.length);
 //                        Log.d("","밖====Lat"+myFrLat[proCount]);
 //                        Log.d("","밖====Lng"+myFrLong[proCount]);
 //                        Log.d("","밖====myCheckPromise"+myCheckPromise.length);
 //                        Log.d("","====이름"+prFrUserName[proCount]);
-                        if(myCheckPromise.length<=1 ){
+                        if (myCheckPromise.length <= 1) {
                             continue;
-                        }else if(!myPromise[proCount].equals(String.valueOf(k_code)) && myCheckPromise[proCount].equals("1")){
-                            promiseFrPosArray.add(new LatLng(Double.valueOf(myFrLat[proCount]),Double.valueOf(myFrLong[proCount])));
+                        } else if (!myPromise[proCount].equals(String.valueOf(k_code)) && myCheckPromise[proCount].equals("1")) {
+                            promiseFrPosArray.add(new LatLng(Double.valueOf(myFrLat[proCount]), Double.valueOf(myFrLong[proCount])));
 //                            Log.d("","====Lat"+myFrLat[proCount]);
 //                            Log.d("","====Lng"+myFrLong[proCount]);
 //                            Log.d("","====이름"+prFrUserName[proCount]);
 //                            Log.d("","====제목"+prFrTitle);
 //                            Log.d("","====좌표"+myFrLat+"   ,  "+myFrLong);
-                            
+
 
                             //위치,유저 이름, 유저 프로필, 약속 장소이름, 약속 이름, 약속시간
 //                            promiseFrMarker.add(new PromiseFriendMarker(new LatLng(Double.valueOf(myFrLat[proCount]),Double.valueOf(myFrLong[proCount])),myFrLong,myFrLat,
@@ -2140,19 +2151,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 }
             }
 
-            for(int count = 0;count <promiseFrPosArray.size();count++){
+            for (int count = 0; count < promiseFrPosArray.size(); count++) {
                 markersPosition.add(promiseFrPosArray.get(count));
 //                Log.d("","============prFrLiArray : "+prFrLiArray.getJSONObject(count).getString("PP.K_code"));
-                Log.d("","============prFrLiArray : "+promiseFrPosArray.get(count).latitude);
-            }
-            for(int count = 0;count <promiseFrMarker.size();count++){
-
-//                Log.d("","============prFrLiArray : "+prFrLiArray.getJSONObject(count).getString("PP.K_code"));
-//                Log.d("","============prFrLiArray : "+promiseFrMarker.get(count).getMarkerProPos());
-                for(int l=0;l<promiseFrMarker.get(count).getProFrLat().length;l++){
-                    Log.d("","============count : "+count+"   l count:"+l);
-//                    Log.d("",promiseFrMarker.get(count).getProTitleName()+"============좌표 : "+promiseFrMarker.get(count).getProFrLat()[l] +" , "+ promiseFrMarker.get(count).getProFrLong()[l]);
-                }
+//                Log.d("", "============prFrLiArray : " + promiseFrPosArray.get(count).latitude);
             }
 
 //            Log.d("","============prFrLiArray : "+prFrLiArray.getJSONObject(0).getString("PP.K_code"));
@@ -2161,6 +2163,22 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
 
     }
+
+    public void MapFriendMarker(int position) {
+        for(int i=0; i<promiseFrMarker.get(position).getProFrLat().length;i++){
+            LatLng latLng = new LatLng(Double.valueOf(promiseFrMarker.get(position).getProFrLat()[i]),Double.valueOf(promiseFrMarker.get(position).getProFrLong()[i]));
+            if(!promiseFrMarker.get(position).getMarkerProUser().equals(String.valueOf(k_code)) &&promiseFrMarker.get(position).getProFrLocalCheck().equals("1"))
+            friendMarker.add(new FriendMarker(latLng,
+                    String.valueOf(promiseFrMarker.get(position).getMarkerProUserName()[i]),
+                    String.valueOf(promiseFrMarker.get(position).getMarkerProUserProfile()[i])
+                    )
+            );
+            System.out.println(latLng);
+            System.out.println(promiseFrMarker.get(position).getProFrLat()[i]);
+            System.out.println(friendMarker);
+        }
+    }
+
     class MapFriendMarkerTread { //친구 목록에서 친구 상태및 고스트 확인및 분류
         public MapFriendMarkerTread() {
 
@@ -2198,29 +2216,29 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         break;
                     case 1: //
 //                        System.out.println("1좌표 추가====================");
-                        switch(friendLiArray.getJSONObject(count).getInt("K.K_ghost")){ //유령 판별
-                          case 0 :
+                        switch (friendLiArray.getJSONObject(count).getInt("K.K_ghost")) { //유령 판별
+                            case 0:
 
-                          case 1 :
-                              if (friendLiArray.getJSONObject(count).getString("K.K_name").equals(name)) {
+                            case 1:
+                                if (friendLiArray.getJSONObject(count).getString("K.K_name").equals(name)) {
 //                            System.out.println("+======+++===+++===+++==++==++=");
-                                  break;
-                              }
-                              markersPosition.add(friendPosArray.get(count));
-                              friendMarker.add(new FriendMarker(
-                                      friendPosArray.get(count), friendLiArray.getJSONObject(count).getString("K.K_name"),
-                                      friendLiArray.getJSONObject(count).getString("K.K_profile"))
-                              );
+                                    break;
+                                }
+                                markersPosition.add(friendPosArray.get(count));
+                                friendMarker.add(new FriendMarker(
+                                        friendPosArray.get(count), friendLiArray.getJSONObject(count).getString("K.K_name"),
+                                        friendLiArray.getJSONObject(count).getString("K.K_profile"))
+                                );
 //                        markersPosition.get(count);
 //                        friendMarkerNameList.add(friendLiArray.getJSONObject(count).getString("K.K_name"));
 //                        System.out.println("===========================좌표===================="+markersPosition.get(count));
 //                        System.out.println("=========================이름코드===================="+friendLiArray.getJSONObject(count).getString("F.K_code2"));
 //                        System.out.println("===========================이름===================="+friendLiArray.getJSONObject(count).getString("K.K_name"));
 //                        System.out.println("  ");
-                            break;
+                                break;
 
-                          default:
-                            break;
+                            default:
+                                break;
                         }
 
                         break;
@@ -2479,8 +2497,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         super.onResumeFragments();
         Log.d("=====================================onResumeFragments()", "");
     }
-
-
 
 
     class BackgroundTask_location extends AsyncTask<Void, Void, String> {
@@ -2809,7 +2825,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     }
 
-  class BackgroundTask_PromiseFrList extends AsyncTask<Void, Void, String> {
+    class BackgroundTask_PromiseFrList extends AsyncTask<Void, Void, String> {
         String target;
 
         @Override
