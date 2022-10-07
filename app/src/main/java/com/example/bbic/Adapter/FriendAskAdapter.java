@@ -72,6 +72,7 @@ public class FriendAskAdapter extends BaseAdapter {
 
         if (status == 0) {
             friendstatus.setBackgroundColor(Color.GREEN);
+
         }
         if (status == 1) {
             friendstatus.setBackgroundColor(Color.parseColor("FF6A00"));
