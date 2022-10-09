@@ -29,7 +29,8 @@ public class PromiseFriendMarker {
 //    }
 
     //약속 장소이름, 약속 제목, 약속시간, 유저 long, 유저 lat, 유저 위치 공유 수락여부, 유저 이름, 유저 프로필, 유저
-    public PromiseFriendMarker(String proPosName, String proTitleName, String proTime, String[] proFrLong, String[] proFrLat, String[] proFrLocalCheck, String[] markerProUserName, String[] markerProUserProfile, String[] markerProUser) {
+    public PromiseFriendMarker(String proPosName, String proTitleName, String proTime,
+                               String[] proFrLong, String[] proFrLat, String[] proFrLocalCheck, String[] markerProUserName, String[] markerProUserProfile, String[] markerProUser) {
         this.proPosName = proPosName;
         this.proTitleName = proTitleName;
         this.proTime = proTime;

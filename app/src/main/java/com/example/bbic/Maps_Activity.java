@@ -635,8 +635,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
         for (Marker activeMarker : activeMarkers) {
             activeMarker.setMap(null);
+
         }
         activeMarkers = new Vector<Marker>();
+
     }
 //===============================================================
 
@@ -894,7 +896,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         naverMap.addOnCameraIdleListener(new NaverMap.OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
-
                 MapMarkerPrint();
 
 //                System.out.println("카메라 줌레벨 " + naverMap.getMaxZoom());
@@ -1427,7 +1428,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 System.out.println("내가 선택한 아이템 포지션 :" + i + "이건 id:" + l);
-
+                friendMarker.clear();
                 MapFriendMarker(i);
                 MapMarkerPrint();
                 drawerLayout.closeDrawer(drawerView);
@@ -2122,12 +2123,22 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     String myFrLat[] = prFrLiArray.getJSONObject(i).getString("K.K_lat").split(","); //유저 lat
                     String prFrProfile[] = prFrLiArray.getJSONObject(i).getString("K.K_profile").split(","); //유저 프로필
                     String prFrUserName[] = prFrLiArray.getJSONObject(i).getString("K.K_name").split(","); //유저 이름
+
+                    //객체 생성에 쓰일 함수들
                     String prFrTitle = prFrLiArray.getJSONObject(i).getString("PP.P_name"); //약속 이름
                     String prFrPosName = prFrLiArray.getJSONObject(i).getString("PP.P_address"); //약속 장소이름(주소)
                     String prFrTime = prFrLiArray.getJSONObject(i).getString("PP.P_time"); //약속 시간
 
+                    String frPrUserKode[] = new String[myPromise.length-1] ; //약속 친구 코드
+                    String frPrCheckLocation[] = new String[myCheckPromise.length-1]; // 위치공유 수락확인
+                    String frPrLong[] = new String[myFrLong.length-1]; //long
+                    String frPrLat[] = new String[myFrLat.length-1]; //lat
+                    String frPrProfile[] = new String[prFrProfile.length-1]; //프로필
+                    String frPrUserName[] = new String[prFrUserName.length-1]; //이름
+
 
                     for (int proCount = 0; proCount < myPromise.length; proCount++) {
+                        int l=0;
 //                        Log.d("","========================="+myPromise.length);
 //                        Log.d("","밖====Lat"+myFrLat[proCount]);
 //                        Log.d("","밖====Lng"+myFrLong[proCount]);
@@ -2137,6 +2148,14 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             continue;
                         } else if (!myPromise[proCount].equals(String.valueOf(k_code)) && myCheckPromise[proCount].equals("1")) {
                             promiseFrPosArray.add(new LatLng(Double.valueOf(myFrLat[proCount]), Double.valueOf(myFrLong[proCount])));
+//                            frPrUserKode[l] = myPromise[proCount];
+//                            frPrCheckLocation[l] = myCheckPromise[proCount];
+//                            frPrLong[l] = myFrLong[proCount];
+//                            frPrLat[l] = myFrLat[proCount];
+//                            frPrProfile[l] = prFrProfile[proCount];
+//                            frPrUserName[l] = prFrUserName[proCount];
+
+                            System.out.println(myPromise[proCount]+"  내 아이디: " +String.valueOf(k_code));
 //                            Log.d("","====Lat"+myFrLat[proCount]);
 //                            Log.d("","====Lng"+myFrLong[proCount]);
 //                            Log.d("","====이름"+prFrUserName[proCount]);
@@ -2150,7 +2169,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         }
 
                     }
+
                     promiseFrMarker.add(new PromiseFriendMarker(prFrPosName, prFrTitle, prFrTime, myFrLong, myFrLat, myCheckPromise, prFrUserName, prFrProfile, myPromise));
+//                    promiseFrMarker.add(new PromiseFriendMarker(prFrPosName, prFrTitle, prFrTime, frPrLong, frPrLat, myCheckPromise, frPrUserName, prFrProfile, frPrUserKode));
                 }
             }
 
@@ -2180,7 +2201,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             )
                     );
                     System.out.println(latLng);
-                    System.out.println(promiseFrMarker.get(position).getProFrLat()[i]);
+                    System.out.println(promiseFrMarker.get(position).getMarkerProUser()[i]);
 //                    System.out.println(promiseFrMarker.get(position).getMarkerProUser()[i]);
 //                    System.out.println(friendMarker);
                 }
