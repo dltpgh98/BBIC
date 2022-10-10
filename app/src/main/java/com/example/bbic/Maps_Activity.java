@@ -1881,9 +1881,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                    cameraUpdate.animate(CameraAnimation.Easing);
 
 //                            naverMap.moveCamera(cameraUpdate);
-
-                            bundleSet();
-
+                            try {
+                                bundleSet();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                             loadingDialog.HideDialog();
                             startService();
                         } else if (result == null) {
@@ -1892,9 +1894,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                 public void run() {
                                     result = mapFindWay.getOdsayResult();
 
-
-                                    bundleSet();
-
+                                    try {
+                                        bundleSet();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
                                     loadingDialog.HideDialog();
                                     startService();
                                 }
@@ -2129,13 +2133,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     String prFrPosName = prFrLiArray.getJSONObject(i).getString("PP.P_address"); //약속 장소이름(주소)
                     String prFrTime = prFrLiArray.getJSONObject(i).getString("PP.P_time"); //약속 시간
 
-                    String frPrUserKode[] = new String[myPromise.length-1] ; //약속 친구 코드
-                    String frPrCheckLocation[] = new String[myCheckPromise.length-1]; // 위치공유 수락확인
-                    String frPrLong[] = new String[myFrLong.length-1]; //long
-                    String frPrLat[] = new String[myFrLat.length-1]; //lat
-                    String frPrProfile[] = new String[prFrProfile.length-1]; //프로필
-                    String frPrUserName[] = new String[prFrUserName.length-1]; //이름
-
+//                    String frPrUserKode[] = new String[myPromise.length-1] ; //약속 친구 코드
+//                    String frPrCheckLocation[] = new String[myCheckPromise.length-1]; // 위치공유 수락확인
+//                    String frPrLong[] = new String[myFrLong.length-1]; //long
+//                    String frPrLat[] = new String[myFrLat.length-1]; //lat
+//                    String frPrProfile[] = new String[prFrProfile.length-1]; //프로필
+//                    String frPrUserName[] = new String[prFrUserName.length-1]; //이름
+//
 
                     for (int proCount = 0; proCount < myPromise.length; proCount++) {
                         int l=0;
@@ -2155,7 +2159,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                            frPrProfile[l] = prFrProfile[proCount];
 //                            frPrUserName[l] = prFrUserName[proCount];
 
-                            System.out.println(myPromise[proCount]+"  내 아이디: " +String.valueOf(k_code));
 //                            Log.d("","====Lat"+myFrLat[proCount]);
 //                            Log.d("","====Lng"+myFrLong[proCount]);
 //                            Log.d("","====이름"+prFrUserName[proCount]);
@@ -2197,7 +2200,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 if (!promiseFrMarker.get(position).getMarkerProUser().equals(String.valueOf(k_code)) && promiseFrMarker.get(position).getProFrLocalCheck()[i].equals("1")) {
                     friendMarker.add(new FriendMarker(latLng,
                                     String.valueOf(promiseFrMarker.get(position).getMarkerProUserName()[i]),
-                                    String.valueOf(promiseFrMarker.get(position).getMarkerProUserProfile()[i])
+                                    String.valueOf(promiseFrMarker.get(position).getMarkerProUserProfile()[i]),
+                                    String.valueOf(promiseFrMarker.get(position).getMarkerProUser()[i])
                             )
                     );
                     System.out.println(latLng);
@@ -2220,6 +2224,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         int count = 0;
         LatLng currentPosition = getCurrentPosition(naverMap);
         String userName;
+        int myKodeIndex=0;
+        for(int i=0;i<friendMarker.size();i++){
+            if(friendMarker.get(i).getMarkerUserKode().equals(k_code)){
+                myKodeIndex = i;
+                System.out.println("인덱스"+myKodeIndex);
+            }
+        }
         for (LatLng markerPosition : markersPosition) {
             if (!withinSightMarker(currentPosition, markerPosition)) {
                 continue;
@@ -2231,19 +2242,22 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                    marker.setIcon(OverlayImage.fromResource(R.drawable.image_profile));
             marker.setIconTintColor(Color.RED);
             try {
-                marker.setPosition(friendMarker.get(count).getMarkerPos());
-                marker.setCaptionText(friendMarker.get(count).getMarkerUserName());
-                marker.setHideCollidedCaptions(true);
-                marker.setMap(naverMap);
-                activeMarkers.add(marker);
-
+                if(count!=myKodeIndex) {
+                    marker.setPosition(friendMarker.get(count).getMarkerPos());
+                    marker.setCaptionText(friendMarker.get(count).getMarkerUserName());
+                    marker.setHideCollidedCaptions(true);
+                    marker.setMap(naverMap);
+                    activeMarkers.add(marker);
+                    count++;
+                }else{
+                    count++;
+                    continue;
+                }
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
-            count++;
 
         }
-
     }
 
 
