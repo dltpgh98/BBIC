@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -304,28 +303,22 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                     friend = promiseFriend.getText().toString().substring(0, promiseFriend.length() - 2);
                 }
 
+                AddPromissRequest addPromissRequest = new AddPromissRequest(partycode, userKakaoCode, title, time, place, responseListener_Promise);
+                RequestQueue queue = Volley.newRequestQueue(Promise_write.this);
+                queue.add(addPromissRequest);
 
-                Handler handler =  new Handler();
-
+                Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        AddPromissRequest addPromissRequest = new AddPromissRequest(partycode, userKakaoCode, title, time, place, responseListener_Promise);
-                        RequestQueue queue = Volley.newRequestQueue(Promise_write.this);
-                        queue.add(addPromissRequest);
-
-                    }
-                },100);
-
-
-
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        AddPartyRequest addPartyRequest = new AddPartyRequest(partycode, userKakaoCode, 1, responseListener_User);
-                        RequestQueue queue = Volley.newRequestQueue(Promise_write.this);
+                        AddPartyRequest addPartyRequest = new AddPartyRequest(partycode, userKakaoCode, 1, 1,responseListener_User);
                         queue.add(addPartyRequest);
+                    }
+                }, 100);
 
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
                         String[] strArr = friend.split(", ");
                         long friendCode = 0;
 
@@ -340,12 +333,14 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                                         Log.d("friendCode", Long.toString(friendCode));
                                     }
                                 }
-                                AddPartyRequest invitePartyRequest = new AddPartyRequest(partycode, friendCode, 0, responseListener_Friend);
+                                AddPartyRequest invitePartyRequest = new AddPartyRequest(partycode, friendCode, 0, 0,responseListener_Friend);
                                 queue.add(invitePartyRequest);
                             }
                         }
+                        new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new BackgroundTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
-                }, 500);
+                }, 300);
 
                 handler.postDelayed(new Runnable() {
                     @Override

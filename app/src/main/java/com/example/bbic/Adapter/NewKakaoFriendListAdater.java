@@ -50,9 +50,13 @@ public class NewKakaoFriendListAdater extends BaseAdapter {
         ImageView friendstatus = (ImageView) view.findViewById(R.id.ask_pro_stat_iv);
 
 
+        System.out.println("친구 카카오톡 이름" + items.get(i).getFriend_Nickname());
+
         Glide.with(context).load(items.get(i).getFriend_Image()).circleCrop().into(profile); // 친구프로필
         friendName.setText(items.get(i).getFriend_Nickname()); // 친구이름
         long friendCode = items.get(i).getFriend_id();//친구 코드
-        return null;
+
+
+        return view;
     }
 }

@@ -99,14 +99,26 @@ public class FP_friend extends Fragment {
 
                 test test = new test();
                 test.test1();
+                System.out.println("getFriendList1 : " + test.getFriendList());
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         List<KakaoFriend> kakaoFriend = test.getFriendList();
 
+//                        for (int i = 0;; i++) {
+//                            System.out.println("루프 : " + i);
+//                            if (kakaoFriend != null) {
+//                                System.out.println("루프 : " + i);
+//                                break;
+//                            }
+//
+//                        }
+
+
+                        System.out.println("getFriendList2 : " + test.getFriendList());
                         ArrayList<KakaoFriend> kakaoFriendArrayList = new ArrayList<KakaoFriend>();
-                        kakaoFriendArrayList = (ArrayList<KakaoFriend>) test.getFriendList();
+                        kakaoFriendArrayList = (ArrayList<KakaoFriend>) kakaoFriend;
 
                         System.out.println("리스트 출력" + kakaoFriend.toString());
                         int arrint = kakaoFriend.size();
@@ -118,13 +130,24 @@ public class FP_friend extends Fragment {
                         }
 
 
-                        Intent intent = new Intent(getContext(), NewKakaoFriend.class);
-                        intent.putExtra("key", kakaoFriendArrayList);
-                        startActivity(intent);
+                        ArrayList<KakaoFriend> finalKakaoFriendArrayList = kakaoFriendArrayList;
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                System.out.println("getFriendList3 : " + test.getFriendList());
+                                Intent intent = new Intent(getContext(), NewKakaoFriend.class);
+                                intent.putExtra("key", finalKakaoFriendArrayList);
+                                startActivity(intent);
+                            }
+                        },900);
+
+
+
 
 
                     }
-                }, 200);
+                }, 2000);
 
 
                 //KakaoFriend[] kakaoFriend = Arrays.copyOf(test.test1(), test.test1().length);
