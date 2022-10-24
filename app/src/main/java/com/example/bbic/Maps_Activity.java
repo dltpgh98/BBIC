@@ -506,7 +506,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private DrawerLayout drawerLayout;
     private RelativeLayout drawerFirst, drawerSecond;
     private View drawerView;
-    private ImageButton menuIbtn, searchIbtn, findWayIbtn, vFindIbtn, vEditChangeFindIbtn, findWayOverlayClearIBtn,
+    private ImageButton menuIbtn, searchIbtn, findWayIbtn, vFindIbtn, vEditChangeFindIbtn, findWayOverlayClearIBtn , find_way_log_page,
             subway_info_bookmarkStar, bus_info_bookmarkStar, place_info_bookmarkStar, markerIbtn;
     private TextView
             temText, fineText, ultraText, covidText, nickName, areaText;
@@ -1129,6 +1129,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         vFindIbtn = (ImageButton) findViewById(R.id.view_find_way_ibtn);
         sPosEdit = (EditText) findViewById(R.id.start_pos_et);
         ePosEdit = (EditText) findViewById(R.id.end_pos_et);
+        find_way_log_page = (ImageButton) findViewById(R.id.view_find_Way_Log_ibtn);
 
 
         subway_info_window = (ConstraintLayout) findViewById(R.id.subway_info_window);//지하철 정보창

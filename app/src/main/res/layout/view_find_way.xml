@@ -60,12 +60,25 @@
             <ImageButton
                 android:id="@+id/view_find_way_ibtn"
                 android:layout_width="80dp"
-                android:layout_height="match_parent"
+                android:layout_height="45dp"
                 android:src="@drawable/ic_search"
                 android:background="@drawable/beige_radious"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf= "@id/start_pos_tilay"
                 app:layout_constraintEnd_toEndOf="parent" />
+            <ImageButton
+                android:id="@+id/view_find_Way_Log_ibtn"
+                android:layout_width="80dp"
+                android:layout_height="45dp"
+                android:src=""
+                android:background="@drawable/beige_radious"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="70dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/start_pos_tilay"
+                app:layout_constraintEnd_toEndOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.tabs.TabLayout
