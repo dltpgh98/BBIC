@@ -78,6 +78,9 @@
         <entry key="..\:/BBIC/do/app/src/main/res/layout/viewpager_item.xml" value="0.23386062419837536" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/circle.xml" value="0.162" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/circle2.xml" value="0.162" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/view_friend_state_clear.xml" value="0.1875" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/view_friend_state_off.xml" value="0.1875" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/view_friend_state_on.xml" value="0.25" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_directions_24.xml" value="0.162" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_baseline_directions_bus_24.xml" value="0.162" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable/ic_search.xml" value="0.162" />
@@ -95,7 +98,7 @@
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/view_detail.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/view_division.xml" value="0.1875" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/view_header.xml" value="0.33" />
-        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/viewpager_item.xml" value="0.1875" />
+        <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/viewpager_item.xml" value="0.33" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/layout/vvvvvvv.xml" value="0.33" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/activity_main.xml" value="0.23097826086956522" />
         <entry key="..\:/Users/user/AndroidStudioProjects/BBIC/app/src/main/res/layout/bookmark.xml" value="0.25" />
