@@ -94,7 +94,7 @@ public class FP_friend_ask extends Fragment {
                 friendGhost = object.getInt("K.K_ghost");
 
                 Friend friend = new Friend(userCode, friendCode, friendStatus, friendName, friendEmail, friendProfile, friendGhost, friendLong, friendLat);
-                if (userCode == userKakaoCode) {
+                if (friendCode == userKakaoCode) {
                     if (friendStatus == 0) {
                         friendList.add(friend);
                     }
