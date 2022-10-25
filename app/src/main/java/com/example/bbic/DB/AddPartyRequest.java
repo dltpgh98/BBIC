@@ -14,7 +14,7 @@ public class AddPartyRequest extends StringRequest {
     final static private String URL = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/partyadd.php";
     private Map<String, String> map;
 
-    public AddPartyRequest(int p_code, long k_code, int p_status, int p_location, Response.Listener<String> listener) {
+    public AddPartyRequest(int p_code, long k_code, int p_status, int p_location,Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
