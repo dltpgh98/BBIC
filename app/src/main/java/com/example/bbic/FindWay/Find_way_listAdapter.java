@@ -81,7 +81,7 @@ public class Find_way_listAdapter extends RecyclerView.Adapter<Find_way_listAdap
             public void onClick(View view) {
 //                Log.d("=================================position===============================",arrayList.get(position).getjObject()+"");
 
-                changePos =position;
+                changePos = position;
 //                if(mSelectedItems.get(position,false)){
 //                    mSelectedItems.put(position,false);
 //                    holder.itemView.setBackgroundColor(Color.WHITE);

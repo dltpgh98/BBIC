@@ -22,12 +22,12 @@
         <TextView
             android:id="@+id/setting_header_text"
             android:layout_width="match_parent"
-            android:layout_height="70sp"
+            android:layout_height="50sp"
             android:textAlignment="center"
             android:text="@string/subway_header_text"
             android:fontFamily="@font/fontstyle"
             android:textSize="25sp"
-            android:paddingTop="20sp"
+            android:paddingTop="12sp"
             android:background="@drawable/header_stroke"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -36,9 +36,9 @@
             android:id="@+id/menu_ibtn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="10sp"
-            android:layout_width="50sp"
-            android:layout_height="50sp"
+            android:layout_margin="5sp"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
             android:background="#00000000"
             android:contentDescription="@string/StringValue"
             android:src="@drawable/ic_baseline_menu"
@@ -46,11 +46,12 @@
 
         <ImageButton
             android:id="@+id/home_btn"
-            android:layout_margin="10sp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@color/transparent"
+            android:layout_margin="5sp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:scaleType="fitCenter"
+
+            android:background="@color/transparent"
             android:src="@drawable/ic_baseline_home_24"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -64,7 +65,7 @@
         android:id="@+id/subway_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="70dp"
+        android:paddingTop="50dp"
         android:orientation="vertical">
 
         <com.github.chrisbanes.photoview.PhotoView

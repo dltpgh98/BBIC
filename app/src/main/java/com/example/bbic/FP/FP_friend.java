@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -69,7 +68,6 @@ public class FP_friend extends Fragment {
         fp_friend_list = new FP_friend_list(); //목록 버튼
         fp_friend_ask = new FP_friend_ask(); // 요청 버튼//벌써 여기서 문제
         fab = rootView.findViewById(R.id.fb_fab_btn);
-
 
 
         String friendlist = null;
@@ -222,11 +220,11 @@ public class FP_friend extends Fragment {
             public void onClick(View v) {
                 if(fp_friend_list == null){
                     getChildFragmentManager().beginTransaction().replace(R.id.fp_container, fp_friend_list).commit();
-                    //getChildFragmentManager().beginTransaction().hide(fp_friend_ask).commit();
+//                    getChildFragmentManager().beginTransaction().hide(fp_friend_ask).commit();
                 }
                 else {
-                    getChildFragmentManager().beginTransaction().replace(R.id.fp_container ,fp_friend_list).commit();
-                    //getChildFragmentManager().beginTransaction().hide(fp_friend_ask).commit();
+                    getChildFragmentManager().beginTransaction().replace(R.id.fp_container, fp_friend_list).commit();
+//                    getChildFragmentManager().beginTransaction().hide(fp_friend_ask).commit();
                 }
 
             }
@@ -239,12 +237,10 @@ public class FP_friend extends Fragment {
 
                 if(fp_friend_ask == null){
                     getChildFragmentManager().beginTransaction().replace(R.id.fp_container, fp_friend_ask).commit();
-                    //getChildFragmentManager().beginTransaction().hide(fp_friend_list).commit();
+//                    getChildFragmentManager().beginTransaction().hide(fp_friend_list).commit();
                 }else {
-                    getChildFragmentManager().beginTransaction().replace(R.id.fp_container , fp_friend_ask).commit();
-
-
-                    //getChildFragmentManager().beginTransaction().hide(fp_friend_list).commit();
+                    getChildFragmentManager().beginTransaction().replace(R.id.fp_container,fp_friend_ask).commit();
+//                    getChildFragmentManager().beginTransaction().hide(fp_friend_list).commit();
                 }
 
             }

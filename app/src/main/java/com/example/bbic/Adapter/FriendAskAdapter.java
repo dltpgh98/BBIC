@@ -1,5 +1,4 @@
 package com.example.bbic.Adapter;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
@@ -34,10 +33,9 @@ public class FriendAskAdapter extends BaseAdapter {
     private List<Friend> userFriendsStatus;
     private Fragment parentActivity;
     private long userKakaoCode;
-    private String name;
-    private String friendprofile;
 
-    public FriendAskAdapter(Context context, List<Friend> friends, List<Friend> userFriends, long userKakaoCode, FP_friend_ask parentActivity) {
+
+    public FriendAskAdapter(Context context, List<Friend> friends, List<Friend> userFriends, long userKakaoCode,FP_friend_ask parentActivity) {
         this.context = context;
         this.friends = friends;
         this.userFriends = userFriends;
@@ -85,7 +83,7 @@ public class FriendAskAdapter extends BaseAdapter {
             friendstatus.setBackgroundColor(Color.BLUE);
         }
 
-        ImageButton deletebutton = (ImageButton) v.findViewById(R.id.ask_delete_ibtn);
+        ImageButton deletebutton = (ImageButton)v.findViewById(R.id.ask_delete_ibtn);
         deletebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +93,7 @@ public class FriendAskAdapter extends BaseAdapter {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
-                            if (success) {
+                            if(success){
 
                                 notifyDataSetChanged();
                             }
@@ -106,7 +104,7 @@ public class FriendAskAdapter extends BaseAdapter {
                 };
                 friends.remove(i);
                 notifyDataSetChanged();
-                deleteAskFriendRequest deleteAskFriendRequest = new deleteAskFriendRequest(friends.get(i).getUserKakapCode(), friends.get(i).getFriendKakaoCode(), responseListener);
+                deleteAskFriendRequest  deleteAskFriendRequest = new deleteAskFriendRequest(friends.get(i).getUserKakapCode(), friends.get(i).getFriendKakaoCode(), responseListener);
                 RequestQueue queue = Volley.newRequestQueue(view.getContext());
                 queue.add(deleteAskFriendRequest);
 
@@ -132,16 +130,12 @@ public class FriendAskAdapter extends BaseAdapter {
                     }
                 };
 
-                System.out.println("수락 버튼" + friends.get(i).getUserKakapCode() + "" + friends.get(i).getFriendKakaoCode());
+                System.out.println("수락 버튼"+friends.get(i).getUserKakapCode() + "" + friends.get(i).getFriendKakaoCode());
                 AcceptFriendRequest acceptFriendRequest = new AcceptFriendRequest(friends.get(i).getUserKakapCode(), friends.get(i).getFriendKakaoCode(), responseListener);
                 RequestQueue queue = Volley.newRequestQueue(view.getContext());
-                System.out.println("친구요청 어댑터에서 나의 코드 확인 :" + friends.get(i).getFriendKakaoCode());
                 AddNewKakaoFriendRequest addNewKakaoFriendRequest = new AddNewKakaoFriendRequest(friends.get(i).getFriendKakaoCode(), friends.get(i).getUserKakapCode(), 1, responseListener);
                 queue.add(addNewKakaoFriendRequest);
                 queue.add(acceptFriendRequest);
-
-                name = friends.get(i).getUserName();
-                friendprofile = friends.get(i).getUserProfile();
                 friends.remove(i);
                 notifyDataSetChanged();
             }
@@ -150,13 +144,4 @@ public class FriendAskAdapter extends BaseAdapter {
         //v.setTag(friends.get(i).getUserKakapCode());
         return v;
     }
-
-    public String getSelectItemName() {
-        return name;
-    }
-
-    public String getSelectItemProfil() {
-        return friendprofile;
-    }
-
 }
