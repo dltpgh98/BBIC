@@ -36,8 +36,6 @@ public class NewKakaoFriend extends AppCompatActivity {
 
         System.out.println("가져온 카카오친구 목록" + list.toString());
 
-
-
         listView = (ListView) findViewById(R.id.Kakao_friend_add_lv);
         kakaoFriendList = new ArrayList<KakaoFriend>();
         adapter = new NewKakaoFriendListAdater(kakaoFriendList);
@@ -62,6 +60,11 @@ public class NewKakaoFriend extends AppCompatActivity {
             String friend_name = list.get(count).getFriend_Nickname();
             String friend_profile = list.get(count).getFriend_Image();
             String friend_UUID = list.get(count).getFriend_uuid();
+
+            System.out.println("가져온 카카오친구 아이디" + list.get(count).getFriend_id());
+            System.out.println("가져온 카카오친구 닉네임" + list.get(count).getFriend_Nickname());
+            System.out.println("가져온 카카오친구 프로필" + list.get(count).getFriend_Image());
+            System.out.println("가져온 카카오친구 UUID" + list.get(count).getFriend_uuid());
 
             KakaoFriend kakaoFriend = new KakaoFriend(friend_ID, friend_name, friend_profile, friend_UUID);
             kakaoFriendList.add(kakaoFriend);

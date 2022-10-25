@@ -55,7 +55,7 @@ public class NewKakaoFriendListAdater extends BaseAdapter {
         ImageView profile = (ImageView) convertView.findViewById(R.id.add_profile_iv);
         TextView friendName = (TextView) convertView.findViewById(R.id.add_name);
         //ImageView friendstatus = (ImageView) convertView.findViewById(R.id.ask_pro_stat_iv);
-
+        ImageView friendAddBtn = (ImageView) convertView.findViewById(R.id.add_friend_iv);
 
         System.out.println("친구 카카오톡 이름" + items.get(i).getFriend_Nickname());
 
