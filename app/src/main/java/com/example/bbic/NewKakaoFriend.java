@@ -29,6 +29,7 @@ public class NewKakaoFriend extends AppCompatActivity {
 
         Intent intent = getIntent();
         ArrayList<KakaoFriend> kakaoFriendArrayList = (ArrayList<KakaoFriend>)getIntent().getSerializableExtra("key");
+        long userKakaoCode = getIntent().getLongExtra("usercode",0);
 
 
         List<KakaoFriend> list = (List<KakaoFriend>)kakaoFriendArrayList;
@@ -38,7 +39,7 @@ public class NewKakaoFriend extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.Kakao_friend_add_lv);
         kakaoFriendList = new ArrayList<KakaoFriend>();
-        adapter = new NewKakaoFriendListAdater(this, kakaoFriendList);
+        adapter = new NewKakaoFriendListAdater(this, kakaoFriendList,userKakaoCode);
         listView.setAdapter(adapter);
 
 //        KakaoFriend[] kakaoFriend = new KakaoFriend[2];

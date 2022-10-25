@@ -8,9 +8,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.bbic.DB.AddNewKakaoFriendRequest;
 import com.example.bbic.KakaoFriend;
 import com.example.bbic.R;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -19,11 +25,12 @@ public class NewKakaoFriendListAdater extends BaseAdapter {
     //LayoutInflater layoutInflater = null;
     Context context;
     List<KakaoFriend> items;
+    private long userKakaoCode;
 
-
-    public NewKakaoFriendListAdater(Context context ,List<KakaoFriend> items) {
+    public NewKakaoFriendListAdater(Context context ,List<KakaoFriend> items, long userKakaoCode) {
         this.items = items;
         this.context = context;
+        this.userKakaoCode = userKakaoCode;
 
     }
 
@@ -65,7 +72,27 @@ public class NewKakaoFriendListAdater extends BaseAdapter {
         friendAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            if (success) {
+                                items.remove(i);
+                                notifyDataSetChanged();
+                            }
 
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                items.remove(i);
+                notifyDataSetChanged();
+                AddNewKakaoFriendRequest addNewKakaoFriendRequest = new AddNewKakaoFriendRequest(userKakaoCode, friendCode, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(view.getContext());
+                queue.add(addNewKakaoFriendRequest);
             }
         });
 

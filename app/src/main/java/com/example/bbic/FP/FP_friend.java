@@ -138,6 +138,7 @@ public class FP_friend extends Fragment {
                                 System.out.println("getFriendList3 : " + test.getFriendList());
                                 Intent intent = new Intent(getContext(), NewKakaoFriend.class);
                                 intent.putExtra("key", finalKakaoFriendArrayList);
+                                intent.putExtra("usercode", userCode);
                                 startActivity(intent);
                             }
                         },900);
