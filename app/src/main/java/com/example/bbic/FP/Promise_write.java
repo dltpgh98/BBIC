@@ -195,7 +195,7 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
         promiseFriend = (TextView) findViewById(R.id.promise_pen_member_tv);
         EditText promisePlace = (EditText) findViewById(R.id.promise_pen_place_tv);
 
-        imageIcon = findViewById(R.id.image_icon);
+//        imageIcon = findViewById(R.id.image_icon);
         friendBtn = findViewById(R.id.image_button);
         friendBtn.setOnClickListener(this);
 
@@ -311,7 +311,7 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        AddPartyRequest addPartyRequest = new AddPartyRequest(partycode, userKakaoCode, 1, responseListener_User);
+                        AddPartyRequest addPartyRequest = new AddPartyRequest(partycode, userKakaoCode, 1, 1,responseListener_User);
                         queue.add(addPartyRequest);
                     }
                 }, 100);
@@ -333,7 +333,7 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                                         Log.d("friendCode", Long.toString(friendCode));
                                     }
                                 }
-                                AddPartyRequest invitePartyRequest = new AddPartyRequest(partycode, friendCode, 0, responseListener_Friend);
+                                AddPartyRequest invitePartyRequest = new AddPartyRequest(partycode, friendCode, 0, 0,responseListener_Friend);
                                 queue.add(invitePartyRequest);
                             }
                         }

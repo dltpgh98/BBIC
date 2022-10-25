@@ -95,6 +95,8 @@ public class FP_promise_ask extends Fragment {
                 System.out.println("유저코드를 문자열로" + userCodeString);
 
 
+
+
                 String[] arrayCode = friendCode.split(",");
 
 
@@ -106,10 +108,13 @@ public class FP_promise_ask extends Fragment {
                         System.out.println("친구들의 코드들" + arrayCode[i].toString() + " " + userCodeString);
                         index = i;
                         System.out.println("인덱스 번호" + i);
+                    }else if(!arrayCode[i].toString().equals(userCodeString)){
+                        index = 0;
                     }
                 }
 
                 String[] array = partyStatuslist.split(",");
+                System.out.println("========array.size:"+array.length);
                 if (array[index].toString().equals("0")) {
                     partyStatus = Integer.parseInt(array[index].toString());
                 }

@@ -31,15 +31,19 @@
                 android:layout_weight="9"
                 android:gravity="center"
                 android:layout_marginStart="50dp"
+                android:fontFamily="@font/fontstyle"
+                android:textSize="15sp"
                 android:text="즐겨찾기"
                 android:textStyle="bold"
                 />
 
             <ImageButton
                 android:id="@+id/home_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_margin="5sp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:background="@color/transparent"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_baseline_home_24"/>
 
         </LinearLayout>
@@ -55,8 +59,7 @@
                 android:id="@+id/bookmark_tab_root"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_constraintTop_toBottomOf="@+id/bookmark_topBar_ly"
-                >
+                app:layout_constraintTop_toBottomOf="@+id/bookmark_topBar_ly">
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
@@ -95,8 +98,10 @@
             android:id="@+id/menu_ibtn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_width="50sp"
-            android:layout_height="50sp"
+            android:layout_margin="5sp"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+
             android:background="#00000000"
             android:contentDescription="@string/StringValue"
             android:src="@drawable/ic_baseline_menu"/>

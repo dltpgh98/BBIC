@@ -89,7 +89,7 @@ public class FP_friend_list extends Fragment {
                 friendLat = object.getDouble("K.K_lat");
                 friendGhost = object.getInt("K.K_ghost");
 
-                Friend friend = new Friend(userCode, friendCode, friendStatus, friendName, friendEmail, friendProfile, friendGhost, friendLong, friendLat);
+                Friend friend = new Friend(userCode, friendCode, friendStatus, friendName, friendEmail, friendProfile, friendGhost, friendLong, friendLat, "","",5);
                 if (userCode == userKakaoCode) {
                     if (friendStatus == 1) {
                         friendList.add(friend);

@@ -11,6 +11,10 @@ public class Friend {
     int friendGhost;
     double friendlong;
     double friendLat;
+    String userProfile;
+    String userName;
+    int userGhost;
+
 
     public long getUserKakapCode() {
         return userKakapCode;
@@ -84,7 +88,31 @@ public class Friend {
         this.friendLat = friendLat;
     }
 
-    public Friend(long userKakapCode, long friendKakaoCode, int friendStatus, String friendName, String friendEmail, String friendProfileURL, int friendGhost, double friendlong, double friendLat) {
+    public String getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(String userProfile) {
+        this.userProfile = userProfile;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public int getUserGhost() {
+        return userGhost;
+    }
+
+    public void setUserGhost(int userGhost) {
+        this.userGhost = userGhost;
+    }
+
+    public Friend(long userKakapCode, long friendKakaoCode, int friendStatus, String friendName, String friendEmail, String friendProfileURL, int friendGhost, double friendlong, double friendLat, String userProfile, String userName, int userGhost) {
         this.userKakapCode = userKakapCode;
         this.friendKakaoCode = friendKakaoCode;
         this.friendStatus = friendStatus;
@@ -94,5 +122,8 @@ public class Friend {
         this.friendGhost = friendGhost;
         this.friendlong = friendlong;
         this.friendLat = friendLat;
+        this.userProfile = userProfile;
+        this.userName = userName;
+        this.userGhost = userGhost;
     }
 }

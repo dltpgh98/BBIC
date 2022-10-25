@@ -24,7 +24,8 @@
             android:layout_height="90dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@color/green" />
+            app:srcCompat="@drawable/left_curve"
+            app:tint="@color/pro_list"/>
 
         <TextView
             android:id="@+id/pro_list_title_tv"

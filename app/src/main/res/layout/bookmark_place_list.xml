@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
-        android:background="@color/blue"
+        android:background="@drawable/red_radious"
+        android:backgroundTint="@color/blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -29,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:text="장소이름"
                 android:textSize="20dp"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,6 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="주소: 경기도 부천시 신흥로 56번길 25"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="@+id/place_name"
                 app:layout_constraintTop_toBottomOf="@+id/place_name" />
 
@@ -50,6 +53,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/setting_menu_f"
+                android:backgroundTint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

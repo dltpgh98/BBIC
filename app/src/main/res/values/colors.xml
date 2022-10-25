@@ -47,4 +47,11 @@
 
     <!-- activity dialog -->
     <color name="confirm_text_color">#737373</color>
+
+    <!-- doo sung dae -->
+    <color name="pro_list">#f6c37f</color>
+    <color name="pro_ask1">#c37ff6</color>
+    <color name="pro_ask2">#7fb2f6</color>
+
+    <color name="pastel_pink">#FCCCD4</color>
 </resources>

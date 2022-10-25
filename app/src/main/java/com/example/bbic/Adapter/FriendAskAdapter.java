@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.bbic.DB.AcceptFriendRequest;
+import com.example.bbic.DB.AddNewKakaoFriendRequest;
 import com.example.bbic.DB.deleteAskFriendRequest;
 import com.example.bbic.Data.Friend;
 import com.example.bbic.FP.FP_friend_ask;
@@ -31,13 +32,15 @@ public class FriendAskAdapter extends BaseAdapter {
     private List<Friend> userFriends;
     private List<Friend> userFriendsStatus;
     private Fragment parentActivity;
+    private long userKakaoCode;
 
 
-    public FriendAskAdapter(Context context, List<Friend> friends, List<Friend> userFriends, FP_friend_ask parentActivity) {
+    public FriendAskAdapter(Context context, List<Friend> friends, List<Friend> userFriends, long userKakaoCode,FP_friend_ask parentActivity) {
         this.context = context;
         this.friends = friends;
         this.userFriends = userFriends;
         //this.userFriendsStatus = userFriendsStatus;
+        this.userKakaoCode = userKakaoCode;
         this.parentActivity = parentActivity;
     }
 
@@ -65,16 +68,16 @@ public class FriendAskAdapter extends BaseAdapter {
         TextView friendName = (TextView) v.findViewById(R.id.ask_name);
         ImageView friendstatus = (ImageView) v.findViewById(R.id.ask_pro_stat_iv);
 
-        int status = friends.get(i).getFriendGhost();
-        Glide.with(context).load(friends.get(i).getFriendProfileURL()).circleCrop().into(profile); // 친구프로필
-        friendName.setText(friends.get(i).getFriendName()); // 친구이름
+        int status = friends.get(i).getUserGhost();
+        Glide.with(context).load(friends.get(i).getUserProfile()).circleCrop().into(profile); // 친구프로필
+        friendName.setText(friends.get(i).getUserName()); // 친구이름
 
 
         if (status == 0) {
             friendstatus.setBackgroundColor(Color.GREEN);
         }
         if (status == 1) {
-            friendstatus.setBackgroundColor(Color.parseColor("FF6A00"));
+            friendstatus.setBackgroundColor(Color.parseColor("#FF6A00"));
         }
         if (status == 2) {
             friendstatus.setBackgroundColor(Color.BLUE);
@@ -91,7 +94,7 @@ public class FriendAskAdapter extends BaseAdapter {
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
                             if(success){
-                                friends.remove(i);
+
                                 notifyDataSetChanged();
                             }
                         } catch (Exception e) {
@@ -119,20 +122,22 @@ public class FriendAskAdapter extends BaseAdapter {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
-                            friends.remove(i);
+
                             notifyDataSetChanged();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 };
-                friends.remove(i);
-                notifyDataSetChanged();
+
                 System.out.println("수락 버튼"+friends.get(i).getUserKakapCode() + "" + friends.get(i).getFriendKakaoCode());
                 AcceptFriendRequest acceptFriendRequest = new AcceptFriendRequest(friends.get(i).getUserKakapCode(), friends.get(i).getFriendKakaoCode(), responseListener);
                 RequestQueue queue = Volley.newRequestQueue(view.getContext());
+                AddNewKakaoFriendRequest addNewKakaoFriendRequest = new AddNewKakaoFriendRequest(friends.get(i).getFriendKakaoCode(), friends.get(i).getUserKakapCode(), 1, responseListener);
+                queue.add(addNewKakaoFriendRequest);
                 queue.add(acceptFriendRequest);
-
+                friends.remove(i);
+                notifyDataSetChanged();
             }
         });
 

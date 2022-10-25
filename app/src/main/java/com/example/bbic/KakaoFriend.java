@@ -1,6 +1,8 @@
 package com.example.bbic;
 
-public class KakaoFriend {
+import java.io.Serializable;
+
+public class KakaoFriend implements Serializable {
 
     Long friend_id;
     String friend_Nickname;
