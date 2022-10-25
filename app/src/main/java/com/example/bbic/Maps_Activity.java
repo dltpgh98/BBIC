@@ -1430,6 +1430,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 System.out.println("내가 선택한 아이템 포지션 :" + i + "이건 id:" + l);
                 friendMarker.clear();
+
                 MapFriendMarker(i);
                 MapMarkerPrint();
                 drawerLayout.closeDrawer(drawerView);
@@ -1837,7 +1838,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             sLatLngPos = new LatLng(Double.valueOf(sLatitude), Double.valueOf(sLongitude));
             eLatLngPos = new LatLng(Double.valueOf(eLatitude), Double.valueOf(eLongitude));
         }
-
         Handler handler = new Handler();
 
         String finalSLongitude = sLongitude;
@@ -1882,11 +1882,15 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                    cameraUpdate.animate(CameraAnimation.Easing);
 
 //                            naverMap.moveCamera(cameraUpdate);
-                            try {
-                                bundleSet();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+
+                            bundleFw.putString("odsay", result.toString());
+                            bundleFw.putString("StartName", String.valueOf(sPosEdit.getText()));
+                            bundleFw.putString("EndName", String.valueOf(ePosEdit.getText()));
+                            fw_frag.setArguments(bundleFw);
+                            frag_set(fw_frag);
+                            meResult = result;
+//                                bundleSet();
+
                             loadingDialog.HideDialog();
                             startService();
                         } else if (result == null) {
@@ -1895,11 +1899,19 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                 public void run() {
                                     result = mapFindWay.getOdsayResult();
 
-                                    try {
-                                        bundleSet();
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
+                                    try{
+                                        bundleFw.putString("odsay", result.toString());
+                                        bundleFw.putString("StartName", String.valueOf(sPosEdit.getText()));
+                                        bundleFw.putString("EndName", String.valueOf(ePosEdit.getText()));
+                                        fw_frag.setArguments(bundleFw);
+                                        frag_set(fw_frag);
+                                        meResult = result;
+//                                        bundleSet();
+                                    }catch (Exception e){
+
                                     }
+
+
                                     loadingDialog.HideDialog();
                                     startService();
                                 }
@@ -2108,6 +2120,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         public void run() throws JSONException {
 
             try {
+
                 promiseFrListObject = new JSONObject(promiseFrList);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -2226,39 +2239,46 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         LatLng currentPosition = getCurrentPosition(naverMap);
         String userName;
         int myKodeIndex=0;
-        for(int i=0;i<friendMarker.size();i++){
-            if(friendMarker.get(i).getMarkerUserKode().equals(k_code)){
-                myKodeIndex = i;
-                System.out.println("인덱스"+myKodeIndex);
-            }
-        }
-        for (LatLng markerPosition : markersPosition) {
-            if (!withinSightMarker(currentPosition, markerPosition)) {
-                continue;
-            }
-            Marker marker = new Marker();
-            marker.setHideCollidedMarkers(true);
+        try{
+            if(friendMarker.size()!= 0) {
+                for (int i = 0; i < friendMarker.size(); i++) {
+                    if (friendMarker.get(i).getMarkerUserKode().equals(k_code)) {
+                        myKodeIndex = i;
+                        System.out.println("인덱스" + myKodeIndex);
+                    }
+                }
+                for (LatLng markerPosition : markersPosition) {
+                    if (!withinSightMarker(currentPosition, markerPosition)) {
+                        continue;
+                    }
+                    Marker marker = new Marker();
+                    marker.setHideCollidedMarkers(true);
 
 //                    System.out.println("==============="+markerPosition.toString()+"======이름====== :"+friendMarkerNameList.get(count));
 //                    marker.setIcon(OverlayImage.fromResource(R.drawable.image_profile));
-            marker.setIconTintColor(Color.RED);
-            try {
-                if(count!=myKodeIndex) {
-                    marker.setPosition(friendMarker.get(count).getMarkerPos());
-                    marker.setCaptionText(friendMarker.get(count).getMarkerUserName());
-                    marker.setHideCollidedCaptions(true);
-                    marker.setMap(naverMap);
-                    activeMarkers.add(marker);
-                    count++;
-                }else{
-                    count++;
-                    continue;
+                    marker.setIconTintColor(Color.RED);
+                    try {
+                        if (count != myKodeIndex) {
+                            marker.setPosition(friendMarker.get(count).getMarkerPos());
+                            marker.setCaptionText(friendMarker.get(count).getMarkerUserName());
+                            marker.setHideCollidedCaptions(true);
+                            marker.setMap(naverMap);
+                            activeMarkers.add(marker);
+                            count++;
+                        } else {
+                            count++;
+                            continue;
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        }catch (Exception e){
 
         }
+
     }
 
 

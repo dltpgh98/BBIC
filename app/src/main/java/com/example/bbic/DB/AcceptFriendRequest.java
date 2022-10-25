@@ -16,8 +16,8 @@ public class AcceptFriendRequest extends StringRequest{
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
-        map.put("K_code1",K_code1 +"");// 유저코드
-        map.put("K_code2", K_code2 + "");// 친구 코드
+        map.put("K_code1",K_code2 +"");// 유저코드
+        map.put("K_code2", K_code1 + "");// 친구 코드
 
 
         System.out.println("버튼 클릭 리스너");

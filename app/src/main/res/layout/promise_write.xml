@@ -140,25 +140,29 @@
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp">
 
-                <TextView
-                    android:id="@+id/promise_pen_member_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:background="@null"
-                    android:fontFamily="@font/fontstyle"
-                    android:hint="약속 친구"
-                    android:textColor="#555555"
-                    android:textSize="18sp"
-                    android:textStyle="normal" />
+                <LinearLayout>
+                    <TextView
+                        android:id="@+id/promise_pen_member_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:background="@null"
+                        android:fontFamily="@font/fontstyle"
+                        android:hint="약속 친구"
+                        android:textColor="#555555"
+                        android:textSize="18sp"
+                        android:textStyle="normal" />
 
-                <ImageButton
-                    android:id="@+id/image_button"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="end"
-                    android:background="@color/transparent"
-                    android:src="@drawable/ic_control_point" />
+                    <ImageButton
+                        android:id="@+id/image_button"
+                        android:layout_width="20dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="right"
+                        android:layout_marginStart="190dp"
+                        android:background="@color/transparent"
+                        android:src="@drawable/ic_control_point" />
+
+                </LinearLayout>
 
 
             </TableRow>
