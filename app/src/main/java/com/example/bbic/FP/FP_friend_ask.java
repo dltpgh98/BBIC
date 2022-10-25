@@ -80,6 +80,10 @@ public class FP_friend_ask extends Fragment {
             double friendLong;
             double friendLat;
             int friendGhost;
+            //친구 기준으로 봤을 때 user이 친구가 되고 friend가 자신이 된다
+            String userProfile;
+            String userName;
+            int userGhost;
 
             while (count < jsonArray.length()) {
                 JSONObject object = jsonArray.getJSONObject(count);
@@ -93,7 +97,12 @@ public class FP_friend_ask extends Fragment {
                 friendLat = object.getDouble("K.K_lat");
                 friendGhost = object.getInt("K.K_ghost");
 
-                Friend friend = new Friend(userCode, friendCode, friendStatus, friendName, friendEmail, friendProfile, friendGhost, friendLong, friendLat);
+                userProfile = object.getString("KK.K_profile");
+                userName = object.getString("Kk_K_name");
+                userGhost = object.getInt("KK_K_ghost");
+
+
+                Friend friend = new Friend(userCode, friendCode, friendStatus, friendName, friendEmail, friendProfile, friendGhost, friendLong, friendLat, userProfile,userName, userGhost);
                 if (friendCode == userKakaoCode) {
                     if (friendStatus == 0) {
                         friendList.add(friend);

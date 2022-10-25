@@ -68,9 +68,9 @@ public class FriendAskAdapter extends BaseAdapter {
         TextView friendName = (TextView) v.findViewById(R.id.ask_name);
         ImageView friendstatus = (ImageView) v.findViewById(R.id.ask_pro_stat_iv);
 
-        int status = friends.get(i).getFriendGhost();
-        Glide.with(context).load(friends.get(i).getFriendProfileURL()).circleCrop().into(profile); // 친구프로필
-        friendName.setText(friends.get(i).getFriendName()); // 친구이름
+        int status = friends.get(i).getUserGhost();
+        Glide.with(context).load(friends.get(i).getUserProfile()).circleCrop().into(profile); // 친구프로필
+        friendName.setText(friends.get(i).getUserName()); // 친구이름
 
 
         if (status == 0) {
