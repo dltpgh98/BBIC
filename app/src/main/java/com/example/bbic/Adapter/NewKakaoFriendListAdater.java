@@ -90,7 +90,7 @@ public class NewKakaoFriendListAdater extends BaseAdapter {
                 };
                 items.remove(i);
                 notifyDataSetChanged();
-                AddNewKakaoFriendRequest addNewKakaoFriendRequest = new AddNewKakaoFriendRequest(userKakaoCode, friendCode, responseListener);
+                AddNewKakaoFriendRequest addNewKakaoFriendRequest = new AddNewKakaoFriendRequest(userKakaoCode, friendCode, 0,responseListener);
                 RequestQueue queue = Volley.newRequestQueue(view.getContext());
                 queue.add(addNewKakaoFriendRequest);
             }

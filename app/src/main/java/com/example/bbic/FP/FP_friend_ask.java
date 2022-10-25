@@ -49,7 +49,7 @@ public class FP_friend_ask extends Fragment {
         userFriendlist = new ArrayList<Friend>();
 
 
-        adapter = new FriendAskAdapter(getContext(), friendList, userFriendlist, this);
+        adapter = new FriendAskAdapter(getContext(), friendList, userFriendlist,userKakaoCode,this);
         listView.setAdapter(adapter);
 
         String getFriend = null;
