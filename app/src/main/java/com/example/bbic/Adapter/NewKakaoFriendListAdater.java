@@ -16,17 +16,18 @@ import java.util.List;
 
 public class NewKakaoFriendListAdater extends BaseAdapter {
 
+    LayoutInflater layoutInflater = null;
     List<KakaoFriend> items = null;
-    Context context;
+    private int count = 0;
 
-    public NewKakaoFriendListAdater(List<KakaoFriend> items, Context context) {
+    public NewKakaoFriendListAdater(List<KakaoFriend> items) {
         this.items = items;
-        this.context = context;
+        count =items.size();
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return count;
     }
 
     @Override
@@ -42,21 +43,27 @@ public class NewKakaoFriendListAdater extends BaseAdapter {
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
 
-        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.fp_friend_ask_list, parent, false);
+        if(convertView == null){
+            final Context context = parent.getContext();
+            if(layoutInflater == null){
+                layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            }
+            convertView = layoutInflater.inflate(R.layout.fp_friend_add_list, parent, false);
+        }
 
-        ImageView profile = (ImageView) view.findViewById(R.id.ask_profile_iv);
-        TextView friendName = (TextView) view.findViewById(R.id.ask_name);
-        ImageView friendstatus = (ImageView) view.findViewById(R.id.ask_pro_stat_iv);
+
+        ImageView profile = (ImageView) convertView.findViewById(R.id.add_profile_iv);
+        TextView friendName = (TextView) convertView.findViewById(R.id.add_name);
+        //ImageView friendstatus = (ImageView) convertView.findViewById(R.id.ask_pro_stat_iv);
 
 
         System.out.println("친구 카카오톡 이름" + items.get(i).getFriend_Nickname());
 
-        Glide.with(context).load(items.get(i).getFriend_Image()).circleCrop().into(profile); // 친구프로필
+        //Glide.with().load(items.get(i).getFriend_Image()).circleCrop().into(profile); // 친구프로필
         friendName.setText(items.get(i).getFriend_Nickname()); // 친구이름
         long friendCode = items.get(i).getFriend_id();//친구 코드
 
 
-        return view;
+        return convertView;
     }
 }
