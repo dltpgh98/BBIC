@@ -98,9 +98,11 @@ public class FP_friend_ask extends Fragment {
                 friendGhost = object.getInt("K.K_ghost");
 
                 userProfile = object.getString("KK.K_profile");
-                userName = object.getString("Kk_K_name");
-                userGhost = object.getInt("KK_K_ghost");
+                userName = object.getString("KK.K_name");
+                userGhost = object.getInt("KK.K_ghost");
 
+                System.out.println("기존의 나의 카카오 코드 : " + userKakaoCode);
+                System.out.println("나를 추가한 친구의 코드 : " + friendCode);
 
                 Friend friend = new Friend(userCode, friendCode, friendStatus, friendName, friendEmail, friendProfile, friendGhost, friendLong, friendLat, userProfile,userName, userGhost);
                 if (friendCode == userKakaoCode) {
@@ -120,6 +122,8 @@ public class FP_friend_ask extends Fragment {
 //        FragmentTransaction ft = getFragmentManager().beginTransaction();
 //        ft.detach(this).attach(this).commit();
 
+        adapter.getSelectItemName();
+        adapter.getSelectItemProfil();
         return rootView;
     }
 
