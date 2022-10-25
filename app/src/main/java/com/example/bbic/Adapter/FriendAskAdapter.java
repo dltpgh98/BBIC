@@ -129,15 +129,15 @@ public class FriendAskAdapter extends BaseAdapter {
                         }
                     }
                 };
-                friends.remove(i);
-                notifyDataSetChanged();
+
                 System.out.println("수락 버튼"+friends.get(i).getUserKakapCode() + "" + friends.get(i).getFriendKakaoCode());
                 AcceptFriendRequest acceptFriendRequest = new AcceptFriendRequest(friends.get(i).getUserKakapCode(), friends.get(i).getFriendKakaoCode(), responseListener);
                 RequestQueue queue = Volley.newRequestQueue(view.getContext());
-                AddNewKakaoFriendRequest addNewKakaoFriendRequest = new AddNewKakaoFriendRequest(userKakaoCode, friends.get(i).getFriendKakaoCode(), 1, responseListener);
+                AddNewKakaoFriendRequest addNewKakaoFriendRequest = new AddNewKakaoFriendRequest(friends.get(i).getFriendKakaoCode(), friends.get(i).getUserKakapCode(), 1, responseListener);
                 queue.add(addNewKakaoFriendRequest);
                 queue.add(acceptFriendRequest);
-
+                friends.remove(i);
+                notifyDataSetChanged();
             }
         });
 
