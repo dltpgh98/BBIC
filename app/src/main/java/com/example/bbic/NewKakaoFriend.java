@@ -38,7 +38,7 @@ public class NewKakaoFriend extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.Kakao_friend_add_lv);
         kakaoFriendList = new ArrayList<KakaoFriend>();
-        adapter = new NewKakaoFriendListAdater(kakaoFriendList);
+        adapter = new NewKakaoFriendListAdater(this, kakaoFriendList);
         listView.setAdapter(adapter);
 
 //        KakaoFriend[] kakaoFriend = new KakaoFriend[2];

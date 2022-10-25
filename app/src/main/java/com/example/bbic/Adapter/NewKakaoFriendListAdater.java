@@ -16,54 +16,60 @@ import java.util.List;
 
 public class NewKakaoFriendListAdater extends BaseAdapter {
 
-    LayoutInflater layoutInflater = null;
-    List<KakaoFriend> items = null;
-    private int count = 0;
+    //LayoutInflater layoutInflater = null;
+    Context context;
+    List<KakaoFriend> items;
 
-    public NewKakaoFriendListAdater(List<KakaoFriend> items) {
+
+    public NewKakaoFriendListAdater(Context context ,List<KakaoFriend> items) {
         this.items = items;
-        count =items.size();
+        this.context = context;
+
     }
 
     @Override
     public int getCount() {
-        return count;
+        return items.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return items.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
-    public View getView(int i, View convertView, ViewGroup parent) {
+    public View getView(int i, View view, ViewGroup viewGroup) {
 
-        if(convertView == null){
-            final Context context = parent.getContext();
-            if(layoutInflater == null){
-                layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            }
-            convertView = layoutInflater.inflate(R.layout.fp_friend_add_list, parent, false);
-        }
+        View v = View.inflate(context, R.layout.fp_friend_add_list, null);
 
 
-        ImageView profile = (ImageView) convertView.findViewById(R.id.add_profile_iv);
-        TextView friendName = (TextView) convertView.findViewById(R.id.add_name);
+        ImageView friendProfile = (ImageView) v.findViewById(R.id.add_profile_iv);
+        TextView friendName = (TextView) v.findViewById(R.id.add_name);
         //ImageView friendstatus = (ImageView) convertView.findViewById(R.id.ask_pro_stat_iv);
-        ImageView friendAddBtn = (ImageView) convertView.findViewById(R.id.add_friend_iv);
+        ImageView friendAddBtn = (ImageView) v.findViewById(R.id.add_friend_iv);
 
+
+        System.out.println("친구 카카오톡 프로파일 주소" + items.get(i).getFriend_Image());
         System.out.println("친구 카카오톡 이름" + items.get(i).getFriend_Nickname());
 
-        //Glide.with().load(items.get(i).getFriend_Image()).circleCrop().into(profile); // 친구프로필
-        friendName.setText(items.get(i).getFriend_Nickname()); // 친구이름
+        Glide.with(context).load(items.get(i).getFriend_Image()).circleCrop().into(friendProfile); // 친구프로필
+        friendName.setText(items.get(i).getFriend_Nickname().toString()); // 친구이름
         long friendCode = items.get(i).getFriend_id();//친구 코드
 
 
-        return convertView;
+        friendAddBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
+        return v;
     }
 }
