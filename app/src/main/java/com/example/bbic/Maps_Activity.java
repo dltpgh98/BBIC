@@ -4,6 +4,7 @@ import static com.naver.maps.map.NaverMap.LAYER_GROUP_TRANSIT;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -50,6 +52,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.bbic.Adapter.HistoryListAdapter;
 import com.example.bbic.Adapter.MarkerListAdapter;
 import com.example.bbic.Adapter.ViewPager_Item_Adapter;
 import com.example.bbic.Bookmark.Bookmark;
@@ -60,6 +63,7 @@ import com.example.bbic.DB.AddSubwayRequest;
 import com.example.bbic.DB.UpdateGhostRequest;
 import com.example.bbic.DB.UpdatePosRequest;
 import com.example.bbic.Data.FriendMarker;
+import com.example.bbic.Data.HistoryData;
 import com.example.bbic.Data.PromiseFriendMarker;
 import com.example.bbic.FP.FP;
 import com.example.bbic.FindWay.Find_Way_Frag;
@@ -343,6 +347,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
                     try {
                         nameToPos(sPosEt, ePosEt);
+
                     } catch (Exception e) {
                         loadingDialog.HideDialog();
                         Toast.makeText(getApplicationContext(), "찾을수 없는 장소입니다.", Toast.LENGTH_SHORT).show();
@@ -506,7 +511,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private DrawerLayout drawerLayout;
     private RelativeLayout drawerFirst, drawerSecond;
     private View drawerView;
-    private ImageButton menuIbtn, searchIbtn, findWayIbtn, vFindIbtn, vEditChangeFindIbtn, findWayOverlayClearIBtn , find_way_log_page,
+    private ImageButton menuIbtn, searchIbtn, findWayIbtn, vFindIbtn, vHistoryIbtn, vEditChangeFindIbtn, findWayOverlayClearIBtn , find_way_log_page,
             subway_info_bookmarkStar, bus_info_bookmarkStar, place_info_bookmarkStar, markerIbtn;
     private TextView
             temText, fineText, ultraText, covidText, nickName, areaText;
@@ -598,6 +603,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private List<Long> friendCodeList = new ArrayList<>();
     private List<Integer> friendStatusList = new ArrayList<>();
     private List<Integer> friendGhostList = new ArrayList<>();
+    private ArrayList<HistoryData> historyDataList = new ArrayList<>();
+
+    Dialog history_dig;
 
 
     public static ODsayService odsayService;
@@ -1127,10 +1135,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         find_way_page = (ConstraintLayout) findViewById(R.id.view_find_way_lay);
         vEditChangeFindIbtn = (ImageButton) findViewById(R.id.posEdit_change_ibtn);
         vFindIbtn = (ImageButton) findViewById(R.id.view_find_way_ibtn);
+        vHistoryIbtn = (ImageButton) findViewById(R.id.view_history_ibtn);
         sPosEdit = (EditText) findViewById(R.id.start_pos_et);
         ePosEdit = (EditText) findViewById(R.id.end_pos_et);
-        find_way_log_page = (ImageButton) findViewById(R.id.view_find_Way_Log_ibtn);
-
 
         subway_info_window = (ConstraintLayout) findViewById(R.id.subway_info_window);//지하철 정보창
 
@@ -1393,6 +1400,21 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
 
                 }
+            }
+        });
+
+        history_dig = new Dialog(Maps_Activity.this);
+        history_dig.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        history_dig.setContentView(R.layout.find_history);
+
+        historyDataList = new ArrayList<HistoryData>();
+        historyDataList.add(new HistoryData("부천대학교","구로역"));
+        historyDataList.add(new HistoryData("김포시청","홍대입구역"));
+
+        vHistoryIbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showHistoryDialog();
             }
         });
 
@@ -1666,6 +1688,40 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         itemList.add("Page 5");
 
         return itemList;
+    }
+
+    public void showHistoryDialog() {
+        history_dig.show();
+
+        ImageButton backIbtn = history_dig.findViewById(R.id.history_close_btn);
+        backIbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                history_dig.dismiss();
+            }
+        });
+
+        ListView historyLv = history_dig.findViewById(R.id.history_listview);
+        final HistoryListAdapter historyListAdapter = new HistoryListAdapter(this, historyDataList);
+        historyLv.setAdapter(historyListAdapter);
+
+        historyLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                sPosEdit.setText(historyListAdapter.getItem(i).getStart_pos());
+                ePosEdit.setText(historyListAdapter.getItem(i).getEnd_pos());
+                history_dig.dismiss();
+            }
+        });
+
+        historyLv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                history_dig.dismiss();
+                historyListAdapter.deleteItem(i);
+                return false;
+            }
+        });
     }
 
     @SuppressLint("MissingSuperCall")

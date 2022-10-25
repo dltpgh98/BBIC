@@ -32,6 +32,8 @@
         <entry key="..\:/BBIC/do/app/src/main/res/layout/bus_info_window.xml" value="0.33" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/drawer.xml" value="0.209375" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/drawer_list.xml" value="0.2201795639162035" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/find_history.xml" value="0.29628046173578454" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/find_history_list.xml" value="0.29628046173578454" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/find_way_item.xml" value="0.33" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/find_way_list.xml" value="0.2740036231884058" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/find_way_log_fg.xml" value="0.2129115006412997" />
@@ -50,6 +52,7 @@
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_promise.xml" value="0.33" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_promise_ask.xml" value="0.14151346729371525" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_promise_ask_list.xml" value="0.33" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_promise_icon.xml" value="0.29628046173578454" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_promise_list.xml" value="0.19153484395040615" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/fp_promise_list_list.xml" value="0.21804189824711415" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/help.xml" value="0.21547669944420692" />
@@ -70,7 +73,7 @@
         <entry key="..\:/BBIC/do/app/src/main/res/layout/test.xml" value="0.2834544677212484" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/view_detail.xml" value="0.25677083333333334" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/view_division.xml" value="0.15476699444206926" />
-        <entry key="..\:/BBIC/do/app/src/main/res/layout/view_find_way.xml" value="0.33" />
+        <entry key="..\:/BBIC/do/app/src/main/res/layout/view_find_way.xml" value="0.1" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/view_header.xml" value="0.1859375" />
         <entry key="..\:/BBIC/do/app/src/main/res/layout/viewpager_item.xml" value="0.23386062419837536" />
         <entry key="..\:/FusionProject/bbic/app/src/main/res/drawable-v24/circle.xml" value="0.162" />
