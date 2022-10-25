@@ -209,7 +209,15 @@ public class FP extends AppCompatActivity {
                         bundle.putString("프로필", address);
                         //System.out.println("친구 목록확인 " + friendlist);
                         fp_friend.setArguments(bundle);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_friend).commit();
+                        if(fp_friend == null){
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_friend).commit();
+                            //getSupportFragmentManager().beginTransaction().hide(fp_promise).commit();
+                        }else {
+                            getSupportFragmentManager().beginTransaction().show(fp_friend).commit();
+                            getSupportFragmentManager().beginTransaction().remove(fp_promise).commit();
+                        }
+                        //getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_friend).commit();
+
                         break;
                     case 1:
                         new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -232,7 +240,15 @@ public class FP extends AppCompatActivity {
                         System.out.println("fp에서 유저코드 확인" + userCode);
                         //System.out.println("친구 목록확인 " + friendlist);
                         fp_promise.setArguments(bundle);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_promise).commit();
+                        if(fp_promise == null){
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_promise).commit();
+                            //getSupportFragmentManager().beginTransaction().hide(fp_friend).commit();
+                        }else {
+                            getSupportFragmentManager().beginTransaction().add(R.id.fp_tab_container,fp_promise).commit();
+                            getSupportFragmentManager().beginTransaction().hide(fp_friend).commit();
+                        }
+                        //getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_promise).commit();
+
                         break;
                 }
             }
@@ -317,7 +333,7 @@ public class FP extends AppCompatActivity {
         System.out.println("FP에서 약속 리스트 확인 :" + promiselist);
         fp_friend.setArguments(bundle);
         fp_promise.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().add(R.id.fp_tab_container, fp_friend).commit();//여긴 잘됨
+        getSupportFragmentManager().beginTransaction().replace(R.id.fp_tab_container, fp_friend).commit();//여긴 잘됨
     }
 
     private void drawer_input() {

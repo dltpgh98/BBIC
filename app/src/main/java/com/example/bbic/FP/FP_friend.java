@@ -218,7 +218,15 @@ public class FP_friend extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getChildFragmentManager().beginTransaction().replace(R.id.fp_container, fp_friend_list).commit();
+                if(fp_friend_list == null){
+                    getChildFragmentManager().beginTransaction().replace(R.id.fp_container, fp_friend_list).commit();
+                    getChildFragmentManager().beginTransaction().hide(fp_friend_ask).commit();
+                }
+                else {
+                    getChildFragmentManager().beginTransaction().show(fp_friend_list).commit();
+                    getChildFragmentManager().beginTransaction().hide(fp_friend_ask).commit();
+                }
+
             }
         });
 
@@ -226,7 +234,15 @@ public class FP_friend extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getChildFragmentManager().beginTransaction().replace(R.id.fp_container, fp_friend_ask).commit();
+
+                if(fp_friend_ask == null){
+                    getChildFragmentManager().beginTransaction().replace(R.id.fp_container, fp_friend_ask).commit();
+                    getChildFragmentManager().beginTransaction().hide(fp_friend_list).commit();
+                }else {
+                    getChildFragmentManager().beginTransaction().show(fp_friend_ask).commit();
+                    getChildFragmentManager().beginTransaction().hide(fp_friend_list).commit();
+                }
+
             }
         });
 

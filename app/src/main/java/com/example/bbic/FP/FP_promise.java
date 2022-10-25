@@ -92,7 +92,14 @@ public class FP_promise extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getChildFragmentManager().beginTransaction().replace(R.id.promise_container, fp_promise_list).commit();
+                if(fp_promise_list == null){
+                    getChildFragmentManager().beginTransaction().replace(R.id.promise_container, fp_promise_list).commit();
+                    getChildFragmentManager().beginTransaction().hide(fp_promise_ask).commit();
+                }else {
+                    getChildFragmentManager().beginTransaction().show(fp_promise_list).commit();
+                    getChildFragmentManager().beginTransaction().hide(fp_promise_ask).commit();
+                }
+
             }
         });
 
@@ -100,7 +107,14 @@ public class FP_promise extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getChildFragmentManager().beginTransaction().replace(R.id.promise_container, fp_promise_ask).commit();
+                if(fp_promise_ask == null){
+                    getChildFragmentManager().beginTransaction().replace(R.id.promise_container, fp_promise_ask).commit();
+                    getChildFragmentManager().beginTransaction().hide(fp_promise_list).commit();
+                }else {
+                    getChildFragmentManager().beginTransaction().show(fp_promise_ask).commit();
+                    getChildFragmentManager().beginTransaction().hide(fp_promise_list).commit();
+                }
+
             }
         });
 
