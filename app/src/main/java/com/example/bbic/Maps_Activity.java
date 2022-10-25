@@ -2825,7 +2825,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         @Override
         protected void onPostExecute(String result) {
-            System.out.println("========result=======" + result);
+            System.out.println("========Friend result=======" + result);
             friendlist = result;
         }
 
