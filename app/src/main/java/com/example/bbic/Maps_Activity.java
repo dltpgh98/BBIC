@@ -195,6 +195,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         keyboardmanager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                     } catch (Exception e) {
                     }
+                    new BackgroundTask_Subway().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new BackgroundTask_Bus().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new BackgroundTask_location().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     drawerFirst.setVisibility(View.VISIBLE);
 
                     drawerSecond.setVisibility(View.GONE);
@@ -407,11 +412,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     handl.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            new BackgroundTask_Subway().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            new BackgroundTask_Bus().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            new BackgroundTask_location().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//                            new BackgroundTask_Subway().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//                            new BackgroundTask_Bus().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//                            new BackgroundTask_location().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//                            new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//                            new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                         }
                     }, 500);
@@ -427,11 +432,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     handl.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            new BackgroundTask_Subway().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            new BackgroundTask_Bus().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            new BackgroundTask_location().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//                            new BackgroundTask_Subway().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//                            new BackgroundTask_Bus().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//                            new BackgroundTask_location().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//                            new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//                            new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                         }
                     }, 500);
@@ -446,11 +451,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     handl.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            new BackgroundTask_Subway().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            new BackgroundTask_Bus().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            new BackgroundTask_location().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//                            new BackgroundTask_Subway().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//                            new BackgroundTask_Bus().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//                            new BackgroundTask_location().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//                            new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//                            new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                         }
                     }, 500);
@@ -868,6 +873,16 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 try {
                     markersPosition.clear();
                     System.out.println("===========청소 확인====================" + markersPosition.toString());
+                    new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+                    new BackgroundTask_PromiseFrList().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new BackgroundTask_Bus().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new BackgroundTask_Subway().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new BackgroundTask_location().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//                    new BackgroundTask_User().execute((Runnable) AsyncTask.THREAD_POOL_EXECUTOR);
+
+//                    new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 //                    mapTread.run();
                     mr.run();
 
@@ -2253,7 +2268,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
             for (int count = 0; count < promiseFrPosArray.size(); count++) {
                 markersPosition.add(promiseFrPosArray.get(count));
-                System.out.println("markersPosition: "+markersPosition.get(count));
+                System.out.println("markersPosition: " + markersPosition.get(count));
 //                Log.d("","============prFrLiArray : "+prFrLiArray.getJSONObject(count).getString("PP.K_code"));
 //                Log.d("", "============prFrLiArray : " + promiseFrPosArray.get(count).latitude);
             }
@@ -2271,7 +2286,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         for (int i = 0; i < promiseFrMarker.get(position).getProFrLat().length; i++) {
             LatLng latLng = new LatLng(Double.valueOf(promiseFrMarker.get(position).getProFrLat()[i]), Double.valueOf(promiseFrMarker.get(position).getProFrLong()[i]));
             try {
-                System.out.println("좌표 수락 여부 : "+promiseFrMarker.get(position).getProFrLocalCheck()[i].equals("1"));
+                System.out.println("좌표 수락 여부 : " + promiseFrMarker.get(position).getProFrLocalCheck()[i].equals("1"));
                 if (!promiseFrMarker.get(position).getMarkerProUser().equals(String.valueOf(k_code)) && promiseFrMarker.get(position).getProFrLocalCheck()[i].equals("1")) {
                     friendMarker.add(new FriendMarker(latLng,
                                     String.valueOf(promiseFrMarker.get(position).getMarkerProUserName()[i]),
@@ -2295,16 +2310,16 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     }
 
     //<--------------------------------------------마커 지도에 찍기----------------------------------------->//
-    public void MapMarkerPrint(){
+    public void MapMarkerPrint() {
         freeActiveMarkers();
         int count = 0;
         LatLng currentPosition = getCurrentPosition(naverMap);
         String userName;
-        int myKodeIndex=0;
-        for(int i=0;i<friendMarker.size();i++){
-            if(friendMarker.get(i).getMarkerUserKode().equals(String.valueOf(k_code))){
+        int myKodeIndex = 0;
+        for (int i = 0; i < friendMarker.size(); i++) {
+            if (friendMarker.get(i).getMarkerUserKode().equals(String.valueOf(k_code))) {
                 myKodeIndex = i;
-                System.out.println("인덱스"+myKodeIndex);
+                System.out.println("인덱스" + myKodeIndex);
             }
         }
         for (LatLng markerPosition : markersPosition) {
@@ -2317,32 +2332,26 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                    System.out.println("==============="+markerPosition.toString()+"======이름====== :"+friendMarkerNameList.get(count));
 //                    marker.setIcon(OverlayImage.fromResource(R.drawable.image_profile));
             marker.setIconTintColor(Color.RED);
-            System.out.println("count : "+count);
-            System.out.println("인덱스"+myKodeIndex);
+            System.out.println("count : " + count);
+            System.out.println("인덱스" + markersPosition.size());
             try {
-                marker.setPosition(friendMarker.get(count).getMarkerPos());
-                marker.setCaptionText(friendMarker.get(count).getMarkerUserName());
-                marker.setHideCollidedCaptions(true);
-                marker.setMap(naverMap);
-                activeMarkers.add(marker);
-                count++;
 
 
-//                if(count!=myKodeIndex) {
-//                    System.out.println("if count : "+count);
-//                    marker.setPosition(friendMarker.get(count).getMarkerPos());
-//                    marker.setCaptionText(friendMarker.get(count).getMarkerUserName());
-//                    marker.setHideCollidedCaptions(true);
-//                    marker.setMap(naverMap);
-//                    activeMarkers.add(marker);
-//                    count++;
-//                    continue;
-//
-//                }else{
-//                    System.out.println("else count : "+count);
-//                    count++;
-//                    continue;
-//                }
+                if (count != myKodeIndex) {
+                    System.out.println("if count : " + count);
+                    marker.setPosition(friendMarker.get(count).getMarkerPos());
+                    marker.setCaptionText(friendMarker.get(count).getMarkerUserName());
+                    marker.setHideCollidedCaptions(true);
+                    marker.setMap(naverMap);
+                    activeMarkers.add(marker);
+                    count++;
+                    continue;
+
+                } else {
+                    System.out.println("else count : " + count);
+                    count++;
+                    continue;
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

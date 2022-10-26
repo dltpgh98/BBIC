@@ -51,6 +51,7 @@ public class Bookmark_Transit_bus extends Fragment {
         adapter = new BusListAdapter(getContext(), busList);
         listView.setAdapter(adapter);
 
+
         try {
             JSONObject jsonObject = new JSONObject(getbuslist);
             System.out.println(getbuslist);
@@ -85,9 +86,6 @@ public class Bookmark_Transit_bus extends Fragment {
             e.printStackTrace();
         }
 
-//        listView.setOnClickListener(new AdapterView.OnItemClickListener(){
-//
-//        });
 
 
         return rootView;
