@@ -64,11 +64,11 @@ public class HistoryListAdapter extends BaseAdapter {
                 if(arrayList.get(i).check_equals(historyData))return;
             }
 
-            arrayList.add(historyData);
+            arrayList.add(0,historyData);
         }
 
-        if(arrayList.size()>=10){
-            arrayList.remove(0);
+        if(arrayList.size()>=6){
+            arrayList.remove(5);
         }
     }
 
