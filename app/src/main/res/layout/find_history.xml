@@ -33,6 +33,7 @@
         android:id="@+id/history_listview"
         android:dividerHeight="@null"
         app:layout_constraintTop_toBottomOf="@id/history_headder_tv"
+        android:stackFromBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

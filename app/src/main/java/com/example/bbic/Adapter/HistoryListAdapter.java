@@ -54,6 +54,24 @@ public class HistoryListAdapter extends BaseAdapter {
         arrayList.remove(i);
     }
 
+    public void insertItem(String start_pos, String end_pos) {
+        HistoryData historyData = new HistoryData(start_pos, end_pos);
+
+        if(arrayList.size()>1)
+        {
+            for(int i = 0; i<arrayList.size(); i++)
+            {
+                if(arrayList.get(i).check_equals(historyData))return;
+            }
+
+            arrayList.add(historyData);
+        }
+
+        if(arrayList.size()>=10){
+            arrayList.remove(0);
+        }
+    }
+
     @Override
     public View getView(int i, View converView, ViewGroup viewGroup) {
         View view = mLayoutInflater.inflate(R.layout.find_history_list,null);

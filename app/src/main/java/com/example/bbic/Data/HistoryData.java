@@ -8,6 +8,12 @@ public class HistoryData {
         this.end_pos = end_pos;
     }
 
+    public boolean check_equals(HistoryData now)
+    {
+        if(this.getStart_pos().equals(now.getStart_pos())&&this.getEnd_pos().equals(now.getEnd_pos()))return true;
+        else return false;
+    }
+
     public String getStart_pos() {
         return start_pos;
     }

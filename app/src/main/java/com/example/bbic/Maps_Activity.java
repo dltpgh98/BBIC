@@ -344,6 +344,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     String ePosEt = ePosEdit.getText().toString();
 
                     System.out.print(sPosEt + "시작 " + ePosEt + "도착");
+                    historyListAdapter.insertItem(sPosEt, ePosEt);
 
                     try {
                         nameToPos(sPosEt, ePosEt);
@@ -606,7 +607,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private ArrayList<HistoryData> historyDataList = new ArrayList<>();
 
     Dialog history_dig;
-
+    HistoryListAdapter historyListAdapter;
 
     public static ODsayService odsayService;
     private InputMethodManager keyboardmanager;
@@ -1411,6 +1412,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         historyDataList.add(new HistoryData("부천대학교","구로역"));
         historyDataList.add(new HistoryData("김포시청","홍대입구역"));
 
+        historyListAdapter = new HistoryListAdapter(this, historyDataList);
+
         vHistoryIbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1702,7 +1705,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         });
 
         ListView historyLv = history_dig.findViewById(R.id.history_listview);
-        final HistoryListAdapter historyListAdapter = new HistoryListAdapter(this, historyDataList);
+        historyLv.setStackFromBottom(true);
         historyLv.setAdapter(historyListAdapter);
 
         historyLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
