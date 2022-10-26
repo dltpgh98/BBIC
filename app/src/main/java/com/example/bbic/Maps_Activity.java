@@ -1868,7 +1868,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             eLatitude = String.valueOf(friendLat);
             eLongitude = String.valueOf(friendLong);
 
-
             sLatLngPos = new LatLng(Double.valueOf(sLatitude), Double.valueOf(sLongitude));
             eLatLngPos = new LatLng(Double.valueOf(eLatitude), Double.valueOf(eLongitude));
         } else {
