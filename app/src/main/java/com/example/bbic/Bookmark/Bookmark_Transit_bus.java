@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -59,7 +60,7 @@ public class Bookmark_Transit_bus extends Fragment {
             int buskey;
             int stationCode;
             long userCode;
-            int busNum;
+            String busNum;
             String busStationName;
             String busDirction;
 
@@ -68,7 +69,7 @@ public class Bookmark_Transit_bus extends Fragment {
                 buskey = object.getInt("B.B_buskey");
                 stationCode = object.getInt("B.B_stationcode");
                 userCode = object.getLong("B.K_code");
-                busNum = object.getInt("B.B_num");
+                busNum = object.getString("B.B_num");
                 busStationName = object.getString("BB.B_stationname");
                 busDirction = object.getString("BB.B_direction");
 
@@ -83,6 +84,10 @@ public class Bookmark_Transit_bus extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+//        listView.setOnClickListener(new AdapterView.OnItemClickListener(){
+//
+//        });
 
 
         return rootView;

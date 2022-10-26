@@ -64,6 +64,8 @@ public class BusListAdapter extends BaseAdapter {
         busStationDirection.setText(busList.get(i).getBusDirction());
         busNum.setText(String.valueOf(busList.get(i).getBusNum()));
 
+
+
         deleteBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
