@@ -2290,13 +2290,19 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     }
     //<--------------------------------------------마커 지도에 찍기----------------------------------------->//
     public void MapMarkerPrint(){
+
+        System.out.println("함수 실행은 하는지 확인");
         freeActiveMarkers();
         int count = 0;
         LatLng currentPosition = getCurrentPosition(naverMap);
         String userName;
         int myKodeIndex=0;
         try{
+            System.out.println("함수 실행후 try문 진행 하는지 확인");
+
             if(friendMarker.size()!= 0) {
+
+                System.out.println("함수 실행후 try문 밑 조건문 실행 하는지 확인");
                 for (int i = 0; i < friendMarker.size(); i++) {
                     if (friendMarker.get(i).getMarkerUserKode().equals(k_code)) {
                         myKodeIndex = i;
