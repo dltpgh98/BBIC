@@ -87,15 +87,17 @@ public class BusListAdapter extends BaseAdapter {
                                         notifyDataSetChanged();
                                     }
                                 } catch (Exception e) {
+                                    busList.remove(i);
+                                    notifyDataSetChanged();
                                     e.printStackTrace();
                                 }
                             }
                         };
-                        busList.remove(i);
-                        notifyDataSetChanged();
-//                        deleteBusStationRequest deleteBusStationRequest = new deleteBusStationRequest(busList.get(i).getBusStationName(), busList.get(i).getUserCode(), responseListener);
+//                        System.out.println("usercod: "+busList.get(i).getUserCode() +"  |  station: "+busList.get(i).getStationCode());
+                        deleteBusStationRequest deleteBusStationRequest = new deleteBusStationRequest(busList.get(i).getStationCode(), busList.get(i).getUserCode() , responseListener);
+//                        deleteBusStationRequest deleteBusStationRequest = new deleteBusStationRequest(busList.get(i).getStationCode(), responseListener);
                         RequestQueue queue = Volley.newRequestQueue(v.getContext());
-//                        queue.add(deleteBusStationRequest);
+                        queue.add(deleteBusStationRequest);
 
                     }
                 });

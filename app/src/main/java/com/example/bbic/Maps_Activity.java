@@ -195,20 +195,29 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         keyboardmanager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                     } catch (Exception e) {
                     }
-                    new BackgroundTask_Subway().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    requestFlagInt=3;
                     new BackgroundTask_Bus().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new BackgroundTask_Subway().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     new BackgroundTask_location().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
                     new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new BackgroundTask_PromiseFrList().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+                    new BackgroundTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new BackgroundTask_User().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
                     drawerFirst.setVisibility(View.VISIBLE);
 
                     drawerSecond.setVisibility(View.GONE);
                     drawerLayout.openDrawer(drawerView);
                     break;
                 case R.id.drawer_menu_1:
+                    requestFlagInt=0;
                     drawerLayout.closeDrawer(drawerView);
                     break;
                 case R.id.drawer_menu_2:
+                    requestFlagInt=0;
                     Intent intent2 = new Intent(getApplicationContext(), Subway.class);
                     drawerLayout.closeDrawer(drawerView);
                     intent2.putExtra("코드", k_code);
@@ -229,7 +238,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     startActivity(intent2);
                     break;
                 case R.id.drawer_menu_3:
-
+                    requestFlagInt=1;
                     Intent intent3 = new Intent(getApplicationContext(), Bookmark.class);
                     intent3.putExtra("코드", k_code);
                     intent3.putExtra("닉네임", name);
@@ -263,7 +272,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     break;
                 case R.id.drawer_menu_5:
                 case R.id.view_header_setting_btn:
-
+                    requestFlagInt=2;
                     Intent intent5 = new Intent(getApplicationContext(), FP.class);
                     intent5.putExtra("코드", k_code);
                     intent5.putExtra("닉네임", name);
@@ -285,6 +294,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                    finish();
                     break;
                 case R.id.drawer_menu_6:
+                    requestFlagInt=0;
                     Intent intent6 = new Intent(getApplicationContext(), Setting_Activity.class);
                     intent6.putExtra("코드", k_code);
                     intent6.putExtra("닉네임", name);
@@ -559,7 +569,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     private SlidingUpPanelLayout upPanelLayout;
     private Bundle bundleFw;
-    private int position, userGhost;
+    private int position, userGhost ,requestFlagInt;
     private FragmentTransaction ft;
     private MultipartPathOverlay pathOver;
     private PathOverlay pathOverlay;
@@ -873,16 +883,43 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 try {
                     markersPosition.clear();
                     System.out.println("===========청소 확인====================" + markersPosition.toString());
-                    new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    switch(requestFlagInt){
+                    //초기 0은 전부 차단
+                        case 0 :
+                            new BackgroundTask_Bus().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_Subway().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_location().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
-                    new BackgroundTask_PromiseFrList().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    new BackgroundTask_Bus().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    new BackgroundTask_Subway().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    new BackgroundTask_location().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-//                    new BackgroundTask_User().execute((Runnable) AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_PromiseFrList().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
-//                    new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_User().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            requestFlagInt=3;
+                        break;
+                        //1은 북마크만 허용
+                        case 1 :
+                            new BackgroundTask_Bus().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_Subway().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_location().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+                            break;
+                        //2는 유저관련 으로 친구와 약속
+                        case 2 :
+                            new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_PromiseFrList().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+                            new BackgroundTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new BackgroundTask_User().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        break;
+
+                      default:
+                          requestFlagInt=0;
+                        break;
+                    }
+
 //                    mapTread.run();
                     mr.run();
 
@@ -893,7 +930,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         };
 
         Timer timer = new Timer();
-        timer.schedule(task, new Date(), 15000);
+        timer.schedule(task, new Date(), 10000);
         //========
 
 //        for (int x = 0; x < 100; ++x) {
@@ -1055,7 +1092,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         String myAddress = getCurrentAddress(latitude, longitude);
         String[] add = myAddress.split(" ");
         drawerInit(myAddress);
-
+        requestFlagInt = 0;
 
         //도성대
         FragmentManager fm = getSupportFragmentManager();
@@ -1229,12 +1266,15 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         viewSwitch = false;
 
+
         new BackgroundTask_Subway().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new BackgroundTask_Bus().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new BackgroundTask_location().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new BackgroundTask_Promise().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new BackgroundTask_Friend().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new BackgroundTask_PromiseFrList().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new BackgroundTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new BackgroundTask_User().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         bus_info_bookmarkStar.setOnClickListener(onClickListener);
         subway_info_bookmarkStar.setOnClickListener(onClickListener);
@@ -2090,7 +2130,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         setIntent(intent);
         String fName;
         long fCode;
+        Log.d("=====requestFlagInt====", "" + requestFlagInt);
 
+        requestFlagInt=0;
         if (intent.getIntExtra("fFlag", 0) == 1) {
             fName = intent.getStringExtra("fName");
             fCode = intent.getLongExtra("fCode", 0);
@@ -2992,6 +3034,135 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
 
     }
+
+    class BackgroundTask_User extends AsyncTask<Void, Void, String> {
+
+        String target;
+
+        @Override
+        protected void onPreExecute() {
+            target = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/userlist.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try{
+                URL url = new URL(target);
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String temp;
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while((temp = bufferedReader.readLine()) != null){
+
+                    stringBuilder.append(temp + "\n");
+
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            System.out.println("========user result======="+result);
+            userlist = result;
+        }
+
+        @Override
+        protected void onCancelled(String s) {
+            super.onCancelled(s);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+
+    }
+
+    class BackgroundTask extends AsyncTask<Void, Void, String> {
+
+        String target;
+
+        @Override
+        protected void onPreExecute() {
+            target = "http://ec2-13-124-60-158.ap-northeast-2.compute.amazonaws.com/friendlist.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try{
+                URL url = new URL(target);
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String temp;
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while((temp = bufferedReader.readLine()) != null){
+
+                    stringBuilder.append(temp + "\n");
+
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            System.out.println("========friend list result======="+result);
+            friendlist = result;
+        }
+
+        @Override
+        protected void onCancelled(String s) {
+            super.onCancelled(s);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+
+    }
+
+
+
 
     public void locationToFriend(long fCode) {
         double fLat = 0, fLong = 0;
