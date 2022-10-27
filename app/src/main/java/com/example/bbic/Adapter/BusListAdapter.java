@@ -90,9 +90,9 @@ public class BusListAdapter extends BaseAdapter {
                         };
                         busList.remove(i);
                         notifyDataSetChanged();
-//                        deleteBusStationRequest deleteBusStationRequest = new deleteBusStationRequest(busList.get(i).getBusStationName(), busList.get(i).getUserCode(), responseListener);
+                        deleteBusStationRequest deleteBusStationRequest = new deleteBusStationRequest(busList.get(i).getStationCode(), responseListener);
                         RequestQueue queue = Volley.newRequestQueue(v.getContext());
-//                        queue.add(deleteBusStationRequest);
+                        queue.add(deleteBusStationRequest);
 
                     }
                 });
