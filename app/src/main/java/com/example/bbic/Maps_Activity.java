@@ -2191,6 +2191,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
 //        if (upPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED ) {
 //            upPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+//
 //        }
 
     }
