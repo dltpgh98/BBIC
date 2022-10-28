@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -46,23 +45,6 @@ public class ViewPager_Item_Adapter extends RecyclerView.Adapter<ViewPager_Item_
             Intent intent = new Intent(view.getContext(), Maps_Activity.class);
             switch (view.getId()) {
                 //case를 통해 id에 따른 클릭이벤트 실행
-                case R.id.view_detail_add_ibtn:
-                    intent.putExtra("fFlag",4);
-                    intent.putExtra("fName",friend_name.get(index));
-                    intent.putExtra("fCode",friend_code.get(index));
-                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    dialog.dismiss();
-                    view.getContext().startActivity(intent);
-                    break;
-
-                case R.id.view_detail_list_ibtn:
-                    intent.putExtra("fFlag",3);
-                    intent.putExtra("fName",friend_name.get(index));
-                    intent.putExtra("fCode",friend_code.get(index));
-                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    dialog.dismiss();
-                    view.getContext().startActivity(intent);
-                    break;
                 case R.id.view_detail_way_ibtn:
                     intent.putExtra("fFlag",1);
                     intent.putExtra("fName",friend_name.get(index));
@@ -161,19 +143,6 @@ public class ViewPager_Item_Adapter extends RecyclerView.Adapter<ViewPager_Item_
             holder.nameHolder[i].setText(friend_name.get(i));
             //holder.nameHolder[i].setCompoundDrawableTintList(Color.);
             Glide.with(context).load(friend_profile.get(i)).fitCenter().circleCrop().into(holder.profileHolder[i]);
-            switch (friend_status.get(i))
-            {
-                case 0:
-                    break;
-                case 1:
-                    holder.stateHolder[i].setImageResource(R.drawable.view_friend_state_on);
-                    break;
-                case 2:
-                    holder.stateHolder[i].setImageResource(R.drawable.view_friend_state_off);
-                    break;
-                default:
-                    break;
-            }
             holder.profileHolder[i].setOnClickListener(onClickListener);
         }
         for(;i<8;i++){
@@ -250,7 +219,7 @@ public class ViewPager_Item_Adapter extends RecyclerView.Adapter<ViewPager_Item_
 
         ImageView[] profileHolder = new ImageView[8];
         TextView[] nameHolder = new TextView[8];
-        ImageView[] stateHolder = new ImageView[8];
+
         public PagerHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -271,15 +240,6 @@ public class ViewPager_Item_Adapter extends RecyclerView.Adapter<ViewPager_Item_
             nameHolder[5] = itemView.findViewById(R.id.view_item_name6);
             nameHolder[6] = itemView.findViewById(R.id.view_item_name7);
             nameHolder[7] = itemView.findViewById(R.id.view_item_name8);
-
-            stateHolder[0] = itemView.findViewById(R.id.view_item_state1);
-            stateHolder[1] = itemView.findViewById(R.id.view_item_state2);
-            stateHolder[2] = itemView.findViewById(R.id.view_item_state3);
-            stateHolder[3] = itemView.findViewById(R.id.view_item_state4);
-            stateHolder[4] = itemView.findViewById(R.id.view_item_state5);
-            stateHolder[5] = itemView.findViewById(R.id.view_item_state6);
-            stateHolder[6] = itemView.findViewById(R.id.view_item_state7);
-            stateHolder[7] = itemView.findViewById(R.id.view_item_state8);
 
             /*for (int i = 0; i < 8; i++) {
                 int profileId = itemView.getResources().getIdentifier("view_item_ibtn" + i, "id", context.getPackageName());

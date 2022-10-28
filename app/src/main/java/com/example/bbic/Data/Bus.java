@@ -4,7 +4,7 @@ public class Bus {
     int buskey;
     int stationCode;
     long userCode;
-    int busNum;
+    String busNum;
     String busStationName;
     String busDirction;
 
@@ -32,11 +32,11 @@ public class Bus {
         this.userCode = userCode;
     }
 
-    public int getBusNum() {
+    public String getBusNum() {
         return busNum;
     }
 
-    public void setBusNum(int busNum) {
+    public void setBusNum(String busNum) {
         this.busNum = busNum;
     }
 
@@ -56,7 +56,7 @@ public class Bus {
         this.busStationName = busStationName;
     }
 
-    public Bus(int buskey, int stationCode, long userCode, int busNum, String busStationName, String busDirction) {
+    public Bus(int buskey, int stationCode, long userCode, String busNum, String busStationName, String busDirction) {
         this.buskey = buskey;
         this.stationCode = stationCode;
         this.userCode = userCode;

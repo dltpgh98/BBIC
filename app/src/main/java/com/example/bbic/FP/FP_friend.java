@@ -24,7 +24,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.bbic.Dialog.LoadingDialog;
 import com.example.bbic.KakaoFriend;
+import com.example.bbic.Maps_Activity;
 import com.example.bbic.NewKakaoFriend;
 import com.example.bbic.R;
 
@@ -57,6 +59,8 @@ public class FP_friend extends Fragment {
     Bundle bundleask;
     long userCode = 0;
 
+    LoadingDialog loadingDialog;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,7 +72,7 @@ public class FP_friend extends Fragment {
         fp_friend_list = new FP_friend_list(); //목록 버튼
         fp_friend_ask = new FP_friend_ask(); // 요청 버튼//벌써 여기서 문제
         fab = rootView.findViewById(R.id.fb_fab_btn);
-
+        loadingDialog = new LoadingDialog(getContext());
 
         String friendlist = null;
 
@@ -92,7 +96,7 @@ public class FP_friend extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                loadingDialog.ShowDialog("로딩중");
 //                Intent intent = new Intent(getActivity(), NewKakaoFriend.class);
 //                startActivity(intent);
 
@@ -139,16 +143,13 @@ public class FP_friend extends Fragment {
                                 Intent intent = new Intent(getContext(), NewKakaoFriend.class);
                                 intent.putExtra("key", finalKakaoFriendArrayList);
                                 intent.putExtra("usercode", userCode);
+                                loadingDialog.HideDialog();
                                 startActivity(intent);
                             }
-                        },900);
-
-
-
-
+                        },200);
 
                     }
-                }, 2000);
+                }, 200);
 
 
                 //KakaoFriend[] kakaoFriend = Arrays.copyOf(test.test1(), test.test1().length);

@@ -209,9 +209,9 @@ public class Setting_Activity extends AppCompatActivity {
 
         homeBtn.setOnClickListener(onClickListener);
         personalBtn.setOnClickListener(onClickListener);
-        helpBtn.setOnClickListener(onClickListener);
-        termsBtn.setOnClickListener(onClickListener);
-        sponsBtn.setOnClickListener(onClickListener);
+//        helpBtn.setOnClickListener(onClickListener);
+//        termsBtn.setOnClickListener(onClickListener);
+//        sponsBtn.setOnClickListener(onClickListener);
 
         Intent intent = getIntent();
         k_code = intent.getLongExtra("코드",0);

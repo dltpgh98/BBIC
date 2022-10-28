@@ -291,7 +291,7 @@ public class Login_Activity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            System.out.println("========result======="+result);
+            System.out.println("========friend list result======="+result);
             str = result;
         }
 
@@ -354,7 +354,7 @@ public class Login_Activity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            System.out.println("========result======="+result);
+            System.out.println("========user result======="+result);
             userlist = result;
         }
 
