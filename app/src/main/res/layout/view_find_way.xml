@@ -74,7 +74,7 @@
             android:layout_width="70dp"
             android:layout_height="50sp"
             android:layout_margin="10sp"
-            android:src="@drawable/ic_search"
+            android:src="@drawable/ic_baseline_list_24"
             android:background="@drawable/beige_radious"
             android:backgroundTint="@color/pastel_pink"
             app:layout_constraintLeft_toRightOf="@id/start_pos_tilay"
