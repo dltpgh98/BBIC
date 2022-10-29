@@ -899,7 +899,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             new BackgroundTask_User().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                             requestFlagInt = 3;
-                            mr.run();
 
                             break;
                         //1은 북마크만 허용
@@ -933,7 +932,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     }
 
 //                    mapTread.run();
-
+                    mr.run();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
