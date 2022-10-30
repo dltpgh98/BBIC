@@ -642,8 +642,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     public final static double REFERANCE_LNG_X3 = 3 / 88.74;
     public final static double REFERANCE_LAT_X5 = 5 / 109.958489129649955;
     public final static double REFERANCE_LNG_X5 = 5 / 88.74;
-    public final static double REFERANCE_LAT_X15 = 15 / 109.958489129649955;
-    public final static double REFERANCE_LNG_X15 = 15 / 88.74;
+    public final static double REFERANCE_LAT_X15 = 25 / 109.958489129649955;
+    public final static double REFERANCE_LNG_X15 = 25 / 88.74;
 
 
     public boolean withinSightMarker(LatLng currentPosition, LatLng markerPosition) {
@@ -918,14 +918,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             new BackgroundTask_User().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             break;
 
-                        case 3:
-                            requestFlagInt = 4;
-                            break;
-
-                        case 4:
-                            requestFlagInt = 5;
-                            break;
-
                         default:
                             requestFlagInt = 0;
                             break;
@@ -940,7 +932,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         };
 
         Timer timer = new Timer();
-        timer.schedule(task, new Date(), 5000);
+        timer.schedule(task, new Date(), 7000);
         //========
 
 //        for (int x = 0; x < 100; ++x) {
