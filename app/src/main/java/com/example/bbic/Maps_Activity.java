@@ -2036,7 +2036,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         }
 
                     }
-                }, 150);
+                }, 500);
             }
         }, 100);
 
