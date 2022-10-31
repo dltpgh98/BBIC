@@ -2312,7 +2312,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
             for (int count = 0; count < promiseFrPosArray.size(); count++) {
                 markersPosition.add(promiseFrPosArray.get(count));
-                System.out.println("markersPosition: " + markersPosition.get(count));
+//                System.out.println("markersPosition: " + markersPosition.get(count));
 //                Log.d("","============prFrLiArray : "+prFrLiArray.getJSONObject(count).getString("PP.K_code"));
 //                Log.d("", "============prFrLiArray : " + promiseFrPosArray.get(count).latitude);
             }
