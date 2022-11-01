@@ -300,7 +300,7 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                 if (promiseFriend.getText().toString().length() < 2) {
                     friend = "";
                 } else {
-                    friend = promiseFriend.getText().toString().substring(0, promiseFriend.length() - 2);
+                    friend = promiseFriend.getText().toString().substring(0, promiseFriend.length() - 1);
                 }
 
                 AddPromissRequest addPromissRequest = new AddPromissRequest(partycode, userKakaoCode, title, time, place, responseListener_Promise);
@@ -319,7 +319,7 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        String[] strArr = friend.split(", ");
+                        String[] strArr = friend.split(" ");
                         long friendCode = 0;
 
                         System.out.println(strArr.length);
@@ -425,9 +425,9 @@ public class Promise_write extends AppCompatActivity implements View.OnClickList
         Log.d("matchString", Boolean.toString(matchString));
 
         if (!matchString) {
-            beforeText += selectFriendName + ", ";
+            beforeText += selectFriendName + " ";
         } else {
-            beforeText = beforeText.replace(selectFriendName + ", ", "");
+            beforeText = beforeText.replace(selectFriendName + " ", "");
         }
 
 
